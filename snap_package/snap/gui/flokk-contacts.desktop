@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Flokk Contacts
+Comment=Manage your contacts
+Icon=${SNAP}/meta/gui/icon.png
+Exec=flokk-contacts %U
+Terminal=false
+Type=Application
+Categories=Office;ContactManagement;
+Keywords=Contacts;
+StartupNotify=false

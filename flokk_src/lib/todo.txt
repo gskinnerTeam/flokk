@@ -1,0 +1,151 @@
+/////////////////////////////////////////////////
+// TODO: COLEMAN
+ * [x] Edit Panel - Finish Picture Upload (ContactEditPanel.handlePhotoPressed)
+ * [x] Edit Panel - Add Label selector (ContactEditPanelView)
+  * Will need to use a 'MiniForm'. Tricky to understand, but pretty easy to use
+  * Lots of examples in /miniforms
+  * Key thing is that the 'MiniForm' needs to dispatch up a FocusChangedNotification upwards, as Focus changes on it's own children
+ * [x] Update StyledScrollBar + List to support horizontal scrolling
+ * [x] Add 'smokeTest' NativeExtension Spike so we can easily test different platforms
+  * [x] Should let us test everything that gets touched when we upgrade SDK (Display AppData folder, Test all extensions, etc)
+ * [x] Add All Icons (when ready from design)
+ * [x] Fix padding on bottom of label header in search dropdown
+ * [x] Search hscroll should not include icons
+ * [x] Update search filtering
+ * [x] Line in label miniform
+ * [x] Label MiniForm should close suggestions when not focused
+ * [x] Focus label miniform text field after adding a new label
+ * [x] Get clipping and animation into the splash screen
+ WED
+ * [x] Splash screen is getting clipped at certain resolutions
+        * make a spike with just the splash screen, and test it thoroughly
+ * [x] Fix search hotkey kicking you out of fields
+ * [x] Label Miniform should not close after clicking a label
+
+ THUR
+ * [x] Use solid background colors for avatars instead of images
+ * [x] Search should not show results as suggestions
+ * [ ] Code cleanup
+ * [ ] Polish and Tune Tab Navigation across the app, with a focus on Dashboard. Ideally can navigate from right to left, across the whole app.
+
+ FRI
+ * [ ] Dropdown tabbing
+ * [ ] Talk to Yoon and figure out what we want to do with mouse-over/shadows on the various Dashboard Cards
+
+
+/////////////////////////////////////////////////
+// TODO EDDIE
+
+* Optimize service calls, lets start counting them, making sure we're optimizing
+
+* Examine startup time, it's getting quite long with the social accts in.
+    * Get a breakdown of where the time is going, and see what we can do?
+
+* Make sure nothing can break app startup, throw everything we can at the loading
+
+* Impose low-level social refresh rates at the command layer
+  * Twitter - 1m refresh limit
+  * Git - 5m for events, 72 hrs for repo info
+  * Global Contacts Refresh - 20s
+  * Git timeouts should be respected on startup (mainly with regards to repo info)
+  * The idea with implementing it at a low level, is:
+      * we can can be kinda sloppy with our command calls from the UI (like double-loading on startup),
+      * we know they are basically cached calls, won't slow down the app or waste service calls
+
+/////////////////////////////////////////////////
+// TODO SHAWN
+
+/* Todo: GENERAL
+
+//* Add search results overlay view (need.searchEngine.hasContent or something...)
+* Warning / Cleanup Pass
+
+THURS
+* DarkModeSwitcher
+* Finish Sidebar
+* Polish
+  * Mouse Overs for Social Renderers + Tabs
+  * Styling Bugs in YouTrack
+* Refresh Button
+* SettingsPanel
+* Mobile Layout
+
+FRI
+
+* Do a organization/cleanup pass on components and styled_components
+  * split spikes from _internal
+  * Remove ImageIcon's
+
+// TODO: CONTACTS
+* Refactor AbstractWidget class into Separate widgets
+* Edit - Finish date-picker
+
+// TODO: SEARCH
+
+// TODO: Bugs
+* Dropdown does not support tab controls
+
+/// TODO: POLISH
+* Contact Panel: Add scrollbar?
+* Panel - Switch back to Info panel when cancelling add
+
+//* Contact List
+//* Empty States
+//* Social Content Panel + TouchSocialData
+//* Create Social Picker Overlay
+//* Responsive TabBar on Dash
+
+/./* Final styling pass w/ Web
+// * Maybe remove the overlay if there are no search results
+// * Look into having some default suggested items
+// * Fix search results landing page heading text
+//* Contact Info - Add Edit accelerator on mouseover
+//* Contact Info - Add Edit accelerator on icon-click
+//* Dashboard: Tab bars get cutoff when panel is open
+//* Onboard Views
+//* Update Btns to match comps (Large, PrimaryBtn, SecondaryBtn, SquareIcon)
+  //  * Standardize Outlines on RollOver
+
+//* Style dialogs
+//* Finish bulk-edit check/delete
+//* See if ListView.cacheExtent can help our lists (did not!)
+//* Edit - Add dual column text inputs for address
+//* Dropdown overlay needs to scroll with it's owner
+//* Edit - Add "Delete This Contact"
+//* Info: Left-Hand button should be grey
+//* Edit - Add new btn
+//* Panel - Throw a dialog if they cancel pending edits, only if something has been changed.
+//* Info - Tweak line height for address
+//* Edit - Get Add New working
+//* Edit - Basic opening/close widget
+//* Edit - Add dynamic 'autoFocus' support
+//* Edit - Add type dropdowns
+
+//* Figure out labels implementation
+//* Hook up Star buttons
+//* Hook up edit button, get initial form structure in place
+//* Finish Info Window
+//* Add checkbox's
+//* Refactor Commands to remove global singletons (what to do for Dialog? Same thing?)
+//* Scrollbar support
+//* Initial layout scaffolding
+//* Model support for groups
+//* Json code generation
+
+// * Get contact updating working
+// Add animations page view support
+// Filtering and sorting
+// Desktop build(s) running
+// Basic view architecture & state management
+
+
+* POC App:
+//*  - Oauth Signup > Code Display
+//*  - Copy to Clipboard
+//*  - Main Contacts List
+*   - Add / Remove / Update
+*   - Launch URL
+ */
+
+Coleman Notes:
+ - Backspace deletes labels in search

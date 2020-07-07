@@ -1,0 +1,3 @@
+class DateSortable {
+  DateTime createdAt;
+}
