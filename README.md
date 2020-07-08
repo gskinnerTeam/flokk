@@ -13,7 +13,7 @@ A fresh and modern Google Contacts manager that integrates with GitHub and Twitt
 
 - Follow the install instructions here: https://flutter.dev/docs/get-started/install
   - Desktop-specific info: https://flutter.dev/desktop, https://github.com/flutter/flutter/wiki/Desktop-shells
-- Flokk was built on the bleeding edge of Flutter, so make sure to use their the `master` branch in their git repo and checkout commit `9c3f0faa6d`.
+- Flokk was built on the bleeding edge of Flutter, so make sure to use the `master` branch in their git repo and checkout commit `9c3f0faa6d`.
   - We're aiming to upgrade to an official Flutter version soon to make this easier.
 
 ### 2. Add Required API Keys
