@@ -1,0 +1,28 @@
+name: flokk-contacts
+version: 1.0.1
+adopt-info: flokk-contacts
+summary: Flokk Contacts
+description: Manage Contacts
+confinement: strict
+base: core18
+grade: stable
+architectures:
+  - build-on: amd64
+
+apps:
+  flokk-contacts:
+    command: flokk-contacts
+    extensions: [flutter-master]
+    plugs:
+      - network
+      - home
+
+parts:
+  flokk-contacts:
+    source: flokk_src
+    plugin: flutter
+    flutter-target: lib/main.dart # The main entry-point file of the application
+    build-snaps: [ yq ]
+    override-build: |
+      snapcraftctl build
+      snapcraftctl set-version "$(yq r pubspec.yaml version)"

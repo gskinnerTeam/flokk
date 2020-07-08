@@ -66,7 +66,7 @@ Release Builds
 - To get a list of available PACKAGE_TYPE, use `flutter build`
 - Typical values are `windows`, `linux`, `apk`, `ios`
 - In order to build the snap package one must first run `lxd init` on your system if you haven't already.
-   ** Then execute `build.sh` to create the snap from the flutter build
+   ** Then execute `snapcraft --use-lxd` to create the snap from the flutter build
 
 Force Log In
 - The app uses a `kForceWebLogin` flag to force release builds to skip the oauth screen.
