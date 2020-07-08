@@ -18,8 +18,9 @@ A fresh and modern Google Contacts manager that integrates with GitHub and Twitt
 
 ### 2. Add Required API Keys
 
-Google Sign In is required in order to run the app (unless running with [cached data](#running-with-cached-data)). You will need to provide your own Google API keys in the `/lib/api_keys.dart` file. Follow the instructions here to create them:
-- https://developers.google.com/people/v1/how-tos/authorizing#APIKey
+Google Sign In is required in order to run the app (unless running with [cached data](#running-with-cached-data)). The app uses the Google People API, and you will need to provide your own Google OAuth 2 client credentials in the `/lib/api_keys.dart` file. Follow the instructions here to enable the People API and create credentials:
+- https://developers.google.com/people/v1/getting-started
+- https://developers.google.com/people/v1/how-tos/authorizing
 
 To optionally fetch social data for your contacts, add your own API keys for those as well:
 - Twitter: https://developer.twitter.com/en/docs/basics/getting-started
