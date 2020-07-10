@@ -6,6 +6,8 @@ A fresh and modern Google Contacts manager that integrates with GitHub and Twitt
 - Linux: https://snapcraft.io/flokk-contacts
 - macOS: https://flokk.app/macos/Flokk_Contacts_v1.0.1.dmg
 - Windows: https://flokk.app/windows/Flokk_Contacts_v1.0.1.zip
+  - Requires the Visual Studio C++ Redist 2015 pack to be installed. See issue [#15](https://github.com/gskinnerTeam/flokk/issues/15) for details.
+  - Note that as of July 10, 2020 Flutter for Windows is currently in Technical Preview and this will not be an issue in the future.
 
 ## Getting Set Up
 
