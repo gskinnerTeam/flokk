@@ -8,6 +8,12 @@ A fresh and modern Google Contacts manager that integrates with GitHub and Twitt
 - Windows: https://flokk.app/windows/Flokk_Contacts_v1.0.1.zip
   - Requires the [Visual Studio C++ Redist 2015 pack](https://www.microsoft.com/en-us/download/details.aspx?id=52685) to be installed. See issue [#15](https://github.com/gskinnerTeam/flokk/issues/15) for details.
   - Note that as of July 10, 2020 Flutter for Windows is currently in Technical Preview and this will not be an issue in the future.
+  
+## Contributing
+
+You are invited to improve Flokk Contacts! Submitting pull requests, answering and asking questions in the [Issues](https://github.com/gskinnerTeam/flokk/issues) page, and updating documentation are all ways you can contribute to the app.
+
+Please note that although we are monitoring GitHub issues, we aren't actively maintaining the codebase, so community involvement and contributions are really appreciated going forward. We're aiming to review pull requests on a weekly basis.
 
 ## Getting Set Up
 
