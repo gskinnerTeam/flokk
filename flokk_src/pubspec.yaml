@@ -43,17 +43,17 @@ dependencies:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/file_chooser
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: be63fd13223fa814e029ae9d36ac7f1eb3800aa9
   path_provider_fde:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/flutter_plugins/path_provider_fde
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: be63fd13223fa814e029ae9d36ac7f1eb3800aa9
   window_size:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: be63fd13223fa814e029ae9d36ac7f1eb3800aa9
 
 dev_dependencies:
   json_serializable: ^3.2.0 # Generate JSON parsers: flutter pub run build_runner build --delete-conflicting-outputs
