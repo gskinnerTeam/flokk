@@ -10,15 +10,16 @@ class AnimatedBirdSplashWidget extends StatefulWidget {
   final Alignment alignment;
   final bool showText;
   final bool showLogo;
-
-  const AnimatedBirdSplashWidget({Key key, this.alignment, this.showText = false, this.showLogo = true})
+  const AnimatedBirdSplashWidget(
+      {Key key, this.alignment, this.showText = false, this.showLogo = true})
       : super(key: key);
 
   @override
   _AnimatedBirdSplashState createState() => _AnimatedBirdSplashState();
 }
 
-class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with SingleTickerProviderStateMixin {
+class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget>
+    with SingleTickerProviderStateMixin {
   GooeyEdge _gooeyEdge;
 
   AnimationController _animationController;
@@ -28,7 +29,8 @@ class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with Sing
   void initState() {
     _gooeyEdge = GooeyEdge();
     _animationController = AnimationController(vsync: this);
-    _animationController.repeat(reverse: true, min: 0.0, max: 1.0, period: 800.milliseconds);
+    _animationController.repeat(
+        reverse: true, min: 0.0, max: 1.0, period: 800.milliseconds);
     _animationController.addListener(_tick);
     super.initState();
   }
@@ -87,7 +89,9 @@ class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with Sing
             textAlign: TextAlign.center,
           ) //Bottom positioned, fades in and out
               .alignment(Alignment.bottomCenter)
-              .translate(offset: Offset(0, 46)) // Offset text below the bottom edge of the images
+              .translate(
+                  offset: Offset(
+                      0, 46)) // Offset text below the bottom edge of the images
               .opacity(widget.showText ? 1 : 0, animate: true)
               .animate(Durations.slow, Curves.easeOut)
               .positioned(left: 0, top: 0, right: 0, bottom: 0)

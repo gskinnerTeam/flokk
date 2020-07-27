@@ -9,7 +9,7 @@ dependencies:
     sdk: flutter
   animations: ^1.0.0+5
   cupertino_icons: ^0.1.3
-  dartx: ^0.4.0
+  dartx: ^0.5.0
   dotted_border: ^1.0.5
   draggable_scrollbar: ^0.0.4
   faker: ^1.2.1
@@ -38,7 +38,8 @@ dependencies:
   universal_platform: ^0.1.2
   url_launcher:
   xdg_directories: ^0.1.0
-
+  multiple_screens: ^0.2.0 #for Duo 
+  
   file_chooser:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
