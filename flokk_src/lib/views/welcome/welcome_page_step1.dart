@@ -24,12 +24,12 @@ class WelcomePageStep1 extends StatelessWidget {
       separatorBuilder: () => SizedBox(height: Insets.l),
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        if (singleColumnMode) FlokkLogo(50, Colors.white).center(),
+        if (singleColumnMode) FlokkLogo(24, Colors.white).center(),
         if (singleColumnMode)
           AnimatedBirdSplashWidget(
                   alignment: Alignment.bottomCenter, showLogo: false)
               .padding(all: Insets.m * 1.5)
-              .height((context.heightPx - (state.isDuo ? 170 : 0)) * .4),
+              .height((context.heightPx - (state.isDuo ? 170 : 0)) * .25),
         [
           Text(
             "Welcome to Flokk Contacts",
@@ -38,12 +38,12 @@ class WelcomePageStep1 extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            "Flokk is a modern Google Contacts manager that integrates with your connections on Twitter and GitHub.",
+            "Flokk is a modern Contacts manager that integrates with your connections on Twitter, GitHub and Microsoft Graph.",
             style: bodyTxtStyle,
             textAlign: TextAlign.center,
           ).padding(vertical: Insets.l),
           Text(
-            "To get started, you will first need to authorize this application and import your existing Google Contacts.",
+            "To get started, you will first need to authorize this application and import your existing Microsoft or Google Contacts.",
             style: bodyTxtStyle,
             textAlign: TextAlign.center,
           ),
@@ -54,11 +54,23 @@ class WelcomePageStep1 extends StatelessWidget {
         kIsWeb
             ? Image.asset("assets/images/google-signin.png", height: 50)
                 .gestures(onTap: state.handleStartPressed)
-            : PrimaryTextBtn(
-                "LET'S START!",
-                bigMode: true,
-                onPressed: state.handleStartPressed,
-              ).padding(top: Insets.m).width(239),
+            : Column(
+                children: [
+                  PrimaryTextBtn(
+                    "Sign in with Microsoft",
+                    onPressed: state.handleStartPressed,
+                  ).padding(top: Insets.m).width(239),
+                  Text(
+                    "or",
+                    style: bodyTxtStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                  PrimaryTextBtn(
+                    "Sign in with Google",
+                    onPressed: state.handleStartPressed,
+                  ).padding(top: Insets.m).width(239),
+                ],
+              ),
       ],
     ).padding(vertical: Insets.l);
   }
