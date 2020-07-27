@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flokk/_internal/components/mouse_hover_builder.dart';
 import 'package:flokk/_internal/components/simple_value_notifier.dart';
 import 'package:flokk/app_extensions.dart';
+import 'package:flokk/class_extensions.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,13 +19,14 @@ class StyledScrollbar extends StatefulWidget {
   final bool showTrack;
   final Color handleColor;
   final Color trackColor;
+  final Duration timeToFade;
 
   // TODO: Remove contentHeight if we can fix this issue
   // https://stackoverflow.com/questions/60855712/flutter-how-to-force-scrollcontroller-to-recalculate-position-maxextents
   final double contentSize;
 
   const StyledScrollbar(
-      {Key key, this.size, this.axis, this.controller, this.onDrag, this.contentSize, this.showTrack = false, this.handleColor, this.trackColor})
+      {Key key, this.size, this.axis, this.controller, this.onDrag, this.contentSize, this.showTrack = false, this.handleColor, this.trackColor, this.timeToFade = const Duration(seconds: 1), })
       : super(key: key);
 
   @override
@@ -32,19 +36,38 @@ class StyledScrollbar extends StatefulWidget {
 class ScrollbarState extends State<StyledScrollbar> {
   double _viewExtent = 100;
   SimpleNotifier buildNotifier = SimpleNotifier();
+  Timer _fadeoutTimer;
+  bool showHandle = false;
+
+  @override
+  void dispose() {
+    _fadeoutTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
-    widget.controller.addListener(() => setState(() {}));
+    var isMobile = UniversalPlatformExt.isMobile;
+    widget.controller.addListener(() {
+      setState(() {
+        if (isMobile) {
+          showHandle = true;
+        }
+      });
+      if (isMobile) {
+        _restartFadeOutTimer();
+      }
+    });
     super.initState();
   }
 
   @override
   void didUpdateWidget(StyledScrollbar oldWidget) {
-    if (oldWidget.contentSize != widget.contentSize) setState(() {});
+    if (oldWidget.contentSize != widget.contentSize) {
+      setState(() {});
+    }
     super.didUpdateWidget(oldWidget);
   }
-
 
 //  void calculateSize() {
 //    //[SB] Only hack I can find  to make the ScrollController update it's maxExtents.
@@ -95,7 +118,9 @@ class ScrollbarState extends State<StyledScrollbar> {
           handleExtent = max(60, _viewExtent * _viewExtent / contentExtent);
         }
         // Hide the handle if content is < the viewExtent
-        bool showHandle = contentExtent > _viewExtent && contentExtent > 0;
+        if (!UniversalPlatformExt.isMobile) {
+          showHandle = contentExtent > _viewExtent && contentExtent > 0;
+        }
         // Handle color
         Color handleColor = widget.handleColor ?? (
             theme.isDark ? theme.greyWeak.withOpacity(.2) : theme.greyWeak);
@@ -136,7 +161,7 @@ class ScrollbarState extends State<StyledScrollbar> {
               ),
             ),
           )
-        ]).opacity(showHandle ? 1.0 : 0.0, animate: false);
+        ]).opacity(showHandle ? 1.0 : 0.0, animate: true);
       },
     );
   }
@@ -154,6 +179,19 @@ class ScrollbarState extends State<StyledScrollbar> {
     widget.controller.jumpTo((pos + details.delta.dy * pxRatio).clamp(0.0, widget.controller.position.maxScrollExtent));
     widget.onDrag?.call(details.delta.dy);
   }
+
+  void _restartFadeOutTimer() {
+    setState(() {
+      showHandle = true;
+    });
+    _fadeoutTimer?.cancel();
+    _fadeoutTimer = Timer(widget.timeToFade, () {
+      setState(() {
+        showHandle = false;
+      });
+      _fadeoutTimer = null;
+    });
+  }
 }
 
 class ScrollbarListStack extends StatelessWidget {
@@ -168,7 +206,7 @@ class ScrollbarListStack extends StatelessWidget {
   final Color trackColor;
 
   const ScrollbarListStack(
-      {Key key, this.barSize, this.axis, this.rebuildNotifier, this.child, this.controller, this.contentSize, this.scrollbarPadding, this.handleColor, this.trackColor})
+      {Key key, this.barSize, this.axis, this.rebuildNotifier, this.child, this.controller, this.contentSize, this.scrollbarPadding, this.handleColor, this.trackColor })
       : super(key: key);
 
   @override

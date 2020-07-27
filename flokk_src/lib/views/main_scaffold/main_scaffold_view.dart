@@ -147,75 +147,76 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
                 onPageSelected: state.trySetCurrentPage,
                 onAddNewPressed: state.addNew,
               ).constrained(maxWidth: Sizes.sideBarLg),
-        body:
-            //Main App Bg
-            StyledContainer(
-          theme.bg1,
-          child: Stack(
-            children: <Widget>[
-              Stack(children: <Widget>[
-                /// /////////////////////////////////////////////////
-                /// INNER CONTENT STACK
-                contentStack.padding(top: topBarHeight + topBarPadding),
+        body: SafeArea(
+          //Main App Bg
+          child: StyledContainer(
+            theme.bg1,
+            child: Stack(
+              children: <Widget>[
+                Stack(children: <Widget>[
+                  /// /////////////////////////////////////////////////
+                  /// INNER CONTENT STACK
+                  contentStack.padding(top: topBarHeight + topBarPadding),
+
+                  /// /////////////////////////////////////////////////
+                  /// HAMBURGER MENU BTN
+                  IconButton(icon: Icon(Icons.menu, size: 24, color: theme.accent1), onPressed: state.openMenu)
+                      .animatedPanelX(closeX: -50, isClosed: showLeftMenu)
+                      .positioned(left: Insets.m, top: Insets.m),
+
+                  /// Flokk Logo, Top-Center, only shown in narrow mode
+                  if (isNarrow) FlokkLogo(40, theme.accent1).alignment(Alignment.topCenter).padding(top: Insets.l),
+
+                  /// /////////////////////////////////////////////////
+                  /// SEARCH BAR
+                  searchBar.constrained(minHeight: topBarHeight),
+                ]) // Shared styling for the entire content area (content + search)
+                    .constrained(minWidth: 500)
+                    .opacity(hideContent ? 0 : 1, animate: true)
+                    .positioned(left: leftContentOffset, right: contentRightPos, bottom: 0, top: 0, animate: true)
+                    .animate(animDuration, Curves.easeOut),
 
                 /// /////////////////////////////////////////////////
-                /// HAMBURGER MENU BTN
-                IconButton(icon: Icon(Icons.menu, size: 24, color: theme.accent1), onPressed: state.openMenu)
-                    .animatedPanelX(closeX: -50, isClosed: showLeftMenu)
-                    .positioned(left: Insets.m, top: Insets.m),
-
-                /// Flokk Logo, Top-Center, only shown in narrow mode
-                if (isNarrow) FlokkLogo(40, theme.accent1).alignment(Alignment.topCenter).padding(top: Insets.l),
+                /// LEFT MENU
+                /// This is defined in the tree unlike the other elements because actually want it to exist twice
+                /// This menu may be animating out, while the other version exists in the app drawer
+                MainSideMenu(
+                  onPageSelected: state.trySetCurrentPage,
+                  onAddNewPressed: state.addNew,
+                  skinnyMode: skinnyMenuMode,
+                )
+                    .animatedPanelX(
+                  closeX: -leftMenuWidth,
+                  // Rely on the animatedPanel to toggle visibility of this when it's hidden. It renders an empty Container() when closed
+                  isClosed: !showLeftMenu,
+                ) // Styling, pin to left, fixed width
+                    .positioned(left: 0, top: 0, width: leftMenuWidth, bottom: 0, animate: true)
+                    .animate(animDuration, Curves.easeOut),
 
                 /// /////////////////////////////////////////////////
-                /// SEARCH BAR
-                searchBar.constrained(minHeight: topBarHeight),
-              ]) // Shared styling for the entire content area (content + search)
-                  .constrained(minWidth: 500)
-                  .opacity(hideContent ? 0 : 1, animate: true)
-                  .positioned(left: leftContentOffset, right: contentRightPos, bottom: 0, top: 0, animate: true)
-                  .animate(animDuration, Curves.easeOut),
+                /// RIGHT PANEL - Layout editPanel in 1 of 2 ways, single or double column
+                !useSingleColumn
 
-              /// /////////////////////////////////////////////////
-              /// LEFT MENU
-              /// This is defined in the tree unlike the other elements because actually want it to exist twice
-              /// This menu may be animating out, while the other version exists in the app drawer
-              MainSideMenu(
-                onPageSelected: state.trySetCurrentPage,
-                onAddNewPressed: state.addNew,
-                skinnyMode: skinnyMenuMode,
-              )
-                  .animatedPanelX(
-                    closeX: -leftMenuWidth,
-                    // Rely on the animatedPanel to toggle visibility of this when it's hidden. It renders an empty Container() when closed
-                    isClosed: !showLeftMenu,
-                  ) // Styling, pin to left, fixed width
-                  .positioned(left: 0, top: 0, width: leftMenuWidth, bottom: 0, animate: true)
-                  .animate(animDuration, Curves.easeOut),
+                /// Dual-column mode: the edit panel is a fixed width
+                    ? editPanel
+                    .animatedPanelX(
+                  duration: animDuration.inMilliseconds * .001,
+                  closeX: detailsPanelWidth,
+                  isClosed: !showPanel,
+                ) // Styling: Pin to right, using a fixed-width for the panel
+                    .positioned(right: 0, width: detailsPanelWidth, top: 0, bottom: 0)
+                //.animate(animDuration, Curves.easeOut)
 
-              /// /////////////////////////////////////////////////
-              /// RIGHT PANEL - Layout editPanel in 1 of 2 ways, single or double column
-              !useSingleColumn
-
-                  /// Dual-column mode: the edit panel is a fixed width
-                  ? editPanel
-                      .animatedPanelX(
-                        duration: animDuration.inMilliseconds * .001,
-                        closeX: detailsPanelWidth,
-                        isClosed: !showPanel,
-                      ) // Styling: Pin to right, using a fixed-width for the panel
-                      .positioned(right: 0, width: detailsPanelWidth, top: 0, bottom: 0)
-                  //.animate(animDuration, Curves.easeOut)
-
-                  /// Single-column mode: the edit panel is the entire width, minus the left-menu
-                  : editPanel
-                      .animatedPanelX(
-                        closeX: context.widthPx - leftContentOffset,
-                        isClosed: !showPanel,
-                      ) // Styling: Pin to left instead of right for better window resizing, allow panel to stretch as needed
-                      .padding(left: leftContentOffset, animate: true)
-                      .animate(animDuration, Curves.easeOut),
-            ],
+                /// Single-column mode: the edit panel is the entire width, minus the left-menu
+                    : editPanel
+                    .animatedPanelX(
+                  closeX: context.widthPx - leftContentOffset,
+                  isClosed: !showPanel,
+                ) // Styling: Pin to left instead of right for better window resizing, allow panel to stretch as needed
+                    .padding(left: leftContentOffset, animate: true)
+                    .animate(animDuration, Curves.easeOut),
+              ],
+            ),
           ),
         ),
       ).gestures(onTap: state.handleBgTapped),
