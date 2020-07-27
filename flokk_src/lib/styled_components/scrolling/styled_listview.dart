@@ -1,5 +1,6 @@
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
+import 'package:flokk/class_extensions.dart';
 import 'package:flokk/styled_components/scrolling/styled_scrollbar.dart';
 import 'package:flokk/styled_components/styled_card.dart';
 import 'package:flokk/styled_components/styled_image_icon.dart';
@@ -70,7 +71,7 @@ class StyledListViewState extends State<StyledListView> {
       contentSize: contentSize,
       axis: widget.axis,
       controller: scrollController,
-      barSize: widget.barSize ?? 12,
+      barSize: widget.barSize ?? (UniversalPlatformExt.isMobile ? 3 : 12),
       scrollbarPadding: widget.scrollbarPadding,
       child: ListView.builder(
         padding: widget.padding,

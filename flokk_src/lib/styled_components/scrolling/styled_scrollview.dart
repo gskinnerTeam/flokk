@@ -1,6 +1,7 @@
 import 'package:flokk/styled_components/scrolling/styled_scrollbar.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flokk/class_extensions.dart';
 import 'styled_listview.dart';
 
 class StyledScrollView extends StatefulWidget {
@@ -51,7 +52,7 @@ class _StyledScrollViewState extends State<StyledScrollView> {
       contentSize: widget.contentSize,
       axis: widget.axis,
       controller: scrollController,
-      barSize: 12,
+      barSize: UniversalPlatformExt.isMobile ? 3 : 12,
       trackColor: widget.trackColor,
       handleColor: widget.handleColor,
       child: SingleChildScrollView(
