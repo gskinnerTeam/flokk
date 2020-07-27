@@ -2,6 +2,7 @@ import 'package:flokk/_internal/components/fading_index_stack.dart';
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
+import 'package:flokk/class_extensions.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/app_model.dart';
 import 'package:flokk/models/contacts_model.dart';
@@ -109,7 +110,7 @@ class _ContactCardList extends StatelessWidget {
           itemExtent: SmallContactCard.cardWidth,
           padding: EdgeInsets.only(left: Insets.l),
           scrollbarPadding: EdgeInsets.only(left: Insets.m, right: Insets.sm),
-          barSize: 6,
+          barSize: UniversalPlatformExt.isMobile ? 3 : 6,
           itemBuilder: (_, index) => SmallContactCard(contacts[index]),
           //itemExtent: itemSize,
         ));
