@@ -7,7 +7,6 @@ import 'package:flokk/app_extensions.dart';
 import 'package:flokk/class_extensions.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -216,8 +215,8 @@ class ScrollbarListStack extends StatelessWidget {
         /// LIST
         /// Wrap with a bit of padding on the right
         child.padding(
-          right: axis == Axis.vertical ? barSize + Insets.sm : 0,
-          bottom: axis == Axis.horizontal ? barSize + Insets.sm : 0,
+          right: axis == Axis.vertical && !UniversalPlatformExt.isMobile ? barSize + Insets.sm : 0,
+          bottom: axis == Axis.horizontal && !UniversalPlatformExt.isMobile ? barSize + Insets.sm : 0,
         ),
 
         /// SCROLLBAR

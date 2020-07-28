@@ -8,7 +8,7 @@ import 'package:flokk/models/twitter_model.dart';
 import 'package:flokk/styled_components/social/git_item_renderer.dart';
 import 'package:flokk/styled_components/social/tweet_item_renderer.dart';
 import 'package:flokk/styled_components/styled_icons.dart';
-import 'package:flokk/styled_components/styled_tab_bar.dart';
+import 'package:flokk/styled_components/styled_image_icon.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';
 import 'package:flokk/views/dashboard_page/social/responsive_double_list.dart';
@@ -38,7 +38,6 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
     return LayoutBuilder(
       builder: (_, constraints) {
         /// Responsively size tab bars
-        double tabWidth = constraints.maxWidth < PageBreaks.LargePhone ? 240 : 280;
         TextStyle headerStyle = TextStyles.T1;
 
         bool useTabView = constraints.maxWidth < PageBreaks.TabletPortrait - 100;
@@ -94,6 +93,47 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
           icon2 = StyledIcons.twitterActive;
         }
 
+        var sections = ["All", "Twitter", "GitHub", "Linked-in"];
+
+        Widget sectionsPopup() => PopupMenuButton(
+          itemBuilder: (context) {
+            var list = <PopupMenuEntry<Object>>[]
+              ..add(PopupMenuItem(child: Row(
+                children: <Widget>[
+                  Icon(Icons.select_all, size: Sizes.iconMed, color: theme.accent1Darker),
+                  HSpace(Insets.sm),
+                  Text(sections[0].toUpperCase(), style: TextStyles.Btn.textColor(theme.accent1Darker),),
+                ],
+              ), value: 0,),)
+              ..add(PopupMenuItem(child: Row(
+                children: <Widget>[
+                  StyledImageIcon(StyledIcons.twitterActive, color: theme.accent1Darker),
+                  HSpace(Insets.sm),
+                  Text(sections[1].toUpperCase(), style: TextStyles.Btn.textColor(theme.accent1Darker)),
+                ],
+              ), value: 1,),)
+              ..add(PopupMenuItem(child: Row(
+                children: <Widget>[
+                  StyledImageIcon(StyledIcons.githubActive, color: theme.accent1Darker),
+                  HSpace(Insets.sm),
+                  Text(sections[2].toUpperCase(), style: TextStyles.Btn.textColor(theme.accent1Darker)),
+                ],
+              ), value: 2,),)
+              ..add(PopupMenuItem(child: Row(
+                children: <Widget>[
+                  StyledImageIcon(StyledIcons.linkedinActive, color: theme.accent1Darker),
+                  HSpace(Insets.sm),
+                  Text(sections[3].toUpperCase(), style: TextStyles.Btn.textColor(theme.accent1Darker)),
+                ],
+              ), value: 3,),);
+            return list;
+          },
+          onSelected: (value) {
+            _handleTabPressed(value);
+          },
+          icon: Icon(Icons.more_vert, size: 22, color: theme.accent1Darker,),
+        );
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -101,11 +141,10 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 OneLineText("SOCIAL ACTIVITIES", style: headerStyle.textColor(theme.accent1Darker)).flexible(),
-                StyledTabBar(
-                  index: tabIndex,
-                  sections: ["All", "Twitter", "GitHub"],
-                  onTabPressed: _handleTabPressed,
-                ).constrained(maxWidth: tabWidth, animate: true).animate(Durations.medium, Curves.easeOut),
+                OneLineText(sections[tabIndex].toUpperCase(), style: TextStyles.Footnote.textColor(theme.isDark ? theme.greyStrong : theme.grey),)
+                  .alignment(Alignment.centerRight)
+                  .expanded(),
+                sectionsPopup(),
               ],
             ),
             VSpace(Insets.l * .75),

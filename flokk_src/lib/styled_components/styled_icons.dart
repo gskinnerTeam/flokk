@@ -43,6 +43,8 @@ class StyledIcons {
 
   static AssetImage get link => AssetImage("assets/icons/icon-link.png");
 
+  static AssetImage get linkedinActive => AssetImage("assets/icons/icon-linkedin-active.png");
+
   static AssetImage get linkout => AssetImage("assets/icons/icon-linkout.png");
 
   static AssetImage get mail => AssetImage("assets/icons/icon-mail.png");
