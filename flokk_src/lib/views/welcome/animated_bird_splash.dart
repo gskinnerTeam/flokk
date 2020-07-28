@@ -10,9 +10,14 @@ class AnimatedBirdSplashWidget extends StatefulWidget {
   final Alignment alignment;
   final bool showText;
   final bool showLogo;
-  const AnimatedBirdSplashWidget(
-      {Key key, this.alignment, this.showText = false, this.showLogo = true})
-      : super(key: key);
+  final bool showSpannedView;
+  const AnimatedBirdSplashWidget({
+    Key key,
+    this.alignment,
+    this.showText = false,
+    this.showLogo = true,
+    this.showSpannedView = false,
+  }) : super(key: key);
 
   @override
   _AnimatedBirdSplashState createState() => _AnimatedBirdSplashState();
@@ -56,46 +61,57 @@ class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget>
     String bgImagePath = "assets/images/onboarding-bg.png";
     String cloudImagePath = "assets/images/onboarding-clouds.png";
     String fgImagePath = "assets/images/onboarding-birds.png";
+
     return Stack(
       children: [
-        Stack(children: [
-          /// Clipped Image Stack
-          ClipPath(
-            clipper: AnimatedBirdSplashClipper(_gooeyEdge),
-            child: Stack(children: [
-              /// BG
-              _BuildImage(bgImagePath, BoxFit.fill)
-                  .positioned(left: 0, top: 0, right: 0, bottom: 0),
+        Flex(
+            direction: widget.showSpannedView ? Axis.horizontal : Axis.vertical,
+            children: [
+              /// Clipped Image Stack
+              Expanded(
+                flex: 6,
+                child: ClipPath(
+                  clipper: AnimatedBirdSplashClipper(_gooeyEdge),
+                  child: Stack(children: [
+                    /// BG
+                    _BuildImage(bgImagePath, BoxFit.fill)
+                        .positioned(left: 0, top: 0, right: 0, bottom: 0),
 
-              /// CLOUD 1
-              _BuildImage(cloudImagePath)
-                  .translate(offset: Offset(_cloudXOffset, 0))
-                  .fractionallySizedBox(heightFactor: 0.4),
+                    /// CLOUD 1
+                    _BuildImage(cloudImagePath)
+                        .translate(offset: Offset(_cloudXOffset, 0))
+                        .fractionallySizedBox(heightFactor: 0.4),
 
-              /// CLOUD2
-              _BuildImage(cloudImagePath)
-                  .translate(offset: Offset(-800 + _cloudXOffset, 0))
-                  .fractionallySizedBox(heightFactor: 0.4),
+                    /// CLOUD2
+                    _BuildImage(cloudImagePath)
+                        .translate(offset: Offset(-800 + _cloudXOffset, 0))
+                        .fractionallySizedBox(heightFactor: 0.4),
 
-              /// Foreground
-              _BuildImage(fgImagePath, BoxFit.scaleDown).center(),
-            ]),
-          ).aspectRatio(aspectRatio: 1.8).constrained(maxWidth: 700),
+                    /// Foreground
+                    _BuildImage(fgImagePath, BoxFit.scaleDown).center(),
+                  ]),
+                )
+                    .aspectRatio(aspectRatio: 1.8)
+                    .constrained(maxWidth: 700)
+                    .padding(
+                      horizontal: 40,
+                      top: 200,
+                      bottom: widget.showSpannedView ? 200 : 64,
+                    ),
+              ),
 
-          /// Loading Text
-          Text(
-            "GATHERING YOUR FLOKK...",
-            style: TextStyles.T1.textColor(theme.accent1Darker),
-            textAlign: TextAlign.center,
-          ) //Bottom positioned, fades in and out
-              .alignment(Alignment.bottomCenter)
-              .translate(
-                  offset: Offset(
-                      0, 46)) // Offset text below the bottom edge of the images
-              .opacity(widget.showText ? 1 : 0, animate: true)
-              .animate(Durations.slow, Curves.easeOut)
-              .positioned(left: 0, top: 0, right: 0, bottom: 0)
-        ]).center(),
+              /// Loading Text
+              Expanded(
+                flex: widget.showSpannedView ? 6 : 1,
+                child: Text(
+                  "GATHERING YOUR FLOKK...",
+                  style: TextStyles.T1.textColor(theme.accent1Darker),
+                  textAlign: TextAlign.center,
+                ) //Bottom positioned, fades in and out
+                    .opacity(widget.showText ? 1 : 0, animate: true)
+                    .animate(Durations.slow, Curves.easeOut),
+              )
+            ]).center(),
 
         /// Flock Logo
         if (widget.showLogo)

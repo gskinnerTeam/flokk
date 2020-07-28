@@ -229,6 +229,7 @@ class _WelcomePageStateView extends StatelessWidget {
                           : EdgeInsets.all(0.0),
                       child: AnimatedBirdSplashWidget(
                         showText: state.isLoading,
+                        showSpannedView: state.isDuoSpanned,
                       ),
                     ),
                   )
