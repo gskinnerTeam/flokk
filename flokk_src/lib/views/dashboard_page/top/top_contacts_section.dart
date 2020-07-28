@@ -13,7 +13,6 @@ import 'package:flokk/themes.dart';
 import 'package:flokk/views/dashboard_page/top/small_contact_card.dart';
 import 'package:flokk/views/empty_states/placeholder_content_switcher.dart';
 import 'package:flokk/views/empty_states/placeholder_top_contacts.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
