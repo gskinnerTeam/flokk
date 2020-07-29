@@ -194,7 +194,12 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
 
                   /// /////////////////////////////////////////////////
                   /// SEARCH BAR
-                  searchBar.constrained(minHeight: topBarHeight),
+                  searchBar
+                      .constrained(
+                          minHeight: topBarHeight,
+                          maxWidth:
+                              state.isDuoSpanned ? context.widthPx / 2 : 0)
+                      .alignment(Alignment.topRight)
                 ]) // Shared styling for the entire content area (content + search)
                     .constrained(minWidth: 500)
                     .opacity(hideContent ? 0 : 1, animate: true)
