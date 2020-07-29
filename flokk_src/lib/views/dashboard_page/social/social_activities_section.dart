@@ -140,10 +140,11 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                OneLineText("SOCIAL ACTIVITIES", style: headerStyle.textColor(theme.accent1Darker)).flexible(),
-                OneLineText(sections[tabIndex].toUpperCase(), style: TextStyles.Footnote.textColor(theme.isDark ? theme.greyStrong : theme.grey),)
-                  .alignment(Alignment.centerRight)
-                  .expanded(),
+                OneLineText("SOCIAL ACTIVITIES", style: headerStyle.textColor(theme.accent1Darker)),
+                OneLineText(
+                  sections[tabIndex].toUpperCase(),
+                  style: TextStyles.Footnote.textColor(theme.isDark ? theme.greyStrong : theme.grey),
+                ).alignment(Alignment.centerRight).expanded(),
                 sectionsPopup(),
               ],
             ),
