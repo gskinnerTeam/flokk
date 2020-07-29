@@ -55,7 +55,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     }
     // If we are on a duo then we want the width to be only one side of the screen
     if (state.isDuoSpanned) {
-      detailsPanelWidth = context.widthPx - state.hingeSize;
+      detailsPanelWidth = context.widthPx / 2 - state.hingeSize;
     }
 
     bool isNarrow = context.widthPx < PageBreaks.TabletPortrait;
@@ -72,8 +72,9 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     bool showLeftMenu = !isNarrow &&
         !state
             .isDuoSpanned; //Whether main menu is shown, or hidden behind hamburger btn
-    bool useSingleColumn = context.widthInches <
-        10; //Whether detail panel fills the entire content area
+    bool useSingleColumn = context.widthInches < 10 &&
+        !state
+            .isDuoSpanned; //Whether detail panel fills the entire content area
     bool hideContent = showPanel &&
         useSingleColumn; //If single column + panel, we can hide the content
     double leftContentOffset = showLeftMenu
@@ -249,7 +250,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
                             width: detailsPanelWidth,
                             top: 0,
                             bottom: 0)
-                    //.animate(animDuration, Curves.easeOut)
+                        .animate(animDuration, Curves.easeOut)
 
                     /// Single-column mode: the edit panel is the entire width, minus the left-menu
                     : editPanel
