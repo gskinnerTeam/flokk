@@ -1,4 +1,3 @@
-
 import 'package:flokk/_internal/components/fading_index_stack.dart';
 import 'package:flokk/_internal/widget_view.dart';
 import 'package:flokk/app_extensions.dart';
@@ -25,10 +24,12 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
   Widget build(BuildContext context) {
     /// ///////////////////////////////////////////////////////////
     /// Bind to AppModel when selectedContact changes, and provide it to the sub-tree
-    ContactData selectedContact = context.select<AppModel, ContactData>((model) => model.selectedContact);
+    ContactData selectedContact =
+        context.select<AppModel, ContactData>((model) => model.selectedContact);
 
     /// Bind to page-change
-    var currentPage = context.select<AppModel, PageType>((value) => value.currentMainPage);
+    var currentPage =
+        context.select<AppModel, PageType>((value) => value.currentMainPage);
 
     /// Flutter throws an error when it's forced to close the drawer on resize, so pre-emptively close it
     state.closeScaffoldOnResize();
@@ -52,6 +53,10 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
       //Panel size gets a little bigger as the screen size grows
       detailsPanelWidth += (context.widthInches - 8) * 12;
     }
+    // If we are on a duo then we want the width to be only one side of the screen
+    if (state.isDuoSpanned) {
+      detailsPanelWidth = context.widthPx - state.hingeSize;
+    }
 
     bool isNarrow = context.widthPx < PageBreaks.TabletPortrait;
 
@@ -62,17 +67,27 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     /// Figure out what should be visible, and the size of our viewport
     /// 3 cases: 1) Single Column, 2) LeftMenu + Single Column, 3) LeftMenu + Dual Column
     /// (Dual Column means it can show both ContentArea and EditPanel at the same time)
-    bool showPanel = selectedContact != null; //Contact panel is always shown if a contact is selected
-    bool showLeftMenu = !isNarrow; //Whether main menu is shown, or hidden behind hamburger btn
-    bool useSingleColumn = context.widthInches < 10; //Whether detail panel fills the entire content area
-    bool hideContent = showPanel && useSingleColumn; //If single column + panel, we can hide the content
-    double leftContentOffset = showLeftMenu ? leftMenuWidth : Insets.mGutter; //Left position for the main content stack
-    double contentRightPos = showPanel ? detailsPanelWidth : 0; //Right position for main content stack
+    bool showPanel = selectedContact !=
+        null; //Contact panel is always shown if a contact is selected
+    bool showLeftMenu = !isNarrow &&
+        !state
+            .isDuoSpanned; //Whether main menu is shown, or hidden behind hamburger btn
+    bool useSingleColumn = context.widthInches <
+        10; //Whether detail panel fills the entire content area
+    bool hideContent = showPanel &&
+        useSingleColumn; //If single column + panel, we can hide the content
+    double leftContentOffset = showLeftMenu
+        ? leftMenuWidth
+        : Insets.mGutter; //Left position for the main content stack
+    double contentRightPos = showPanel
+        ? detailsPanelWidth
+        : 0; //Right position for main content stack
 
     /// Sometimes we want to skip the layout animations, for example, when we're changing main pages ,
     /// we want the new page to ignore the panel that is sliding out of the view.
     Duration animDuration = state.skipScaffoldAnims ? .01.seconds : .35.seconds;
-    state.skipScaffoldAnims = false; // Reset flag so we only skip animations for one build cycle
+    state.skipScaffoldAnims =
+        false; // Reset flag so we only skip animations for one build cycle
     if (UniversalPlatform.isWeb && !AppModel.enableAnimationsOnWeb) {
       animDuration = .0.seconds;
     }
@@ -95,7 +110,8 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
       closedHeight: topBarHeight,
       narrowMode: !showLeftMenu,
       searchEngine: state.appModel.searchEngine,
-      onContactPressed: (c) => state.trySetSelectedContact(c, showSocial: false),
+      onContactPressed: (c) =>
+          state.trySetSelectedContact(c, showSocial: false),
       onSearchSubmitted: state.handleSearchSubmit,
     );
     searchBar = RepaintBoundary(child: searchBar);
@@ -160,12 +176,21 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
 
                   /// /////////////////////////////////////////////////
                   /// HAMBURGER MENU BTN
-                  IconButton(icon: Icon(Icons.menu, size: 24, color: theme.accent1), onPressed: state.openMenu)
+                  IconButton(
+                          icon:
+                              Icon(Icons.menu, size: 24, color: theme.accent1),
+                          onPressed: state.openMenu)
                       .animatedPanelX(closeX: -50, isClosed: showLeftMenu)
                       .positioned(left: Insets.m, top: Insets.m),
 
                   /// Flokk Logo, Top-Center, only shown in narrow mode
-                  if (isNarrow) FlokkLogo(40, theme.accent1).alignment(Alignment.topCenter).padding(top: Insets.l),
+                  if (isNarrow || state.isDuoSpanned)
+                    FlokkLogo(40, theme.accent1)
+                        .alignment(state.isDuoSpanned
+                            ? Alignment.topLeft
+                            : Alignment.topCenter)
+                        .padding(
+                            top: Insets.l, left: state.isDuoSpanned ? 80 : 0),
 
                   /// /////////////////////////////////////////////////
                   /// SEARCH BAR
@@ -173,7 +198,12 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
                 ]) // Shared styling for the entire content area (content + search)
                     .constrained(minWidth: 500)
                     .opacity(hideContent ? 0 : 1, animate: true)
-                    .positioned(left: leftContentOffset, right: contentRightPos, bottom: 0, top: 0, animate: true)
+                    .positioned(
+                        left: leftContentOffset,
+                        right: contentRightPos,
+                        bottom: 0,
+                        top: 0,
+                        animate: true)
                     .animate(animDuration, Curves.easeOut),
 
                 /// /////////////////////////////////////////////////
@@ -186,35 +216,44 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
                   skinnyMode: skinnyMenuMode,
                 )
                     .animatedPanelX(
-                  closeX: -leftMenuWidth,
-                  // Rely on the animatedPanel to toggle visibility of this when it's hidden. It renders an empty Container() when closed
-                  isClosed: !showLeftMenu,
-                ) // Styling, pin to left, fixed width
-                    .positioned(left: 0, top: 0, width: leftMenuWidth, bottom: 0, animate: true)
+                      closeX: -leftMenuWidth,
+                      // Rely on the animatedPanel to toggle visibility of this when it's hidden. It renders an empty Container() when closed
+                      isClosed: !showLeftMenu,
+                    ) // Styling, pin to left, fixed width
+                    .positioned(
+                        left: 0,
+                        top: 0,
+                        width: leftMenuWidth,
+                        bottom: 0,
+                        animate: true)
                     .animate(animDuration, Curves.easeOut),
 
                 /// /////////////////////////////////////////////////
                 /// RIGHT PANEL - Layout editPanel in 1 of 2 ways, single or double column
                 !useSingleColumn
 
-                /// Dual-column mode: the edit panel is a fixed width
+                    /// Dual-column mode: the edit panel is a fixed width
                     ? editPanel
-                    .animatedPanelX(
-                  duration: animDuration.inMilliseconds * .001,
-                  closeX: detailsPanelWidth,
-                  isClosed: !showPanel,
-                ) // Styling: Pin to right, using a fixed-width for the panel
-                    .positioned(right: 0, width: detailsPanelWidth, top: 0, bottom: 0)
-                //.animate(animDuration, Curves.easeOut)
+                        .animatedPanelX(
+                          duration: animDuration.inMilliseconds * .001,
+                          closeX: detailsPanelWidth,
+                          isClosed: !showPanel,
+                        ) // Styling: Pin to right, using a fixed-width for the panel
+                        .positioned(
+                            right: 0,
+                            width: detailsPanelWidth,
+                            top: 0,
+                            bottom: 0)
+                    //.animate(animDuration, Curves.easeOut)
 
-                /// Single-column mode: the edit panel is the entire width, minus the left-menu
+                    /// Single-column mode: the edit panel is the entire width, minus the left-menu
                     : editPanel
-                    .animatedPanelX(
-                  closeX: context.widthPx - leftContentOffset,
-                  isClosed: !showPanel,
-                ) // Styling: Pin to left instead of right for better window resizing, allow panel to stretch as needed
-                    .padding(left: leftContentOffset, animate: true)
-                    .animate(animDuration, Curves.easeOut),
+                        .animatedPanelX(
+                          closeX: context.widthPx - leftContentOffset,
+                          isClosed: !showPanel,
+                        ) // Styling: Pin to left instead of right for better window resizing, allow panel to stretch as needed
+                        .padding(left: leftContentOffset, animate: true)
+                        .animate(animDuration, Curves.easeOut),
               ],
             ),
           ),

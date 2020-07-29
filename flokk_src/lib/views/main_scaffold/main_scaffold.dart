@@ -13,6 +13,8 @@ import 'package:flokk/views/main_scaffold/contact_panel.dart';
 import 'package:flokk/views/main_scaffold/main_scaffold_view.dart';
 import 'package:flokk/views/search/search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:multiple_screens/multiple_screens.dart';
 import 'package:provider/provider.dart';
 
 enum PageType { None, Dashboard, ContactsList }
@@ -37,7 +39,13 @@ class MainScaffoldState extends State<MainScaffold> {
     PageType.ContactsList,
   ];
 
-  SimpleValueNotifier<List<ContactData>> checkedContactsNotifier = SimpleValueNotifier([]);
+  final duoPlatform = const MethodChannel('duosdk.microsoft.dev');
+  bool isDuo = false;
+  bool isDuoSpanned = false;
+  double hingeSize = 0.0;
+
+  SimpleValueNotifier<List<ContactData>> checkedContactsNotifier =
+      SimpleValueNotifier([]);
 
   AppModel appModel;
 
@@ -56,7 +64,22 @@ class MainScaffoldState extends State<MainScaffold> {
 
     /// Change current page
     Future.microtask(() => trySetCurrentPage(PageType.Dashboard, false));
+
+    MultipleScreensMethods.isAppSpannedStream().listen(
+      (data) => setState(() => isDuoSpanned = data),
+    );
+
+    checkForDuo();
     super.initState();
+  }
+
+  void checkForDuo() async {
+    try {
+      isDuo = await duoPlatform.invokeMethod('isDualScreenDevice');
+      hingeSize = await duoPlatform.invokeMethod('gethingeSize');
+    } catch (_) {
+      // if we fail it is likely because we aren't on a duo
+    }
   }
 
   /// Setting an empty id will trigger the Create User panel to open
@@ -68,7 +91,8 @@ class MainScaffoldState extends State<MainScaffold> {
     appModel.selectedContact = ContactData();
   }
 
-  void editSelectedContact(String section) => contactsPanel.showEditView(section);
+  void editSelectedContact(String section) =>
+      contactsPanel.showEditView(section);
 
   /// Attempt to change current page, this might not complete if user is currently editing
   Future<void> trySetCurrentPage(PageType t, [bool refresh = true]) async {
@@ -100,11 +124,14 @@ class MainScaffoldState extends State<MainScaffold> {
   }
 
   /// Change selected contact, this might not complete if user is currently editing
-  Future<void> trySetSelectedContact(ContactData value, {showSocial = false}) async {
+  Future<void> trySetSelectedContact(ContactData value,
+      {showSocial = false}) async {
     if (!await showDiscardWarningIfNecessary()) return;
     //De-select?
     bool hasSocialChanged = showSocial != appModel.showSocialTabOnInfoView;
-    if (!hasSocialChanged && appModel.selectedContact != null && appModel.selectedContact?.id == value?.id) {
+    if (!hasSocialChanged &&
+        appModel.selectedContact != null &&
+        appModel.selectedContact?.id == value?.id) {
       value = null;
     }
     appModel.selectedContact = value;
@@ -158,5 +185,4 @@ class MainScaffoldState extends State<MainScaffold> {
         value: this,
         child: MainScaffoldView(this),
       );
-
 }

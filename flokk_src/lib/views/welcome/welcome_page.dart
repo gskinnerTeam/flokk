@@ -95,7 +95,6 @@ class WelcomePageState extends State<WelcomePage> {
     } catch (_) {
       // if we fail it is likely because we aren't on a duo
     }
-    print('isDualScreenDevice : $isDuo');
   }
 
   //TODO: This is currently firing every time the app loads, should only fire when they hit the btn, and only on desktop
