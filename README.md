@@ -58,7 +58,7 @@ For more information, see https://github.com/Rob--W/cors-anywhere
 If you simply want to see the app running, it is possible to run the app using cached data:
 - Run the app at least once, to create your data folders
 - Extract the _contents_ of /sample_data.zip to the newly created data folder on your machine:
-  - Windows: \Users\\[USER]\AppData\Roaming\Flokk Contacts
+  - Windows: \Users\\[USER]\AppData\Roaming\flokk
   - Linux: $HOME/.local/share/flokk-contacts
   - macOS: /Users/[USER]/Library/Containers/app.flokk/Data/Library/Application Support/app.flokk
 - Overwrite any files that are there
