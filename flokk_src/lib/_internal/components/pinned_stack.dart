@@ -17,7 +17,7 @@ class PinnedStack extends StatelessWidget {
   final StackFit fit;
   final AlignmentGeometry alignment;
   final TextDirection textDirection;
-  final Overflow overflow;
+  final Clip clip;
 
   const PinnedStack(
       {Key key,
@@ -25,7 +25,7 @@ class PinnedStack extends StatelessWidget {
       this.fit = StackFit.expand,
       this.alignment = Alignment.topLeft,
       this.textDirection = TextDirection.ltr,
-      this.overflow = Overflow.visible})
+      this.clip = Clip.none})
       : super(key: key);
 
   @override
@@ -36,7 +36,7 @@ class PinnedStack extends StatelessWidget {
         child: Stack(
           fit: fit,
           alignment: alignment,
-          overflow: overflow,
+          clipBehavior: clip,
           textDirection: textDirection,
           children: children,
         ),

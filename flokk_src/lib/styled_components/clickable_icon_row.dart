@@ -62,7 +62,7 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
         ),
         padding: EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m),
         child: Stack(
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

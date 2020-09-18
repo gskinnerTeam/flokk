@@ -36,7 +36,7 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
     GithubModel gitModel = context.watch();
     TwitterModel twitterModel = context.watch();
     return LayoutBuilder(
-      builder: (_, constraints) {
+      builder: (layoutContext, constraints) {
         /// Responsively size tab bars
         double tabWidth = constraints.maxWidth < PageBreaks.LargePhone ? 240 : 280;
         TextStyle headerStyle = TextStyles.T1;
@@ -44,7 +44,7 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
         bool useTabView = constraints.maxWidth < PageBreaks.TabletPortrait - 100;
 
         /// Determine which tab should be selected
-        var sectionType = context.select<AppModel, DashboardSocialSectionType>((model) => model.dashSocialSection);
+        var sectionType = layoutContext.select<AppModel, DashboardSocialSectionType>((model) => model.dashSocialSection);
         int tabIndex = 0;
         if (sectionType == DashboardSocialSectionType.Twitter) tabIndex = 1;
         if (sectionType == DashboardSocialSectionType.Git) tabIndex = 2;

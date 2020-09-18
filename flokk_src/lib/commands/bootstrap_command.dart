@@ -65,7 +65,7 @@ class BootstrapCommand extends AbstractCommand {
     });
 
     /// Reset models if there are any errors, or if the app version has been updated
-    if (errorLoadingData || appModel.version != AppModel.kCurrentVersion) {
+    if (errorLoadingData) {
       authModel.reset();
       twitterModel.reset();
       githubModel.reset();

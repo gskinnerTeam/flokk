@@ -23,7 +23,7 @@ class FlokkSidebarLogo extends StatelessWidget {
     return Container(
       width: skinny ? 140 : 240,
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.none,
         children: [
           Image.asset("assets/images/sidebar-logo.png", width: skinny ? 140 : 160, filterQuality: FilterQuality.high),
           if (!skinny) ...{

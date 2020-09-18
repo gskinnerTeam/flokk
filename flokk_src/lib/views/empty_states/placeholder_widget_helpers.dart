@@ -85,7 +85,7 @@ class PlaceholderImageAndBgStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      overflow: Overflow.visible,
+      clipBehavior: Clip.none,
       children: [
         bgWidget ?? _BgCircle(),
         Image.asset("assets/images/empty-$path@2x.png", height: height).positioned(top: top, left: left),
