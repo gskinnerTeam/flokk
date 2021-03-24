@@ -1,5 +1,6 @@
 name: flokk-contacts
-adopt-info: flokk-contacts
+version: 1.0.2
+#adopt-info: flokk-contacts
 summary: Flokk Contacts
 description: Manage Contacts
 confinement: strict
@@ -21,7 +22,9 @@ parts:
     source: flokk_src
     plugin: flutter
     flutter-target: lib/main.dart # The main entry-point file of the application
-    build-snaps: [ yq ]
-    override-build: |
-      snapcraftctl build
-      snapcraftctl set-version "$(yq r pubspec.yaml version)"
+
+
+#    build-snaps: [ yq ]
+#    override-build: |
+#      snapcraftctl build
+#      snapcraftctl set-version "$(yq r pubspec.yaml version)"
