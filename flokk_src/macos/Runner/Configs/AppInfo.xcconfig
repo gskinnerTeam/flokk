@@ -8,7 +8,7 @@
 PRODUCT_NAME = Flokk Contacts
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = app.flokk
+PRODUCT_BUNDLE_IDENTIFIER = com.gskinner.flokkContacts
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2020 com.gskinner. All rights reserved.
