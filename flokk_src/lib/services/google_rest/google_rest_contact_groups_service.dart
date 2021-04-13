@@ -120,7 +120,7 @@ class GoogleRestContactGroupsService {
 
     switch (g.groupType) {
       case "GROUP_TYPE_UNSPECIFIED":
-        groupData.groupType = GroupType.GroupTypeUnspecified;
+        groupData.groupType = GroupType.Unspecified;
         break;
       case "USER_CONTACT_GROUP":
         groupData.groupType = GroupType.UserContactGroup;
@@ -129,7 +129,7 @@ class GoogleRestContactGroupsService {
         groupData.groupType = GroupType.SystemContactGroup;
         break;
       default:
-        groupData.groupType = GroupType.GroupTypeUnspecified;
+        groupData.groupType = GroupType.Unspecified;
     }
 
     return groupData;

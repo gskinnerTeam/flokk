@@ -3,13 +3,13 @@ import 'package:github/github.dart';
 
 class GitEvent implements DateSortable {
   //Populated at runtime
-  Repository repository;
+  Repository repository = Repository();
 
   //Serialized to json
-  Event event;
+  Event event = Event();
 
   @override
-  DateTime get createdAt => event.createdAt; //Read only
+  DateTime get createdAt => event.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0); //Read only
 
   @override
   void set createdAt(DateTime value) {}

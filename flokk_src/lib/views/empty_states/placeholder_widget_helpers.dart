@@ -8,7 +8,7 @@ import 'package:flokk/views/main_scaffold/main_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:styled_widget/styled_widget.dart';
+//import 'package:styled_widget/styled_widget.dart';
 
 void showSocial(BuildContext context, String type) {
   context.read<MainScaffoldState>().editSelectedContact(type);
@@ -29,13 +29,13 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
   final Function() onPressed;
 
   const EmptyStateTitleAndClickableText({
-    Key key,
-    this.title,
-    this.startText,
-    this.endText,
-    this.linkText,
-    this.onPressed,
-    this.crossAxisAlign,
+    Key? key,
+    required this.title,
+    required this.startText,
+    required this.endText,
+    required this.linkText,
+    required this.onPressed,
+    this.crossAxisAlign = CrossAxisAlignment.center,
   }) : super(key: key);
 
   TextSpan _buildTapSpan(String text, TextStyle style, Function() handler) {
@@ -49,7 +49,7 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
     TextStyle style = TextStyles.Body2.textColor(theme.grey).textHeight(1.4);
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: crossAxisAlign ?? CrossAxisAlignment.center,
+      crossAxisAlignment: crossAxisAlign,
       children: [
         VSpace(Insets.l),
         Text(
@@ -75,12 +75,12 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
 
 class PlaceholderImageAndBgStack extends StatelessWidget {
   final String path;
-  final Widget bgWidget;
+  final Widget? bgWidget;
   final double height;
   final double top;
   final double left;
 
-  const PlaceholderImageAndBgStack(this.path, {Key key, this.height, this.top, this.left, this.bgWidget}) : super(key: key);
+  const PlaceholderImageAndBgStack(this.path, {Key? key, required this.height, required this.top, required this.left, this.bgWidget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,11 @@ class PlaceholderImageAndBgStack extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         bgWidget ?? _BgCircle(),
-        Image.asset("assets/images/empty-$path@2x.png", height: height).positioned(top: top, left: left),
+        Positioned(
+            left: left,
+            top: top,
+            child: Image.asset("assets/images/empty-$path@2x.png", height: height),
+        )
       ],
       );
   }
@@ -101,3 +105,4 @@ class _BgCircle extends StatelessWidget {
     return StyledContainer(theme.bg2, width: 157, height: 157, borderRadius: BorderRadius.circular(999));
   }
 }
+

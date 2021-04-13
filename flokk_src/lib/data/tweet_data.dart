@@ -7,42 +7,42 @@ part 'tweet_data.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Tweet implements DateSortable {
   @JsonKey(name: "id_str")
-  String id;
+  String id = "";
 
   @JsonKey(name: "full_text")
-  String text;
+  String text = "";
 
-  @JsonKey(defaultValue: false)
-  bool truncated;
+  //@JsonKey(defaultValue: false)
+  bool truncated = false;
 
-  @JsonKey(defaultValue: false)
-  bool retweeted;
+  //@JsonKey(defaultValue: false)
+  bool retweeted = false;
 
-  @JsonKey(name: "retweet_count", defaultValue: 0)
-  int retweetCount;
+  //@JsonKey(name: "retweet_count", defaultValue: 0)
+  int retweetCount = 0;
 
-  @JsonKey(name: "favorite_count", defaultValue: 0)
-  int favoriteCount;
+  //@JsonKey(name: "favorite_count", defaultValue: 0)
+  int favoriteCount = 0;
 
   @JsonKey(name: "created_at")
-  String createdAtString;
+  String createdAtString = "";
 
   //Tweet dates use a Date string that is not compatible with DateTime.parse(), have to manually parse
   @override
   @JsonKey(ignore: true)
-  DateTime createdAt;
+  DateTime createdAt = DateTime.fromMillisecondsSinceEpoch(0);
 
   //Url is populated at runtime based on tweet id
   @JsonKey(ignore: true)
-  String url;
+  String url = "";
 
-  TwitterUser user;
+  TwitterUser user = TwitterUser();
 
   Tweet();
 
   static DateTime parseTwitterDateTime(String s) {
     final r = RegExp(r"\w+\s(\w+)\s(\d+)\s([\d:]+)\s\+\d{4}\s(\d{4})");
-    RegExpMatch m = r.firstMatch(s);
+    RegExpMatch? m = r.firstMatch(s);
 
     String year = m?.group(4) ?? "1970";
     String month = m?.group(1) ?? "01";

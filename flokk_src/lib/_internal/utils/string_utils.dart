@@ -35,7 +35,7 @@ class StringUtils {
   }
 
   /// Gracefully handles null values, and skips the suffix when null
-  static String safeGet(String value, [String suffix]) {
-    return (value ?? "") + (!StringUtils.isEmpty(value) ? suffix ?? "" : "");
+  static String safeGet(String value, [String? suffix]) {
+    return value + (!StringUtils.isEmpty(value) ? suffix ?? "" : "");
   }
 }

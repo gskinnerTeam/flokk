@@ -97,7 +97,7 @@ class GoogleRestContactsService {
     syncToken = result.content.syncToken;
 
     //Attempt to load all chunks of data, just for edge cases that have > 2000 contacts (max page size)
-    while ((nextPageToken?.isNotEmpty ?? false) && retryCount < 3) {
+    while (nextPageToken.isNotEmpty && retryCount < 3) {
       ServiceResult<GetContactsResult> result = await get(
         accessToken,
         nextPageToken: nextPageToken,
@@ -116,9 +116,14 @@ class GoogleRestContactsService {
 
   //List of valid PersonFields can be found here https://developers.google.com/people/api/rest/v1/people.connections/list
   Future<ServiceResult<GetContactsResult>> get(String accessToken,
-      {List<String> personFields, String nextPageToken, String syncToken, bool requestSyncToken}) async {
+      {List<String> personFields = const [],
+        String nextPageToken = "",
+        String syncToken = "",
+        bool requestSyncToken = false}) async {
     // Default to all person fields if none are passed
-    personFields ??= kAllPersonFields;
+    if (personFields.isEmpty) {
+      personFields = kAllPersonFields;
+    }
     String url = "https://people.googleapis.com/v1/people/me/connections?"
         "access_token=$accessToken"
         "&personFields=${kAllPersonFields.join(',')}"
@@ -133,21 +138,18 @@ class GoogleRestContactsService {
       url += "&syncToken=$syncToken";
     }
 
-    if (requestSyncToken != null) {
-      url += "&requestSyncToken=$requestSyncToken";
-    }
+    url += "&requestSyncToken=$requestSyncToken";
     HttpResponse response = await HttpClient.get(url);
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    List<ContactData> list;
+    List<ContactData> list = [];
     String newNextPageToken = "";
     String newSyncToken = "";
-    if (response?.success == true) {
+    if (response.success == true) {
       Map<String, dynamic> data = jsonDecode(response.body);
       newNextPageToken = data["nextPageToken"] ?? "";
       newSyncToken = data["nextSyncToken"] ?? "";
       List<dynamic> entries = data["connections"] ?? [];
       print("token: $newNextPageToken ${entries.length} out of ${data["totalPeople"]}");
-      list = [];
       for (int i = 0, l = entries.length; i < l; i++) {
         ContactData c = contactFromJson(entries[i]);
         list.add(c);
@@ -163,7 +165,7 @@ class GoogleRestContactsService {
   }
 
   //List of valid PersonFields can be found here https://developers.google.com/people/api/rest/v1/people/updateContact
-  Future<ServiceResult<ContactData>> set(String accessToken, ContactData contact, {List<String> personFields}) async {
+  Future<ServiceResult<ContactData>> set(String accessToken, ContactData contact, {List<String> personFields = const[]}) async {
     personFields ??= kAllUpdatePersonFields;
     String url = "https://people.googleapis.com/v1/${contact.googleId}:updateContact?"
         "updatePersonFields=${personFields.join(',')}";
@@ -171,8 +173,8 @@ class GoogleRestContactsService {
     HttpResponse response = await HttpClient.patch(url,
         headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(contactToJson(contact)));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    ContactData updatedContact;
-    if (response?.success == true) {
+    ContactData updatedContact = ContactData();
+    if (response.success == true) {
       //updated contact returned from server
       updatedContact = contactFromJson(jsonDecode(response.body));
     }
@@ -185,8 +187,8 @@ class GoogleRestContactsService {
     HttpResponse response = await HttpClient.post(url,
         headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(contactToJson(contact)));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    ContactData newContact;
-    if (response?.success == true) {
+    ContactData newContact = ContactData();
+    if (response.success == true) {
       //new contact with proper "resourceName"(googleId) and "etag" properties set
       newContact = contactFromJson(jsonDecode(response.body));
     }
@@ -210,8 +212,8 @@ class GoogleRestContactsService {
     HttpResponse response =
         await HttpClient.patch(url, headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(bodyJson));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    ContactData updatedContact;
-    if (response?.success == true) {
+    ContactData updatedContact = ContactData();
+    if (response.success == true) {
       updatedContact = contactFromJson(jsonDecode(response.body)["person"]);
     }
     return ServiceResult(updatedContact, response);

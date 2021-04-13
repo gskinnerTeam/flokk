@@ -58,7 +58,7 @@ T _$enumDecodeNullable<T>(
 }
 
 const _$GroupTypeEnumMap = {
-  GroupType.GroupTypeUnspecified: 'GroupTypeUnspecified',
+  GroupType.Unspecified: 'GroupTypeUnspecified',
   GroupType.UserContactGroup: 'UserContactGroup',
   GroupType.SystemContactGroup: 'SystemContactGroup',
 };
