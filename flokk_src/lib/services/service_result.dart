@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/http_client.dart';
 
 class ServiceResult<T> {

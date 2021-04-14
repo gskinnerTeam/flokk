@@ -1,3 +1,4 @@
+// @dart=2.9
 
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/views/contact_edit/contact_edit_panel.dart';

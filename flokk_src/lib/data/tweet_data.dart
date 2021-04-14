@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/data/date_sortable_interface.dart';
 import 'package:flokk/data/twitter_user_data.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -42,7 +43,7 @@ class Tweet implements DateSortable {
 
   static DateTime parseTwitterDateTime(String s) {
     final r = RegExp(r"\w+\s(\w+)\s(\d+)\s([\d:]+)\s\+\d{4}\s(\d{4})");
-    RegExpMatch? m = r.firstMatch(s);
+    RegExpMatch m = r.firstMatch(s);
 
     String year = m?.group(4) ?? "1970";
     String month = m?.group(1) ?? "01";

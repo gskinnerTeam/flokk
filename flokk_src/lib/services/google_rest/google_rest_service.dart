@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/api_keys.dart';
 import 'package:flokk/services/google_rest/google_rest_auth_service.dart';
 import 'package:flokk/services/google_rest/google_rest_contact_groups_service.dart';

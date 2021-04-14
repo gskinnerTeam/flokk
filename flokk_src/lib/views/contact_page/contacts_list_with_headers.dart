@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/contacts_model.dart';

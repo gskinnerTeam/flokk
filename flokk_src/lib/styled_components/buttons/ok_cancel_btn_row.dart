@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/strings.dart';
 import 'package:flokk/styled_components/buttons/primary_btn.dart';

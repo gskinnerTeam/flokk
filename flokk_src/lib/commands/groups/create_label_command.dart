@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/data/group_data.dart';

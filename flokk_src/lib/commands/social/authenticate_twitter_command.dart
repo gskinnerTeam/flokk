@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/dialogs/show_service_error_command.dart';

@@ -31,7 +31,7 @@ dependencies:
   shared_preferences: ^2.0.5
   sized_context: ^1.0.0-nullsafety
   statsfl: ^2.0.1-nullsafety
-  #styled_widget: ^0.2.1
+  styled_widget: ^0.3.0
   textstyle_extensions: ^2.0.0-nullsafety
   timeago: ^3.0.2
   tuple: ^2.0.0

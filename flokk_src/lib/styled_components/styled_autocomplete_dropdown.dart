@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:math';
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';

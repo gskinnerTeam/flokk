@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/components/mouse_hover_builder.dart';
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/widget_view.dart';

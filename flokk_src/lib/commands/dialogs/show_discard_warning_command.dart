@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
 import 'package:flutter/material.dart';

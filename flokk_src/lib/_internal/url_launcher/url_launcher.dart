@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'url_launcher_locator.dart'
     if (dart.library.html) 'url_launcher_web.dart'
     if (dart.library.io) 'url_launcher_io.dart';

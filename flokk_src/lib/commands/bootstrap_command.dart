@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/_internal/utils/path.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';

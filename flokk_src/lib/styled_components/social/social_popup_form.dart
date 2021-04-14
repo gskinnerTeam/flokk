@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/_internal/utils/color_utils.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';

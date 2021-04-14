@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flutter/cupertino.dart';
 

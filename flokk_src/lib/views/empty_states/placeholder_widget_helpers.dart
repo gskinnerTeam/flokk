@@ -1,3 +1,4 @@
+// @dart=2.9
 
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';
@@ -8,7 +9,7 @@ import 'package:flokk/views/main_scaffold/main_scaffold.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:styled_widget/styled_widget.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 void showSocial(BuildContext context, String type) {
   context.read<MainScaffoldState>().editSelectedContact(type);
@@ -29,12 +30,12 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
   final Function() onPressed;
 
   const EmptyStateTitleAndClickableText({
-    Key? key,
-    required this.title,
-    required this.startText,
-    required this.endText,
-    required this.linkText,
-    required this.onPressed,
+    Key key,
+    this.title,
+    this.startText,
+    this.endText,
+    this.linkText,
+    this.onPressed,
     this.crossAxisAlign = CrossAxisAlignment.center,
   }) : super(key: key);
 
@@ -75,12 +76,12 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
 
 class PlaceholderImageAndBgStack extends StatelessWidget {
   final String path;
-  final Widget? bgWidget;
+  final Widget bgWidget;
   final double height;
   final double top;
   final double left;
 
-  const PlaceholderImageAndBgStack(this.path, {Key? key, required this.height, required this.top, required this.left, this.bgWidget}) : super(key: key);
+  const PlaceholderImageAndBgStack(this.path, {Key key, this.height, this.top, this.left, this.bgWidget}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

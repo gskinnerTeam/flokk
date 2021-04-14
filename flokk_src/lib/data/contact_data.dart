@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -168,9 +169,9 @@ class ContactData {
 
   /// ////////////////////////////////////////////////
   /// SEARCHABLE
-  late final String _searchable = _getSearchableFields().toLowerCase();
+  String _searchable;
 
-  String get searchable => _searchable;
+  String get searchable => _searchable ??= _getSearchableFields().toLowerCase();
 
   String _getSearchableFields() => "$nameGiven $nameMiddle $nameFamily $nameMiddlePhonetic $nameGivenPhonetic "
       "$namePrefix $nameSuffix $nameFull $twitterHandle $gitUsername $notes $birthday $nickname"
@@ -234,7 +235,7 @@ class AddressData {
   Map<String, dynamic> toJson() => _$AddressDataToJson(this);
 
   String getFullAddress() {
-    String ss(String value, [String? extra]) => StringUtils.safeGet(value, extra);
+    String ss(String value, [String extra]) => StringUtils.safeGet(value, extra);
 
     String streetAddress = "${ss(street, ", ")}${ss(formattedAddress)}";
     String address = "${ss(streetAddress, " \n")}";

@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:convert';
 
 import 'package:flokk/_internal/log.dart';
@@ -15,37 +16,37 @@ typedef Future<http.Response> HttpRequest();
 class HttpClient {
   static Future<HttpResponse> get(String url, {Map<String, String> headers}) async {
     return await _request(() async {
-      return await http.get(url, headers: headers);
+      return await http.get(Uri.parse(url), headers: headers);
     });
   }
 
   static Future<HttpResponse> post(String url, {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     return await _request(() async {
-      return await http.post(url, headers: headers, body: body, encoding: encoding);
+      return await http.post(Uri.parse(url), headers: headers, body: body, encoding: encoding);
     });
   }
 
   static Future<HttpResponse> put(String url, {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     return await _request(() async {
-      return await http.put(url, headers: headers, body: body, encoding: encoding);
+      return await http.put(Uri.parse(url), headers: headers, body: body, encoding: encoding);
     });
   }
 
   static Future<HttpResponse> patch(String url, {Map<String, String> headers, dynamic body, Encoding encoding}) async {
     return await _request(() async {
-      return await http.patch(url, headers: headers, body: body, encoding: encoding);
+      return await http.patch(Uri.parse(url), headers: headers, body: body, encoding: encoding);
     });
   }
 
   static Future<HttpResponse> delete(String url, {Map<String, String> headers}) async {
     return await _request(() async {
-      return await http.delete(url, headers: headers);
+      return await http.delete(Uri.parse(url), headers: headers);
     });
   }
 
   static Future<HttpResponse> head(String url, {Map<String, String> headers}) async {
     return await _request(() async {
-      return await http.head(url, headers: headers);
+      return await http.head(Uri.parse(url), headers: headers);
     });
   }
 

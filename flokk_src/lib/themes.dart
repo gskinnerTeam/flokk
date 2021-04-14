@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/utils/color_utils.dart';
 import 'package:flokk/styled_components/styled_text_input.dart';
 import 'package:flutter/cupertino.dart';

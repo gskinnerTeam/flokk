@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/components/no_glow_scroll_behavior.dart';
 import 'package:flokk/_internal/page_routes.dart';
 import 'package:flokk/app_extensions.dart';

@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'universal_picker.dart';
 
 UniversalPicker getPlatformPicker({String accept}) =>

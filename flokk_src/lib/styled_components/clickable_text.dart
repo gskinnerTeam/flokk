@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';

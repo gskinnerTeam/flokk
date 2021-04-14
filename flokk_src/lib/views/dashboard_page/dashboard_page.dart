@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/components/scrolling_flex_view.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';

@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:file_chooser/file_chooser.dart';
 
 import 'path.dart';

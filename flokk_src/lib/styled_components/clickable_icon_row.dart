@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/components/seperated_flexibles.dart';
 import 'package:flokk/_internal/utils/color_utils.dart';
 import 'package:flokk/app_extensions.dart';

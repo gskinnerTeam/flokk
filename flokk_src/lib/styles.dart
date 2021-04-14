@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/app_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+// @dart=2.9
 import "package:flokk/_internal/utils/string_utils.dart";
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/data/tweet_data.dart';
@@ -27,7 +28,7 @@ class TwitterModel extends AbstractModel {
     _twitterAccessToken = json["_twitterAccessToken"] ?? "";
     Map<String, dynamic> jsonTweetHash = json["_tweetHash"] ?? <String, dynamic>{};
     _tweetHash = jsonTweetHash.map((key, value) => MapEntry<String, List<Tweet>>(
-        key, (value as List?)?.where((value) => value != null).map((x) => Tweet.fromJson(x)).toList() ?? []));
+        key, (value as List)?.where((value) => value != null).map((x) => Tweet.fromJson(x)).toList() ?? []));
     return this;
   }
 

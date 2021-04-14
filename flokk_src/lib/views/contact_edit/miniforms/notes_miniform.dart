@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/components/seperated_flexibles.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styled_components/styled_icons.dart';

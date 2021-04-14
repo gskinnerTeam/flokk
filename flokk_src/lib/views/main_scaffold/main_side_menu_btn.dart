@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/components/spacing.dart';

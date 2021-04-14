@@ -1,3 +1,4 @@
+// @dart=2.9
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'twitter_user_data.dart';

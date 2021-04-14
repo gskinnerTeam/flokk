@@ -1,3 +1,4 @@
+// @dart=2.9
 
 import 'package:flokk/_internal/components/fading_index_stack.dart';
 import 'package:flokk/_internal/widget_view.dart';

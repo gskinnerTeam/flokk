@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/styled_components/styled_text_input.dart';
 import 'package:flokk/views/main_scaffold/main_scaffold.dart';

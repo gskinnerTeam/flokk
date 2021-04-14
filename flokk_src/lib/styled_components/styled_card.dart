@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/styled_components/buttons/transparent_btn.dart';
 import 'package:flokk/styled_components/styled_container.dart';
 import 'package:flokk/styles.dart';

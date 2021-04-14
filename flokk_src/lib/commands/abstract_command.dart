@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/commands/dialogs/show_service_error_command.dart';
 import 'package:flokk/commands/refresh_auth_tokens_command.dart';

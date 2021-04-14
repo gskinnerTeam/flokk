@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:url_launcher/url_launcher.dart';
 
 Future<bool> urlLauncherOpen(String url) async {

@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/styled_components/scrolling/styled_scrollview.dart';
 import 'package:flutter/material.dart';
 

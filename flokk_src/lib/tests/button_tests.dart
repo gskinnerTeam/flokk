@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/components/seperated_flexibles.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/styled_components/buttons/colored_icon_btn.dart';

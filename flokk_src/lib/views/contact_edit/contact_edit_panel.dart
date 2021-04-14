@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flokk/_internal/universal_picker/universal_picker.dart';
 import 'package:flokk/commands/contacts/delete_contact_command.dart';
 import 'package:flokk/commands/contacts/update_contact_command.dart';

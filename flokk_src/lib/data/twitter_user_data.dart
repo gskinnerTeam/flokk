@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:json_annotation/json_annotation.dart';
 
 part 'twitter_user_data.g.dart';
