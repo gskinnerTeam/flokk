@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/app_extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -12,10 +11,10 @@ class SimpleGrid extends StatelessWidget {
 
   //TODO SB: Refactor this class to support Hz scrolling
   const SimpleGrid({
-    Key key,
+    Key? key,
     this.hSpace = 0,
     this.vSpace = 0,
-    this.kids,
+    this.kids = const<Widget>[],
     this.colCount = 2,
     this.kidHeight = 40,
     this.align = CrossAxisAlignment.start,

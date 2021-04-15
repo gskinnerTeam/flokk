@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:time/time.dart';
 
@@ -7,7 +6,8 @@ class DelayedBuilder extends StatefulWidget {
   final WidgetBuilder secondBuilder;
   final double delay;
 
-  const DelayedBuilder({Key key, this.firstBuilder, this.secondBuilder, this.delay}) : super(key: key);
+  const DelayedBuilder({Key? key, required this.firstBuilder, required this.secondBuilder, this.delay = 0.0})
+      : super(key: key);
 
   @override
   _DelayedBuilderState createState() => _DelayedBuilderState();
@@ -19,7 +19,7 @@ class _DelayedBuilderState extends State<DelayedBuilder> {
 
   @override
   void initState() {
-    Future<void>.delayed((widget.delay ?? 0).milliseconds).then((value) {
+    Future<void>.delayed(widget.delay.milliseconds).then((value) {
       if (!mounted) return;
       return setState(() => show = true);
     });

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:time/time.dart';
 
@@ -8,9 +7,9 @@ class FadingIndexedStack extends StatefulWidget {
   final Duration duration;
 
   const FadingIndexedStack({
-    Key key,
-    this.index,
-    this.children,
+    Key? key,
+    this.index = 0,
+    this.children = const <Widget>[],
     this.duration = const Duration(
       milliseconds: 250,
     ),
