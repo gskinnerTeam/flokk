@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
@@ -10,7 +9,7 @@ class PathUtil {
     if (Platform.isLinux) {
       result = "${xdgDirectories.dataHome.path}/flokk-contacts";
     } else {
-      result = (await getApplicationSupportDirectory().catchError(print)).path;
+      result = (await getApplicationSupportDirectory()).path;
     }
     return result;
   }

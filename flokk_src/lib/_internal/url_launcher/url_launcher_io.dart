@@ -1,4 +1,3 @@
-// @dart=2.9
 import "dart:io" as io;
 import 'dart:io';
 
@@ -6,7 +5,7 @@ import 'package:flokk/_internal/log.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 Future<bool> urlLauncherOpen(String url) async {
-  ProcessResult result;
+  ProcessResult? result;
   try {
     if (UniversalPlatform.isLinux) {
       result = await io.Process.run("xdg-open", [
@@ -19,8 +18,8 @@ Future<bool> urlLauncherOpen(String url) async {
       result = await io.Process.run("open", [url]);
     }
   } on ProcessException catch (e) {
-    Log.e(e?.message);
+    Log.e(e.message);
   }
-  ;
+
   return result?.exitCode == 0;
 }

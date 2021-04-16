@@ -1,11 +1,12 @@
-// @dart=2.9
 import 'package:file_chooser/file_chooser.dart';
 
 import 'path.dart';
 
-Future<String> pickImage({String confirmText, String initialPath}) async {
-  confirmText ??= "Pick Image";
-  initialPath ??= await PathUtil.dataPath;
+Future<String?> pickImage({String confirmText = "", String initialPath = ""}) async {
+  if (confirmText.isEmpty)
+    confirmText = "Pick Image";
+  if (initialPath.isEmpty)
+    initialPath = await PathUtil.dataPath;
 
   final result = await showOpenPanel(
     initialDirectory: initialPath,
