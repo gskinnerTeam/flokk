@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/utils/color_utils.dart';
 import 'package:flokk/styled_components/buttons/base_styled_button.dart';
 import 'package:flokk/styled_components/styled_image_icon.dart';
@@ -12,25 +11,25 @@ import 'package:provider/provider.dart';
 /// Transparent icon button that changes it's btn color on mouse-over
 /// ////////////////////////////////////////////////////
 class ColorShiftIconBtn extends StatelessWidget {
-  final Function() onPressed;
+  final VoidCallback? onPressed;
 
   final AssetImage icon;
   final double size;
-  final Color color;
-  final Color bgColor;
+  final Color? color;
+  final Color ?bgColor;
   final EdgeInsets padding;
-  final double minWidth;
-  final double minHeight;
-  final Function(bool) onFocusChanged;
+  final double? minWidth;
+  final double? minHeight;
+  final void Function(bool)? onFocusChanged;
   final bool shrinkWrap;
 
   const ColorShiftIconBtn(
     this.icon, {
-    Key key,
+    Key? key,
     this.onPressed,
     this.color,
-    this.size,
-    this.padding,
+    this.size = 22,
+    this.padding = const EdgeInsets.all(Insets.sm),
     this.onFocusChanged,
     this.bgColor,
     this.minWidth,
@@ -59,9 +58,9 @@ class ColorShiftIconBtn extends StatelessWidget {
               downColor: theme.bg2.withOpacity(.35),
               hoverColor: bgColor ?? Colors.transparent,
               onFocusChanged: onFocusChanged,
-              contentPadding: padding ?? EdgeInsets.all(Insets.sm),
+              contentPadding: padding ?? ,
               child: IgnorePointer(
-                child: StyledImageIcon(icon, size: (size ?? 22.0), color: iconColor),
+                child: StyledImageIcon(icon, size: size, color: iconColor),
               ),
               onPressed: onPressed),
         );

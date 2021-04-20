@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/globals.dart';
 import 'package:flokk/styled_components/buttons/ok_cancel_btn_row.dart';
@@ -9,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Dialogs {
-  static Future<dynamic> show(Widget child, [BuildContext context]) async {
+  static Future<dynamic> show(Widget child, [BuildContext? context]) async {
     return await (context != null ? Navigator.of(context) : AppGlobals.nav).push(
       StyledDialogRoute(
         pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
@@ -25,38 +24,34 @@ class Dialogs {
 }
 
 class StyledDialog extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final double maxWidth;
   final double maxHeight;
   final EdgeInsets padding;
   final EdgeInsets margin;
   final BorderRadius borderRadius;
-  final Color bgColor;
-  final double elevation;
+  final Color? bgColor;
   final bool shrinkWrap;
 
   const StyledDialog({
-    Key key,
+    Key? key,
     this.child,
-    this.maxWidth,
-    this.maxHeight,
-    this.padding,
-    this.margin,
+    this.maxWidth = double.infinity,
+    this.maxHeight = double.infinity,
+    this.padding = const EdgeInsets.all(Insets.lGutter),
+    this.margin = const EdgeInsets.all(Insets.lGutter * 2),
     this.bgColor,
-    this.borderRadius,
-    this.elevation,
+    this.borderRadius = Corners.s8Border,
     this.shrinkWrap = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    BorderRadius radius = borderRadius ?? Corners.s8Border;
     AppTheme theme = context.watch();
 
     Widget innerContent = Container(
-      padding: padding ?? EdgeInsets.all(Insets.lGutter),
+      padding: padding,
       color: bgColor ?? theme.surface,
-      //elevation: elevation ?? dialogTheme.elevation ?? 3,
       child: child,
     );
 
@@ -66,16 +61,16 @@ class StyledDialog extends StatelessWidget {
 
     return FocusTraversalGroup(
       child: Container(
-        margin: margin ?? EdgeInsets.all(Insets.lGutter * 2),
+        margin: margin,
         alignment: Alignment.center,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minWidth: 280.0,
-            maxHeight: maxHeight ?? double.infinity,
-            maxWidth: maxWidth ?? double.infinity,
+            maxHeight: maxHeight,
+            maxWidth: maxWidth,
           ),
           child: ClipRRect(
-            borderRadius: radius,
+            borderRadius: borderRadius,
             child: SingleChildScrollView(
               physics: StyledScrollPhysics(),
               child: Material(type: MaterialType.transparency, child: innerContent),
@@ -88,35 +83,36 @@ class StyledDialog extends StatelessWidget {
 }
 
 class OkCancelDialog extends StatelessWidget {
-  final Function() onOkPressed;
-  final Function() onCancelPressed;
-  final String okLabel;
-  final String cancelLabel;
-  final String title;
+  final VoidCallback? onOkPressed;
+  final VoidCallback? onCancelPressed;
+  final String? okLabel;
+  final String? cancelLabel;
+  final String? title;
   final String message;
   final double maxWidth;
 
   const OkCancelDialog(
-      {Key key,
+      {Key? key,
       this.onOkPressed,
       this.onCancelPressed,
       this.okLabel,
       this.cancelLabel,
       this.title,
-      this.message,
-      this.maxWidth})
+      this.message = "",
+      this.maxWidth = 500})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
+    String? titleStr = title;
     return StyledDialog(
-      maxWidth: maxWidth ?? 500,
+      maxWidth: maxWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (title != null) ...[
-            Text(title.toUpperCase(), style: TextStyles.T1.textColor(theme.accent1Darker)),
+          if (titleStr != null) ...[
+            Text(titleStr.toUpperCase(), style: TextStyles.T1.textColor(theme.accent1Darker)),
             VSpace(Insets.sm * 1.5),
             Container(color: theme.greyWeak.withOpacity(.35), height: 1),
             VSpace(Insets.m * 1.5),
@@ -137,15 +133,14 @@ class OkCancelDialog extends StatelessWidget {
 
 class StyledDialogRoute<T> extends PopupRoute<T> {
   StyledDialogRoute({
-    @required RoutePageBuilder pageBuilder,
+    required RoutePageBuilder pageBuilder,
     bool barrierDismissible = true,
-    String barrierLabel,
+    String barrierLabel = "",
     Color barrierColor = const Color(0x80000000),
     Duration transitionDuration = const Duration(milliseconds: 200),
-    RouteTransitionsBuilder transitionBuilder,
-    RouteSettings settings,
-  })  : assert(barrierDismissible != null),
-        _pageBuilder = pageBuilder,
+    RouteTransitionsBuilder? transitionBuilder,
+    RouteSettings? settings,
+  })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
         _barrierLabel = barrierLabel,
         _barrierColor = barrierColor,
@@ -171,7 +166,7 @@ class StyledDialogRoute<T> extends PopupRoute<T> {
   Duration get transitionDuration => _transitionDuration;
   final Duration _transitionDuration;
 
-  final RouteTransitionsBuilder _transitionBuilder;
+  final RouteTransitionsBuilder? _transitionBuilder;
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
@@ -185,9 +180,10 @@ class StyledDialogRoute<T> extends PopupRoute<T> {
   @override
   Widget buildTransitions(
       BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-    if (_transitionBuilder == null) {
+    RouteTransitionsBuilder? tb = _transitionBuilder;
+    if (tb == null) {
       return FadeTransition(opacity: CurvedAnimation(parent: animation, curve: Curves.linear), child: child);
     } // Some default transition
-    return _transitionBuilder(context, animation, secondaryAnimation, child);
+    return tb(context, animation, secondaryAnimation, child);
   }
 }

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/styled_components/scrolling/styled_scrollbar.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +12,8 @@ class StyledScrollView extends StatefulWidget {
   final Widget child;
 
   StyledScrollView({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.contentSize,
     this.axis = Axis.vertical, this.trackColor, this.handleColor,
   }) : super(key: key) {}

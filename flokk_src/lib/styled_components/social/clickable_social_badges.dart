@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/contact_data.dart';
@@ -25,7 +24,7 @@ class ClickableSocialBadges extends StatefulWidget {
   final ContactData contact;
   final bool showTimeSince;
 
-  const ClickableSocialBadges(this.contact, {Key key, this.showTimeSince = false}) : super(key: key);
+  const ClickableSocialBadges(this.contact, {Key? key, this.showTimeSince = false}) : super(key: key);
 
   @override
   _ClickableSocialBadgesState createState() => _ClickableSocialBadgesState();
@@ -34,7 +33,7 @@ class ClickableSocialBadges extends StatefulWidget {
 class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
   LayerLink overlayLink = LayerLink();
 
-  Size _viewSize;
+  late Size _viewSize;
 
   void _handleSocialClicked(BuildContext context, ContactData contact, SocialActivityType type) {
     // If they clicked a badge that they have already entered a handle for, then open their social panel.
@@ -56,7 +55,7 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
     // Grab socialData for this contact (might be null)
     SocialContactData social = contactsModel.getSocialById(widget.contact.id);
     // Get the time of their last activity
-    DateTime lastSocialTime = social?.latestActivity?.createdAt;
+    DateTime? lastSocialTime = social?.latestActivity?.createdAt;
     // Grab any tweets we haven't look at yet
     List<Tweet> newTweets = social?.newTweets ?? [];
     List<GitEvent> newGits = social?.newGits ?? [];
@@ -104,8 +103,8 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
 
   void _showSocialMiniFormOverlay(BuildContext context, SocialActivityType type) {
     AppTheme theme = context.read();
-    OverlayEntry bg;
-    OverlayEntry form;
+    late OverlayEntry bg;
+    late OverlayEntry form;
 
     void _closeOverlay() {
       bg.remove();
@@ -129,15 +128,15 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
             socialActivityType: type,
           )));
     });
-    Overlay.of(context).insert(bg);
-    Overlay.of(context).insert(form);
+    Overlay.of(context)?.insert(bg);
+    Overlay.of(context)?.insert(form);
   }
 }
 
 class FadeInWidget extends StatelessWidget {
   final Widget child;
 
-  const FadeInWidget(this.child, {Key key}) : super(key: key);
+  const FadeInWidget(this.child, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

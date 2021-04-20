@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/design_grid_overlay.dart';
 import 'package:flokk/styles.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,7 @@ class StyledDesignGrid extends StatelessWidget {
   final Alignment alignment;
   final bool isEnabled;
 
-  const StyledDesignGrid({Key key, this.child, this.alignment, this.isEnabled = false}) : super(key: key);
+  const StyledDesignGrid({Key? key, required this.child, this.alignment = Alignment.center, this.isEnabled = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

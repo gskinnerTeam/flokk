@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/styled_components/buttons/transparent_btn.dart';
 import 'package:flokk/styled_components/styled_container.dart';
 import 'package:flokk/styles.dart';
@@ -8,13 +7,13 @@ import 'package:provider/provider.dart';
 
 /// A card that defaults to theme.surface1, and has a built in shadow and rounded corners.
 class StyledCard extends StatelessWidget {
-  final Color bgColor;
+  final Color? bgColor;
   final bool enableShadow;
-  final Widget child;
-  final Function() onPressed;
-  final Alignment align;
+  final Widget? child;
+  final VoidCallback? onPressed;
+  final Alignment? align;
 
-  const StyledCard({Key key, this.bgColor, this.enableShadow = true, this.child, this.onPressed, this.align})
+  const StyledCard({Key? key, this.bgColor, this.enableShadow = true, this.child, this.onPressed, this.align})
       : super(key: key);
 
   @override

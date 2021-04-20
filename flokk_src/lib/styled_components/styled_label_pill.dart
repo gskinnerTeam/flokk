@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/utils/color_utils.dart';
 import 'package:flokk/styles.dart';
@@ -10,12 +9,12 @@ import 'buttons/base_styled_button.dart';
 
 class StyledLabelPill extends StatelessWidget {
   final String text;
-  final TextStyle textStyle;
-  final Color color;
+  final TextStyle? textStyle;
+  final Color? color;
   final double borderRadius;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
-  const StyledLabelPill(this.text, {Key key, this.textStyle, this.color, this.borderRadius, this.onPressed})
+  const StyledLabelPill(this.text, {Key? key, this.textStyle, this.color, this.borderRadius = Corners.s5, this.onPressed})
       : super(key: key);
 
   @override
@@ -31,7 +30,7 @@ class StyledLabelPill extends StatelessWidget {
       child: IntrinsicWidth(
         child: Container(
           alignment: Alignment.center,
-          child: OneLineText(t ?? "", style: textStyle ?? TextStyles.Btn),
+          child: OneLineText(t, style: textStyle ?? TextStyles.Btn),
         ),
       ),
     );
@@ -40,10 +39,10 @@ class StyledLabelPill extends StatelessWidget {
 
 class ContactLabelPill extends StatelessWidget {
   final String text;
-  final Color color;
-  final VoidCallback onPressed;
+  final Color? color;
+  final VoidCallback? onPressed;
 
-  const ContactLabelPill(this.text, {Key key, this.color, this.onPressed}) : super(key: key);
+  const ContactLabelPill(this.text, {Key? key, this.color, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +58,7 @@ class ContactLabelPill extends StatelessWidget {
             color: color ?? theme.bg2.withOpacity(.35),
             borderRadius: Corners.s5Border,
           ),
-          child: OneLineText(t ?? "", style: TextStyles.Footnote),
+          child: OneLineText(t, style: TextStyles.Footnote),
         ),
       ),
     );

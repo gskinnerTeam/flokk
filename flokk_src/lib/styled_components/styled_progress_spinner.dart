@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +5,7 @@ import 'package:provider/provider.dart';
 class StyledProgressSpinner extends StatelessWidget {
   final Color color;
 
-  const StyledProgressSpinner({Key key, this.color}) : super(key: key);
+  const StyledProgressSpinner({Key? key, this.color = Colors.white}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class StyledProgressSpinner extends StatelessWidget {
         width: 24,
         height: 24,
         child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(theme.accent1Darker), backgroundColor: color ?? Colors.white),
+            valueColor: AlwaysStoppedAnimation<Color>(theme.accent1Darker), backgroundColor: color),
       ),
     );
   }

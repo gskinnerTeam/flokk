@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:math';
 
 import 'package:flokk/data/contact_data.dart';
@@ -8,18 +7,18 @@ class StyledUserAvatar extends StatefulWidget {
   final ContactData contact;
   final double size;
 
-  const StyledUserAvatar({Key key, this.contact, this.size}) : super(key: key);
+  const StyledUserAvatar({Key? key, required this.contact, this.size = 50}) : super(key: key);
 
   @override
   _StyledUserAvatarState createState() => _StyledUserAvatarState();
 }
 
 class _StyledUserAvatarState extends State<StyledUserAvatar> {
-  int _seed;
+  late int _seed;
 
   @override
   void initState() {
-    _seed = widget.contact?.id?.hashCode ?? 0;
+    _seed = widget.contact.id?.hashCode ?? 0;
     super.initState();
   }
 
@@ -46,8 +45,8 @@ class _StyledUserAvatarState extends State<StyledUserAvatar> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(99),
       child: Container(
-        width: widget.size ?? 50,
-        height: widget.size ?? 50,
+        width: widget.size,
+        height: widget.size,
         child: child,
       ),
     );
@@ -55,7 +54,7 @@ class _StyledUserAvatarState extends State<StyledUserAvatar> {
 }
 
 class AnimalAvatar extends StatelessWidget {
-  final int seed;
+  final int? seed;
 
   final List<Color> backgrounds = [
     Color(0xFF44D3B8),
@@ -83,7 +82,7 @@ class AnimalAvatar extends StatelessWidget {
     "bird-toucan"
   ];
 
-  AnimalAvatar({Key key, this.seed}) : super(key: key);
+  AnimalAvatar({Key? key, this.seed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

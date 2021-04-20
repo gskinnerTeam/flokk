@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/styled_components/buttons/base_styled_button.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';
@@ -6,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PrimaryBtn extends StatelessWidget {
-  final Widget child;
-  final Function() onPressed;
+  final Widget? child;
+  final VoidCallback? onPressed;
   final bool bigMode;
 
-  const PrimaryBtn({Key key, this.child, this.onPressed, this.bigMode = false}) : super(key: key);
+  const PrimaryBtn({Key? key, this.child, this.onPressed, this.bigMode = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +30,10 @@ class PrimaryBtn extends StatelessWidget {
 
 class PrimaryTextBtn extends StatelessWidget {
   final String label;
-  final Function() onPressed;
+  final VoidCallback? onPressed;
   final bool bigMode;
 
-  const PrimaryTextBtn(this.label, {Key key, this.onPressed, this.bigMode = false}) : super(key: key);
+  const PrimaryTextBtn(this.label, {Key? key, this.onPressed, this.bigMode = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

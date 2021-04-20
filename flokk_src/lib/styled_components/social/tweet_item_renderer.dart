@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/components/selectable_link_text.dart';
 import 'package:flokk/_internal/components/spacing.dart';
@@ -16,7 +15,7 @@ import '../styled_icons.dart';
 class TweetListItem extends StatelessWidget {
   final Tweet tweet;
 
-  const TweetListItem(this.tweet, {Key key}) : super(key: key);
+  const TweetListItem(this.tweet, {Key? key}) : super(key: key);
 
   void _handleRowPressed() {
     UrlLauncher.openHttp(tweet.url);
