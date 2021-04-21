@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:math';
 
 import 'package:flokk/_internal/components/listenable_builder.dart';
@@ -20,7 +19,7 @@ import 'package:provider/provider.dart';
 class SearchQueryRow extends StatelessWidget {
   final SearchBarState state;
 
-  const SearchQueryRow(this.state, {Key key}) : super(key: key);
+  const SearchQueryRow(this.state, {Key? key}) : super(key: key);
 
   double calcTagWidth(String tag) {
     //Calculate all padding in the row (searchIcon + padding + closeIcon + padding)
@@ -120,7 +119,7 @@ class SearchQueryRow extends StatelessWidget {
 class _SearchIconBtn extends StatelessWidget {
   final void Function() onPressed;
 
-  const _SearchIconBtn(this.onPressed, {Key key}) : super(key: key);
+  const _SearchIconBtn(this.onPressed, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -90,7 +88,7 @@ class GooeyEdge {
 
 
   void tick(Duration duration) {
-    if (points == null || points.isEmpty) { return; }
+    if (points.isEmpty) { return; }
     double t = min(1.5, (duration.inMilliseconds - lastT) / 1000 * 60);
     lastT = duration.inMilliseconds;
     double dampingT = pow(damping, t) as double;

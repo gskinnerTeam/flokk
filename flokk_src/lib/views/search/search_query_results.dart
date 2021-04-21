@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:math';
 
 import 'package:flokk/_internal/components/listenable_builder.dart';
@@ -24,7 +23,7 @@ import 'package:provider/provider.dart';
 class SearchResults extends StatelessWidget {
   final SearchBarState state;
 
-  const SearchResults(this.state, {Key key}) : super(key: key);
+  const SearchResults(this.state, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +112,9 @@ class SearchResults extends StatelessWidget {
 
 class _ContactSearchListItem extends StatelessWidget {
   final ContactData contact;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
-  _ContactSearchListItem({this.contact, this.onPressed});
+  _ContactSearchListItem({required this.contact, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +141,7 @@ class _SearchCategory extends StatelessWidget {
   final String text;
   final Widget child;
 
-  _SearchCategory({@required this.icon, @required this.text, @required this.child});
+  _SearchCategory({required this.icon, required this.text, required this.child});
 
   @override
   Widget build(BuildContext context) {

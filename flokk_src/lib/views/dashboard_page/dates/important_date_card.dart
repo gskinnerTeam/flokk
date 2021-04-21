@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
@@ -15,7 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ImportantEventCard extends StatelessWidget {
-  const ImportantEventCard(this.contact, this.event, {Key key}) : super(key: key);
+  const ImportantEventCard(this.contact, this.event, {Key? key}) : super(key: key);
 
   static DateFormat get monthDayFmt => DateFormat("MMMMEEEEd");
 

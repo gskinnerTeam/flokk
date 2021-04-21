@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 
 import 'package:flokk/app_extensions.dart';
@@ -15,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactLabelMiniForm extends BaseMiniForm {
-  ContactLabelMiniForm(ContactEditFormState form, {Key key}) : super(form, ContactSectionType.label, key: key);
+  ContactLabelMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.label, key: key);
 
   void _handleAddLabel(String label, BuildContext context) {
     // If the label is empty or we already have that label on our contact then dont add it
@@ -62,17 +61,17 @@ class _LabelMiniformWithSearch extends StatefulWidget {
   final bool autoFocus;
   final void Function(String) onAddLabel;
   final void Function(String) onRemoveLabel;
-  final void Function(bool) onFocusChanged;
+  final void Function(bool)? onFocusChanged;
   final List<String> contactLabels;
   final List<String> allLabels;
 
   _LabelMiniformWithSearch({
-    this.autoFocus,
-    this.onAddLabel,
-    this.onRemoveLabel,
+    this.autoFocus = false,
+    required this.onAddLabel,
+    required this.onRemoveLabel,
     this.onFocusChanged,
-    this.contactLabels,
-    this.allLabels,
+    this.contactLabels = const <String>[],
+    this.allLabels = const <String>[],
   });
 
   @override
@@ -80,9 +79,9 @@ class _LabelMiniformWithSearch extends StatefulWidget {
 }
 
 class _LabelMiniformWithSearchState extends State<_LabelMiniformWithSearch> {
-  bool _isOpen;
+  bool? _isOpen;
   String _labelFilter = "";
-  Timer _timer;
+  Timer? _timer;
 
   _LabelMiniformWithSearchState();
 
@@ -106,13 +105,13 @@ class _LabelMiniformWithSearchState extends State<_LabelMiniformWithSearch> {
     } else {
       _timer?.cancel();
     }
-    widget.onFocusChanged(value);
+    widget.onFocusChanged?.call(value);
     return true;
   }
 
   bool _handleTextFocusChanged(bool value) {
     final result = _handleFocusChanged(value);
-    if (value && !_isOpen) setState(() => _isOpen = true);
+    if (value && !_isOpen!) setState(() => _isOpen = true);
     return result;
   }
 
@@ -143,7 +142,7 @@ class _LabelMiniformWithSearchState extends State<_LabelMiniformWithSearch> {
         labels: widget.contactLabels,
         onFocusChanged: _handleTextFocusChanged,
       ),
-      if (_isOpen) ...{
+      if (_isOpen!) ...{
         Text("Suggestions".toUpperCase(), style: TextStyles.Caption.textColor(theme.grey)).padding(bottom: Insets.m),
         Wrap(
           runSpacing: Insets.sm * 1.5,

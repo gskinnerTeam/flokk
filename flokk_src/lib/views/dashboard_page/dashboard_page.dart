@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/scrolling_flex_view.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
@@ -12,7 +11,7 @@ import 'package:flutter/material.dart';
 class DashboardPage extends StatefulWidget {
   final ContactData selectedContact;
 
-  const DashboardPage({Key key, this.selectedContact}) : super(key: key);
+  const DashboardPage({Key? key, required this.selectedContact}) : super(key: key);
 
   @override
   DashboardPageState createState() => DashboardPageState();

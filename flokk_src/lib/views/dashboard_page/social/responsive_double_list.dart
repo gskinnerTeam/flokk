@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styled_components/scrolling/styled_listview.dart';
@@ -24,16 +23,16 @@ class ResponsiveDoubleList extends StatefulWidget {
   final AssetImage list2Icon;
 
   const ResponsiveDoubleList(
-      {Key key,
-      @required this.list1,
-      @required this.list2,
-      @required this.list1Title = "",
-      @required this.list2Title = "",
-      @required this.list1Placeholder,
-      @required this.list2Placeholder,
-      @required this.useTabView,
-      @required this.list1Icon,
-      @required this.list2Icon})
+      {Key? key,
+      required this.list1,
+      required this.list2,
+      required this.list1Title,
+      required this.list2Title,
+      required this.list1Placeholder,
+      required this.list2Placeholder,
+      required this.useTabView,
+      required this.list1Icon,
+      required this.list2Icon})
       : super(key: key);
 
   @override

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styled_components/buttons/colored_icon_btn.dart';
@@ -12,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WelcomePageStep2 extends StatefulWidget {
-  const WelcomePageStep2({Key key}) : super(key: key);
+  const WelcomePageStep2({Key? key}) : super(key: key);
 
   @override
   _WelcomePageStep2State createState() => _WelcomePageStep2State();
@@ -136,9 +135,9 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
 }
 
 class StyledOutlinedBox extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
-  const StyledOutlinedBox({Key key, this.child}) : super(key: key);
+  const StyledOutlinedBox({Key? key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

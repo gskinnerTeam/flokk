@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/app_model.dart';
@@ -13,10 +12,10 @@ import 'package:provider/provider.dart';
 
 /// Holds the Contact Info and Edit pages, and provides an API to switch between them
 class ContactPanel extends StatefulWidget {
-  final Function() onClosePressed;
+  final VoidCallback? onClosePressed;
   final ContactsModel contactsModel;
 
-  const ContactPanel({Key key, this.onClosePressed, this.contactsModel}) : super(key: key);
+  const ContactPanel({Key? key, this.onClosePressed, required this.contactsModel}) : super(key: key);
 
   @override
   ContactPanelState createState() => ContactPanelState();
@@ -24,12 +23,12 @@ class ContactPanel extends StatefulWidget {
 
 class ContactPanelState extends State<ContactPanel> {
   GlobalKey<ContactInfoPanelState> detailsKey = GlobalKey();
-  GlobalObjectKey<ContactEditFormState> editKey;
-  ContactData _prevContact;
+  GlobalObjectKey<ContactEditFormState>? editKey;
+  ContactData? _prevContact;
 
   bool _isEditingContact = false;
 
-  String _initialEditSection;
+  String _initialEditSection = "";
 
   bool get hasUnsavedChanged => _isEditingContact && (editKey?.currentState?.isDirty ?? false);
 
@@ -72,8 +71,9 @@ class ContactPanelState extends State<ContactPanel> {
 
           /// When contact has been set to null, we want to use the prevContact so we get a clean transition out
           /// Bit of a hack, but not sure how else to maintain state as we slide out.
-          contact ??= _prevContact;
-          if (contact != null) _prevContact = contact;
+          if (contact == ContactData())
+            contact = _prevContact ?? ContactData();
+          if (contact != ContactData()) _prevContact = contact;
 
           /// Anytime we're working on a new contact, we want to be in edit mode
           if (contact.isNew) _isEditingContact = true;

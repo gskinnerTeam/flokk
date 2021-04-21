@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/fading_index_stack.dart';
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/components/spacing.dart';
@@ -18,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TopContactsSection extends StatefulWidget {
-  const TopContactsSection({Key key}) : super(key: key);
+  const TopContactsSection({Key? key}) : super(key: key);
 
   @override
   _TopContactsSectionState createState() => _TopContactsSectionState();
@@ -88,15 +87,12 @@ class _TopContactsSectionState extends State<TopContactsSection> {
 class _ContactCardList extends StatelessWidget {
   final _TopContactsSectionState state;
   final List<ContactData> contacts;
-  final Widget placeholder;
+  final Widget? placeholder;
 
-  const _ContactCardList(this.state, {Key key, this.contacts, this.placeholder}) : super(key: key);
+  const _ContactCardList(this.state, {Key? key, this.contacts = const<ContactData>[], this.placeholder}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    /// Create list of item renderers
-    List<Widget> contactCards = contacts.map((c) => SmallContactCard(c)).toList();
-
     /// Layout content
     EdgeInsets padding = EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m);
     // Placeholder content-box

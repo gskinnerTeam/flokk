@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:async';
 
 import 'package:flokk/_internal/components/simple_value_notifier.dart';
@@ -40,12 +39,12 @@ class MainScaffoldState extends State<MainScaffold> {
 
   SimpleValueNotifier<List<ContactData>> checkedContactsNotifier = SimpleValueNotifier([]);
 
-  AppModel appModel;
+  late AppModel appModel;
 
   /// Easily lookup the current state of the SidePanel
-  ContactPanelState get contactsPanel => MainScaffold.sidePanelKey.currentState;
+  ContactPanelState? get contactsPanel => MainScaffold.sidePanelKey.currentState;
 
-  SearchBarState get searchBar => MainScaffold.searchBarKey.currentState;
+  SearchBarState? get searchBar => MainScaffold.searchBarKey.currentState;
 
   /// Disable scaffold animations, used when changing pages, so the new page does not animate in
   bool skipScaffoldAnims = false;
@@ -69,7 +68,7 @@ class MainScaffoldState extends State<MainScaffold> {
     appModel.selectedContact = ContactData();
   }
 
-  void editSelectedContact(String section) => contactsPanel.showEditView(section);
+  void editSelectedContact(String section) => contactsPanel?.showEditView(section);
 
   /// Attempt to change current page, this might not complete if user is currently editing
   Future<void> trySetCurrentPage(PageType t, [bool refresh = true]) async {
@@ -106,7 +105,7 @@ class MainScaffoldState extends State<MainScaffold> {
     //De-select?
     bool hasSocialChanged = showSocial != appModel.showSocialTabOnInfoView;
     if (!hasSocialChanged && appModel.selectedContact != null && appModel.selectedContact?.id == value?.id) {
-      value = null;
+      value = ContactData();
     }
     appModel.selectedContact = value;
     appModel.showSocialTabOnInfoView = showSocial;
@@ -138,7 +137,7 @@ class MainScaffoldState extends State<MainScaffold> {
     }
   }
 
-  void openMenu() => MainScaffold.scaffoldKey.currentState.openDrawer();
+  void openMenu() => MainScaffold.scaffoldKey.currentState?.openDrawer();
 
   void handleBgTapped() {
     Utils.unFocus();

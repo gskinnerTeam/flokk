@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/contact_data.dart';
@@ -16,17 +15,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactInfoPanel extends StatefulWidget {
-  final Function() onClosePressed;
-  final Function(String) onEditPressed;
+  final VoidCallback? onClosePressed;
+  final void Function(String) onEditPressed;
 
-  const ContactInfoPanel({Key key, this.onClosePressed, this.onEditPressed}) : super(key: key);
+  const ContactInfoPanel({Key? key, this.onClosePressed, required this.onEditPressed}) : super(key: key);
 
   @override
   ContactInfoPanelState createState() => ContactInfoPanelState();
 }
 
 class ContactInfoPanelState extends State<ContactInfoPanel> {
-  ContactData _prevContact;
+  ContactData? _prevContact;
   ValueNotifier<double> opacityNotifier = ValueNotifier(0);
 
   @override
@@ -35,7 +34,7 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
   }
 
   void startFadeIfContactsHaveChanged(ContactData c) {
-    if (c != null && c?.id != _prevContact?.id) {
+    if (c.id != _prevContact?.id) {
       opacityNotifier.value = 0;
       Future.microtask(() => opacityNotifier.value = 1);
     }
@@ -51,7 +50,8 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
         // Fade in each time we change contact
         startFadeIfContactsHaveChanged(c);
         //c ??= _prevContact;
-        if (c != null) _prevContact = c;
+        //if (c != null) _prevContact = c;
+        _prevContact = c;
         return Column(
           children: <Widget>[
             /// TOP ICON ROW
@@ -59,7 +59,7 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
               ColorShiftIconBtn(StyledIcons.closeLarge, size: 16, color: theme.grey, onPressed: widget.onClosePressed),
               Spacer(),
               ColorShiftIconBtn(StyledIcons.edit,
-                  size: 22, color: theme.accent1Dark, onPressed: () => widget.onEditPressed(null)),
+                  size: 22, color: theme.accent1Dark, onPressed: () => widget.onEditPressed("")),
             ]).padding(horizontal: Insets.l),
 
             /// CONTENT STACK
@@ -98,16 +98,16 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
 }
 
 class _DetailsAndSocialTabView extends StatefulWidget {
-  final Function(String) onEditPressed;
+  final void Function(String?) onEditPressed;
 
-  const _DetailsAndSocialTabView({Key key, this.onEditPressed}) : super(key: key);
+  const _DetailsAndSocialTabView({Key? key, required this.onEditPressed}) : super(key: key);
 
   @override
   _DetailsAndSocialTabViewState createState() => _DetailsAndSocialTabViewState();
 }
 
 class _DetailsAndSocialTabViewState extends State<_DetailsAndSocialTabView> with SingleTickerProviderStateMixin {
-  TabController tabController;
+  late TabController tabController;
 
   void _handleTabPressed(int i) {
     AppModel appModel = context.read();
@@ -120,6 +120,12 @@ class _DetailsAndSocialTabViewState extends State<_DetailsAndSocialTabView> with
     int index = context.read<AppModel>().showSocialTabOnInfoView ? 1 : 0;
     tabController = TabController(length: 2, vsync: this, initialIndex: index);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
   }
 
   @override

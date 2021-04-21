@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';
@@ -18,11 +17,11 @@ class PlaceholderContentSwitcher extends StatelessWidget {
   final EdgeInsets placeholderPadding;
 
   const PlaceholderContentSwitcher(
-      {Key key,
+      {Key? key,
       this.showOutline = true,
-      @required this.placeholder,
-      @required this.content,
-      @required this.hasContent,
+      required this.placeholder,
+      required this.content,
+      required this.hasContent,
       this.placeholderPadding = EdgeInsets.zero})
       : super(key: key);
 

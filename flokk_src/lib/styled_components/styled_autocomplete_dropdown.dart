@@ -14,7 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class StyledAutoCompleteDropdown extends StatefulWidget {
-  final String initialValue;
+  final String? initialValue;
   final String hint;
   final List<String> items;
   final double maxHeight;
@@ -22,7 +22,7 @@ class StyledAutoCompleteDropdown extends StatefulWidget {
   final void Function(bool)? onFocusChanged;
 
   const StyledAutoCompleteDropdown(
-      {Key? key, this.initialValue = "", this.hint = "", this.items = const<String>[], this.onChanged, this.onFocusChanged, this.maxHeight = 500})
+      {Key? key, this.initialValue, this.hint = "", this.items = const<String>[], this.onChanged, this.onFocusChanged, this.maxHeight = 500})
       : super(key: key);
 
   @override

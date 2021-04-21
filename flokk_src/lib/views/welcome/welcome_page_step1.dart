@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/seperated_flexibles.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styled_components/buttons/primary_btn.dart';
@@ -13,7 +12,7 @@ import 'package:provider/provider.dart';
 class WelcomePageStep1 extends StatelessWidget {
   final bool singleColumnMode;
 
-  const WelcomePageStep1({Key key, this.singleColumnMode = false}) : super(key: key);
+  const WelcomePageStep1({Key? key, this.singleColumnMode = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

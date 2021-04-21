@@ -12,7 +12,7 @@ class StyledFormTextInput extends StatelessWidget {
 
   final String label;
   final bool autoFocus;
-  final String initialValue;
+  final String? initialValue;
   final String hintText;
   final EdgeInsets contentPadding;
   final TextStyle? textStyle;
@@ -28,7 +28,7 @@ class StyledFormTextInput extends StatelessWidget {
       {Key? key,
       this.label = "",
       this.autoFocus = false,
-      this.initialValue = "",
+      this.initialValue,
       this.onChanged,
       this.onEditingComplete,
       this.hintText = "",
@@ -57,7 +57,7 @@ class StyledFormTextInput extends StatelessWidget {
       maxLines: maxLines,
       inputDecoration: InputDecoration(
         isDense: true,
-        contentPadding: contentPadding ?? kDefaultTextInputPadding,
+        contentPadding: contentPadding,
         border: ThinUnderlineBorder(borderSide: BorderSide(width: 5, color: Colors.red)),
         //focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: .5, color: Colors.red)),
         hintText: hintText,
@@ -73,7 +73,7 @@ class StyledSearchTextInput extends StatefulWidget {
   final bool autoFocus;
   final bool obscureText;
   final IconData? icon;
-  final String initialValue;
+  final String? initialValue;
   final int? maxLines;
   final TextEditingController? controller;
   final TextCapitalization capitalization;
@@ -104,7 +104,7 @@ class StyledSearchTextInput extends StatefulWidget {
     this.obscureText = false,
     this.type = TextInputType.text,
     this.icon,
-    this.initialValue = "",
+    this.initialValue,
     this.controller,
     this.enabled = true,
     this.autoValidate = false,
@@ -235,8 +235,7 @@ class ThinUnderlineBorder extends InputBorder {
       topLeft: Radius.circular(4.0),
       topRight: Radius.circular(4.0),
     ),
-  })  : assert(borderRadius != null),
-        super(borderSide: borderSide);
+  }) : super(borderSide: borderSide);
 
   /// The radii of the border's rounded rectangle corners.
   ///

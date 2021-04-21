@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/seperated_flexibles.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/_internal/utils/color_utils.dart';
@@ -30,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormState> {
-  ContactEditFormView(ContactEditFormState state, {Key key}) : super(state, key: key);
+  ContactEditFormView(ContactEditFormState state, {Key? key}) : super(state, key: key);
 
   BuildContext get context => state.context;
 
@@ -39,7 +38,6 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
-    if (widget.contact == null || contact == null) return Container();
     return state.isLoading
         ? Center(child: StyledProgressSpinner())
         : Column(

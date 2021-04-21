@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styled_components/buttons/secondary_btn.dart';
@@ -16,14 +15,14 @@ class TextfieldWithDatePickerRow extends StatefulWidget {
   final BaseMiniForm miniform;
   final bool isSelected;
   final String hint;
-  final String initialValue;
-  final void Function(String, DateTime) onDateChanged;
+  final String? initialValue;
+  final void Function(String, DateTime)? onDateChanged;
 
   const TextfieldWithDatePickerRow(
     this.miniform, {
-    Key key,
-    this.isSelected,
-    this.hint,
+    Key? key,
+    this.isSelected = false,
+    this.hint = "",
     this.initialValue,
     this.onDateChanged,
   }) : super(key: key);
@@ -34,7 +33,7 @@ class TextfieldWithDatePickerRow extends StatefulWidget {
 
 class _TextfieldWithDatePickerRowState extends State<TextfieldWithDatePickerRow> {
 
-  TextEditingController textController;
+  late TextEditingController textController;
 
   void handleDatePicked(BuildContext context) async {
     DateTime firstDate = DateTime.now().subtract((365 * 100).days);
@@ -47,7 +46,7 @@ class _TextfieldWithDatePickerRowState extends State<TextfieldWithDatePickerRow>
     /// Manually 'clamp' these dates because material date picker likes to blow up with AssertErrors rather than fail gracefully
     if (startDate.isBefore(firstDate)) startDate = firstDate;
     if (startDate.isAfter(lastDate)) startDate = lastDate;
-    DateTime result = await showDatePicker(
+    DateTime? result = await showDatePicker(
       context: context,
       initialDate: startDate,
       firstDate: firstDate,
@@ -55,14 +54,14 @@ class _TextfieldWithDatePickerRowState extends State<TextfieldWithDatePickerRow>
     );
     if (result != null) {
       textController.text = DateFormats.google.format(result);
-      widget.onDateChanged(textController.text, result);
+      widget.onDateChanged?.call(textController.text, result);
     }
   }
 
   DateTime parseDate(String v) {
     try {
       return DateFormats.google.parse(v);
-    } on FormatException catch (e) {
+    } on FormatException catch (_) {
       return DateTime.now();
     }
   }

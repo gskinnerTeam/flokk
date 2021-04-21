@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styles.dart';
@@ -9,8 +8,7 @@ import 'package:flutter/material.dart';
 class TopContactsPlaceholder extends StatelessWidget {
   final bool isRecent;
 
-  const TopContactsPlaceholder({Key key, this.isRecent = false}) : super(key: key);
-
+  const TopContactsPlaceholder({Key? key, this.isRecent = false}) : super(key: key);
 
 
   @override

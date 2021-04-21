@@ -4,7 +4,7 @@ typedef Widget SeparatorBuilder();
 
 class SeparatedRow extends StatelessWidget {
   final List<Widget> children;
-  final SeparatorBuilder separatorBuilder;
+  final SeparatorBuilder? separatorBuilder;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisSize mainAxisSize;
@@ -15,7 +15,7 @@ class SeparatedRow extends StatelessWidget {
   const SeparatedRow({
     Key? key,
     this.children = const <Widget>[],
-    required this.separatorBuilder,
+    this.separatorBuilder,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.mainAxisSize = MainAxisSize.max,
@@ -28,7 +28,7 @@ class SeparatedRow extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> c = children.toList();
     for (var i = c.length; i-- > 0;) {
-      if (i > 0) c.insert(i, separatorBuilder());
+      if (i > 0 && separatorBuilder != null) c.insert(i, separatorBuilder!());
     }
     return Row(
       children: c,
@@ -44,7 +44,7 @@ class SeparatedRow extends StatelessWidget {
 
 class SeparatedColumn extends StatelessWidget {
   final List<Widget> children;
-  final SeparatorBuilder separatorBuilder;
+  final SeparatorBuilder? separatorBuilder;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisSize mainAxisSize;
@@ -55,7 +55,7 @@ class SeparatedColumn extends StatelessWidget {
   const SeparatedColumn({
     Key? key,
     this.children = const <Widget>[],
-    required this.separatorBuilder,
+    this.separatorBuilder,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.mainAxisSize = MainAxisSize.max,
@@ -68,7 +68,7 @@ class SeparatedColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> c = children.toList();
     for (var i = c.length; i-- > 0;) {
-      if (i > 0) c.insert(i, separatorBuilder());
+      if (i > 0 && separatorBuilder != null) c.insert(i, separatorBuilder!());
     }
     return Column(
       children: c,

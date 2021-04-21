@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/styled_components/styled_icons.dart';
 import 'package:flokk/views/contact_edit/contact_edit_panel.dart';
@@ -6,7 +5,7 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 
 class ContactEmailMiniForm extends BaseMiniForm {
-  ContactEmailMiniForm(ContactEditFormState form, {Key key}) : super(form, ContactSectionType.email, key: key);
+  ContactEmailMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.email, key: key);
 
   @override
   Widget build(BuildContext context) {

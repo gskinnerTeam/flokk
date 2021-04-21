@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/url_launcher/url_launcher.dart';
 import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/app_extensions.dart';
@@ -12,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
 class ContactInfoDetailsCard extends StatelessWidget {
-  const ContactInfoDetailsCard({Key key}) : super(key: key);
+  const ContactInfoDetailsCard({Key? key}) : super(key: key);
 
   void _handlePhonePressed(String value) => UrlLauncher.openPhoneNumber(value);
 

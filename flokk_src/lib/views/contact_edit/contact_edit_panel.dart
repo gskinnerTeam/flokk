@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/universal_picker/universal_picker.dart';
 import 'package:flokk/commands/contacts/delete_contact_command.dart';
 import 'package:flokk/commands/contacts/update_contact_command.dart';
@@ -32,10 +31,10 @@ class ContactSectionType {
 class ContactEditForm extends StatefulWidget {
   final ContactData contact;
   final ContactsModel contactsModel;
-  final Function(ContactData contact) onEditComplete;
+  final void Function(ContactData contact)? onEditComplete;
   final String initialSection;
 
-  const ContactEditForm({Key key, this.contact, this.contactsModel, this.onEditComplete, this.initialSection})
+  const ContactEditForm({Key? key, required this.contact, required this.contactsModel, this.onEditComplete, this.initialSection = ""})
       : super(key: key);
 
   @override
@@ -43,9 +42,9 @@ class ContactEditForm extends StatefulWidget {
 }
 
 class ContactEditFormState extends State<ContactEditForm> {
-  ContactData tmpContact;
+  late ContactData tmpContact;
   bool isLoading = false;
-  String currentSection;
+  late String currentSection;
 
   // Convenience lookup method for the mini-forms.
   // Since they are stateless, and use a lot of internal buildMethods, it's a lot less
@@ -53,7 +52,6 @@ class ContactEditFormState extends State<ContactEditForm> {
   AppTheme get theme => Provider.of(context, listen: false);
 
   bool get isDirty {
-    if (tmpContact == null) return false;
     // Create a copy of our tmp object, and strip it of empty listItems,
     var tc = tmpContact.copy().trimLists();
     return !tc.equals(widget.contact);
@@ -68,7 +66,7 @@ class ContactEditFormState extends State<ContactEditForm> {
 
   @override
   void didUpdateWidget(ContactEditForm oldWidget) {
-    if (tmpContact == null || oldWidget.contact != widget.contact) {
+    if (oldWidget.contact != widget.contact) {
       tmpContact = widget.contact.copy();
     }
     super.didUpdateWidget(oldWidget);
@@ -117,7 +115,7 @@ class ContactEditFormState extends State<ContactEditForm> {
     if (success) {
       widget.onEditComplete?.call(contact);
       //Edit is complete, make sure this contact is the currently selected
-      context?.read<AppModel>()?.selectedContact = contact;
+      context.read<AppModel>().selectedContact = contact;
 
     }
   }
@@ -129,9 +127,9 @@ class ContactEditFormState extends State<ContactEditForm> {
     if (isDirty) {
       doCancel = await ShowDiscardWarningCommand(context).execute();
     }
-    if (doCancel ?? false) {
+    if (doCancel) {
       /// If we're cancelling a new contact, return null indicating that it should be discarded
-      widget.onEditComplete?.call(tmpContact.isNew ? null : widget.contact);
+      widget.onEditComplete?.call(tmpContact.isNew ? ContactData() : widget.contact);
     }
   }
 

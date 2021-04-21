@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/_internal/utils/color_utils.dart';
 import 'package:flokk/app_extensions.dart';
@@ -87,6 +86,6 @@ class _AnimatedMenuIndicatorState extends State<_AnimatedMenuIndicator> {
         width: widget.width,
         height: widget.height,
         child: Container(color: theme.surface),
-        margin: EdgeInsets.only(top: widget.indicatorY ?? 0));
+        margin: EdgeInsets.only(top: widget.indicatorY));
   }
 }

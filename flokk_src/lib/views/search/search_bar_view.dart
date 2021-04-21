@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:math';
 
 import 'package:flokk/_internal/components/content_underlay.dart';
@@ -17,7 +16,7 @@ import 'package:provider/provider.dart';
 
 class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
 
-  SearchBarView(SearchBarState state, {Key key}) : super(state, key: key);
+  SearchBarView(SearchBarState state, {Key? key}) : super(state, key: key);
 
   bool get isOpen => state.isOpen;
 
@@ -89,10 +88,10 @@ class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
 
 /// Handles the transition from open and closed, the content is a Column, contains the SearchBox, and SearchResults
 class _AnimatedSearchCard extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final SearchBarState searchBar;
 
-  const _AnimatedSearchCard(this.searchBar, {Key key, this.child}) : super(key: key);
+  const _AnimatedSearchCard(this.searchBar, {Key? key, this.child}) : super(key: key);
 
   bool get isOpen => searchBar.isOpen;
 

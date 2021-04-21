@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/fading_index_stack.dart';
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/components/spacing.dart';
@@ -61,38 +60,37 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
         AssetImage icon1;
         AssetImage icon2;
 
-        // ALL
-        if (sectionType == DashboardSocialSectionType.All) {
-          list1Title = "TWITTER RECENT ACTIVITY";
-          list1 = twitterModel.allTweets.map((tweet) => TweetListItem(tweet)).take(maxItems).toList();
-          list1Placeholder = TwitterPlaceholder();
-          icon1 = StyledIcons.twitterActive;
-          list2Title = "GITHUB RECENT ACTIVITY";
-          list2 = gitModel.allEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
-          list2Placeholder = GitPlaceholder();
-          icon2 = StyledIcons.githubActive;
-        }
-        // GITHUB
-        else if (sectionType == DashboardSocialSectionType.Git) {
-          list1Title = "GITHUB RECENT ACTIVITY";
-          list1Placeholder = GitPlaceholder();
-          list1 = gitModel.allEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
-          icon1 = StyledIcons.githubActive;
-          list2Title = "TRENDING REPOSITORIES";
-          list2Placeholder = GitPlaceholder(isTrending: true);
-          list2 = gitModel.popularRepos.map((repo) => GitRepoListItem(repo)).take(maxItems).toList();
-          icon2 = StyledIcons.githubActive;
-        }
-        // TWITTER
-        else if (sectionType == DashboardSocialSectionType.Twitter) {
-          list1 = twitterModel.allTweets.map((e) => TweetListItem(e)).take(maxItems).toList();
-          list1Placeholder = TwitterPlaceholder();
-          list1Title = "TWITTER RECENT ACTIVITY";
-          icon1 = StyledIcons.twitterActive;
-          list2 = twitterModel.popularTweets.map((e) => TweetListItem(e)).take(maxItems).toList();
-          list2Placeholder = TwitterPlaceholder(isPopular: true);
-          list2Title = "POPULAR TWEETS";
-          icon2 = StyledIcons.twitterActive;
+        switch (sectionType) {
+          case DashboardSocialSectionType.All:
+            list1Title = "TWITTER RECENT ACTIVITY";
+            list1 = twitterModel.allTweets.map((tweet) => TweetListItem(tweet)).take(maxItems).toList();
+            list1Placeholder = TwitterPlaceholder();
+            icon1 = StyledIcons.twitterActive;
+            list2Title = "GITHUB RECENT ACTIVITY";
+            list2 = gitModel.allEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
+            list2Placeholder = GitPlaceholder();
+            icon2 = StyledIcons.githubActive;
+            break;
+          case DashboardSocialSectionType.Git:
+            list1Title = "GITHUB RECENT ACTIVITY";
+            list1Placeholder = GitPlaceholder();
+            list1 = gitModel.allEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
+            icon1 = StyledIcons.githubActive;
+            list2Title = "TRENDING REPOSITORIES";
+            list2Placeholder = GitPlaceholder(isTrending: true);
+            list2 = gitModel.popularRepos.map((repo) => GitRepoListItem(repo)).take(maxItems).toList();
+            icon2 = StyledIcons.githubActive;
+            break;
+          case DashboardSocialSectionType.Twitter:
+            list1 = twitterModel.allTweets.map((e) => TweetListItem(e)).take(maxItems).toList();
+            list1Placeholder = TwitterPlaceholder();
+            list1Title = "TWITTER RECENT ACTIVITY";
+            icon1 = StyledIcons.twitterActive;
+            list2 = twitterModel.popularTweets.map((e) => TweetListItem(e)).take(maxItems).toList();
+            list2Placeholder = TwitterPlaceholder(isPopular: true);
+            list2Title = "POPULAR TWEETS";
+            icon2 = StyledIcons.twitterActive;
+            break;
         }
 
         return Column(

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/listenable_builder.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/_internal/widget_view.dart';
@@ -19,7 +18,7 @@ class ContactsPage extends StatefulWidget {
   final List<ContactData> checkedContacts;
   final ContactData selectedContact;
 
-  const ContactsPage({Key key, this.searchEngine, this.checkedContacts, this.selectedContact}) : super(key: key);
+  const ContactsPage({Key? key, required this.searchEngine, this.checkedContacts = const<ContactData>[], required this.selectedContact}) : super(key: key);
 
   @override
   ContactsPageState createState() => ContactsPageState();

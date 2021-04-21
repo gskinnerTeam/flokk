@@ -115,7 +115,7 @@ class MultilineClickableIconRow extends StatelessWidget {
   final void Function(String)? onPressed;
   final AssetImage? icon;
   final List<Tuple2<String, String>> rows;
-  final SeparatorBuilder separator;
+  final SeparatorBuilder? separator;
   final double size;
   final Color? iconColor;
   final String editType;
@@ -125,7 +125,7 @@ class MultilineClickableIconRow extends StatelessWidget {
     this.icon,
     this.rows = const <Tuple2<String, String>>[],
     this.onPressed,
-    required this.separator,
+    this.separator,
     this.size = 20,
     this.iconColor,
     required this.editType,

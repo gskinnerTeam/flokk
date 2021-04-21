@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/social_activity_type.dart';
@@ -12,7 +11,7 @@ import 'package:flutter/material.dart';
 class ContactSocialMiniForm extends BaseMiniForm {
   final SocialActivityType type;
 
-  ContactSocialMiniForm(ContactEditFormState form, this.type, {Key key})
+  ContactSocialMiniForm(ContactEditFormState form, this.type, {Key? key})
       : super(form, type == SocialActivityType.Git ? ContactSectionType.github : ContactSectionType.twitter, key: key);
 
   bool get isGit => type == SocialActivityType.Git;

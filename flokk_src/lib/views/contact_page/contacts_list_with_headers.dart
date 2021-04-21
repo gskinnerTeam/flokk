@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/contacts_model.dart';
@@ -21,14 +20,14 @@ class ContactsListWithHeaders extends StatefulWidget {
   final bool showHeaders;
 
   const ContactsListWithHeaders({
-    Key key,
-    this.contacts,
-    this.orderBy,
-    this.orderDesc,
-    this.showHeaders,
-    this.checkedContacts,
-    this.selectedContact,
-    this.searchMode,
+    Key? key,
+    this.contacts = const<ContactData>[],
+    this.orderBy = ContactOrderBy.FirstName,
+    this.orderDesc = false,
+    this.showHeaders = false,
+    this.checkedContacts = const<ContactData>[],
+    required this.selectedContact,
+    this.searchMode = false,
   }) : super(key: key);
 
   @override
@@ -41,9 +40,8 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
   List<ContactData> get checked => widget.checkedContacts;
 
   bool _getIsChecked(String id) {
-    if (id == null) return false;
-    ContactData c = widget.checkedContacts?.firstWhere((_c) => _c.id == id, orElse: () => null);
-    return c != null;
+    ContactData c = widget.checkedContacts.firstWhere((_c) => _c.id == id, orElse: () => ContactData());
+    return c != ContactData();
   }
 
   Tuple2<List<ContactData>, int> getSortedContactsWithFavoriteCount() {
@@ -68,8 +66,8 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
             /// LIST / HEADER COLUMN
             Column(
               children: <Widget>[
-                /// Header: Pass a null contact, the renderer will switch to header mode
-                ContactsListRow(null, parentWidth: constraints.maxWidth)
+                /// Header: Pass an empty contact, the renderer will switch to header mode
+                ContactsListRow(ContactData(), parentWidth: constraints.maxWidth)
                     .constrained(height: 48)
                     .padding(right: Insets.lGutter - Insets.sm),
 
@@ -106,7 +104,7 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
                         key: ValueKey(c.id),
                         // Pass our width into the renderers as an optimization, so they don't need to calculate their own
                         parentWidth: constraints.maxWidth,
-                        isSelected: c.id == widget.selectedContact?.id,
+                        isSelected: c.id == widget.selectedContact.id,
                         isChecked: _getIsChecked(c.id),
                       );
                     }

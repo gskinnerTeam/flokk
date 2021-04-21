@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/components/seperated_flexibles.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
@@ -9,7 +8,7 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 
 class ContactNameMiniForm extends BaseMiniForm {
-  ContactNameMiniForm(ContactEditFormState form, {Key key}) : super(form, ContactSectionType.name, key: key);
+  ContactNameMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.name, key: key);
 
   @override
   Widget build(BuildContext context) {

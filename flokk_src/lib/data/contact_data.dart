@@ -83,37 +83,37 @@ class ContactData {
   @JsonKey(ignore: true)
   String profilePicBase64 = ""; //base 64 encoded bytes of profile pic (from picker)
   @JsonKey(ignore: true)
-  Uint8List profilePicBytes = Uint8List(0); //raw bytes of profile pic (from picker)
+  Uint8List profilePicBytes; //raw bytes of profile pic (from picker)
   @JsonKey(ignore: true)
   bool hasNewProfilePic = false;
 
   //Phone
-  List<PhoneData> phoneList = [];
+  List<PhoneData> phoneList = const [];
 
   //Email
-  List<EmailData> emailList = [];
+  List<EmailData> emailList = const [];
 
   //Address
-  List<AddressData> addressList = [];
+  List<AddressData> addressList = const [];
 
   //Instant Messaging
-  List<InstantMessageData> imList = [];
+  List<InstantMessageData> imList = const [];
 
   //User fields
-  Map<String, String> customFields = {};
+  Map<String, String> customFields = const {};
 
   //Web Sites
-  List<WebsiteData> websiteList = [];
+  List<WebsiteData> websiteList = const [];
 
   //Relations
-  List<RelationData> relationList = [];
+  List<RelationData> relationList = const [];
 
   //Labels
   @JsonKey(ignore: true)
-  List<GroupData> groupList = [];
+  List<GroupData> groupList = const [];
 
   //Events
-  List<EventData> eventList = [];
+  List<EventData> eventList = const [];
 
   ContactData();
 
