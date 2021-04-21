@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/api_keys.dart';
 import 'package:flokk/commands/abstract_command.dart';
@@ -16,8 +15,10 @@ class WebSignInCommand extends AbstractCommand {
         scopes: ['https://www.googleapis.com/auth/contacts'],
       );
 
-      GoogleSignInAccount account = silentSignIn ? await gs.signInSilently() : await gs.signIn();
-      GoogleSignInAuthentication auth = await account.authentication;
+      GoogleSignInAccount? account = silentSignIn ? await gs.signInSilently() : await gs.signIn();
+      GoogleSignInAuthentication? auth;
+      if (account != null)
+        auth = await account.authentication;
 
       if (auth != null) {
         Log.p("[WebSignInCommand] Success");

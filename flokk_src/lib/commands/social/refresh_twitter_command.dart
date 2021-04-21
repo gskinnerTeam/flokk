@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/dialogs/show_service_error_command.dart';
@@ -40,7 +39,7 @@ class RefreshTwitterCommand extends AbstractCommand {
           break;
       }
 
-      List<Tweet> tweets = result?.content ?? [];
+      List<Tweet> tweets = result.content ?? [];
       twitterModel.addTweets(twitterHandle, tweets);
       twitterModel.isLoading = false;
       twitterModel.scheduleSave();

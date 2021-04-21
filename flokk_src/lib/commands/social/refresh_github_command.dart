@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/dialogs/show_service_error_command.dart';
@@ -43,7 +42,7 @@ class RefreshGithubCommand extends AbstractCommand {
       //Fetch the repos for each event contact was involved in
       for (var n in events) {
         //The full name of the repo is populated in Event.repo.name, but once Repository is fetched, Repository.fullName will be populated
-        String fullName = n.event.repo.name;
+        String fullName = n.event.repo?.name ?? "";
 
         if (githubModel.repoIsStale(fullName)) {
           ServiceResult<GitRepo> repoResult = await gitService.getRepo(fullName);

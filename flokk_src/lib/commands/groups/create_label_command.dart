@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/data/group_data.dart';
@@ -11,16 +10,15 @@ class CreateLabelCommand extends AbstractCommand with AuthorizedServiceCommandMi
   Future<GroupData> execute(String labelName) async {
     Log.p("[CreateLabelCommand]");
     GroupData newGroup = GroupData()..name = labelName;
-    ServiceResult<GroupData> result;
-    await executeAuthServiceCmd(() async {
-      result = await googleRestService.groups.create(authModel.googleAccessToken, newGroup);
+    ServiceResult<GroupData> result = await executeAuthServiceCmd(() async {
+      ServiceResult<GroupData> result = await googleRestService.groups.create(authModel.googleAccessToken, newGroup);
       newGroup = result.content;
 
       if (result.success) {
         contactsModel.allGroups.add(newGroup);
       }
-      return result.response;
+      return result;
     });
-    return result.success ? newGroup : null;
+    return result.success ? newGroup : GroupData();
   }
 }

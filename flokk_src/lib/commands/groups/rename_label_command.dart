@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/data/group_data.dart';
@@ -9,15 +8,14 @@ class RenameLabelCommand extends AbstractCommand with AuthorizedServiceCommandMi
   RenameLabelCommand(BuildContext c) : super(c);
 
   Future<GroupData> execute(GroupData group) async {
-    if (group == null) return null;
+    if (group == GroupData()) return group;
     Log.p("[RenameLabelCommand]");
-    ServiceResult<GroupData> result;
-    await executeAuthServiceCmd(() async {
-      result = await googleRestService.groups.set(authModel.googleAccessToken, group);
+    ServiceResult<GroupData> result = await executeAuthServiceCmd(() async {
+      ServiceResult<GroupData> result = await googleRestService.groups.set(authModel.googleAccessToken, group);
       if (result.success) {
         contactsModel.swapGroupById(result.content);
       }
-      return result.response;
+      return result;
     });
     return result.success ? result.content : null;
   }

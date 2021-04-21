@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/contacts/refresh_contacts_command.dart';
@@ -12,7 +11,7 @@ class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
   DeletePicCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact) async {
-    if (contact == null || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return false;
     Log.p("[DeletePicCommand]");
 
     bool doDelete = await Dialogs.show(
@@ -28,16 +27,15 @@ class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
 
     //TODO: replace the profile pic
     //Update local data optimistically
-    ServiceResult result;
-    await executeAuthServiceCmd(() async {
+    ServiceResult result = await executeAuthServiceCmd(() async {
       //Update remove database
-      result = await googleRestService.contacts.deletePic(authModel.googleAccessToken, contact);
+      ServiceResult result = await googleRestService.contacts.deletePic(authModel.googleAccessToken, contact);
       //Request succeeded?
       if (result.success) {
         RefreshContactsCommand(context).execute();
       }
-      return result.response;
+      return result;
     });
-    return result?.success;
+    return result.success;
   }
 }

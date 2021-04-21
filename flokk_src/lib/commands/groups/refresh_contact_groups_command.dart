@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
@@ -21,9 +20,9 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
 
       await executeAuthServiceCmd(() async {
         GoogleRestContactGroupsService groupsApi = googleRestService.groups;
-        HttpResponse response;
+        ServiceResult<GroupData> result = ServiceResult(null, null);
         if (onlyStarred) {
-          ServiceResult<GroupData> result =
+          result =
               await groupsApi.getById(authModel.googleAccessToken, GoogleRestService.kStarredGroupId);
           if (result.success) {
             GroupData starred = contactsModel.getGroupById(GoogleRestService.kStarredGroupId);
@@ -33,7 +32,6 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
               contactsModel.allGroups.add(starred);
             }
           }
-          response = result.response;
         } else {
           ServiceResult<Tuple2<List<GroupData>, String>> result = await groupsApi.get(authModel.googleAccessToken);
           List<GroupData> groups = result.content.item1;
@@ -46,7 +44,7 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
             nextPageToken = result.content.item2;
           }
 
-          if (groups != null && result.success) {
+          if (groups.isNotEmpty && result.success) {
             //Need to fetch each individual group to get members list
             for (int i = 0; i < groups.length; i++) {
               if (groups[i].memberCount > 0 || groups[i].id == GoogleRestService.kStarredGroupId) {
@@ -60,10 +58,9 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
             contactsModel.allGroups = groups;
             contactsModel.scheduleSave();
           }
-          response = result.response;
-          Log.p("Groups loaded = ${groups?.length ?? 0}");
+          Log.p("Groups loaded = ${groups.length}");
         }
-        return response;
+        return result;
       });
     }
     return contactsModel.allGroups;

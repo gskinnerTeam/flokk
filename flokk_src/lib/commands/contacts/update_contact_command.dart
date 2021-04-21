@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/contacts/refresh_contacts_command.dart';
@@ -12,11 +11,11 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
   UpdateContactCommand(BuildContext c) : super(c);
 
   Future<ContactData> execute(ContactData contact, {bool updateSocial: false, bool tryAgainOnError = true}) async {
-    if (contact == null || AppModel.forceIgnoreGoogleApiCalls) return null;
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return ContactData();
     Log.p("[UpdateContactCommand]");
 
-    ServiceResult<ContactData> result;
-    await executeAuthServiceCmd(() async {
+    ServiceResult<ContactData> result = await executeAuthServiceCmd(() async {
+      ServiceResult<ContactData> result;
       if (contact.isNew) {
         /// Update remote database
         result = await googleRestService.contacts.create(authModel.googleAccessToken, contact);
@@ -66,7 +65,7 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
         }
       }
 
-      return result.response;
+      return result;
     });
     return result.success ? result.content : null;
   }

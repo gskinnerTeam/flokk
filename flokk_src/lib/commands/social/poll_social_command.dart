@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/social/refresh_social_command.dart';

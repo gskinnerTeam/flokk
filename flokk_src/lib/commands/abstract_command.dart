@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/commands/dialogs/show_service_error_command.dart';
 import 'package:flokk/commands/refresh_auth_tokens_command.dart';
@@ -11,15 +10,16 @@ import 'package:flokk/models/twitter_model.dart';
 import 'package:flokk/services/github_rest_service.dart';
 import 'package:flokk/services/google_rest/google_rest_service.dart';
 import 'package:flokk/services/twitter_rest_service.dart';
+import 'package:flokk/services/service_result.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 abstract class AbstractCommand {
-  static BuildContext _lastKnownRoot;
+  static BuildContext? _lastKnownRoot;
 
   /// Provide all commands access to the global context & navigator
-  BuildContext context;
+  late BuildContext context;
 
   NavigatorState get rootNav => AppGlobals.nav;
 
@@ -67,7 +67,7 @@ mixin AuthorizedServiceCommandMixin on AbstractCommand {
   bool ignoreErrors = false;
 
   /// Runs a service that refreshes Auth if needed, and checks for errors on completion
-  Future<void> executeAuthServiceCmd(Future<HttpResponse> Function() cmd) async {
+  Future<ServiceResult<T>> executeAuthServiceCmd<T>(Future<ServiceResult<T>> Function() cmd) async {
     /// Bail early if we're offline
     if (!appModel.isOnline) {
       Dialogs.show(OkCancelDialog(
@@ -81,11 +81,13 @@ mixin AuthorizedServiceCommandMixin on AbstractCommand {
     await RefreshAuthTokensCommand(context).execute(onlyIfExpired: true);
 
     /// Execute command
-    HttpResponse r = await cmd();
+    ServiceResult<T> r = await cmd();
 
     /// Check for errors
-    if (!ignoreErrors && r != null) {
-      ShowServiceErrorCommand(context).execute(r);
+    if (!ignoreErrors && r.response != null) {
+      ShowServiceErrorCommand(context).execute(r.response);
     }
+
+    return r;
   }
 }

@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/groups/refresh_contact_groups_command.dart';
@@ -13,14 +12,14 @@ class RefreshContactsCommand extends AbstractCommand with AuthorizedServiceComma
   Future<ServiceResult> execute({bool skipGroups = false}) async {
     Log.p("[RefreshContactsCommand]");
 
-    ServiceResult<GetContactsResult> result;
-    await executeAuthServiceCmd(() async {
+    ServiceResult<GetContactsResult> result = await executeAuthServiceCmd(() async {
       // Check if we have a sync token...
       String syncToken = authModel.googleSyncToken ?? "";
-      if(contactsModel.allContacts.isEmpty){
-        syncToken = null;
+      if (contactsModel.allContacts.isEmpty) {
+        syncToken = "";
       }
-      result = await googleRestService.contacts.getAll(authModel.googleAccessToken, syncToken);
+      ServiceResult<GetContactsResult> result =
+          await googleRestService.contacts.getAll(authModel.googleAccessToken, syncToken);
       // Now do we have a sync token?
       syncToken = result.content.syncToken ?? "";
       List<ContactData> contacts = result.content.contacts ?? [];
@@ -42,8 +41,8 @@ class RefreshContactsCommand extends AbstractCommand with AuthorizedServiceComma
       if (!skipGroups) {
         await RefreshContactGroupsCommand(context).execute();
       }
-      Log.p("Contacts loaded = ${contacts?.length ?? 0}");
-      return result.response;
+      Log.p("Contacts loaded = ${contacts.length}");
+      return result;
     });
     return result;
   }

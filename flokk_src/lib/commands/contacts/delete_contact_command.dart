@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/contacts/refresh_contacts_command.dart';
@@ -12,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 class DeleteContactCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   DeleteContactCommand(BuildContext c) : super(c);
 
-  Future<bool> execute(List<ContactData> contacts, {Function() onDeleteConfirmed}) async {
+  Future<bool> execute(List<ContactData> contacts, {VoidCallback? onDeleteConfirmed}) async {
     if (contacts == null || contacts.isEmpty || AppModel.forceIgnoreGoogleApiCalls) return false;
     Log.p("[DeleteContactCommand]");
     String txt = contacts.length > 1 ? "these ${contacts.length} contacts" : "this contact";
@@ -29,8 +28,7 @@ class DeleteContactCommand extends AbstractCommand with AuthorizedServiceCommand
     onDeleteConfirmed?.call();
 
     GoogleRestContactsService service = googleRestService.contacts;
-    ServiceResult result;
-    await executeAuthServiceCmd(() async {
+    ServiceResult result = await executeAuthServiceCmd(() async {
       /// Update local data optimistically
       for (var c in contacts) {
         contactsModel.removeContact(c);
@@ -42,11 +40,11 @@ class DeleteContactCommand extends AbstractCommand with AuthorizedServiceCommand
       // Dispatch them all at once
       List<ServiceResult> results = await Future.wait(futures);
       //Request succeeded?
-      result = results[0];
+      ServiceResult result = results[0];
       if (result.success) {
         RefreshContactsCommand(context).execute();
       }
-      return result.response;
+      return result;
     });
     return result.success;
   }
