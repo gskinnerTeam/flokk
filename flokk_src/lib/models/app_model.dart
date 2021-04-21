@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/abstract_model.dart';
 import 'package:flokk/models/contacts_model.dart';
@@ -63,7 +62,7 @@ class AppModel extends AbstractModel {
   /// /////////////////////////////////////////////////
   /// Current dashboard sections (serialized)
   DashboardContactsSectionType get dashContactsSection => _dashContactsSection;
-  DashboardContactsSectionType _dashContactsSection;
+  DashboardContactsSectionType _dashContactsSection = DashboardContactsSectionType.Favorites;
 
   set dashContactsSection(DashboardContactsSectionType value) {
     _dashContactsSection = value;
@@ -71,7 +70,7 @@ class AppModel extends AbstractModel {
   }
 
   DashboardSocialSectionType get dashSocialSection => _dashSocialSection;
-  DashboardSocialSectionType _dashSocialSection;
+  DashboardSocialSectionType _dashSocialSection = DashboardSocialSectionType.All;
 
   set dashSocialSection(DashboardSocialSectionType value) {
     _dashSocialSection = value;
@@ -80,10 +79,10 @@ class AppModel extends AbstractModel {
 
   /// //////////////////////////////////////////////////
   /// Selected edit target, controls visibility of the edit panel and selected rows in the various views
-  ContactData get selectedContact => _selectedContact;
-  ContactData _selectedContact;
+  ContactData get selectedContact => _selectedContact ?? ContactData();
+  ContactData? _selectedContact;
 
-  void touchSelectedSocial() => contactsModel.touchSocialById(selectedContact?.id);
+  void touchSelectedSocial() => contactsModel.touchSocialById(selectedContact.id);
 
   /// Current selected edit target, controls visibility of the edit panel
   set selectedContact(ContactData value) {
@@ -109,7 +108,7 @@ class AppModel extends AbstractModel {
   /// //////////////////////////////////////////////////
   /// Holds current page type, synchronizes leftMenu with the mainContent
   PageType get currentMainPage => _currentMainPage;
-  PageType _currentMainPage;
+  PageType _currentMainPage = PageType.None;
 
   set currentMainPage(PageType value) {
     _currentMainPage = value;
@@ -129,7 +128,7 @@ class AppModel extends AbstractModel {
   /// //////////////////////////////////////////
   /// Current Theme (serialized)
   ThemeType get theme => _theme;
-  ThemeType _theme;
+  ThemeType _theme = ThemeType.FlockGreen;
 
   set theme(ThemeType value) {
     _theme = value;
