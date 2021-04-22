@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/url_launcher/url_launcher.dart';
 import 'package:flokk/_internal/utils/path.dart';
 import 'package:flokk/_internal/utils/picker.dart';
@@ -12,8 +11,8 @@ class NativeSmokeTest extends StatefulWidget {
 }
 
 class _NativeSmokeTestState extends State<NativeSmokeTest> {
-  String _dataPath;
-  String _imagePath;
+  late String _dataPath;
+  late String _imagePath;
 
   @override
   void initState() {
@@ -28,7 +27,7 @@ class _NativeSmokeTestState extends State<NativeSmokeTest> {
   }
 
   void _handlePickImage() async {
-    final imagePath = await pickImage(confirmText: "Choose Image");
+    final imagePath = await pickImage(confirmText: "Choose Image") ?? "";
 
     setState(() => _imagePath = imagePath);
   }

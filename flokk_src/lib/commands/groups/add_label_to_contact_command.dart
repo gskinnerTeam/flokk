@@ -1,3 +1,4 @@
+import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/commands/abstract_command.dart';
@@ -14,14 +15,14 @@ class AddLabelToContactCommand extends AbstractCommand with AuthorizedServiceCom
     Log.p("[AddLabelToContactCommand]");
     await executeAuthServiceCmd(() async {
       GroupData group = GroupData();
-      if (!StringUtils.isEmpty(newLabel)) {
+      if (newLabel.isNotEmpty) {
         //create a new label
         group = await CreateLabelCommand(context).execute(newLabel);
       } else if (existingGroup != GroupData()) {
         //use existing label
         group = existingGroup;
       }
-      ServiceResult result = ServiceResult(null, null);
+      ServiceResult result = ServiceResult(null, HttpResponse.error());
       if (group != GroupData()) {
         result = await googleRestService.groups.modify(authModel.googleAccessToken, group, addContacts: contacts);
       }

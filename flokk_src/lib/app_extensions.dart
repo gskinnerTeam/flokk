@@ -1,4 +1,3 @@
-// @dart=2.9
 export 'package:flokk/_internal/components/animated_panel.dart';
 export 'package:flokk/_internal/components/clickable_extensions.dart';
 export 'package:sized_context/sized_context.dart';

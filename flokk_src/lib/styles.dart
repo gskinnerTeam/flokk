@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/app_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,14 +34,14 @@ class PageBreaks {
 }
 
 class Insets {
-  static const double gutterScale = 1;
+  static double gutterScale = 1;
 
   static const double scale = 1;
 
   /// Dynamic insets, may get scaled with the device size
-  static const double mGutter = m * gutterScale;
+  static double mGutter = m * gutterScale;
 
-  static const double lGutter = l * gutterScale;
+  static double lGutter = l * gutterScale;
 
   static const double xs = 2 * scale;
 
@@ -138,19 +137,19 @@ class Shadows {
     return enabled
         ? [
             BoxShadow(
-              color: color.withOpacity(opacity ?? .03),
+              color: color.withOpacity(opacity),
               blurRadius: mRadius,
               spreadRadius: mRadius / 2,
               offset: Offset(1, 0),
             ),
             BoxShadow(
-              color: color.withOpacity(opacity ?? .04),
+              color: color.withOpacity(opacity),
               blurRadius: mRadius / 2,
               spreadRadius: mRadius / 4,
               offset: Offset(1, 0),
             )
           ]
-        : null;
+        : const<BoxShadow>[];
   }
 }
 

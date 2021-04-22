@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/data/group_data.dart';
 import 'package:flokk/data/social_activity_type.dart';

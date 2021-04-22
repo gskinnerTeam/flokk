@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/dialogs/show_service_error_command.dart';
@@ -14,7 +13,7 @@ class AuthenticateTwitterCommand extends AbstractCommand {
 
     ServiceResult<TwitterAuthResult> result = await twitterService.getAuth();
     if (result.success) {
-      twitterModel.twitterAccessToken = result.content.accessToken;
+      twitterModel.twitterAccessToken = result.content?.accessToken ?? "";
       twitterModel.scheduleSave();
       return twitterModel.twitterAccessToken;
     } else {
