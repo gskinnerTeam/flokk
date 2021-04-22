@@ -1,4 +1,5 @@
 import 'package:flokk/_internal/log.dart';
+import "package:flokk/_internal/utils/date_utils.dart";
 import "package:flokk/_internal/utils/string_utils.dart";
 import "package:flokk/models/abstract_model.dart";
 import 'package:google_sign_in/google_sign_in.dart';
@@ -63,7 +64,7 @@ class AuthModel extends AbstractModel {
       ..googleRefreshToken = json["googleRefreshToken"]
       ..googleSyncToken = json["googleSyncToken"]
       ..googleEmail = json["googleEmail"]
-      .._expiry = json["_expiry"] != null ? DateTime.parse(json["_expiry"]) : DateTime.fromMillisecondsSinceEpoch(0);
+      .._expiry = json["_expiry"] != null ? DateTime.parse(json["_expiry"]) : Dates.epoch;
     ;
   }
 

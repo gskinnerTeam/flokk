@@ -1,4 +1,4 @@
-// @dart=2.9
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/data/date_sortable_interface.dart';
 import 'package:github/github.dart';
 
@@ -10,7 +10,7 @@ class GitEvent implements DateSortable {
   Event event = Event();
 
   @override
-  DateTime get createdAt => event.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0); //Read only
+  DateTime get createdAt => event.createdAt ?? Dates.epoch; //Read only
 
   @override
   void set createdAt(DateTime value) {}

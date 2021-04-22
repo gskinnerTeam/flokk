@@ -1,4 +1,4 @@
-// @dart=2.9
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/data/date_sortable_interface.dart';
 import 'package:flokk/data/twitter_user_data.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -31,7 +31,7 @@ class Tweet implements DateSortable {
   //Tweet dates use a Date string that is not compatible with DateTime.parse(), have to manually parse
   @override
   @JsonKey(ignore: true)
-  DateTime createdAt = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime createdAt = Dates.epoch;
 
   //Url is populated at runtime based on tweet id
   @JsonKey(ignore: true)
@@ -43,7 +43,7 @@ class Tweet implements DateSortable {
 
   static DateTime parseTwitterDateTime(String s) {
     final r = RegExp(r"\w+\s(\w+)\s(\d+)\s([\d:]+)\s\+\d{4}\s(\d{4})");
-    RegExpMatch m = r.firstMatch(s);
+    RegExpMatch? m = r.firstMatch(s);
 
     String year = m?.group(4) ?? "1970";
     String month = m?.group(1) ?? "01";

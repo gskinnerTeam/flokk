@@ -1,4 +1,3 @@
-// @dart=2.9
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'contact_data.dart';

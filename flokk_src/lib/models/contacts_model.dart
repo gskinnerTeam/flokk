@@ -1,4 +1,5 @@
 import 'package:flokk/_internal/log.dart';
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/data/group_data.dart';
@@ -10,14 +11,11 @@ import 'package:flokk/services/google_rest/google_rest_service.dart';
 import 'package:tuple/tuple.dart';
 
 class ContactsModel extends AbstractModel {
-  final DateTime epoch = DateTime.fromMillisecondsSinceEpoch(0);
-
   final gitEventsCooldown = Duration(minutes: 5);
   final tweetsCooldown = Duration(minutes: 1);
   final contactGroupsCooldown = Duration(seconds: 20);
 
-  DateTime lastUpdatedGroups = DateTime.fromMillisecondsSinceEpoch(
-      0); //can't just use epoch because "only static members can be used in initializers"
+  DateTime lastUpdatedGroups = Dates.epoch;
 
   ContactsModel() {
     enableSerialization("contacts.dat");
@@ -107,26 +105,26 @@ class ContactsModel extends AbstractModel {
   }
 
   void clearGitCooldown(ContactData contact) {
-    getSocialById(contact.id).lastUpdatedGit = epoch;
-    getSocialById(contact.id).lastCheckedGit = epoch;
+    getSocialById(contact.id).lastUpdatedGit = Dates.epoch;
+    getSocialById(contact.id).lastCheckedGit = Dates.epoch;
   }
 
   void clearTwitterCooldown(ContactData contact) {
-    getSocialById(contact.id).lastUpdatedTwitter = epoch;
-    getSocialById(contact.id).lastCheckedTweets = epoch;
+    getSocialById(contact.id).lastUpdatedTwitter = Dates.epoch;
+    getSocialById(contact.id).lastCheckedTweets = Dates.epoch;
   }
 
   bool canRefreshGitEventsFor(String gitUsername) {
-    DateTime lastUpdate = getSocialContactByGit(gitUsername).lastUpdatedGit ?? epoch;
+    DateTime lastUpdate = getSocialContactByGit(gitUsername).lastUpdatedGit;
     return DateTime.now().difference(lastUpdate) > gitEventsCooldown;
   }
 
   bool canRefreshTweetsFor(String twitterHandle) {
-    DateTime lastUpdate = getSocialContactByTwitter(twitterHandle)?.lastUpdatedTwitter ?? epoch;
+    DateTime lastUpdate = getSocialContactByTwitter(twitterHandle).lastUpdatedTwitter;
     return DateTime.now().difference(lastUpdate) > tweetsCooldown;
   }
 
-  bool get canRefreshContactGroups => DateTime.now().difference(lastUpdatedGroups ?? epoch) > contactGroupsCooldown;
+  bool get canRefreshContactGroups => DateTime.now().difference(lastUpdatedGroups) > contactGroupsCooldown;
 
   //Updates the timestamps when social feeds are refreshed for contact
   void updateSocialTimestamps({String twitterHandle = "", String gitUsername = ""}) {
@@ -164,7 +162,7 @@ class ContactsModel extends AbstractModel {
 
   //Get a list of contacts with the most recent activity
   List<SocialContactData> get mostRecentSocialContacts => allSocialContacts
-    ..sort((a, b) => (b.latestActivity?.createdAt ?? epoch).compareTo(a.latestActivity?.createdAt ?? epoch));
+    ..sort((a, b) => (b.latestActivity.createdAt).compareTo(a.latestActivity.createdAt));
 
   SocialContactData getSocialById(String id) {
     if (id.isEmpty) return SocialContactData();

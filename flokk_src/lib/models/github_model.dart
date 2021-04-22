@@ -1,3 +1,4 @@
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/data/git_event_data.dart';
 import 'package:flokk/data/git_repo_data.dart';
@@ -7,7 +8,6 @@ import 'package:github/github.dart';
 import 'package:tuple/tuple.dart';
 
 class GithubModel extends AbstractModel {
-  final DateTime epoch = DateTime.fromMillisecondsSinceEpoch(0);
   final expiry = Duration(days: 30); //the period of which to cull events based on createdAt
   final repoStaleTime = Duration(hours: 72);
   ContactsModel contactsModel;
@@ -59,7 +59,7 @@ class GithubModel extends AbstractModel {
 
   bool repoIsStale(String repoFullName) =>
       !repoExists(repoFullName) ||
-      DateTime.now().difference(_reposHash[repoFullName]?.lastUpdated ?? epoch) > repoStaleTime;
+      DateTime.now().difference(_reposHash[repoFullName]?.lastUpdated ?? Dates.epoch) > repoStaleTime;
 
   //Get all user repos
   List<GitRepo> get allRepos {
@@ -92,7 +92,7 @@ class GithubModel extends AbstractModel {
               repoNames.any((e) => e == x.repository.fullName))
           .map((x) => x
             ..contacts = [contact]
-            ..latestActivityDate = x.repository.updatedAt)
+            ..latestActivityDate = x.repository.updatedAt ?? Dates.epoch)
           .toList();
       return repos;
     } else {
@@ -105,9 +105,9 @@ class GithubModel extends AbstractModel {
     List<Tuple2<int, GitRepo>> popular = [];
     for (var n in allRepos) {
       int pts = 0;
-      pts += (n.repository.stargazersCount ?? 0) * 3;
-      pts += (n.repository.forksCount ?? 0) * 2;
-      pts += (n.repository.watchersCount ?? 0) * 1;
+      pts += (n.repository.stargazersCount) * 3;
+      pts += (n.repository.forksCount) * 2;
+      pts += (n.repository.watchersCount) * 1;
 
       //All events associated with this repo
       List<GitEvent> associatedEvents = _eventsHash.values
@@ -127,7 +127,7 @@ class GithubModel extends AbstractModel {
       associatedEvents.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       DateTime latestActivityDate = (associatedEvents.isNotEmpty && n.repository.updatedAt != null)
           ? associatedEvents.first.createdAt
-          : n.repository.updatedAt ?? DateTime.fromMillisecondsSinceEpoch(0);
+          : n.repository.updatedAt ?? Dates.epoch;
 
       if (associatedContacts.isNotEmpty) {
         popular.add(Tuple2<int, GitRepo>(
@@ -147,13 +147,13 @@ class GithubModel extends AbstractModel {
   //Get all events sorted by time
   List<GitEvent> get allEvents {
     final sorted = _eventsHash.values.toList().expand((x) => x).toList();
-    sorted.sort((a, b) => (b.createdAt ?? epoch).compareTo(a.createdAt ?? epoch));
+    sorted.sort((a, b) => (b.createdAt).compareTo(a.createdAt));
 
     //inject the repos data for each event
     for (var n in sorted) {
-      n.repository = _reposHash[n.event?.repo?.name]?.repository ??
+      n.repository = _reposHash[n.event.repo?.name]?.repository ??
           Repository(
-              id: n.event?.repo?.id ?? 0, name: n.event?.repo?.name ?? "", htmlUrl: n.event?.repo?.htmlUrl ?? "");
+              id: n.event.repo?.id ?? 0, name: n.event.repo?.name ?? "", htmlUrl: n.event.repo?.htmlUrl ?? "");
     }
 
     return sorted;

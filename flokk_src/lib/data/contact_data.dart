@@ -1,7 +1,7 @@
-// @dart=2.9
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/data/group_data.dart';
 import 'package:flokk/data/social_activity_type.dart';
@@ -81,9 +81,9 @@ class ContactData {
   String profilePic = "";
   bool isDefaultPic = true;
   @JsonKey(ignore: true)
-  String profilePicBase64 = ""; //base 64 encoded bytes of profile pic (from picker)
+  String? profilePicBase64; //base 64 encoded bytes of profile pic (from picker)
   @JsonKey(ignore: true)
-  Uint8List profilePicBytes; //raw bytes of profile pic (from picker)
+  Uint8List? profilePicBytes; //raw bytes of profile pic (from picker)
   @JsonKey(ignore: true)
   bool hasNewProfilePic = false;
 
@@ -169,9 +169,9 @@ class ContactData {
 
   /// ////////////////////////////////////////////////
   /// SEARCHABLE
-  String _searchable;
+  late final String _searchable = _getSearchableFields().toLowerCase();
 
-  String get searchable => _searchable ??= _getSearchableFields().toLowerCase();
+  String get searchable => _searchable;
 
   String _getSearchableFields() => "$nameGiven $nameMiddle $nameFamily $nameMiddlePhonetic $nameGivenPhonetic "
       "$namePrefix $nameSuffix $nameFull $twitterHandle $gitUsername $notes $birthday $nickname"
@@ -235,7 +235,7 @@ class AddressData {
   Map<String, dynamic> toJson() => _$AddressDataToJson(this);
 
   String getFullAddress() {
-    String ss(String value, [String extra]) => StringUtils.safeGet(value, extra);
+    String ss(String value, [String? extra]) => StringUtils.safeGet(value, extra);
 
     String streetAddress = "${ss(street, ", ")}${ss(formattedAddress)}";
     String address = "${ss(streetAddress, " \n")}";

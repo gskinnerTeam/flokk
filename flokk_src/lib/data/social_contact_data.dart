@@ -1,4 +1,4 @@
-// @dart=2.9
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/data/date_sortable_interface.dart';
 import 'package:flokk/data/git_event_data.dart';
@@ -7,8 +7,8 @@ import 'package:flokk/data/tweet_data.dart';
 class SocialContactData {
   /* Populated at runtime */
   ContactData contact = ContactData();
-  List<Tweet> tweets = [];
-  List<GitEvent> gitEvents = [];
+  List<Tweet> tweets = const<Tweet>[];
+  List<GitEvent> gitEvents = const<GitEvent>[];
 
   //The number of new tweets since the last time user checked  (populates the indicator)
   List<Tweet> get newTweets => tweets.where((x) => x.createdAt.isAfter(lastCheckedTweets)).toList();
@@ -45,15 +45,15 @@ class SocialContactData {
   String contactId = "";
 
   //Field to be updated whenever the user checks user social feeds
-  DateTime lastCheckedTweets = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime lastCheckedTweets = Dates.epoch;
 
-  DateTime lastCheckedGit = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime lastCheckedGit = Dates.epoch;
 
   //Field to be updated whenever the data for tweets have been updated
-  DateTime lastUpdatedTwitter = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime lastUpdatedTwitter = Dates.epoch;
 
   //Field to be updated whenever the data for git events have been updated
-  DateTime lastUpdatedGit = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime lastUpdatedGit = Dates.epoch;
 
   SocialContactData();
 
@@ -64,11 +64,11 @@ class SocialContactData {
     return SocialContactData()
       ..contactId = json["contactId"] as String
       ..lastCheckedTweets =
-          json["lastCheckedTweets"] == null ? DateTime.fromMillisecondsSinceEpoch(0) : DateTime.parse(json["lastCheckedTweets"] as String)
-      ..lastCheckedGit = json["lastCheckedGit"] == null ? DateTime.fromMillisecondsSinceEpoch(0) : DateTime.parse(json["lastCheckedGit"] as String)
+          json["lastCheckedTweets"] == null ? Dates.epoch : DateTime.parse(json["lastCheckedTweets"] as String)
+      ..lastCheckedGit = json["lastCheckedGit"] == null ? Dates.epoch : DateTime.parse(json["lastCheckedGit"] as String)
       ..lastUpdatedTwitter =
-          json["lastUpdatedTwitter"] == null ? DateTime.fromMillisecondsSinceEpoch(0) : DateTime.parse(json["lastUpdatedTwitter"] as String)
-      ..lastUpdatedGit = json["lastUpdatedGit"] == null ? DateTime.fromMillisecondsSinceEpoch(0) : DateTime.parse(json["lastUpdatedGit"] as String);
+          json["lastUpdatedTwitter"] == null ? Dates.epoch : DateTime.parse(json["lastUpdatedTwitter"] as String)
+      ..lastUpdatedGit = json["lastUpdatedGit"] == null ? Dates.epoch : DateTime.parse(json["lastUpdatedGit"] as String);
   }
 
   Map<String, dynamic> toJson() {

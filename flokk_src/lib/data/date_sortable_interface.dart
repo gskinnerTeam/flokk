@@ -1,4 +1,5 @@
-// @dart=2.9
+import 'package:flokk/_internal/utils/date_utils.dart';
+
 class DateSortable {
-  DateTime createdAt = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime createdAt = Dates.epoch;
 }

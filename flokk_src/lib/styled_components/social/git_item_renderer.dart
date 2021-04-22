@@ -1,3 +1,4 @@
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/_internal/url_launcher/url_launcher.dart';
 import 'package:flokk/app_extensions.dart';
@@ -109,8 +110,8 @@ class GitRepoListItem extends StatelessWidget {
     return Column(
       children: [
         Row(children: [
-          Text("${repo.contacts?.first?.nameGiven ?? "?"}", style: titleStyle.bold),
-          Text("  ·  ${GitUtils.monthDayFmt.format(repo.repository.updatedAt ?? DateTime.fromMillisecondsSinceEpoch(0))}", style: titleStyle),
+          Text("${repo.contacts.first.nameGiven}", style: titleStyle.bold),
+          Text("  ·  ${GitUtils.monthDayFmt.format(repo.repository.updatedAt ?? Dates.epoch)}", style: titleStyle),
         ]),
         VSpace(Insets.xs * 1.5),
         GitRepoInfo(repo.repository),
