@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class StringUtils {
   static bool isEmpty(String? s) {
-    return (s ?? "").trim().isEmpty;
+    if (s == null) return true;
+    return s.trim().isEmpty;
   }
 
   static bool isNotEmpty(String s) => !isEmpty(s);

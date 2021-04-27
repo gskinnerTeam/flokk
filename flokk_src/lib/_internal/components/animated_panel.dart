@@ -7,7 +7,7 @@ class AnimatedPanel extends StatefulWidget {
   final double closedY;
   final double duration;
   final Curve curve;
-  final Widget? child;
+  final Widget child;
 
   const AnimatedPanel(
       {Key? key,
@@ -16,7 +16,7 @@ class AnimatedPanel extends StatefulWidget {
       this.closedY = 0,
       this.duration = .35,
       this.curve = Curves.easeOut,
-      this.child})
+      required this.child})
       : super(key: key);
 
   @override

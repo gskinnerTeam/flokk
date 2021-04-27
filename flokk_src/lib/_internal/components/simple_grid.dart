@@ -14,7 +14,7 @@ class SimpleGrid extends StatelessWidget {
     Key? key,
     this.hSpace = 0,
     this.vSpace = 0,
-    this.kids = const<Widget>[],
+    required this.kids,
     this.colCount = 2,
     this.kidHeight = 40,
     this.align = CrossAxisAlignment.start,

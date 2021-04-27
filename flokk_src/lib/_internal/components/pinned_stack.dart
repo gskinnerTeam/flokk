@@ -21,7 +21,7 @@ class PinnedStack extends StatelessWidget {
 
   const PinnedStack(
       {Key? key,
-      this.children = const <Widget>[],
+      required this.children,
       this.fit = StackFit.expand,
       this.alignment = Alignment.topLeft,
       this.textDirection = TextDirection.ltr,

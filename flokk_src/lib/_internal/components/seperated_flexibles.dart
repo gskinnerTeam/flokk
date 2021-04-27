@@ -14,7 +14,7 @@ class SeparatedRow extends StatelessWidget {
 
   const SeparatedRow({
     Key? key,
-    this.children = const <Widget>[],
+    required this.children,
     this.separatorBuilder,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
@@ -54,7 +54,7 @@ class SeparatedColumn extends StatelessWidget {
 
   const SeparatedColumn({
     Key? key,
-    this.children = const <Widget>[],
+    required this.children,
     this.separatorBuilder,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,

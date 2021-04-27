@@ -8,7 +8,7 @@ class ConstrainedFlexView extends StatelessWidget {
   final EdgeInsets scrollPadding;
 
   const ConstrainedFlexView(this.minSize,
-      {Key? key, required this.child, this.axis = Axis.vertical, required this.scrollPadding})
+      {Key? key, required this.child, this.axis = Axis.vertical, this.scrollPadding = const EdgeInsets.all(0)})
       : super(key: key);
 
   bool get isHz => axis == Axis.horizontal;

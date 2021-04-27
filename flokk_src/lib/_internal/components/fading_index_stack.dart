@@ -8,8 +8,8 @@ class FadingIndexedStack extends StatefulWidget {
 
   const FadingIndexedStack({
     Key? key,
-    this.index = 0,
-    this.children = const <Widget>[],
+    required this.index,
+    required this.children,
     this.duration = const Duration(
       milliseconds: 250,
     ),
