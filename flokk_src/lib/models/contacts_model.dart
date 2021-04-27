@@ -25,7 +25,7 @@ class ContactsModel extends AbstractModel {
   late GithubModel gitModel;
 
   //Groups
-  List<GroupData> get allGroups => _allGroups ?? [];
+  List<GroupData> get allGroups => _allGroups;
   List<GroupData> _allGroups = [GroupData()..name = ""];
 
   set allGroups(List<GroupData> value) {

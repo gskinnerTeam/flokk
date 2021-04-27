@@ -68,7 +68,7 @@ class StyledListViewState extends State<StyledListView> {
 
   @override
   Widget build(BuildContext context) {
-    double contentSize = (widget.itemCount ?? 0.0) * (widget.itemExtent ?? 00.0);
+    double contentSize = widget.itemCount * (widget.itemExtent ?? 0.0);
     Widget listContent = ScrollbarListStack(
       contentSize: contentSize,
       axis: widget.axis,

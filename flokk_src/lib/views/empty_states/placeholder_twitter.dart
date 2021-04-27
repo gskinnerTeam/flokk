@@ -14,7 +14,7 @@ class TwitterPlaceholder extends StatelessWidget {
 
   void _handleLinkPressed(BuildContext context) {
     //If in single-contact mode, try and edit the selected contact
-    if (contact != null) {
+    if (contact != ContactData()) {
       showSocial(context, ContactSectionType.github);
     }
     // Try and move to ContactList page

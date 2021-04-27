@@ -7,7 +7,7 @@ class TwitterUser {
   int id = 0;
   String name = "";
 
-  @JsonKey(name: "screen_name", defaultValue: 0)
+  @JsonKey(name: "screen_name", defaultValue: "")
   String screenName = "";
 
   String location = "";

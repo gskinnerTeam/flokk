@@ -24,7 +24,7 @@ class WebSignInCommand extends AbstractCommand {
         Log.p("[WebSignInCommand] Success");
         authModel.googleSignIn =
             gs; //save off instance of GoogleSignIn, so it can be used to call googleSignIn.disconnect() if needed
-        authModel.googleAccessToken = auth.accessToken;
+        authModel.googleAccessToken = auth.accessToken ?? "";
         authModel.scheduleSave();
         return true;
       } else {

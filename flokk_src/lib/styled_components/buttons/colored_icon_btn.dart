@@ -58,7 +58,7 @@ class ColorShiftIconBtn extends StatelessWidget {
               downColor: theme.bg2.withOpacity(.35),
               hoverColor: bgColor ?? Colors.transparent,
               onFocusChanged: onFocusChanged,
-              contentPadding: padding ?? ,
+              contentPadding: padding,
               child: IgnorePointer(
                 child: StyledImageIcon(icon, size: size, color: iconColor),
               ),

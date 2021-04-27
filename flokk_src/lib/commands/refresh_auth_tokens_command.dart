@@ -16,11 +16,11 @@ class RefreshAuthTokensCommand extends AbstractCommand {
     if (onlyIfExpired && !authModel.isExpired) return true;
 
     //Query server, see if we can get a new auth token
-    ServiceResult<GoogleAuthResults> result = await googleRestService.auth.refresh(authModel.googleRefreshToken);
+    ServiceResult<GoogleAuthResults> result = await googleRestService.auth.refresh(authModel.googleRefreshToken ?? "");
     //If the request succeeded, inject the model with the latest authToken and write to disk
     if (result.success) {
-      authModel.googleAccessToken = result.content.accessToken;
-      authModel.setExpiry(result.content.expiresIn);
+      authModel.googleAccessToken = result.content?.accessToken ?? "";
+      authModel.setExpiry(result.content?.expiresIn ?? 0);
       authModel.scheduleSave();
       Log.p(
         "Refresh token success. authKey = ${authModel.googleAccessToken}, refreshToken = ${authModel.googleRefreshToken}",

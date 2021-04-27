@@ -72,7 +72,7 @@ class ShowServiceErrorCommand extends AbstractCommand {
         OkCancelDialog(
           title: "Connection Error",
           message: msg,
-          onOkPressed: () => rootNav.pop(),
+          onOkPressed: () => rootNav?.pop(),
         ),
       );
       isShowingError = false;

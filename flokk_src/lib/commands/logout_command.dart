@@ -16,8 +16,8 @@ class LogoutCommand extends AbstractCommand {
       bool doLogout = await Dialogs.show(OkCancelDialog(
         title: "Sign Out?",
         message: "Are you sure you want to sign-out?",
-        onOkPressed: () => rootNav.pop<bool>(true),
-        onCancelPressed: () => rootNav.pop<bool>(false),
+        onOkPressed: () => rootNav?.pop<bool>(true),
+        onCancelPressed: () => rootNav?.pop<bool>(false),
       ));
       if (!doLogout) return;
     }
@@ -34,6 +34,6 @@ class LogoutCommand extends AbstractCommand {
     appModel.reset(false);
 
     //Show login page
-    rootNav.pushReplacement(PageRoutes.fade(() => WelcomePage(initialPanelOpen: true)));
+    rootNav?.pushReplacement(PageRoutes.fade(() => WelcomePage(initialPanelOpen: true)));
   }
 }

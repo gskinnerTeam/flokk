@@ -12,7 +12,7 @@ class CreateLabelCommand extends AbstractCommand with AuthorizedServiceCommandMi
     GroupData newGroup = GroupData()..name = labelName;
     ServiceResult<GroupData> result = await executeAuthServiceCmd(() async {
       ServiceResult<GroupData> result = await googleRestService.groups.create(authModel.googleAccessToken, newGroup);
-      newGroup = result.content;
+      newGroup = result.content ?? GroupData();
 
       if (result.success) {
         contactsModel.allGroups.add(newGroup);

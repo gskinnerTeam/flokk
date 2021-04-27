@@ -88,7 +88,12 @@ class HttpResponse {
     else if (raw.statusCode >= 400 && raw.statusCode < 500) errorType = NetErrorType.denied;
   }
 
+  // NOTE CE: This just crahes on construction
   HttpResponse.error()
       : raw = http.Response("", -1),
         errorType = NetErrorType.unknown;
+
+  HttpResponse.empty()
+      : raw = http.Response("", 200),
+        errorType = NetErrorType.none;
 }

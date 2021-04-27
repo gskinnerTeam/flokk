@@ -21,7 +21,7 @@ abstract class AbstractCommand {
   /// Provide all commands access to the global context & navigator
   late BuildContext context;
 
-  NavigatorState get rootNav => AppGlobals.nav;
+  NavigatorState? get rootNav => AppGlobals.nav;
 
   AbstractCommand(BuildContext c) {
     /// Get root context
@@ -73,7 +73,7 @@ mixin AuthorizedServiceCommandMixin on AbstractCommand {
       Dialogs.show(OkCancelDialog(
         title: "No Connection",
         message: "It appears your device is offline. Please check your connection and try again.",
-        onOkPressed: () => rootNav.pop(),
+        onOkPressed: () => rootNav?.pop(),
       ));
     }
 

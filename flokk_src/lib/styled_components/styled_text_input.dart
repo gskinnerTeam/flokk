@@ -286,7 +286,7 @@ class ThinUnderlineBorder extends InputBorder {
     if (shape is UnderlineInputBorder) {
       return UnderlineInputBorder(
         borderSide: BorderSide.lerp(shape.borderSide, borderSide, t),
-        borderRadius: BorderRadius.lerp(shape!.borderRadius, borderRadius, t)!,
+        borderRadius: BorderRadius.lerp(shape.borderRadius, borderRadius, t)!,
       );
     }
     return super.lerpFrom(a, t);

@@ -22,7 +22,7 @@ class AddLabelToContactCommand extends AbstractCommand with AuthorizedServiceCom
         //use existing label
         group = existingGroup;
       }
-      ServiceResult result = ServiceResult(null, HttpResponse.error());
+      ServiceResult result = ServiceResult(null, HttpResponse.empty());
       if (group != GroupData()) {
         result = await googleRestService.groups.modify(authModel.googleAccessToken, group, addContacts: contacts);
       }

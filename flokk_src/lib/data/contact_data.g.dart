@@ -24,9 +24,7 @@ ContactData _$ContactDataFromJson(Map<String, dynamic> json) {
     ..nameMiddle = json['nameMiddle'] as String
     ..nameMiddlePhonetic = json['nameMiddlePhonetic'] as String
     ..notes = json['notes'] as String
-    ..birthday = json['birthday'] == null
-        ? null
-        : BirthdayData.fromJson(json['birthday'] as Map<String, dynamic>)
+    ..birthday = BirthdayData.fromJson(json['birthday'] as Map<String, dynamic>)
     ..nickname = json['nickname'] as String
     ..fileAs = json['fileAs'] as String
     ..isStarred = json['isStarred'] as bool
@@ -35,38 +33,28 @@ ContactData _$ContactDataFromJson(Map<String, dynamic> json) {
     ..jobCompany = json['jobCompany'] as String
     ..profilePic = json['profilePic'] as String
     ..isDefaultPic = json['isDefaultPic'] as bool
-    ..phoneList = (json['phoneList'] as List)
-        ?.map((e) =>
-            e == null ? null : PhoneData.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..emailList = (json['emailList'] as List)
-        ?.map((e) =>
-            e == null ? null : EmailData.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..addressList = (json['addressList'] as List)
-        ?.map((e) =>
-            e == null ? null : AddressData.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..imList = (json['imList'] as List)
-        ?.map((e) => e == null
-            ? null
-            : InstantMessageData.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..customFields = (json['customFields'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, e as String),
-    )
-    ..websiteList = (json['websiteList'] as List)
-        ?.map((e) =>
-            e == null ? null : WebsiteData.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..relationList = (json['relationList'] as List)
-        ?.map((e) =>
-            e == null ? null : RelationData.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..eventList = (json['eventList'] as List)
-        ?.map((e) =>
-            e == null ? null : EventData.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+    ..phoneList = (json['phoneList'] as List<dynamic>)
+        .map((e) => PhoneData.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..emailList = (json['emailList'] as List<dynamic>)
+        .map((e) => EmailData.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..addressList = (json['addressList'] as List<dynamic>)
+        .map((e) => AddressData.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..imList = (json['imList'] as List<dynamic>)
+        .map((e) => InstantMessageData.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..customFields = Map<String, String>.from(json['customFields'] as Map)
+    ..websiteList = (json['websiteList'] as List<dynamic>)
+        .map((e) => WebsiteData.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..relationList = (json['relationList'] as List<dynamic>)
+        .map((e) => RelationData.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..eventList = (json['eventList'] as List<dynamic>)
+        .map((e) => EventData.fromJson(e as Map<String, dynamic>))
+        .toList();
 }
 
 Map<String, dynamic> _$ContactDataToJson(ContactData instance) =>
@@ -87,7 +75,7 @@ Map<String, dynamic> _$ContactDataToJson(ContactData instance) =>
       'nameMiddle': instance.nameMiddle,
       'nameMiddlePhonetic': instance.nameMiddlePhonetic,
       'notes': instance.notes,
-      'birthday': instance.birthday?.toJson(),
+      'birthday': instance.birthday.toJson(),
       'nickname': instance.nickname,
       'fileAs': instance.fileAs,
       'isStarred': instance.isStarred,
@@ -96,14 +84,14 @@ Map<String, dynamic> _$ContactDataToJson(ContactData instance) =>
       'jobCompany': instance.jobCompany,
       'profilePic': instance.profilePic,
       'isDefaultPic': instance.isDefaultPic,
-      'phoneList': instance.phoneList?.map((e) => e?.toJson())?.toList(),
-      'emailList': instance.emailList?.map((e) => e?.toJson())?.toList(),
-      'addressList': instance.addressList?.map((e) => e?.toJson())?.toList(),
-      'imList': instance.imList?.map((e) => e?.toJson())?.toList(),
+      'phoneList': instance.phoneList.map((e) => e.toJson()).toList(),
+      'emailList': instance.emailList.map((e) => e.toJson()).toList(),
+      'addressList': instance.addressList.map((e) => e.toJson()).toList(),
+      'imList': instance.imList.map((e) => e.toJson()).toList(),
       'customFields': instance.customFields,
-      'websiteList': instance.websiteList?.map((e) => e?.toJson())?.toList(),
-      'relationList': instance.relationList?.map((e) => e?.toJson())?.toList(),
-      'eventList': instance.eventList?.map((e) => e?.toJson())?.toList(),
+      'websiteList': instance.websiteList.map((e) => e.toJson()).toList(),
+      'relationList': instance.relationList.map((e) => e.toJson()).toList(),
+      'eventList': instance.eventList.map((e) => e.toJson()).toList(),
     };
 
 AddressData _$AddressDataFromJson(Map<String, dynamic> json) {
@@ -194,25 +182,23 @@ Map<String, dynamic> _$RelationDataToJson(RelationData instance) =>
 
 EventData _$EventDataFromJson(Map<String, dynamic> json) {
   return EventData()
-    ..date =
-        json['date'] == null ? null : DateTime.parse(json['date'] as String)
+    ..date = DateTime.parse(json['date'] as String)
     ..type = json['type'] as String;
 }
 
 Map<String, dynamic> _$EventDataToJson(EventData instance) => <String, dynamic>{
-      'date': instance.date?.toIso8601String(),
+      'date': instance.date.toIso8601String(),
       'type': instance.type,
     };
 
 BirthdayData _$BirthdayDataFromJson(Map<String, dynamic> json) {
   return BirthdayData()
-    ..date =
-        json['date'] == null ? null : DateTime.parse(json['date'] as String)
+    ..date = DateTime.parse(json['date'] as String)
     ..text = json['text'] as String;
 }
 
 Map<String, dynamic> _$BirthdayDataToJson(BirthdayData instance) =>
     <String, dynamic>{
-      'date': instance.date?.toIso8601String(),
+      'date': instance.date.toIso8601String(),
       'text': instance.text,
     };

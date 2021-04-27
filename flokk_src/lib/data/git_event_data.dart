@@ -18,7 +18,7 @@ class GitEvent implements DateSortable {
   GitEvent();
 
   factory GitEvent.fromJson(Map<String, dynamic> json) {
-    return GitEvent()..event = json["event"] == null ? null : Event.fromJson(json["event"] as Map<String, dynamic>);
+    return GitEvent()..event = json["event"] == null ? Event() : Event.fromJson(json["event"] as Map<String, dynamic>);
   }
 
   Map<String, dynamic> toJson() => {"event": event};

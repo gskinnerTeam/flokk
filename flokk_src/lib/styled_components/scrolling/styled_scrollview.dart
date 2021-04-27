@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'styled_listview.dart';
 
 class StyledScrollView extends StatefulWidget {
-  final double contentSize;
+  final double? contentSize;
   final Axis axis;
-  final Color trackColor;
-  final Color handleColor;
+  final Color? trackColor;
+  final Color? handleColor;
 
   final Widget child;
 
@@ -23,7 +23,7 @@ class StyledScrollView extends StatefulWidget {
 }
 
 class _StyledScrollViewState extends State<StyledScrollView> {
-  ScrollController scrollController;
+  late ScrollController scrollController;
 
   @override
   void initState() {

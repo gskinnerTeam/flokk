@@ -13,16 +13,16 @@ class Tweet implements DateSortable {
   @JsonKey(name: "full_text")
   String text = "";
 
-  //@JsonKey(defaultValue: false)
+  @JsonKey(defaultValue: false)
   bool truncated = false;
 
-  //@JsonKey(defaultValue: false)
+  @JsonKey(defaultValue: false)
   bool retweeted = false;
 
-  //@JsonKey(name: "retweet_count", defaultValue: 0)
+  @JsonKey(name: "retweet_count", defaultValue: 0)
   int retweetCount = 0;
 
-  //@JsonKey(name: "favorite_count", defaultValue: 0)
+  @JsonKey(name: "favorite_count", defaultValue: 0)
   int favoriteCount = 0;
 
   @JsonKey(name: "created_at")
@@ -103,4 +103,10 @@ class Tweet implements DateSortable {
   }
 
   Map<String, dynamic> toJson() => _$TweetToJson(this);
+
+  @override
+  bool operator==(covariant Tweet other) => other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

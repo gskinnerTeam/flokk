@@ -18,7 +18,7 @@ class _StyledUserAvatarState extends State<StyledUserAvatar> {
 
   @override
   void initState() {
-    _seed = widget.contact.id?.hashCode ?? 0;
+    _seed = widget.contact.id.hashCode;
     super.initState();
   }
 
@@ -35,8 +35,8 @@ class _StyledUserAvatarState extends State<StyledUserAvatar> {
 
     Widget child;
     if (widget.contact.profilePicBytes != null) {
-      child = Image.memory(widget.contact.profilePicBytes, fit: BoxFit.cover);
-    } else if (widget.contact.profilePic != null && !widget.contact.isDefaultPic) {
+      child = Image.memory(widget.contact.profilePicBytes!, fit: BoxFit.cover);
+    } else if (widget.contact.profilePic.isNotEmpty && !widget.contact.isDefaultPic) {
       child = Image.network(widget.contact.profilePic, fit: BoxFit.cover);
     } else {
       child = AnimalAvatar(seed: _seed);

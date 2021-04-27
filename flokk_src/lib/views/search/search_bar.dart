@@ -75,7 +75,7 @@ class SearchBarState extends State<SearchBar> {
     // Anytime we toggle, make sure the search bar contents match the main searchEngine,
     // this will either revert the un-submitted changes, or do nothing.
     tmpSearch.copyFrom(widget.searchEngine);
-    textKey.currentState?.text = tmpSearch.query ?? "";
+    textKey.currentState?.text = tmpSearch.query;
 
     setState(() => _isOpen = value);
   }

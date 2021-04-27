@@ -87,9 +87,9 @@ class _TopContactsSectionState extends State<TopContactsSection> {
 class _ContactCardList extends StatelessWidget {
   final _TopContactsSectionState state;
   final List<ContactData> contacts;
-  final Widget? placeholder;
+  final Widget placeholder;
 
-  const _ContactCardList(this.state, {Key? key, this.contacts = const<ContactData>[], this.placeholder}) : super(key: key);
+  const _ContactCardList(this.state, {Key? key, this.contacts = const<ContactData>[], required this.placeholder}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

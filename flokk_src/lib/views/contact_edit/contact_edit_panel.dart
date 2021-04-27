@@ -95,11 +95,12 @@ class ContactEditFormState extends State<ContactEditForm> {
         // Wait for add-new command to complete, since it would be overly complicated to create a tmpUser
         contact = await UpdateContactCommand(context).execute(contact, updateSocial: contact.hasAnySocial);
         // Upload their image if it's changed
-        if (tmpContact.hasNewProfilePic) {
-          UpdatePicCommand(context).execute(contact, tmpContact.profilePicBase64);
+        final profilePicData = tmpContact.profilePicBase64;
+        if (tmpContact.hasNewProfilePic && profilePicData != null) {
+          UpdatePicCommand(context).execute(contact, profilePicData);
         }
         // If we have a valid contact here, all is good
-        success = contact != null;
+        success = contact != ContactData();
         if(mounted){
           setState(() => isLoading = false);
         }
@@ -108,8 +109,9 @@ class ContactEditFormState extends State<ContactEditForm> {
       // Updating a contact, don't wait, just assume it will work. Data will get updated locally.
       UpdateContactCommand(context).execute(contact, updateSocial: !contact.hasSameSocial(widget.contact));
       // Upload their image if it's changed.
-      if (tmpContact.hasNewProfilePic) {
-        UpdatePicCommand(context).execute(contact, tmpContact.profilePicBase64);
+      final profilePicData = tmpContact.profilePicBase64;
+      if (tmpContact.hasNewProfilePic && profilePicData != null) {
+        UpdatePicCommand(context).execute(contact, profilePicData);
       }
     }
     if (success) {

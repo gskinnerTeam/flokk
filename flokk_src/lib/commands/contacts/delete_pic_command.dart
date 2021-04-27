@@ -19,8 +19,8 @@ class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
         message: "Are you sure you want to delete profile pic?",
         okLabel: "Yes",
         cancelLabel: "No",
-        onOkPressed: () => rootNav.pop(true),
-        onCancelPressed: () => rootNav.pop(false),
+        onOkPressed: () => rootNav?.pop(true),
+        onCancelPressed: () => rootNav?.pop(false),
       ),
     );
     if (!doDelete) return false;

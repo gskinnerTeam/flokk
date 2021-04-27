@@ -19,5 +19,5 @@ class GitRepo {
       ..lastUpdated = json["lastUpdated"] == null ? Dates.epoch : DateTime.parse(json['lastUpdated'] as String);
   }
 
-  Map<String, dynamic> toJson() => {"repository": repository, "lastUpdated": lastUpdated?.toIso8601String()};
+  Map<String, dynamic> toJson() => {"repository": repository, "lastUpdated": lastUpdated.toIso8601String()};
 }

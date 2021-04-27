@@ -20,28 +20,28 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
 
       await executeAuthServiceCmd(() async {
         GoogleRestContactGroupsService groupsApi = googleRestService.groups;
-        ServiceResult<GroupData> result = ServiceResult(null, null);
+        ServiceResult<GroupData> result = ServiceResult(null, HttpResponse.empty());
         if (onlyStarred) {
           result =
               await groupsApi.getById(authModel.googleAccessToken, GoogleRestService.kStarredGroupId);
           if (result.success) {
             GroupData starred = contactsModel.getGroupById(GoogleRestService.kStarredGroupId);
-            if (starred != null) {
-              starred.members = result.content.members;
+            if (starred != GroupData()) {
+              starred.members = result.content?.members ?? [];
             } else {
               contactsModel.allGroups.add(starred);
             }
           }
         } else {
           ServiceResult<Tuple2<List<GroupData>, String>> result = await groupsApi.get(authModel.googleAccessToken);
-          List<GroupData> groups = result.content.item1;
-          String nextPageToken = result.content.item2;
+          List<GroupData> groups = result.content?.item1 ?? [];
+          String nextPageToken = result.content?.item2 ?? "";
 
           while (nextPageToken != "" && result.success) {
             ServiceResult<Tuple2<List<GroupData>, String>> result =
                 await groupsApi.get(authModel.googleAccessToken, nextPageToken: nextPageToken);
-            groups.addAll(result.content.item1);
-            nextPageToken = result.content.item2;
+            groups.addAll(result.content?.item1 ?? []);
+            nextPageToken = result.content?.item2 ?? "";
           }
 
           if (groups.isNotEmpty && result.success) {
@@ -51,7 +51,7 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
                 ServiceResult<GroupData> groupResult =
                     await groupsApi.getById(authModel.googleAccessToken, groups[i].id);
                 if (groupResult.success) {
-                  groups[i].members = groupResult.content.members;
+                  groups[i].members = groupResult.content?.members ?? [];
                 }
               }
             }

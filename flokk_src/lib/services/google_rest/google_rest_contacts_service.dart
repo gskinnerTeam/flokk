@@ -92,9 +92,9 @@ class GoogleRestContactsService {
       }
     }
 
-    list = result.content.contacts;
-    nextPageToken = result.content.nextPageToken;
-    syncToken = result.content.syncToken;
+    list = result.content?.contacts ?? [];
+    nextPageToken = result.content?.nextPageToken ?? "";
+    syncToken = result.content?.syncToken ?? "";
 
     //Attempt to load all chunks of data, just for edge cases that have > 2000 contacts (max page size)
     while (nextPageToken.isNotEmpty && retryCount < 3) {
@@ -104,8 +104,8 @@ class GoogleRestContactsService {
       );
 
       if (result.success) {
-        list.addAll(result.content.contacts);
-        nextPageToken = result.content.nextPageToken;
+        list.addAll(result.content?.contacts ?? []);
+        nextPageToken = result.content?.nextPageToken ?? "";
       } else {
         //Possible for subsequent calls to fail and return 503
         retryCount++;

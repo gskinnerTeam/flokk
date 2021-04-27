@@ -20,8 +20,8 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
         /// Update remote database
         result = await googleRestService.contacts.create(authModel.googleAccessToken, contact);
         if (result.success) {
-          result.content.isRecentlyAdded = true;
-          contactsModel.addContact(result.content);
+          result.content!.isRecentlyAdded = true;
+          contactsModel.addContact(result.content!);
         }
       } else {
         // Check whether git or twitter changed, if they did we want to reset their cooldowns
@@ -52,7 +52,7 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
 
         /// Since we get back the updated object, we can inject it straight into the model to keep us in sync
         if (result.success) {
-          contactsModel.swapContactById(result.content);
+          contactsModel.swapContactById(result.content!);
         } else if (tryAgainOnError &&
             result.response.statusCode == 400 &&
             result.response.body.contains("person.etag")) {
@@ -67,6 +67,6 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
 
       return result;
     });
-    return result.success ? result.content : null;
+    return result.success ? result.content! : ContactData();
   }
 }

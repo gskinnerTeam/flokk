@@ -20,8 +20,8 @@ class DeleteContactCommand extends AbstractCommand with AuthorizedServiceCommand
         message: "Are you sure you want to delete $txt?",
         okLabel: "Yes",
         cancelLabel: "No",
-        onOkPressed: () => rootNav.pop(true),
-        onCancelPressed: () => rootNav.pop(false),
+        onOkPressed: () => rootNav?.pop(true),
+        onCancelPressed: () => rootNav?.pop(false),
       ),
     );
     if (!doDelete) return false;

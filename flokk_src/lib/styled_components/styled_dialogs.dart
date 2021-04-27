@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class Dialogs {
   static Future<dynamic> show(Widget child, [BuildContext? context]) async {
-    return await (context != null ? Navigator.of(context) : AppGlobals.nav).push(
+    return await (context != null ? Navigator.of(context) : AppGlobals.nav)?.push(
       StyledDialogRoute(
         pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
           return SafeArea(child: child);
@@ -27,8 +27,8 @@ class StyledDialog extends StatelessWidget {
   final Widget? child;
   final double maxWidth;
   final double maxHeight;
-  final EdgeInsets padding;
-  final EdgeInsets margin;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
   final BorderRadius borderRadius;
   final Color? bgColor;
   final bool shrinkWrap;
@@ -38,8 +38,8 @@ class StyledDialog extends StatelessWidget {
     this.child,
     this.maxWidth = double.infinity,
     this.maxHeight = double.infinity,
-    this.padding = const EdgeInsets.all(Insets.lGutter),
-    this.margin = const EdgeInsets.all(Insets.lGutter * 2),
+    this.padding,
+    this.margin,
     this.bgColor,
     this.borderRadius = Corners.s8Border,
     this.shrinkWrap = true,
@@ -50,7 +50,7 @@ class StyledDialog extends StatelessWidget {
     AppTheme theme = context.watch();
 
     Widget innerContent = Container(
-      padding: padding,
+      padding: padding ?? EdgeInsets.all(Insets.lGutter),
       color: bgColor ?? theme.surface,
       child: child,
     );
@@ -61,7 +61,7 @@ class StyledDialog extends StatelessWidget {
 
     return FocusTraversalGroup(
       child: Container(
-        margin: margin,
+        margin: margin ?? EdgeInsets.all(Insets.lGutter * 2),
         alignment: Alignment.center,
         child: ConstrainedBox(
           constraints: BoxConstraints(

@@ -41,11 +41,11 @@ class ContactPanelState extends State<ContactPanel> {
     setState(() => _isEditingContact = false);
   }
 
-  void _handleEditPressed(String startSection) => showEditView(startSection);
+  void _handleEditPressed(String? startSection) => showEditView(startSection ?? "");
 
   void _handleEditComplete(ContactData contact) {
     /// If contact is not null, then we want to switch back to the InfoView
-    if (contact != null) {
+    if (contact != ContactData()) {
       showInfoView();
     }
 
@@ -67,7 +67,7 @@ class ContactPanelState extends State<ContactPanel> {
       child: Consumer<ContactData>(
         builder: (_, contact, __) {
           /// Create a key from each unique contact to make sure we get state-rebuilds when changing Contact
-          editKey = GlobalObjectKey(contact ?? ContactData());
+          editKey = GlobalObjectKey(contact);
 
           /// When contact has been set to null, we want to use the prevContact so we get a clean transition out
           /// Bit of a hack, but not sure how else to maintain state as we slide out.

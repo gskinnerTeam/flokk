@@ -33,7 +33,7 @@ abstract class AbstractModel extends ChangeNotifier {
     if (file == null) return;
 
     String string = await file.read().catchError((e, s) {
-      Log.e(e, stack: s);
+      Log.e("$e", stack: s);
       return "{}";
     });
     copyFromJson(jsonDecode(string));

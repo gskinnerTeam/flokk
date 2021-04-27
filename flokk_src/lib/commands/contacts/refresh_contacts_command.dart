@@ -21,8 +21,8 @@ class RefreshContactsCommand extends AbstractCommand with AuthorizedServiceComma
       ServiceResult<GetContactsResult> result =
           await googleRestService.contacts.getAll(authModel.googleAccessToken, syncToken);
       // Now do we have a sync token?
-      syncToken = result.content.syncToken ?? "";
-      List<ContactData> contacts = result.content.contacts ?? [];
+      syncToken = result.content?.syncToken ?? "";
+      List<ContactData> contacts = result.content?.contacts ?? [];
       if (result.success) {
         authModel.googleSyncToken = syncToken;
         //Iterate through returned contacts and either update existing contact or append

@@ -39,8 +39,8 @@ class _ContactInfoSocialCardState extends State<ContactInfoSocialCard> {
     SocialContactData social = contactsModel.getSocialById(contact.id);
 
     int maxItems = 30;
-    final gitItems = social.gitEvents?.map((event) => GitEventListItem(event)).take(maxItems).toList() ?? [];
-    final tweetItems = social.tweets?.map((tweet) => TweetListItem(tweet)).take(maxItems).toList() ?? [];
+    final gitItems = social.gitEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
+    final tweetItems = social.tweets.map((tweet) => TweetListItem(tweet)).take(maxItems).toList();
 
     //return Container();
     return Column(

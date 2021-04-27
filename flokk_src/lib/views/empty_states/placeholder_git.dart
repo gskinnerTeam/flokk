@@ -14,7 +14,7 @@ class GitPlaceholder extends StatelessWidget {
 
   void _handleLinkPressed(BuildContext context) {
     //If in single-contact mode, try and edit the selected contact
-    if (contact != null) {
+    if (contact != ContactData()) {
       showSocial(context, ContactSectionType.github);
     }
     // Try and move to ContactList page
@@ -30,8 +30,8 @@ class GitPlaceholder extends StatelessWidget {
         if (constraints.maxHeight > 250) PlaceholderImageAndBgStack("dashboard-github", height: 126, top: 43, left: -30),
         EmptyStateTitleAndClickableText(
           title: isTrending ? "NO TRENDING REPOS" : "NO GITHUB ACTIVITY",
-          startText: contact == null ? "Add GitHub ID in " : "Add ",
-          linkText: contact == null ? "contacts" : "GitHub ID",
+          startText: contact == ContactData() ? "Add GitHub ID in " : "Add ",
+          linkText: contact == ContactData() ? "contacts" : "GitHub ID",
           endText: " to show ${isTrending ? "trending repos" : "recent activity"}",
           onPressed: () => _handleLinkPressed(context),
           ),

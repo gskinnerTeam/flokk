@@ -1,4 +1,5 @@
 import 'package:flokk/_internal/components/spacing.dart';
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/data/git_event_data.dart';
@@ -55,14 +56,14 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
     // Grab socialData for this contact (might be null)
     SocialContactData social = contactsModel.getSocialById(widget.contact.id);
     // Get the time of their last activity
-    DateTime? lastSocialTime = social?.latestActivity?.createdAt;
+    DateTime lastSocialTime = social.latestActivity.createdAt;
     // Grab any tweets we haven't look at yet
-    List<Tweet> newTweets = social?.newTweets ?? [];
-    List<GitEvent> newGits = social?.newGits ?? [];
+    List<Tweet> newTweets = social.newTweets;
+    List<GitEvent> newGits = social.newGits;
     // Figure out bottom text, changes if we have no social
     String bottomTxt = "Add Social IDs";
     if (widget.contact.hasAnySocial) {
-      bottomTxt = lastSocialTime != null ? timeago.format(lastSocialTime) : "No New Activities";
+      bottomTxt = lastSocialTime != Dates.epoch ? timeago.format(lastSocialTime) : "No New Activities";
     }
     return LayoutBuilder(
       builder: (_, constraints) {

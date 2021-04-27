@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 
 class ContactInfoPanel extends StatefulWidget {
   final VoidCallback? onClosePressed;
-  final void Function(String) onEditPressed;
+  final void Function(String?) onEditPressed;
 
   const ContactInfoPanel({Key? key, this.onClosePressed, required this.onEditPressed}) : super(key: key);
 
