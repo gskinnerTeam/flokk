@@ -119,7 +119,7 @@ class GoogleRestContactsService {
       {List<String> personFields = const [],
         String nextPageToken = "",
         String syncToken = "",
-        bool requestSyncToken = false}) async {
+        bool requestSyncToken = true}) async {
     // Default to all person fields if none are passed
     if (personFields.isEmpty) {
       personFields = kAllPersonFields;
@@ -130,11 +130,11 @@ class GoogleRestContactsService {
         "&sortOrder=FIRST_NAME_ASCENDING"
         "&pageSize=2000";
 
-    if (!StringUtils.isEmpty(nextPageToken)) {
+    if (nextPageToken.isNotEmpty) {
       url += "&pageToken=$nextPageToken";
     }
 
-    if (!StringUtils.isEmpty(syncToken)) {
+    if (syncToken.isNotEmpty) {
       url += "&syncToken=$syncToken";
     }
 
