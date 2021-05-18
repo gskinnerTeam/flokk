@@ -49,7 +49,7 @@ class CommandTestingSpike extends StatelessWidget {
             child: Text("edit label"),
             onPressed: () async {
               group.name = "Renamed Label";
-              group = await RenameLabelCommand(context).execute(group);
+              group = (await RenameLabelCommand(context).execute(group)) ?? group;
               print(group);
             },
           ),
@@ -84,8 +84,8 @@ class CommandTestingSpike extends StatelessWidget {
           RaisedButton(
             child: Text("add new label to contact"),
             onPressed: () async {
-              List<ContactData> updatedContact =
-                  await AddLabelToContactCommand(context).execute([contact], existingGroup: GroupData(), newLabel: "Foo");
+              List<ContactData> updatedContact = await AddLabelToContactCommand(context)
+                  .execute([contact], existingGroup: GroupData(), newLabel: "Foo");
               print(updatedContact.first);
             },
           ),

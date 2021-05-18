@@ -43,17 +43,17 @@ dependencies:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/file_chooser
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: 66728170b34ec1e624d8bfdb6d56d502e3da7fc0
   path_provider_fde:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/flutter_plugins/path_provider_fde
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: 66728170b34ec1e624d8bfdb6d56d502e3da7fc0
   window_size:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
-      ref: b0794faf2c000576515aee56ca6bb5bee64cece4
+      ref: 66728170b34ec1e624d8bfdb6d56d502e3da7fc0
 
 dev_dependencies:
   build_runner: ^2.0.0
