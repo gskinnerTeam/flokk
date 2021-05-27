@@ -51,8 +51,15 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
         result = await googleRestService.contacts.set(authModel.googleAccessToken, contact);
 
         /// Since we get back the updated object, we can inject it straight into the model to keep us in sync
+        print("Success: ${result.success}, etag=${contact.etag}");
         if (result.success) {
-          contactsModel.swapContactById(result.content!);
+          ContactData? updatedContact = result.content;
+          if (updatedContact != null) {
+            contactsModel.swapContactById(updatedContact);
+            if (appModel.selectedContact.googleId == updatedContact.googleId) {
+              appModel.selectedContact = updatedContact;
+            }
+          }
         } else if (tryAgainOnError &&
             result.response.statusCode == 400 &&
             result.response.body.contains("person.etag")) {

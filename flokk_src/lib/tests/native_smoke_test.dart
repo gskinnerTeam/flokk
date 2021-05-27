@@ -1,9 +1,9 @@
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flokk/_internal/url_launcher/url_launcher.dart';
 import 'package:flokk/_internal/utils/path.dart';
 import 'package:flokk/_internal/utils/picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:window_size/window_size.dart';
 
 class NativeSmokeTest extends StatefulWidget {
   @override
@@ -33,11 +33,11 @@ class _NativeSmokeTestState extends State<NativeSmokeTest> {
   }
 
   void _handleSetWindowRect() async {
-    setWindowFrame(Rect.fromLTWH(8, 8, 256, 256));
+    DesktopWindow.setWindowSize(Size(256, 256));
   }
 
   void _handleSetWindowMinSize() async {
-    setWindowMinSize(Size(512, 512));
+    DesktopWindow.setMinWindowSize(Size(512, 512));
   }
 
   @override

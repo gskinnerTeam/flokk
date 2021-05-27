@@ -46,7 +46,7 @@ class _ContactInfoHeaderCardState extends State<ContactInfoHeaderCard> {
         VSpace(Insets.sm - 1),
 
         /// PROFILE PIC
-        StyledUserAvatar(key: ValueKey(contact.id), size: 110, contact: contact),
+        StyledUserAvatar(key: ValueKey(contact.id + contact.profilePic), size: 110, contact: contact),
 
         /// TITLE
         Row(

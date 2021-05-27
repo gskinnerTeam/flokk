@@ -91,7 +91,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     /// Search Bar
     Widget searchBar = SearchBar(
       key: MainScaffold.searchBarKey,
-      closedHeight: topBarHeight,
+      closedHeight: topBarHeight - 5,
       narrowMode: !showLeftMenu,
       searchEngine: state.appModel.searchEngine,
       onContactPressed: (c) => state.trySetSelectedContact(c, showSocial: false),

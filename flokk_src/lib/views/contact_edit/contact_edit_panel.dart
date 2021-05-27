@@ -34,7 +34,8 @@ class ContactEditForm extends StatefulWidget {
   final void Function(ContactData contact)? onEditComplete;
   final String initialSection;
 
-  const ContactEditForm({Key? key, required this.contact, required this.contactsModel, this.onEditComplete, this.initialSection = ""})
+  const ContactEditForm(
+      {Key? key, required this.contact, required this.contactsModel, this.onEditComplete, this.initialSection = ""})
       : super(key: key);
 
   @override
@@ -75,10 +76,16 @@ class ContactEditFormState extends State<ContactEditForm> {
   void handleSavePressed() async {
     bool success = true;
     print("================= SAVE PRESSED ======================");
+    setState(() => isLoading = true);
+
+    // Upload their image if it's changed.
+    final profilePicData = tmpContact.profilePicBase64;
+    if (tmpContact.hasNewProfilePic && profilePicData != null) {
+      await UpdatePicCommand(context).execute(tmpContact, profilePicData);
+    }
 
     /// Strip contact of any empty list items before saving
     ContactData contact = tmpContact.copy().trimLists();
-
     // Adding a new contact?
     if (contact.isNew) {
       //Prevent them from adding an empty contact
@@ -91,34 +98,23 @@ class ContactEditFormState extends State<ContactEditForm> {
       }
       //Continue to add new contact
       else {
-        setState(() => isLoading = true);
         // Wait for add-new command to complete, since it would be overly complicated to create a tmpUser
         contact = await UpdateContactCommand(context).execute(contact, updateSocial: contact.hasAnySocial);
-        // Upload their image if it's changed
-        final profilePicData = tmpContact.profilePicBase64;
-        if (tmpContact.hasNewProfilePic && profilePicData != null) {
-          UpdatePicCommand(context).execute(contact, profilePicData);
-        }
+
         // If we have a valid contact here, all is good
         success = contact != ContactData();
-        if(mounted){
-          setState(() => isLoading = false);
-        }
       }
     } else {
-      // Updating a contact, don't wait, just assume it will work. Data will get updated locally.
-      UpdateContactCommand(context).execute(contact, updateSocial: !contact.hasSameSocial(widget.contact));
-      // Upload their image if it's changed.
-      final profilePicData = tmpContact.profilePicBase64;
-      if (tmpContact.hasNewProfilePic && profilePicData != null) {
-        UpdatePicCommand(context).execute(contact, profilePicData);
-      }
+      bool hasSocialChanged = contact.hasSameSocial(widget.contact) == false;
+      await UpdateContactCommand(context).execute(contact, updateSocial: hasSocialChanged);
     }
     if (success) {
       widget.onEditComplete?.call(contact);
       //Edit is complete, make sure this contact is the currently selected
       context.read<AppModel>().selectedContact = contact;
-
+    }
+    if (mounted) {
+      setState(() => isLoading = false);
     }
   }
 
@@ -147,6 +143,7 @@ class ContactEditFormState extends State<ContactEditForm> {
       tmpContact.profilePicBase64 = picker.base64Data;
       tmpContact.profilePicBytes = picker.byteData;
       tmpContact.hasNewProfilePic = true;
+      rebuild();
     };
 
     picker.open();

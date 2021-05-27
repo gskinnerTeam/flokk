@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+1"
   crypto:
     dependency: transitive
     description:
@@ -197,6 +204,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.1"
+  desktop_window:
+    dependency: "direct main"
+    description:
+      name: desktop_window
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   dotted_border:
     dependency: "direct main"
     description:
@@ -225,15 +239,48 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.0"
-  file_chooser:
+  file_selector:
     dependency: "direct main"
     description:
-      path: "plugins/file_chooser"
-      ref: "66728170b34ec1e624d8bfdb6d56d502e3da7fc0"
-      resolved-ref: "66728170b34ec1e624d8bfdb6d56d502e3da7fc0"
-      url: "git://github.com/google/flutter-desktop-embedding.git"
-    source: git
-    version: "0.2.0"
+      name: file_selector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.2"
+  file_selector_linux:
+    dependency: "direct main"
+    description:
+      name: file_selector_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
+  file_selector_macos:
+    dependency: "direct main"
+    description:
+      name: file_selector_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
+  file_selector_platform_interface:
+    dependency: transitive
+    description:
+      name: file_selector_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
+  file_selector_web:
+    dependency: "direct main"
+    description:
+      name: file_selector_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.1"
+  file_selector_windows:
+    dependency: "direct main"
+    description:
+      name: file_selector_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   fixnum:
     dependency: transitive
     description:
@@ -461,15 +508,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  path_provider_fde:
-    dependency: "direct main"
-    description:
-      path: "plugins/flutter_plugins/path_provider_fde"
-      ref: "66728170b34ec1e624d8bfdb6d56d502e3da7fc0"
-      resolved-ref: "66728170b34ec1e624d8bfdb6d56d502e3da7fc0"
-      url: "git://github.com/google/flutter-desktop-embedding.git"
-    source: git
-    version: "0.0.1"
   path_provider_linux:
     dependency: transitive
     description:
@@ -818,15 +856,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  window_size:
-    dependency: "direct main"
-    description:
-      path: "plugins/window_size"
-      ref: "66728170b34ec1e624d8bfdb6d56d502e3da7fc0"
-      resolved-ref: "66728170b34ec1e624d8bfdb6d56d502e3da7fc0"
-      url: "git://github.com/google/flutter-desktop-embedding.git"
-    source: git
-    version: "0.1.0"
   xdg_directories:
     dependency: "direct main"
     description:

@@ -161,8 +161,8 @@ class ContactsModel extends AbstractModel {
       allSocialContacts..sort((a, b) => b.points.compareTo(a.points));
 
   //Get a list of contacts with the most recent activity
-  List<SocialContactData> get mostRecentSocialContacts => allSocialContacts
-    ..sort((a, b) => (b.latestActivity.createdAt).compareTo(a.latestActivity.createdAt));
+  List<SocialContactData> get mostRecentSocialContacts =>
+      allSocialContacts..sort((a, b) => (b.latestActivity.createdAt).compareTo(a.latestActivity.createdAt));
 
   SocialContactData getSocialById(String id) {
     if (id.isEmpty) return SocialContactData();

@@ -159,8 +159,7 @@ class _MainAppState extends State<MainApp> {
 
         /// Wrap root navigator in various styling widgets
         builder: (_, navigator) {
-          if (navigator == null)
-            return Container();
+          if (navigator == null) return Container();
           // Wrap root page in a builder, so we can make initial responsive tweaks based on MediaQuery
           return Builder(builder: (c) {
             //Responsive: Reduce size of our gutter scale when we're below a certain size

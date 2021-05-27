@@ -108,7 +108,7 @@ class AppModel extends AbstractModel {
   /// //////////////////////////////////////////////////
   /// Holds current page type, synchronizes leftMenu with the mainContent
   PageType get currentMainPage => _currentMainPage;
-  PageType _currentMainPage = PageType.None;
+  PageType _currentMainPage = PageType.Dashboard;
 
   set currentMainPage(PageType value) {
     _currentMainPage = value;
