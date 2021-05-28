@@ -20,9 +20,9 @@ TwitterUser _$TwitterUserFromJson(Map<String, dynamic> json) {
     ..friendsCount = json['friends_count'] as int? ?? 0
     ..listedCount = json['listed_count'] as int? ?? 0
     ..statusesCount = json['statuses_count'] as int? ?? 0
-    ..profileImageUrl = json['profile_image_url_https'] as String
+    ..profileImageUrl = json['profile_image_url_https'] as String? ?? ''
     ..profileBackgroundImageUrl =
-        json['profile_background_image_url_https'] as String
+        json['profile_background_image_url_https'] as String? ?? ''
     ..profileUseBackgroundImage =
         json['profile_use_background_image'] as bool? ?? false;
 }

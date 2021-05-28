@@ -729,7 +729,7 @@ packages:
       name: styled_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   term_glyph:
     dependency: transitive
     description:

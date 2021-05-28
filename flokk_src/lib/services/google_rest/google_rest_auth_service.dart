@@ -83,13 +83,18 @@ class GoogleAuthEndpointInfo {
   final String userCode;
   final String verificationUrl;
 
-  GoogleAuthEndpointInfo({required this.deviceCode, required this.expiresIn, required this.interval, required this.userCode, required this.verificationUrl});
+  GoogleAuthEndpointInfo(
+      {required this.deviceCode,
+      required this.expiresIn,
+      required this.interval,
+      required this.userCode,
+      required this.verificationUrl});
 }
 
 class GoogleAuthResults {
   final String accessToken;
   final int expiresIn;
-  final String refreshToken;
+  final String? refreshToken;
   final String tokenType;
   final String idToken;
   late Map<String, dynamic> profile;
@@ -97,7 +102,12 @@ class GoogleAuthResults {
   String get email => _email;
   late String _email;
 
-  GoogleAuthResults({required this.accessToken, required this.expiresIn, required this.refreshToken, required this.tokenType, required this.idToken}) {
+  GoogleAuthResults(
+      {required this.accessToken,
+      required this.expiresIn,
+      required this.refreshToken,
+      required this.tokenType,
+      required this.idToken}) {
     profile = jsonDecode(getProfileFromToken(idToken));
     _email = profile["email"];
   }

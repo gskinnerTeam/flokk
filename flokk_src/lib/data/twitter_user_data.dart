@@ -11,7 +11,7 @@ class TwitterUser {
   String screenName = "";
 
   String location = "";
-  String description = " = """;
+  String description = " = " "";
   String url = "";
 
   //@JsonKey(defaultValue: false)
@@ -32,10 +32,10 @@ class TwitterUser {
   @JsonKey(name: "statuses_count", defaultValue: 0)
   int statusesCount = 0;
 
-  @JsonKey(name: "profile_image_url_https")
+  @JsonKey(name: "profile_image_url_https", defaultValue: '')
   String profileImageUrl = "";
 
-  @JsonKey(name: "profile_background_image_url_https")
+  @JsonKey(name: "profile_background_image_url_https", defaultValue: '')
   String profileBackgroundImageUrl = "";
 
   @JsonKey(name: "profile_use_background_image", defaultValue: false)
@@ -47,4 +47,3 @@ class TwitterUser {
 
   Map<String, dynamic> toJson() => _$TwitterUserToJson(this);
 }
-
