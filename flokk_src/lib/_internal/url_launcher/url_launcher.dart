@@ -30,7 +30,7 @@ class UrlLauncher {
 
   static void openGoogleMaps(String value) => open("https://www.google.com/maps/search/${Uri.encodeFull(value)}/");
 
-  static void openGitUser(String value) => open("https://github.com/$value/");
+  static void openGitUser(String value) => open("https://$value/");
 
   static void openTwitterUser(String value) => open("https://twitter.com/${value.replaceAll("@", "")}/");
 }
