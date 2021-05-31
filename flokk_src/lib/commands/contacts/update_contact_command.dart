@@ -11,17 +11,17 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
   UpdateContactCommand(BuildContext c) : super(c);
 
   Future<ContactData> execute(ContactData contact, {bool updateSocial: false, bool tryAgainOnError = true}) async {
-    if (contact == null || AppModel.forceIgnoreGoogleApiCalls) return null;
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return ContactData();
     Log.p("[UpdateContactCommand]");
 
-    ServiceResult<ContactData> result;
-    await executeAuthServiceCmd(() async {
+    ServiceResult<ContactData> result = await executeAuthServiceCmd(() async {
+      ServiceResult<ContactData> result;
       if (contact.isNew) {
         /// Update remote database
         result = await googleRestService.contacts.create(authModel.googleAccessToken, contact);
         if (result.success) {
-          result.content.isRecentlyAdded = true;
-          contactsModel.addContact(result.content);
+          result.content!.isRecentlyAdded = true;
+          contactsModel.addContact(result.content!);
         }
       } else {
         // Check whether git or twitter changed, if they did we want to reset their cooldowns
@@ -51,8 +51,15 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
         result = await googleRestService.contacts.set(authModel.googleAccessToken, contact);
 
         /// Since we get back the updated object, we can inject it straight into the model to keep us in sync
+        print("Success: ${result.success}, etag=${contact.etag}");
         if (result.success) {
-          contactsModel.swapContactById(result.content);
+          ContactData? updatedContact = result.content;
+          if (updatedContact != null) {
+            contactsModel.swapContactById(updatedContact);
+            if (appModel.selectedContact.googleId == updatedContact.googleId) {
+              appModel.selectedContact = updatedContact;
+            }
+          }
         } else if (tryAgainOnError &&
             result.response.statusCode == 400 &&
             result.response.body.contains("person.etag")) {
@@ -65,8 +72,8 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
         }
       }
 
-      return result.response;
+      return result;
     });
-    return result.success ? result.content : null;
+    return result.success ? result.content! : ContactData();
   }
 }

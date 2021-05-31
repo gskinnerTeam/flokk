@@ -6,13 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StyledTabBar extends StatelessWidget {
-  final Function(int) onTabPressed;
-  final double width;
+  final void Function(int)? onTabPressed;
   final List<String> sections;
   final int index;
   static const List<String> defaults = ["test", "foo", "bar"];
 
-  const StyledTabBar({Key key, this.width, this.sections = defaults, this.index, this.onTabPressed}) : super(key: key);
+  const StyledTabBar({Key? key, this.sections = defaults, this.index = 0, this.onTabPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class StyledTabBar extends StatelessWidget {
     );
   }
 
-  Widget _RoundedBox({double width, Color border, Color fill}) {
+  Widget _RoundedBox({double? width, Color? border, Color? fill}) {
     return Container(
       width: width ?? null,
       decoration: BoxDecoration(
@@ -54,15 +53,15 @@ class StyledTabBar extends StatelessWidget {
 
   Widget _ClickableLabel(String e, AppTheme theme, [double fontScale = 1]) {
     bool isSelected = sections.indexOf(e) == index;
-    Color selected =  theme.isDark? theme.bg1 :  theme.surface;
-    Color notSelected =  theme.isDark? theme.greyStrong :  theme.grey;
+    Color selected = theme.isDark ? theme.bg1 : theme.surface;
+    Color notSelected = theme.isDark ? theme.greyStrong : theme.grey;
 
     return AnimatedDefaultTextStyle(
       duration: Durations.fast,
       style: TextStyles.Footnote.textColor(isSelected ? selected : notSelected).scale(fontScale),
       child: OneLineText(e.toUpperCase())
           .center()
-          .clickable(()=>onTabPressed?.call(sections.indexOf(e)), opaque: true)
+          .clickable(() => onTabPressed?.call(sections.indexOf(e)), opaque: true)
           .expanded(),
     );
   }

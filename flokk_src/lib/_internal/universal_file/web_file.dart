@@ -3,23 +3,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'universal_file.dart';
 
 class WebFileWriter implements UniversalFile {
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
+  bool _hasPrefs = false;
 
   @override
   String fileName;
 
-  String _lastWrite = "";
+  String? _lastWrite;
 
   WebFileWriter(this.fileName);
 
   Future<void> initPrefs() async {
-    prefs ??= await SharedPreferences.getInstance();
+    if (_hasPrefs)
+      return;
+    _hasPrefs = true;
+    prefs = await SharedPreferences.getInstance();
   }
 
   @override
   Future<String> read() async {
     await initPrefs();
-    String value = prefs.getString(fileName);
+    String? value = prefs.getString(fileName);
+    if (value == null)
+      throw Exception("$fileName not found");
     //print("Reading pref: $fileName = $value");
     return value;
   }
@@ -28,8 +34,9 @@ class WebFileWriter implements UniversalFile {
   Future write(String value, [bool append = false]) async {
     await initPrefs();
     if (append && _lastWrite == null) {
-      _lastWrite = await read();
-      value = _lastWrite + value;
+      String lastWrite = await read();
+      _lastWrite = lastWrite;
+      value = lastWrite + value;
     }
     //print("Write: $fileName = $value");
     _lastWrite = value;

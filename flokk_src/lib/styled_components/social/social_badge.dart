@@ -13,10 +13,15 @@ class SocialBadge extends StatelessWidget {
   final AssetImage iconPlaceholder;
   final int newMessageCount;
   final bool hasAccount;
-  final Function() onPressed;
+  final VoidCallback? onPressed;
 
   const SocialBadge(
-      {this.icon, this.iconPlaceholder, this.newMessageCount, Key key, this.hasAccount, this.onPressed})
+      {required this.icon,
+      required this.iconPlaceholder,
+      this.newMessageCount = 0,
+      Key? key,
+      this.hasAccount = false,
+      this.onPressed})
       : super(key: key);
 
   @override

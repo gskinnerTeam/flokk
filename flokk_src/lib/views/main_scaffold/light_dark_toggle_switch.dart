@@ -49,7 +49,8 @@ class _LightDarkToggleSwitchState extends State<LightDarkToggleSwitch> {
             builder: (_, value, __) => StyledContainer(
               theme.surface,
               duration: Durations.medium,
-              margin: EdgeInsets.only(top: 2, left: 2 + (innerWidth - 20 - 4) * value, right: 2),
+              margin: EdgeInsets.only(
+                  top: 2, left: 2 + (innerWidth - 20 - 4) * (value as double? ?? 1), right: 2),
               borderRadius: BorderRadius.circular(99),
               width: 20,
               height: 20,
@@ -86,6 +87,6 @@ class _AnimatedMenuIndicatorState extends State<_AnimatedMenuIndicator> {
         width: widget.width,
         height: widget.height,
         child: Container(color: theme.surface),
-        margin: EdgeInsets.only(top: widget.indicatorY ?? 0));
+        margin: EdgeInsets.only(top: widget.indicatorY));
   }
 }

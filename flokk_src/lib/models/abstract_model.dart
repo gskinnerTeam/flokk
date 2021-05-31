@@ -5,7 +5,7 @@ import 'package:flokk/_internal/universal_file/universal_file.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class AbstractModel extends ChangeNotifier {
-  UniversalFile _file;
+  UniversalFile? _file;
 
   void reset([bool notify = true]) {
     copyFromJson({});
@@ -29,13 +29,17 @@ abstract class AbstractModel extends ChangeNotifier {
 
   //Loads a string from disk, and parses it into ourselves.
   Future<void> load() async {
-    String string = await _file.read().catchError((e, s) => Log.e(e, stack: s)) ?? "{}";
-    if (string != null) {
-      copyFromJson(jsonDecode(string));
-    }
+    final file = _file;
+    if (file == null) return;
+
+    String string = await file.read().catchError((e, s) {
+      Log.e("$e", stack: s);
+      return "{}";
+    });
+    copyFromJson(jsonDecode(string));
   }
 
-  Future<void> save() async => _file.write(jsonEncode(toJson()));
+  Future<void> save() async => _file?.write(jsonEncode(toJson()));
 
   //Enable file serialization, remember to override the to/from serialization methods as well
   void enableSerialization(String fileName) {
@@ -52,10 +56,12 @@ abstract class AbstractModel extends ChangeNotifier {
     throw UnimplementedError();
   }
 
-  List<T> toList<T>(dynamic json, Function(dynamic) fromJson) {
-    final List<T> list = (json as Iterable)?.map((e) {
-      return e == null ? null : fromJson(e) as T;
-    })?.toList();
+  List<T> toList<T>(dynamic json, dynamic Function(dynamic) fromJson) {
+    final List<T> list = (json as Iterable?)?.map((e) {
+      return e == null ? e : fromJson(e) as T?;
+    }).where((e) => e != null).whereType<T>().toList() ?? [];
+
     return list;
   }
 }
+

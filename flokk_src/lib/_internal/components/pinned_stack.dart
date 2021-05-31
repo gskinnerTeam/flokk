@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class StackConstraints extends InheritedWidget {
   final BoxConstraints constraints;
 
-  StackConstraints({this.constraints, Widget child}) : super(child: child);
+  StackConstraints({required this.constraints, required Widget child}) : super(child: child);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
@@ -20,8 +20,8 @@ class PinnedStack extends StatelessWidget {
   final Clip clip;
 
   const PinnedStack(
-      {Key key,
-      this.children,
+      {Key? key,
+      required this.children,
       this.fit = StackFit.expand,
       this.alignment = Alignment.topLeft,
       this.textDirection = TextDirection.ltr,

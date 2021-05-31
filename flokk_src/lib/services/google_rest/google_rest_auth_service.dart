@@ -30,7 +30,7 @@ class GoogleRestAuthService {
       HttpResponse authResponse = await HttpClient.post(url);
       //print("Response: ${authResponse.statusCode} / ${authResponse.body}");
 
-      GoogleAuthEndpointInfo endpoint;
+      GoogleAuthEndpointInfo? endpoint;
       if (authResponse.success) {
         Map<String, dynamic> userAuth = jsonDecode(authResponse.body);
         endpoint = GoogleAuthEndpointInfo(
@@ -51,7 +51,7 @@ class GoogleRestAuthService {
   Future<ServiceResult<GoogleAuthResults>> refresh(String refreshToken) async =>
       await _getAuthResults(refreshToken: refreshToken);
 
-  Future<ServiceResult<GoogleAuthResults>> _getAuthResults({String deviceCode, String refreshToken}) async {
+  Future<ServiceResult<GoogleAuthResults>> _getAuthResults({String deviceCode = "", String refreshToken = ""}) async {
     String grant = !StringUtils.isEmpty(refreshToken) ? "refresh_token" : deviceCodeGrantType;
     Map<String, String> params = {"client_id": _clientId, "client_secret": _clientSecret, "grant_type": grant};
     if (!StringUtils.isEmpty(refreshToken)) {
@@ -61,7 +61,7 @@ class GoogleRestAuthService {
     }
     HttpResponse response = await HttpClient.post("$authUrl?${RESTUtils.encodeParams(params)}");
     print("Response: ${response.statusCode} / ${response.body}");
-    GoogleAuthResults results;
+    GoogleAuthResults? results;
     if (response.success) {
       Map<String, dynamic> userAccess = jsonDecode(response.body);
       results = GoogleAuthResults(
@@ -83,21 +83,31 @@ class GoogleAuthEndpointInfo {
   final String userCode;
   final String verificationUrl;
 
-  GoogleAuthEndpointInfo({this.deviceCode, this.expiresIn, this.interval, this.userCode, this.verificationUrl});
+  GoogleAuthEndpointInfo(
+      {required this.deviceCode,
+      required this.expiresIn,
+      required this.interval,
+      required this.userCode,
+      required this.verificationUrl});
 }
 
 class GoogleAuthResults {
   final String accessToken;
   final int expiresIn;
-  final String refreshToken;
+  final String? refreshToken;
   final String tokenType;
   final String idToken;
-  Map<String, dynamic> profile;
+  late Map<String, dynamic> profile;
 
   String get email => _email;
-  String _email;
+  late String _email;
 
-  GoogleAuthResults({this.accessToken, this.expiresIn, this.refreshToken, this.tokenType, this.idToken}) {
+  GoogleAuthResults(
+      {required this.accessToken,
+      required this.expiresIn,
+      required this.refreshToken,
+      required this.tokenType,
+      required this.idToken}) {
     profile = jsonDecode(getProfileFromToken(idToken));
     _email = profile["email"];
   }

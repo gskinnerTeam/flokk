@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 class StyledHorizontalScrollView extends StatefulWidget {
   final Duration autoScrollDuration;
   final Curve autoScrollCurve;
-  final Widget child;
+  final Widget? child;
 
-  StyledHorizontalScrollView({this.autoScrollDuration, this.autoScrollCurve, this.child, Key key}) : super(key: key);
+  StyledHorizontalScrollView({required this.autoScrollDuration, required this.autoScrollCurve, this.child, Key? key})
+      : super(key: key);
 
   @override
   State createState() => _StyledHorizontalScrollViewState();
 }
 
 class _StyledHorizontalScrollViewState extends State<StyledHorizontalScrollView> {
-  GlobalKey _childContainerKey;
-  GlobalKey _scrollViewKey;
+  late GlobalKey _childContainerKey;
+  late GlobalKey _scrollViewKey;
   double _childWidth = 0.0;
   double _scrollWidth = 0.0;
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {

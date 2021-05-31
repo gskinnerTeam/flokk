@@ -8,12 +8,12 @@ import 'package:googleapis/people/v1.dart';
 import 'package:tuple/tuple.dart';
 
 class GoogleRestContactGroupsService {
-  Future<ServiceResult<Tuple2<List<GroupData>, String>>> get(String accessToken, {String nextPageToken}) async {
+  Future<ServiceResult<Tuple2<List<GroupData>, String>>> get(String accessToken, {String nextPageToken = ""}) async {
     String url = "https://people.googleapis.com/v1/contactGroups"
         "?access_token=$accessToken"
         "&pageSize=1000";
 
-    if (nextPageToken != null) {
+    if (nextPageToken.isNotEmpty) {
       url += "&pageToken=$nextPageToken";
     }
 
@@ -21,7 +21,7 @@ class GoogleRestContactGroupsService {
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
     List<GroupData> groups = [];
     String token = "";
-    if (response?.success == true) {
+    if (response.success == true) {
       Map<String, dynamic> data = jsonDecode(response.body);
       token = data["nextPageToken"] ?? "";
       List<dynamic> groupsData = data["contactGroups"];
@@ -40,8 +40,8 @@ class GoogleRestContactGroupsService {
 
     HttpResponse response = await HttpClient.get(url);
     //print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    GroupData group;
-    if (response?.success == true) {
+    GroupData? group;
+    if (response.success == true) {
       group = groupFromJson(jsonDecode(response.body));
     }
     return ServiceResult(group, response);
@@ -53,8 +53,8 @@ class GoogleRestContactGroupsService {
     HttpResponse response = await HttpClient.post(url,
         headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode({"contactGroup": groupToJson(group)}));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    GroupData newGroup;
-    if (response?.success == true) {
+    GroupData? newGroup;
+    if (response.success == true) {
       Map<String, dynamic> data = jsonDecode(response.body);
       newGroup = groupFromJson(data);
     }
@@ -73,14 +73,14 @@ class GoogleRestContactGroupsService {
   }
 
   Future<ServiceResult<void>> modify(String accessToken, GroupData group,
-      {List<ContactData> addContacts, List<ContactData> removeContacts}) async {
+      {List<ContactData> addContacts = const<ContactData>[], List<ContactData> removeContacts = const<ContactData>[]}) async {
     String url = "https://people.googleapis.com/v1/${group.id}/members:modify";
 
     Map<String, dynamic> data = {};
-    if (addContacts?.isNotEmpty ?? false) {
+    if (addContacts.isNotEmpty) {
       data["resourceNamesToAdd"] = addContacts.map((x) => x.id).toList();
     }
-    if (removeContacts?.isNotEmpty ?? false) {
+    if (removeContacts.isNotEmpty) {
       data["resourceNamesToRemove"] = removeContacts.map((x) => x.id).toList();
     }
 
@@ -99,8 +99,8 @@ class GoogleRestContactGroupsService {
     HttpResponse response = await HttpClient.put(url,
         headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode({"contactGroup": groupToJson(group)}));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    GroupData updatedContact;
-    if (response?.success == true) {
+    GroupData? updatedContact;
+    if (response.success == true) {
       //updated contact group returned from server
       Map<String, dynamic> data = jsonDecode(response.body);
       updatedContact = groupFromJson(data);
@@ -120,7 +120,7 @@ class GoogleRestContactGroupsService {
 
     switch (g.groupType) {
       case "GROUP_TYPE_UNSPECIFIED":
-        groupData.groupType = GroupType.GroupTypeUnspecified;
+        groupData.groupType = GroupType.Unspecified;
         break;
       case "USER_CONTACT_GROUP":
         groupData.groupType = GroupType.UserContactGroup;
@@ -129,7 +129,7 @@ class GoogleRestContactGroupsService {
         groupData.groupType = GroupType.SystemContactGroup;
         break;
       default:
-        groupData.groupType = GroupType.GroupTypeUnspecified;
+        groupData.groupType = GroupType.Unspecified;
     }
 
     return groupData;
@@ -137,11 +137,11 @@ class GoogleRestContactGroupsService {
 
   Map<String, dynamic> groupToJson(GroupData group) {
     final contactGroup = ContactGroup()
-      ..resourceName = group.id ?? ""
-      ..etag = group.etag ?? ""
-      ..name = group.name ?? ""
-      ..memberCount = group.memberCount ?? 0
-      ..memberResourceNames = group.members ?? [];
+      ..resourceName = group.id
+      ..etag = group.etag
+      ..name = group.name
+      ..memberCount = group.memberCount
+      ..memberResourceNames = group.members;
     return contactGroup.toJson();
   }
 }

@@ -12,17 +12,17 @@ class RefreshContactsCommand extends AbstractCommand with AuthorizedServiceComma
   Future<ServiceResult> execute({bool skipGroups = false}) async {
     Log.p("[RefreshContactsCommand]");
 
-    ServiceResult<GetContactsResult> result;
-    await executeAuthServiceCmd(() async {
+    ServiceResult<GetContactsResult> result = await executeAuthServiceCmd(() async {
       // Check if we have a sync token...
       String syncToken = authModel.googleSyncToken ?? "";
-      if(contactsModel.allContacts.isEmpty){
-        syncToken = null;
+      if (contactsModel.allContacts.isEmpty) {
+        syncToken = "";
       }
-      result = await googleRestService.contacts.getAll(authModel.googleAccessToken, syncToken);
+      ServiceResult<GetContactsResult> result =
+          await googleRestService.contacts.getAll(authModel.googleAccessToken, syncToken);
       // Now do we have a sync token?
-      syncToken = result.content.syncToken ?? "";
-      List<ContactData> contacts = result.content.contacts ?? [];
+      syncToken = result.content?.syncToken ?? "";
+      List<ContactData> contacts = result.content?.contacts ?? [];
       if (result.success) {
         authModel.googleSyncToken = syncToken;
         //Iterate through returned contacts and either update existing contact or append
@@ -41,8 +41,8 @@ class RefreshContactsCommand extends AbstractCommand with AuthorizedServiceComma
       if (!skipGroups) {
         await RefreshContactGroupsCommand(context).execute();
       }
-      Log.p("Contacts loaded = ${contacts?.length ?? 0}");
-      return result.response;
+      Log.p("Contacts loaded = ${contacts.length}");
+      return result;
     });
     return result;
   }

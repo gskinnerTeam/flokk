@@ -6,10 +6,10 @@ import 'package:flokk/data/group_data.dart';
 
 class SearchEngine extends SimpleNotifier {
   bool _isDirty = false;
-  List<ContactData> _cachedResults;
-  List<String> _tagCache;
+  List<ContactData> _cachedResults = [];
+  List<String> _tagCache = [];
 
-  get hasQuery => (query?.isNotEmpty ?? false) || tags.isNotEmpty || filterContacts.isNotEmpty;
+  get hasQuery => query.isNotEmpty || tags.isNotEmpty || filterContacts.isNotEmpty;
 
   SearchEngine copy() => SearchEngine()..copyFrom(this);
 
@@ -30,11 +30,11 @@ class SearchEngine extends SimpleNotifier {
   String get query => _query;
 
   set query(String query) => setAndMarkDirty(() => _query = query);
-  String _query;
+  String _query = "";
 
   /// ////////////////////////////////////////////
   /// Filter tags
-  String get tags => _tags ?? "";
+  String get tags => _tags;
 
   set tags(String tags) => setAndMarkDirty(() => _tags = tags);
 
@@ -58,11 +58,11 @@ class SearchEngine extends SimpleNotifier {
   void clearTags() => tags = "";
 
   /// _tags is a comma separated list of tags
-  String _tags;
+  String _tags = "";
 
   /// ////////////////////////////////////////////
   /// Filter contacts
-  String get filterContacts => _filterContacts ?? "";
+  String get filterContacts => _filterContacts;
 
   set filterContacts(String filterContacts) => setAndMarkDirty(() => _filterContacts = filterContacts);
 
@@ -85,7 +85,7 @@ class SearchEngine extends SimpleNotifier {
 
   void clearFilterContacts() => filterContacts = "";
 
-  String _filterContacts;
+  String _filterContacts = "";
 
   /// ////////////////////////////////////////////
   /// ORDER BY
@@ -106,26 +106,28 @@ class SearchEngine extends SimpleNotifier {
   List<ContactData> get contactsList => _contactsList;
 
   set contactsList(List<ContactData> value) => setAndMarkDirty(() => _contactsList = value);
-  List<ContactData> _contactsList;
+  List<ContactData> _contactsList = [];
 
   List<GroupData> get groupsList => _groupsList;
 
   set groupsList(List<GroupData> value) => setAndMarkDirty(() => _groupsList = value);
-  List<GroupData> _groupsList;
+  List<GroupData> _groupsList = [];
 
-  List<ContactData> getResults([List<ContactData> newContacts, ContactOrderBy _orderBy]) {
-    if (newContacts != null) contactsList = newContacts;
-    if (_orderBy != null) orderBy = _orderBy;
+  List<ContactData> getResults(
+      [List<ContactData>? newContacts, ContactOrderBy _orderBy = ContactOrderBy.FirstName]) {
+    if (newContacts != null)
+      contactsList = newContacts;
+    orderBy = _orderBy;
     // If we have no data
-    if (_contactsList == null) return [];
+    if (_contactsList.isEmpty) return [];
     _updateCache();
-    return _cachedResults ?? <ContactData>[];
+    return _cachedResults;
   }
 
   List<String> getTagResults() {
-    if (query == null || query.isEmpty) return <String>[];
+    if (query.isEmpty) return <String>[];
     _updateCache();
-    return _tagCache ?? <String>[];
+    return _tagCache;
   }
 
   List<String> _buildGroups() {
@@ -178,7 +180,7 @@ class SearchEngine extends SimpleNotifier {
   }
 
   int _nullSafeSort(String a, String b, bool orderDesc) {
-    return (a ?? "").compareTo(b ?? "") * (orderDesc ? -1 : 1);
+    return a.compareTo(b) * (orderDesc ? -1 : 1);
   }
 
   void setAndMarkDirty(Function() setter) {

@@ -14,25 +14,25 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
 class ClickableIconRow extends StatefulWidget {
-  final Function(String) onPressed;
-  final Function() onEditPressed;
-  final AssetImage icon;
+  final void Function(String)? onPressed;
+  final VoidCallback? onEditPressed;
+  final AssetImage? icon;
   final String value;
-  final String label;
+  final String? label;
   final double size;
-  final Color iconColor;
+  final Color? iconColor;
   final String editType;
 
   const ClickableIconRow(
-      {Key key,
-      this.icon,
-      this.value,
+      {Key? key,
+      required this.icon,
+      required this.value,
       this.label,
       this.onPressed,
-      this.size,
+      this.size = 20,
       this.iconColor,
       this.onEditPressed,
-      this.editType})
+      required this.editType})
       : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
-    Color overColor = theme.isDark? ColorUtils.shiftHsl(theme.bg1, .2) : theme.bg2.withOpacity(.35);
+    Color overColor = theme.isDark ? ColorUtils.shiftHsl(theme.bg1, .2) : theme.bg2.withOpacity(.35);
     return MouseRegion(
       onEnter: (_) => isMouseOver = true,
       onExit: (_) => isMouseOver = false,
@@ -67,14 +67,15 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                StyledImageIcon(widget.icon ?? null, size: (widget.size ?? 20), color: widget.iconColor ?? theme.grey),
+                if (widget.icon != null)
+                  StyledImageIcon(widget.icon!, size: widget.size, color: widget.iconColor ?? theme.grey),
                 SizedBox(width: Insets.l),
                 // Wrap value in ClickableText widget, it will get colored if anyone is listening
                 //Text(value),
                 ClickableText(widget.value, onPressed: widget.onPressed).constrained(maxWidth: 300).flexible(),
                 SizedBox(width: Insets.m),
                 if (widget.label != null)
-                  Text(widget.label.toUpperCase(), style: TextStyles.Caption.textColor(theme.greyWeak))
+                  Text(widget.label!.toUpperCase(), style: TextStyles.Caption.textColor(theme.greyWeak))
                       .translate(offset: Offset(0, 8)),
               ],
             ).padding(right: Insets.l * 1.5),
@@ -96,8 +97,7 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
                         color: theme.accent1,
                         padding: EdgeInsets.zero,
                         onPressed: _handleEditPressed,
-                        ),
-
+                      ),
                     ],
                   ),
                 ),
@@ -112,17 +112,24 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
 typedef Widget SeparatorBuilder();
 
 class MultilineClickableIconRow extends StatelessWidget {
-  final Function(String) onPressed;
-  final AssetImage icon;
+  final void Function(String)? onPressed;
+  final AssetImage? icon;
   final List<Tuple2<String, String>> rows;
-  final SeparatorBuilder separator;
+  final SeparatorBuilder? separator;
   final double size;
-  final Color iconColor;
+  final Color? iconColor;
   final String editType;
 
-  const MultilineClickableIconRow(
-      {Key key, this.icon, this.rows, this.onPressed, this.separator, this.size, this.iconColor, this.editType})
-      : super(key: key);
+  const MultilineClickableIconRow({
+    Key? key,
+    this.icon,
+    this.rows = const <Tuple2<String, String>>[],
+    this.onPressed,
+    this.separator,
+    this.size = 20,
+    this.iconColor,
+    required this.editType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/_internal/log.dart';
-import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/check_connection_command.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
@@ -15,13 +14,13 @@ class ShowServiceErrorCommand extends AbstractCommand {
 
   static bool isShowingError = false;
 
-  Future<bool> execute(HttpResponse response, {String customMessage}) async {
+  Future<bool> execute(HttpResponse response, {String customMessage = ""}) async {
     //If response has no errors, return false to indicate no error was shown
     if (response.success) return false;
     Log.p("[ShowServiceErrorCommand]");
 
     String msg;
-    if (StringUtils.isNotEmpty(customMessage)) {
+    if (customMessage.isNotEmpty) {
       msg = customMessage;
     } else {
       msg =
@@ -34,9 +33,9 @@ class ShowServiceErrorCommand extends AbstractCommand {
               "Something went wrong with authorization, you should probably ${UniversalPlatform.isWeb ? "refresh" : "restart"} the app";
         } else {
           //Use message from server if available
-          Map<String, dynamic> json = jsonDecode(response.body)["error"];
+          Map<String, dynamic>? json = jsonDecode(response.body)["error"];
           if (json?.containsKey("message") ?? false) {
-            msg = json["message"];
+            msg = json!["message"];
           } else {
             msg = "Unable to connect to online services: Internal Server Error (${response.statusCode})";
           }
@@ -48,9 +47,9 @@ class ShowServiceErrorCommand extends AbstractCommand {
         msg = "Server is down, please try again later";
 
         //Show message from server if available
-        Map<String, dynamic> json = jsonDecode(response.body)["error"];
+        Map<String, dynamic>? json = jsonDecode(response.body)["error"];
         if (json?.containsKey("message") ?? false) {
-          msg = json["message"];
+          msg = json!["message"];
         }
       }
       // No Connection
@@ -73,7 +72,7 @@ class ShowServiceErrorCommand extends AbstractCommand {
         OkCancelDialog(
           title: "Connection Error",
           message: msg,
-          onOkPressed: () => rootNav.pop(),
+          onOkPressed: () => rootNav?.pop(),
         ),
       );
       isShowingError = false;

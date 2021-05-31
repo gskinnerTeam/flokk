@@ -6,7 +6,7 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 
 class ContactJobMiniForm extends BaseMiniForm {
-  ContactJobMiniForm(ContactEditFormState form, {Key key}) : super(form, ContactSectionType.job, key: key);
+  ContactJobMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.job, key: key);
 
   @override
   Widget build(BuildContext context) {

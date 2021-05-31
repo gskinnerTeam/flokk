@@ -15,14 +15,16 @@ class WebSignInCommand extends AbstractCommand {
         scopes: ['https://www.googleapis.com/auth/contacts'],
       );
 
-      GoogleSignInAccount account = silentSignIn ? await gs.signInSilently() : await gs.signIn();
-      GoogleSignInAuthentication auth = await account.authentication;
+      GoogleSignInAccount? account = silentSignIn ? await gs.signInSilently() : await gs.signIn();
+      GoogleSignInAuthentication? auth;
+      if (account != null)
+        auth = await account.authentication;
 
       if (auth != null) {
         Log.p("[WebSignInCommand] Success");
         authModel.googleSignIn =
             gs; //save off instance of GoogleSignIn, so it can be used to call googleSignIn.disconnect() if needed
-        authModel.googleAccessToken = auth.accessToken;
+        authModel.googleAccessToken = auth.accessToken ?? "";
         authModel.scheduleSave();
         return true;
       } else {

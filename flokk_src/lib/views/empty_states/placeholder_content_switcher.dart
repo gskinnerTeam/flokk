@@ -17,11 +17,11 @@ class PlaceholderContentSwitcher extends StatelessWidget {
   final EdgeInsets placeholderPadding;
 
   const PlaceholderContentSwitcher(
-      {Key key,
+      {Key? key,
       this.showOutline = true,
-      @required this.placeholder,
-      @required this.content,
-      @required this.hasContent,
+      required this.placeholder,
+      required this.content,
+      required this.hasContent,
       this.placeholderPadding = EdgeInsets.zero})
       : super(key: key);
 

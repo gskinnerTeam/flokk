@@ -8,21 +8,21 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class SearchBar extends StatefulWidget {
-  final Function(ContactData) onContactPressed;
-  final Function() onSearchSubmitted;
+  final void Function(ContactData)? onContactPressed;
+  final VoidCallback? onSearchSubmitted;
   final double closedHeight;
   final SearchEngine searchEngine;
   final bool narrowMode;
   final double topPadding;
 
   const SearchBar({
-    Key key,
-    this.searchEngine,
-    this.closedHeight,
+    Key? key,
+    required this.searchEngine,
+    required this.closedHeight,
     this.onContactPressed,
     this.onSearchSubmitted,
-    this.narrowMode,
-    this.topPadding,
+    this.narrowMode = false,
+    this.topPadding = 0.0,
   }) : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class SearchBarState extends State<SearchBar> {
   final GlobalKey<StyledSearchTextInputState> textKey = GlobalKey();
   final GlobalKey<StyledSearchTextInputState> resultsColumnKey = GlobalKey();
 
-  FocusNode textFocusNode;
+  late FocusNode textFocusNode;
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class SearchBarState extends State<SearchBar> {
     // When we open up, make a copy of the current search settings to work with
     if (value == true) {
       // Put the focus in the text field to start
-      textFocusNode?.requestFocus();
+      textFocusNode.requestFocus();
     } else {
       // Unfocus textNode when closing
       textFocusNode.unfocus();
@@ -75,7 +75,7 @@ class SearchBarState extends State<SearchBar> {
     // Anytime we toggle, make sure the search bar contents match the main searchEngine,
     // this will either revert the un-submitted changes, or do nothing.
     tmpSearch.copyFrom(widget.searchEngine);
-    textKey?.currentState?.text = tmpSearch.query ?? "";
+    textKey.currentState?.text = tmpSearch.query;
 
     setState(() => _isOpen = value);
   }
@@ -119,7 +119,7 @@ class SearchBarState extends State<SearchBar> {
       } else if (textFocusNode.hasFocus && evt.logicalKey == LogicalKeyboardKey.enter) {
         handleSearchSubmitted();
       } else if (textFocusNode.hasFocus && evt.logicalKey == LogicalKeyboardKey.backspace) {
-        if (textKey != null && textKey.currentState != null && textKey.currentState.text.isEmpty) {
+        if (textKey.currentState != null && (textKey.currentState?.text.isEmpty ?? true)) {
           final tl = tmpSearch.tagList;
           final cl = tmpSearch.filterContactList;
           if (cl.isNotEmpty) {
@@ -146,17 +146,17 @@ class SearchBarState extends State<SearchBar> {
     if (!isOpen) save();
   }
 
-  void handleSearchIconPressed() => textFocusNode?.requestFocus();
+  void handleSearchIconPressed() => textFocusNode.requestFocus();
 
   void clearQueryString() {
     handleSearchChanged("");
-    textKey?.currentState?.text = "";
+    textKey.currentState?.text = "";
     textFocusNode.requestFocus();
   }
 
   void clearSearch() {
     handleSearchChanged("");
-    textKey?.currentState?.text = "";
+    textKey.currentState?.text = "";
     tmpSearch.clearTags();
     tmpSearch.clearFilterContacts();
     if (!isOpen)

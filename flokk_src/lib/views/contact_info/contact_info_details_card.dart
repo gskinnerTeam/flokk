@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
 class ContactInfoDetailsCard extends StatelessWidget {
-  const ContactInfoDetailsCard({Key key}) : super(key: key);
+  const ContactInfoDetailsCard({Key? key}) : super(key: key);
 
   void _handlePhonePressed(String value) => UrlLauncher.openPhoneNumber(value);
 

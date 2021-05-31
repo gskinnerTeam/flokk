@@ -4,25 +4,24 @@ import 'package:flutter/material.dart';
 
 class SelectableLinkText extends StatefulWidget {
   final String text;
-  final TextStyle textStyle;
-  final TextStyle linkStyle;
+  final TextStyle? textStyle;
+  final TextStyle? linkStyle;
   final TextAlign textAlign;
 
   const SelectableLinkText({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
     this.textStyle,
     this.linkStyle,
     this.textAlign = TextAlign.start,
-  })  : assert(text != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _LinkTextState createState() => _LinkTextState();
 }
 
 class _LinkTextState extends State<SelectableLinkText> {
-  List<TapGestureRecognizer> _gestureRecognizers;
+  List<TapGestureRecognizer> _gestureRecognizers = const <TapGestureRecognizer>[];
   final RegExp _regex = RegExp(
       r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%.,_\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\,+.~#?&//=]*)");
 
@@ -45,9 +44,9 @@ class _LinkTextState extends State<SelectableLinkText> {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    final textStyle = widget.textStyle ?? themeData.textTheme.body1;
+    final textStyle = widget.textStyle ?? themeData.textTheme.bodyText1;
     final linkStyle = widget.linkStyle ??
-        themeData.textTheme.bodyText1.copyWith(color: themeData.accentColor, decoration: TextDecoration.underline);
+        themeData.textTheme.bodyText1?.copyWith(color: themeData.accentColor, decoration: TextDecoration.underline);
 
     final links = _regex.allMatches(widget.text);
 
@@ -62,7 +61,7 @@ class _LinkTextState extends State<SelectableLinkText> {
     textParts.forEach((part) {
       textSpans.add(TextSpan(text: part, style: textStyle));
       if (i < links.length) {
-        final link = links.elementAt(i).group(0);
+        final link = links.elementAt(i).group(0) ?? "";
         final recognizer = TapGestureRecognizer()..onTap = () => _launchUrl(link);
         _gestureRecognizers.add(recognizer);
         textSpans.add(

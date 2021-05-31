@@ -6,7 +6,8 @@ import 'package:path/path.dart' as p;
 import 'universal_file.dart';
 
 class IoFileWriter implements UniversalFile {
-  Directory dataPath;
+  late Directory dataPath;
+  bool _hasDataPath = false;
 
   @override
   String fileName;
@@ -16,7 +17,8 @@ class IoFileWriter implements UniversalFile {
   String get fullPath => p.join(dataPath.path, fileName);
 
   Future getDataPath() async {
-    if (dataPath != null) return;
+    if (_hasDataPath) return;
+    _hasDataPath = true;
     dataPath = Directory(await PathUtil.dataPath);
     if (Platform.isWindows || Platform.isLinux) {
       createDirIfNotExists(dataPath);
@@ -26,25 +28,26 @@ class IoFileWriter implements UniversalFile {
   @override
   Future<String> read() async {
     await getDataPath();
-    return await File("$fullPath").readAsString().catchError(print);
+    return await File("$fullPath").readAsString();
   }
 
   @override
   Future write(String value, [bool append = false]) async {
     await getDataPath();
-    await File("$fullPath")
-        .writeAsString(
-          value,
-          mode: append ? FileMode.append : FileMode.write,
-        )
-        .catchError(print);
+    await File("$fullPath").writeAsString(
+      value,
+      mode: append ? FileMode.append : FileMode.write,
+    );
   }
 
   static void createDirIfNotExists(Directory dir) async {
     //Create directory if it doesn't exist
-    if (dir != null && !await dir.exists()) {
+    if (!await dir.exists()) {
       //Catch error since disk io can always fail.
-      await dir.create(recursive: true).catchError((e, stack) => print(e));
+      await dir.create(recursive: true).catchError((e, stack) {
+        print(e);
+        return Directory(".");
+      });
     }
   }
 }

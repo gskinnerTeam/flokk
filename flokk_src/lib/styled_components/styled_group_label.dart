@@ -12,13 +12,13 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class StyledGroupLabel extends StatelessWidget {
-  final AssetImage icon;
+  final AssetImage? icon;
   final String text;
-  final Function(bool) onFocusChanged;
-  final VoidCallback onClose;
-  final VoidCallback onPressed;
+  final void Function(bool)? onFocusChanged;
+  final VoidCallback? onClose;
+  final VoidCallback? onPressed;
 
-  StyledGroupLabel({this.icon, this.text, this.onFocusChanged, this.onClose, this.onPressed})
+  StyledGroupLabel({this.icon, this.text = "", this.onFocusChanged, this.onClose, this.onPressed})
       : assert(icon == null || (icon is AssetImage) || (icon is IconData));
 
   @override
@@ -29,7 +29,7 @@ class StyledGroupLabel extends StatelessWidget {
       children: [
         if (icon != null) ...{
           StyledImageIcon(
-            icon,
+            icon!,
             size: 12,
             color: theme.surface,
           ).center().constrained(width: 30, height: 30).decorated(

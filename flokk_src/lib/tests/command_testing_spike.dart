@@ -19,7 +19,7 @@ class CommandTestingSpike extends StatelessWidget {
   Widget build(BuildContext context) {
     final contactModel = Provider.of<ContactsModel>(context, listen: false);
     ContactData contact = contactModel.allContacts.first;
-    GroupData group;
+    GroupData group = GroupData();
 
     return Container(
       child: Column(
@@ -49,7 +49,7 @@ class CommandTestingSpike extends StatelessWidget {
             child: Text("edit label"),
             onPressed: () async {
               group.name = "Renamed Label";
-              group = await RenameLabelCommand(context).execute(group);
+              group = (await RenameLabelCommand(context).execute(group)) ?? group;
               print(group);
             },
           ),
@@ -57,7 +57,7 @@ class CommandTestingSpike extends StatelessWidget {
             child: Text("add multiple labels to single contact"),
             onPressed: () async {
               List<GroupData> userLabels =
-                  contactModel.allGroups.where((x) => x.groupType == GroupType.UserContactGroup)?.toList() ?? [];
+                  contactModel.allGroups.where((x) => x.groupType == GroupType.UserContactGroup).toList();
               int length = min(userLabels.length, 3);
               List<GroupData> firstThreeLabels = userLabels.sublist(0, length);
               contact.groupList = firstThreeLabels;
@@ -70,10 +70,10 @@ class CommandTestingSpike extends StatelessWidget {
           RaisedButton(
             child: Text("add single label to multiple contacts"),
             onPressed: () async {
-              GroupData firstLabel =
-                  contactModel.allGroups?.where((x) => x.groupType == GroupType.UserContactGroup)?.first ?? null;
-              if (firstLabel != null) {
-                List<ContactData> faves = contactModel.allContacts.where((x) => x.isStarred == true)?.toList();
+              if (contactModel.allGroups.isNotEmpty) {
+                GroupData firstLabel =
+                    contactModel.allGroups.where((x) => x.groupType == GroupType.UserContactGroup).first;
+                List<ContactData> faves = contactModel.allContacts.where((x) => x.isStarred == true).toList();
                 int length = min(faves.length, 3);
                 List<ContactData> firstThreeContacts = faves.sublist(0, length);
                 AddLabelToContactCommand(context).execute(firstThreeContacts, existingGroup: firstLabel);
@@ -84,8 +84,8 @@ class CommandTestingSpike extends StatelessWidget {
           RaisedButton(
             child: Text("add new label to contact"),
             onPressed: () async {
-              List<ContactData> updatedContact =
-                  await AddLabelToContactCommand(context).execute([contact], newLabel: "Foo");
+              List<ContactData> updatedContact = await AddLabelToContactCommand(context)
+                  .execute([contact], existingGroup: GroupData(), newLabel: "Foo");
               print(updatedContact.first);
             },
           ),

@@ -22,18 +22,19 @@ class SocialPopupForm extends StatefulWidget {
   static const double kWidth = 270;
   static const double kHeight = 190;
 
-  final void Function() onClosePressed;
+  final VoidCallback? onClosePressed;
   final ContactData contact;
   final SocialActivityType socialActivityType;
 
-  const SocialPopupForm(this.contact, {Key key, this.onClosePressed, this.socialActivityType}) : super(key: key);
+  const SocialPopupForm(this.contact, {Key? key, this.onClosePressed, required this.socialActivityType})
+      : super(key: key);
 
   @override
   _SocialPopupFormState createState() => _SocialPopupFormState();
 }
 
 class _SocialPopupFormState extends State<SocialPopupForm> {
-  ContactData _tmpContact;
+  late ContactData _tmpContact;
 
   void _handleGitChanged(String value) => _tmpContact.gitUsername = value;
 
@@ -106,7 +107,9 @@ class _SocialTextInput extends StatelessWidget {
   final bool autoFocus;
   final void Function(String) onChanged;
 
-  const _SocialTextInput({Key key, this.hint, this.onChanged, this.initial, this.icon, this.autoFocus=false}) : super(key: key);
+  const _SocialTextInput(
+      {Key? key, this.hint = "", required this.onChanged, this.initial = "", required this.icon, this.autoFocus = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +139,7 @@ class _SocialTextInput extends StatelessWidget {
   }
 
   buildTextInput(BuildContext context,
-      {String hint, String initial = "", bool autoFocus = false, void Function(String) onChanged, EdgeInsets padding}) {
+      {String hint = "", String initial = "", bool autoFocus = false, void Function(String)? onChanged, EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding}) {
     return StyledFormTextInput(
         contentPadding: padding,
         hintText: hint,

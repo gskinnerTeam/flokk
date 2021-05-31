@@ -1,4 +1,3 @@
-
 import 'package:flokk/_internal/components/fading_index_stack.dart';
 import 'package:flokk/_internal/widget_view.dart';
 import 'package:flokk/app_extensions.dart';
@@ -62,7 +61,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     /// Figure out what should be visible, and the size of our viewport
     /// 3 cases: 1) Single Column, 2) LeftMenu + Single Column, 3) LeftMenu + Dual Column
     /// (Dual Column means it can show both ContentArea and EditPanel at the same time)
-    bool showPanel = selectedContact != null; //Contact panel is always shown if a contact is selected
+    bool showPanel = selectedContact != ContactData(); //Contact panel is always shown if a contact is selected
     bool showLeftMenu = !isNarrow; //Whether main menu is shown, or hidden behind hamburger btn
     bool useSingleColumn = context.widthInches < 10; //Whether detail panel fills the entire content area
     bool hideContent = showPanel && useSingleColumn; //If single column + panel, we can hide the content
@@ -83,7 +82,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     /// Edit Panel
     Widget editPanel = ContactPanel(
       key: MainScaffold.sidePanelKey,
-      onClosePressed: () => state.trySetSelectedContact(null),
+      onClosePressed: () => state.trySetSelectedContact(ContactData()),
       contactsModel: state.appModel.contactsModel,
     );
     editPanel = RepaintBoundary(child: editPanel);
@@ -92,7 +91,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     /// Search Bar
     Widget searchBar = SearchBar(
       key: MainScaffold.searchBarKey,
-      closedHeight: topBarHeight,
+      closedHeight: topBarHeight - 5,
       narrowMode: !showLeftMenu,
       searchEngine: state.appModel.searchEngine,
       onContactPressed: (c) => state.trySetSelectedContact(c, showSocial: false),

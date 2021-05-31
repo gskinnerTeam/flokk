@@ -15,11 +15,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
-
-  SearchBarView(SearchBarState state, {Key key}) : super(state, key: key);
+  SearchBarView(SearchBarState state, {Key? key}) : super(state, key: key);
 
   bool get isOpen => state.isOpen;
-
 
   bool _handleKeyPress(FocusNode node, RawKeyEvent evt) {
     if (evt is RawKeyDownEvent) {
@@ -37,8 +35,8 @@ class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
 
     // Fixed content height plus top and bottom padding
     double barHeight = 30 + Insets.m * 1.25 * 2.0;
-    double topPadding = state.widget.narrowMode? Insets.m : Insets.l;
-    double leftPadding = state.widget.narrowMode? 50 : 0; // Move over to not overlay with main-app menu btn
+    double topPadding = state.widget.narrowMode ? Insets.m : Insets.l;
+    double leftPadding = state.widget.narrowMode ? 50 : 0; // Move over to not overlay with main-app menu btn
     /// CONTENT UNDERLAY
     Widget underlay = ContentUnderlay(
       isActive: isOpen && state.resultsHeight > 0,
@@ -50,6 +48,7 @@ class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
         children: <Widget>[
           /// Clickable underlay, closes on press
           underlay.gestures(onTap: state.cancel),
+
           /// Wrap content in an animated card, this will handle open and closing animations
           _AnimatedSearchCard(
             state,
@@ -62,7 +61,7 @@ class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
                 SearchQueryRow(state),
                 // Search Results
                 SearchResults(state)
-                // Fade search results out when we're not open
+                    // Fade search results out when we're not open
                     .opacity(isOpen ? 1 : 0, animate: true)
                     .animate(Durations.fast, Curves.easeOut)
                     .expanded()
@@ -79,7 +78,6 @@ class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
               child: OpeningDivider(isOpen: isOpen),
             ),
           },
-
         ],
       ),
     );
@@ -88,10 +86,10 @@ class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
 
 /// Handles the transition from open and closed, the content is a Column, contains the SearchBox, and SearchResults
 class _AnimatedSearchCard extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final SearchBarState searchBar;
 
-  const _AnimatedSearchCard(this.searchBar, {Key key, this.child}) : super(key: key);
+  const _AnimatedSearchCard(this.searchBar, {Key? key, this.child}) : super(key: key);
 
   bool get isOpen => searchBar.isOpen;
 
@@ -101,7 +99,7 @@ class _AnimatedSearchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
     double openHeight = min(searchBar.widget.closedHeight + searchBar.resultsHeight + 1, 600);
-    return StyledContainer(isOpen || hasQuery ? theme.surface : Color(0x00ffffff),
+    return StyledContainer(isOpen || hasQuery ? theme.surface : theme.surface.withOpacity(.4),
         height: isOpen ? openHeight : searchBar.widget.closedHeight,
         borderRadius: BorderRadius.circular(6),
         duration: Durations.fast,

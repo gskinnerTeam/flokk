@@ -14,20 +14,22 @@ import 'package:provider/provider.dart';
 class BulkContactEditBar extends StatefulWidget {
   final List<ContactData> checked;
   final List<ContactData> all;
-  final Function() onCheckChanged;
+  final VoidCallback? onCheckChanged;
 
-  const BulkContactEditBar({Key key, this.checked, this.onCheckChanged, this.all}) : super(key: key);
+  const BulkContactEditBar(
+      {Key? key, this.checked = const <ContactData>[], this.onCheckChanged, this.all = const <ContactData>[]})
+      : super(key: key);
 
   @override
   _BulkContactEditBarState createState() => _BulkContactEditBarState();
 }
 
 class _BulkContactEditBarState extends State<BulkContactEditBar> {
-  void _handleCheckChanged(bool value) {
-    if (value == true) {
+  void _handleCheckChanged(StyledCheckboxValue value) {
+    if (value == StyledCheckboxValue.All) {
       widget.checked.clear();
       widget.checked.addAll(widget.all);
-    } else if (value == false) {
+    } else if (value == StyledCheckboxValue.None) {
       widget.checked.clear();
     }
     widget.onCheckChanged?.call();
@@ -59,9 +61,9 @@ class _BulkContactEditBarState extends State<BulkContactEditBar> {
           HSpace(Insets.m),
           Text("Select", style: TextStyles.H2.textHeight(1)),
           HSpace(Insets.sm * 1.5),
-          TransparentTextBtn("All", style: linkStyle, onPressed: () => _handleCheckChanged(true)),
+          TransparentTextBtn("All", style: linkStyle, onPressed: () => _handleCheckChanged(StyledCheckboxValue.All)),
           Text("  /  ", style: linkStyle).translate(offset: Offset(-Insets.sm, 0)),
-          TransparentTextBtn("None", style: linkStyle, onPressed: () => _handleCheckChanged(false))
+          TransparentTextBtn("None", style: linkStyle, onPressed: () => _handleCheckChanged(StyledCheckboxValue.None))
               .translate(offset: Offset(-Insets.sm * 2, 0)),
           HSpace(Insets.m),
 //TODO: Implement ManageLabels btn
@@ -77,9 +79,9 @@ class _BulkContactEditBarState extends State<BulkContactEditBar> {
     );
   }
 
-  bool _getValue() {
-    if (widget.checked.isEmpty) return false;
-    if (widget.checked.length == widget.all.length) return true;
-    return null;
+  StyledCheckboxValue _getValue() {
+    if (widget.checked.isEmpty) return StyledCheckboxValue.None;
+    if (widget.checked.length == widget.all.length) return StyledCheckboxValue.All;
+    return StyledCheckboxValue.Partial;
   }
 }

@@ -10,18 +10,18 @@ class UpdatePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
   UpdatePicCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact, String base64Pic) async {
-    if (contact == null || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return false;
     Log.p("[UpdatePicCommand]");
 
-    ServiceResult result;
-    await executeAuthServiceCmd(() async {
-      result = await googleRestService.contacts.updatePic(authModel.googleAccessToken, contact, base64Pic);
+    ServiceResult result = await executeAuthServiceCmd(() async {
+      ServiceResult result =
+          await googleRestService.contacts.updatePic(authModel.googleAccessToken, contact, base64Pic);
       if (result.success) {
         contact.profilePic = result.content.profilePic;
         contact.isDefaultPic = result.content.isDefaultPic;
         await RefreshContactsCommand(context).execute();
       }
-      return result.response;
+      return result;
     });
     return result.success;
   }

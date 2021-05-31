@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactInfoSocialCard extends StatefulWidget {
-  const ContactInfoSocialCard({Key key}) : super(key: key);
+  const ContactInfoSocialCard({Key? key}) : super(key: key);
 
   @override
   _ContactInfoSocialCardState createState() => _ContactInfoSocialCardState();
@@ -39,8 +39,8 @@ class _ContactInfoSocialCardState extends State<ContactInfoSocialCard> {
     SocialContactData social = contactsModel.getSocialById(contact.id);
 
     int maxItems = 30;
-    var gitItems = social?.gitEvents?.map((event) => GitEventListItem(event))?.take(maxItems)?.toList() ?? [];
-    var tweetItems = social?.tweets?.map((tweet) => TweetListItem(tweet))?.take(maxItems)?.toList() ?? [];
+    final gitItems = social.gitEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
+    final tweetItems = social.tweets.map((tweet) => TweetListItem(tweet)).take(maxItems).toList();
 
     //return Container();
     return Column(

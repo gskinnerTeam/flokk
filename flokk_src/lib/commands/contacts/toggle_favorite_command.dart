@@ -11,17 +11,18 @@ class ToggleFavoriteCommand extends AbstractCommand with AuthorizedServiceComman
   ToggleFavoriteCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact) async {
-    if (contact == null) return null;
+    if (contact == ContactData()) return false;
     Log.p("[ToggleFavoriteCommand]");
-    ServiceResult result;
-    await executeAuthServiceCmd(() async {
-      GroupData group = contactsModel.allGroups?.firstWhere(
+    ServiceResult result = await executeAuthServiceCmd(() async {
+      GroupData group = contactsModel.allGroups.firstWhere(
         (x) => x.id == GoogleRestService.kStarredGroupId,
         orElse: () => GroupData()..id = GoogleRestService.kStarredGroupId,
       );
       // Toggle the contact optimistically
       contact.isStarred = !contact.isStarred;
       contactsModel.notify();
+
+      ServiceResult result;
 
       if (contact.isStarred) {
         //add to favorites group
@@ -32,7 +33,7 @@ class ToggleFavoriteCommand extends AbstractCommand with AuthorizedServiceComman
       }
       // Dispatch background refresh command to make sure we're in sync
       RefreshContactGroupsCommand(context).execute(onlyStarred: true);
-      return result.response;
+      return result;
     });
     return result.success;
   }

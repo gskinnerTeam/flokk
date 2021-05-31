@@ -8,24 +8,24 @@ import 'universal_picker.dart';
 
 class WebPicker implements UniversalPicker {
   @override
-  ValueChanged<String> onChange;
+  ValueChanged<String>? onChange;
 
   @override
-  Uint8List byteData;
+  Uint8List? byteData;
 
   @override
-  String base64Data;
+  String? base64Data;
 
-  InputElement uploadInput;
-  FileReader reader;
+  late FileUploadInputElement uploadInput;
+  late FileReader reader;
 
-  WebPicker({String accept}) {
+  WebPicker({required String accept}) {
     print("Web Picker Constructor: accept: $accept");
     reader = FileReader();
     reader.onLoad.listen(handleFileLoad);
 
     uploadInput = FileUploadInputElement();
-    uploadInput.accept = accept ?? "";
+    uploadInput.accept = accept;
     uploadInput.draggable = true;
 
     uploadInput.onChange.listen(handleInputChange);
@@ -38,17 +38,19 @@ class WebPicker implements UniversalPicker {
   }
 
   void handleInputChange(Event e) {
-    if (uploadInput.files?.isNotEmpty ?? false) {
-      File f = uploadInput.files.first;
+    List<File> files = uploadInput.files ?? <File>[];
+    if (files.isNotEmpty) {
+      File f = files.first;
       reader.readAsDataUrl(f);
     }
   }
 
   void handleFileLoad(ProgressEvent e) {
     base64Data = reader.result.toString().split(",").last;
-    byteData = Base64Decoder().convert(base64Data);
-    onChange(base64Data);
+    if (base64Data != null)
+      byteData = Base64Decoder().convert(base64Data!);
+    onChange?.call(base64Data ?? "");
   }
 }
 
-UniversalPicker getPlatformPicker({String accept}) => WebPicker(accept: accept);
+UniversalPicker getPlatformPicker({ required String accept }) => WebPicker(accept: accept);

@@ -39,7 +39,7 @@ class RefreshTwitterCommand extends AbstractCommand {
           break;
       }
 
-      List<Tweet> tweets = result?.content ?? [];
+      List<Tweet> tweets = result.content ?? [];
       twitterModel.addTweets(twitterHandle, tweets);
       twitterModel.isLoading = false;
       twitterModel.scheduleSave();

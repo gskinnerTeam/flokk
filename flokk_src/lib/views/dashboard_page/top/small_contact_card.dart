@@ -17,7 +17,7 @@ class SmallContactCard extends StatelessWidget {
 
   final ContactData contact;
 
-  const SmallContactCard(this.contact, {Key key}) : super(key: key);
+  const SmallContactCard(this.contact, {Key? key}) : super(key: key);
 
   void _handleCardPressed(BuildContext c) =>
       c.read<MainScaffoldState>().trySetSelectedContact(contact, showSocial: false);
@@ -36,7 +36,7 @@ class SmallContactCard extends StatelessWidget {
             StyledUserAvatar(contact: contact, size: 60),
             VSpace(Insets.m),
             Text(
-              contact?.nameFull ?? "",
+              contact.nameFull,
               maxLines: 2,
               overflow: TextOverflow.fade,
               style: TextStyles.H2.textHeight(1.3).textColor(txtColor).regular,

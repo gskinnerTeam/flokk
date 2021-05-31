@@ -8,7 +8,7 @@ extension ClickableExtensions on Widget {
       onTap: action,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        opaque: opaque ?? false,
+        opaque: opaque,
         child: this,
       ),
     );

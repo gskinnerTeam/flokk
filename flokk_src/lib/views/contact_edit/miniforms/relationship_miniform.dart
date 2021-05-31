@@ -5,9 +5,9 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 
 class ContactRelationshipMiniForm extends BaseMiniForm {
-  double maxDropdownHeight;
+  final double maxDropdownHeight;
 
-  ContactRelationshipMiniForm(ContactEditFormState form, {Key key, this.maxDropdownHeight})
+  ContactRelationshipMiniForm(ContactEditFormState form, {Key? key, required this.maxDropdownHeight})
       : super(form, ContactSectionType.relationship, key: key);
 
   @override

@@ -14,15 +14,15 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class StyledAutoCompleteDropdown extends StatefulWidget {
-  final String initialValue;
+  final String? initialValue;
   final String hint;
   final List<String> items;
   final double maxHeight;
-  final Function(String) onChanged;
-  final Function(bool) onFocusChanged;
+  final void Function(String)? onChanged;
+  final void Function(bool)? onFocusChanged;
 
   const StyledAutoCompleteDropdown(
-      {Key key, this.initialValue, this.hint, this.items, this.onChanged, this.onFocusChanged, this.maxHeight = 500})
+      {Key? key, this.initialValue, this.hint = "", this.items = const<String>[], this.onChanged, this.onFocusChanged, this.maxHeight = 500})
       : super(key: key);
 
   @override
@@ -31,11 +31,11 @@ class StyledAutoCompleteDropdown extends StatefulWidget {
 
 class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown> {
   bool _isOpen = false;
-  OverlayEntry _overlay;
-  ValueNotifier<List<String>> _itemsFiltered;
-  TextEditingController _textController;
-  FocusNode _textFocusNode;
-  FocusScopeNode _dropDownFocusNode;
+  OverlayEntry? _overlay;
+  late ValueNotifier<List<String>> _itemsFiltered;
+  late TextEditingController _textController;
+  FocusNode? _textFocusNode;
+  late FocusScopeNode _dropDownFocusNode;
   LayerLink layerLink = LayerLink();
   bool _skipNextFocusOut = false;
 
@@ -77,13 +77,13 @@ class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown>
 
   void _handleRawKeyPressed(RawKeyEvent evt) {
     if (evt is RawKeyDownEvent) {
-      if (_textFocusNode.hasFocus && evt.logicalKey == LogicalKeyboardKey.arrowDown) {
+      if ((_textFocusNode?.hasFocus ?? false) && evt.logicalKey == LogicalKeyboardKey.arrowDown) {
         _skipNextFocusOut = true;
         Future.microtask(() => _dropDownFocusNode.requestFocus());
       }
       if (_dropDownFocusNode.hasFocus &&
           (evt.logicalKey == LogicalKeyboardKey.arrowRight || evt.logicalKey == LogicalKeyboardKey.arrowLeft)) {
-        _textFocusNode.requestFocus();
+        _textFocusNode?.requestFocus();
       }
     }
   }
@@ -150,10 +150,11 @@ class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown>
 
   void showOverlay([bool show = true]) {
     if (show && _overlay == null) {
-      _overlay = OverlayEntry(builder: (_) => _AutoCompleteDropdown(this, focusNode: _dropDownFocusNode));
-      Overlay.of(context).insert(_overlay);
+      final overlay = OverlayEntry(builder: (_) => _AutoCompleteDropdown(this, focusNode: _dropDownFocusNode));
+      _overlay = overlay;
+      Overlay.of(context)?.insert(overlay);
     } else if (!show && _overlay != null) {
-      _overlay.remove();
+      _overlay?.remove();
       _overlay = null;
     }
     setState(() => _isOpen = show);
@@ -169,9 +170,9 @@ class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown>
 class _AutoCompleteDropdown extends StatelessWidget {
   final _StyledAutoCompleteDropdownState state;
   final double rowHeight;
-  final FocusScopeNode focusNode;
+  final FocusScopeNode? focusNode;
 
-  _AutoCompleteDropdown(this.state, {Key key, this.focusNode, this.rowHeight = 40}) : super(key: key);
+  _AutoCompleteDropdown(this.state, {Key? key, this.focusNode, this.rowHeight = 40}) : super(key: key);
 
   List<String> get items => state.widget.items;
 
@@ -180,12 +181,12 @@ class _AutoCompleteDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
-    if (state.context == null) return Container();
-    RenderBox rb = state.context.findRenderObject();
+    RenderBox? rb = state.context.findRenderObject() as RenderBox?;
+    if (rb == null) return Container();
     Size size = rb.size;
     double longest = StringUtils.measureLongest(filteredItems, TextStyles.Caption, 50);
     longest += Insets.m * 2;
-    double maxHeight = state.widget.maxHeight ?? 300;
+    double maxHeight = state.widget.maxHeight;
 
     /// Use [CompositedTransformFollower] to link the overlay position to the original content.
     /// Automatically updates when the window resizes or on scroll.

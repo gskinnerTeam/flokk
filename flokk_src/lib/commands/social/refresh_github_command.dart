@@ -36,18 +36,18 @@ class RefreshGithubCommand extends AbstractCommand {
           break;
       }
 
-      List<GitEvent> events = eventResult?.content ?? [];
+      List<GitEvent> events = eventResult.content ?? [];
       githubModel.addEvents(githubUsername, events);
 
       //Fetch the repos for each event contact was involved in
       for (var n in events) {
         //The full name of the repo is populated in Event.repo.name, but once Repository is fetched, Repository.fullName will be populated
-        String fullName = n.event.repo.name;
+        String fullName = n.event.repo?.name ?? "";
 
         if (githubModel.repoIsStale(fullName)) {
           ServiceResult<GitRepo> repoResult = await gitService.getRepo(fullName);
-          if (repoResult?.success == true) {
-            GitRepo repo = repoResult.content;
+          if (repoResult.success == true) {
+            GitRepo repo = repoResult.content!;
             githubModel.addRepo(repo);
           }
         }

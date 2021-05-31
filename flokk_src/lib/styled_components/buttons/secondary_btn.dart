@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 
 class SecondaryTextBtn extends StatelessWidget {
   final String label;
-  final Function() onPressed;
+  final VoidCallback? onPressed;
 
-  const SecondaryTextBtn(this.label, {Key key, this.onPressed}) : super(key: key);
+  const SecondaryTextBtn(this.label, {Key? key, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,10 @@ class SecondaryTextBtn extends StatelessWidget {
 class SecondaryIconBtn extends StatelessWidget {
   /// Must be either an `AssetImage` for an `ImageIcon` or an `IconData` for a regular `Icon`
   final AssetImage icon;
-  final Function() onPressed;
-  final Color color;
+  final VoidCallback? onPressed;
+  final Color? color;
 
-  const SecondaryIconBtn(this.icon, {Key key, this.onPressed, this.color})
+  const SecondaryIconBtn(this.icon, {Key? key, this.onPressed, this.color})
       : assert((icon is AssetImage) || (icon is IconData)),
         super(key: key);
 
@@ -43,14 +43,21 @@ class SecondaryIconBtn extends StatelessWidget {
 }
 
 class SecondaryBtn extends StatefulWidget {
-  final Widget child;
-  final Function() onPressed;
+  final Widget? child;
+  final VoidCallback? onPressed;
   final double minWidth;
   final double minHeight;
   final double contentPadding;
-  final Function(bool) onFocusChanged;
+  final void Function(bool)? onFocusChanged;
 
-  const SecondaryBtn({Key key, this.child, this.onPressed, this.minWidth, this.minHeight, this.contentPadding, this.onFocusChanged})
+  const SecondaryBtn(
+      {Key? key,
+      this.child,
+      this.onPressed,
+      this.minWidth = 78,
+      this.minHeight = 42,
+      this.contentPadding = Insets.m,
+      this.onFocusChanged})
       : super(key: key);
 
   @override
@@ -67,9 +74,9 @@ class _SecondaryBtnState extends State<SecondaryBtn> {
       onEnter: (_) => setState(() => _isMouseOver = true),
       onExit: (_) => setState(() => _isMouseOver = false),
       child: BaseStyledBtn(
-        minWidth: widget.minWidth ?? 78,
-        minHeight: widget.minHeight ?? 42,
-        contentPadding: EdgeInsets.all(widget.contentPadding ?? Insets.m),
+        minWidth: widget.minWidth,
+        minHeight: widget.minHeight,
+        contentPadding: EdgeInsets.all(widget.contentPadding),
         bgColor: theme.surface,
         outlineColor: (_isMouseOver ? theme.accent1 : theme.grey).withOpacity(.35),
         hoverColor: theme.surface,

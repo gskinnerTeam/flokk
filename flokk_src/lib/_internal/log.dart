@@ -3,11 +3,13 @@ import 'package:intl/intl.dart';
 
 class Log {
   static bool writeToDisk = true;
-  static UniversalFile _printFile;
-  static UniversalFile _errorFile;
+  static late UniversalFile _printFile;
+  static late UniversalFile _errorFile;
+  static bool _initialized = false;
 
   static Future<void> init() async {
-    if (_printFile != null) return;
+    if (_initialized) return;
+    _initialized = true;
     _printFile = UniversalFile("editor-log.txt");
     _errorFile = UniversalFile("error-log.txt");
   }
@@ -22,11 +24,11 @@ class Log {
   }
 
   static String _formatLine(String value, bool writeTimestamp) {
-    String date = writeTimestamp ? "${DateFormat("EEE MMM d @ H:m:s").format(DateTime.now())}: " : null;
-    return "${date ?? ""}$value \n";
+    String date = writeTimestamp ? "${DateFormat("EEE MMM d @ H:m:s").format(DateTime.now())}" : "";
+    return "$date: $value \n";
   }
 
-  static void e(String error, {StackTrace stack, bool writeTimestamp = true}) {
+  static void e(String error, {StackTrace? stack, bool writeTimestamp = true}) {
     init().then((dynamic value) {
       print("[ERROR] $error");
       if (writeToDisk) {

@@ -20,49 +20,47 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
 
       await executeAuthServiceCmd(() async {
         GoogleRestContactGroupsService groupsApi = googleRestService.groups;
-        HttpResponse response;
+        ServiceResult<GroupData> result = ServiceResult(null, HttpResponse.empty());
         if (onlyStarred) {
-          ServiceResult<GroupData> result =
+          result =
               await groupsApi.getById(authModel.googleAccessToken, GoogleRestService.kStarredGroupId);
           if (result.success) {
             GroupData starred = contactsModel.getGroupById(GoogleRestService.kStarredGroupId);
-            if (starred != null) {
-              starred.members = result.content.members;
+            if (starred != GroupData()) {
+              starred.members = result.content?.members ?? [];
             } else {
               contactsModel.allGroups.add(starred);
             }
           }
-          response = result.response;
         } else {
           ServiceResult<Tuple2<List<GroupData>, String>> result = await groupsApi.get(authModel.googleAccessToken);
-          List<GroupData> groups = result.content.item1;
-          String nextPageToken = result.content.item2;
+          List<GroupData> groups = result.content?.item1 ?? [];
+          String nextPageToken = result.content?.item2 ?? "";
 
           while (nextPageToken != "" && result.success) {
             ServiceResult<Tuple2<List<GroupData>, String>> result =
                 await groupsApi.get(authModel.googleAccessToken, nextPageToken: nextPageToken);
-            groups.addAll(result.content.item1);
-            nextPageToken = result.content.item2;
+            groups.addAll(result.content?.item1 ?? []);
+            nextPageToken = result.content?.item2 ?? "";
           }
 
-          if (groups != null && result.success) {
+          if (groups.isNotEmpty && result.success) {
             //Need to fetch each individual group to get members list
             for (int i = 0; i < groups.length; i++) {
               if (groups[i].memberCount > 0 || groups[i].id == GoogleRestService.kStarredGroupId) {
                 ServiceResult<GroupData> groupResult =
                     await groupsApi.getById(authModel.googleAccessToken, groups[i].id);
                 if (groupResult.success) {
-                  groups[i].members = groupResult.content.members;
+                  groups[i].members = groupResult.content?.members ?? [];
                 }
               }
             }
             contactsModel.allGroups = groups;
             contactsModel.scheduleSave();
           }
-          response = result.response;
-          Log.p("Groups loaded = ${groups?.length ?? 0}");
+          Log.p("Groups loaded = ${groups.length}");
         }
-        return response;
+        return result;
       });
     }
     return contactsModel.allGroups;

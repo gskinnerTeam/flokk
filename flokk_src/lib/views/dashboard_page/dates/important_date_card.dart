@@ -14,7 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ImportantEventCard extends StatelessWidget {
-  const ImportantEventCard(this.contact, this.event, {Key key}) : super(key: key);
+  const ImportantEventCard(this.contact, this.event, {Key? key}) : super(key: key);
 
   static DateFormat get monthDayFmt => DateFormat("MMMMEEEEd");
 

@@ -6,14 +6,13 @@ import 'package:flokk/styles.dart';
 import 'package:flutter/material.dart';
 
 class OkCancelBtnRow extends StatelessWidget {
-  final Function() onOkPressed;
-  final Function() onCancelPressed;
-  final String okLabel;
-  final String cancelLabel;
-  final double minHeight;
+  final VoidCallback? onOkPressed;
+  final VoidCallback? onCancelPressed;
+  final String? okLabel;
+  final String? cancelLabel;
 
   const OkCancelBtnRow(
-      {Key key, this.onOkPressed, this.onCancelPressed, this.okLabel, this.cancelLabel, this.minHeight})
+      {Key? key, this.onOkPressed, this.onCancelPressed, this.okLabel, this.cancelLabel})
       : super(key: key);
 
   @override

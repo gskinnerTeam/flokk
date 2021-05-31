@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 class TopContactsPlaceholder extends StatelessWidget {
   final bool isRecent;
 
-  const TopContactsPlaceholder({Key key, this.isRecent = false}) : super(key: key);
-
+  const TopContactsPlaceholder({Key? key, this.isRecent = false}) : super(key: key);
 
 
   @override

@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class WelcomePageStep1 extends StatelessWidget {
   final bool singleColumnMode;
 
-  const WelcomePageStep1({Key key, this.singleColumnMode = false}) : super(key: key);
+  const WelcomePageStep1({Key? key, this.singleColumnMode = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

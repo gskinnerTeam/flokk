@@ -13,7 +13,7 @@ class AuthenticateTwitterCommand extends AbstractCommand {
 
     ServiceResult<TwitterAuthResult> result = await twitterService.getAuth();
     if (result.success) {
-      twitterModel.twitterAccessToken = result.content.accessToken;
+      twitterModel.twitterAccessToken = result.content?.accessToken ?? "";
       twitterModel.scheduleSave();
       return twitterModel.twitterAccessToken;
     } else {

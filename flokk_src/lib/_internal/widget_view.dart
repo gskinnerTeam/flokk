@@ -25,7 +25,7 @@ abstract class WidgetView<T1, T2> extends StatelessWidget {
 
   T1 get widget => (state as State).widget as T1;
 
-  const WidgetView(this.state, {Key key}) : super(key: key);
+  const WidgetView(this.state, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context);
@@ -34,7 +34,7 @@ abstract class WidgetView<T1, T2> extends StatelessWidget {
 abstract class StatelessView<T1> extends StatelessWidget {
   final T1 widget;
 
-  const StatelessView(this.widget, {Key key}) : super(key: key);
+  const StatelessView(this.widget, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context);

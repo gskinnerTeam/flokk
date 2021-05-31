@@ -8,7 +8,7 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 
 class ContactNameMiniForm extends BaseMiniForm {
-  ContactNameMiniForm(ContactEditFormState form, {Key key}) : super(form, ContactSectionType.name, key: key);
+  ContactNameMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.name, key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -9,14 +9,14 @@ import 'package:provider/provider.dart';
 /// STYLED BTN - BASE CLASS FOR ALL OTHER BTNS
 /// ////////////////////////////////////////////////////
 class BaseStyledBtn extends StatefulWidget {
-  final Widget child;
-  final VoidCallback onPressed;
-  final Function(bool) onFocusChanged;
-  final Function(bool) onHighlightChanged;
-  final Color bgColor;
-  final Color focusColor;
-  final Color hoverColor;
-  final Color downColor;
+  final Widget? child;
+  final VoidCallback? onPressed;
+  final Function(bool)? onFocusChanged;
+  final Function(bool)? onHighlightChanged;
+  final Color? bgColor;
+  final Color? focusColor;
+  final Color? hoverColor;
+  final Color? downColor;
   final EdgeInsets contentPadding;
   final double minWidth;
   final double minHeight;
@@ -24,22 +24,22 @@ class BaseStyledBtn extends StatefulWidget {
   final bool useBtnText;
   final bool autoFocus;
 
-  final ShapeBorder shape;
+  final ShapeBorder? shape;
 
   final Color outlineColor;
 
   const BaseStyledBtn({
-    Key key,
+    Key? key,
     this.child,
     this.onPressed,
     this.onFocusChanged,
     this.onHighlightChanged,
     this.bgColor,
     this.focusColor,
-    this.contentPadding,
-    this.minWidth,
-    this.minHeight,
-    this.borderRadius,
+    this.contentPadding = const EdgeInsets.all(Insets.m),
+    this.minWidth = 0,
+    this.minHeight = 0,
+    this.borderRadius = Corners.s5,
     this.hoverColor,
     this.downColor,
     this.shape,
@@ -53,7 +53,7 @@ class BaseStyledBtn extends StatefulWidget {
 }
 
 class _BaseStyledBtnState extends State<BaseStyledBtn> {
-  FocusNode _focusNode;
+  late FocusNode _focusNode;
   bool _isFocused = false;
 
   @override
@@ -70,7 +70,7 @@ class _BaseStyledBtnState extends State<BaseStyledBtn> {
 
   @override
   void dispose() {
-    _focusNode?.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -80,7 +80,7 @@ class _BaseStyledBtnState extends State<BaseStyledBtn> {
     return Container(
       decoration: BoxDecoration(
         color: widget.bgColor ?? theme.surface,
-        borderRadius: BorderRadius.circular(widget.borderRadius ?? Corners.s5),
+        borderRadius: BorderRadius.circular(widget.borderRadius),
         boxShadow: _isFocused
             ? [
                 BoxShadow(
@@ -97,7 +97,7 @@ class _BaseStyledBtnState extends State<BaseStyledBtn> {
                   width: 1.8,
                   color: theme.focus,
                 ),
-                borderRadius: BorderRadius.circular(widget.borderRadius ?? Corners.s5),
+                borderRadius: BorderRadius.circular(widget.borderRadius),
               ),
             )
           : null,
@@ -119,17 +119,17 @@ class _BaseStyledBtnState extends State<BaseStyledBtn> {
         focusColor: widget.focusColor?? Colors.grey.withOpacity(0.35),
         child: Opacity(
           child: Padding(
-            padding: widget.contentPadding ?? EdgeInsets.all(Insets.m),
+            padding: widget.contentPadding,
             child: widget.child,
           ),
           opacity: widget.onPressed != null ? 1 : .7,
         ),
-        constraints: BoxConstraints(minHeight: widget.minHeight ?? 0, minWidth: widget.minWidth ?? 0),
+        constraints: BoxConstraints(minHeight: widget.minHeight, minWidth: widget.minWidth),
         onPressed: widget.onPressed,
         shape: widget.shape ??
             RoundedRectangleBorder(
                 side: BorderSide(color: widget.outlineColor, width: 1.5),
-                borderRadius: BorderRadius.circular(widget.borderRadius ?? Corners.s5)),
+                borderRadius: BorderRadius.circular(widget.borderRadius)),
       ),
     );
   }

@@ -11,7 +11,8 @@ class AnimatedBirdSplashWidget extends StatefulWidget {
   final bool showText;
   final bool showLogo;
 
-  const AnimatedBirdSplashWidget({Key key, this.alignment, this.showText = false, this.showLogo = true})
+  const AnimatedBirdSplashWidget(
+      {Key? key, this.alignment = Alignment.center, this.showText = false, this.showLogo = true})
       : super(key: key);
 
   @override
@@ -19,9 +20,9 @@ class AnimatedBirdSplashWidget extends StatefulWidget {
 }
 
 class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with SingleTickerProviderStateMixin {
-  GooeyEdge _gooeyEdge;
+  late GooeyEdge _gooeyEdge;
 
-  AnimationController _animationController;
+  late AnimationController _animationController;
   double _cloudXOffset = 0.0;
 
   @override
@@ -40,7 +41,7 @@ class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with Sing
   }
 
   void _tick() {
-    _gooeyEdge.tick(_animationController.lastElapsedDuration);
+    _gooeyEdge.tick(_animationController.lastElapsedDuration ?? Duration(milliseconds: 0));
     _cloudXOffset += _animationController.velocity * 0.08;
     while (_cloudXOffset > 800.0) {
       _cloudXOffset -= 800.0;
@@ -62,8 +63,7 @@ class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with Sing
             clipper: AnimatedBirdSplashClipper(_gooeyEdge),
             child: Stack(children: [
               /// BG
-              _BuildImage(bgImagePath, BoxFit.fill)
-                  .positioned(left: 0, top: 0, right: 0, bottom: 0),
+              _BuildImage(bgImagePath, BoxFit.fill).positioned(left: 0, top: 0, right: 0, bottom: 0),
 
               /// CLOUD 1
               _BuildImage(cloudImagePath)

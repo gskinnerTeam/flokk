@@ -21,7 +21,7 @@ class ContactsListRow extends StatefulWidget {
   final ContactData contact;
   final bool oddRow;
   final bool lastNameFirst;
-  final double parentWidth;
+  final double? parentWidth;
   final bool isSelected;
   final bool isChecked;
   final bool isStarred;
@@ -30,14 +30,14 @@ class ContactsListRow extends StatefulWidget {
 
   ContactsListRow(
     this.contact, {
-    Key key,
+    Key? key,
     this.oddRow = false,
     this.lastNameFirst = false,
     this.parentWidth,
     this.isSelected = false,
     this.isChecked = false,
     this.isStarred = false,
-    this.shape,
+    this.shape = const RoundedRectangleBorder(),
     this.showDividers = true,
   }) : super(key: key);
 
@@ -56,11 +56,11 @@ class _ContactsListRowState extends State<ContactsListRow> {
 }
 
 class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowState> {
-  const ContactListCardView(_ContactsListRowState state, {Key key}) : super(state, key: key);
+  const ContactListCardView(_ContactsListRowState state, {Key? key}) : super(state, key: key);
 
   ContactData get contact => widget.contact;
 
-  bool get headerMode => contact == null;
+  bool get headerMode => contact == ContactData();
 
   void _handleRowPressed(BuildContext context) {
     context.read<MainScaffoldState>().trySetSelectedContact(widget.contact);
@@ -93,7 +93,7 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
       bgColor: bgColor,
       downColor: bgColor,
       hoverColor: widget.isSelected ? bgColor : Colors.transparent,
-      shape: widget.shape ?? RoundedRectangleBorder(),
+      shape: widget.shape,
       contentPadding: EdgeInsets.zero,
       useBtnText: false,
       child: Stack(
@@ -172,11 +172,11 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
 }
 
 class _ProfileCheckboxWithLabels extends StatefulWidget {
-  final Function(bool) onChecked;
+  final void Function(bool) onChecked;
   final ContactData contact;
   final bool isChecked;
 
-  const _ProfileCheckboxWithLabels(this.contact, {Key key, this.onChecked, this.isChecked}) : super(key: key);
+  const _ProfileCheckboxWithLabels(this.contact, {Key? key, required this.onChecked, this.isChecked = false}) : super(key: key);
 
   @override
   _ProfileCheckboxWithLabelsState createState() => _ProfileCheckboxWithLabelsState();
@@ -211,18 +211,18 @@ class _ProfileCheckboxWithLabelsState extends State<_ProfileCheckboxWithLabels> 
       width: size,
       height: size,
       alignment: Alignment.center,
-      child: StyledCheckbox(size: 18, value: widget.isChecked),
+      child: StyledCheckbox(size: 18, value: widget.isChecked ? StyledCheckboxValue.All : StyledCheckboxValue.None),
     );
   }
 }
 
 class _FadingFlexContent extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final int flex;
   final bool isVisible;
   final bool enableAnimations;
 
-  const _FadingFlexContent({Key key, this.child, this.flex, this.isVisible = true, this.enableAnimations = true})
+  const _FadingFlexContent({Key? key, this.child, required this.flex, this.isVisible = true, this.enableAnimations = true})
       : super(key: key);
 
   @override
@@ -235,7 +235,7 @@ class _FadingFlexContent extends StatelessWidget {
           tween: Tween<double>(begin: isVisible ? 1 : 0, end: isVisible ? 1 : 0),
           duration: (isVisible ? .5 : .2).seconds,
           builder: (_, value, child) {
-            if (value == 0 && !isVisible) return Container();
+            if (value == 0 && !isVisible || child == null) return Container();
             return child.opacity(value).expanded(flex: (targetFlex * value).round());
 //
           },

@@ -10,21 +10,21 @@ TwitterUser _$TwitterUserFromJson(Map<String, dynamic> json) {
   return TwitterUser()
     ..id = json['id'] as int
     ..name = json['name'] as String
-    ..screenName = json['screen_name'] as String ?? 0
+    ..screenName = json['screen_name'] as String? ?? ''
     ..location = json['location'] as String
     ..description = json['description'] as String
     ..url = json['url'] as String
-    ..protected = json['protected'] as bool ?? false
-    ..verified = json['verified'] as bool ?? false
-    ..followersCount = json['followers_count'] as int ?? 0
-    ..friendsCount = json['friends_count'] as int ?? 0
-    ..listedCount = json['listed_count'] as int ?? 0
-    ..statusesCount = json['statuses_count'] as int ?? 0
-    ..profileImageUrl = json['profile_image_url_https'] as String
+    ..protected = json['protected'] as bool
+    ..verified = json['verified'] as bool
+    ..followersCount = json['followers_count'] as int? ?? 0
+    ..friendsCount = json['friends_count'] as int? ?? 0
+    ..listedCount = json['listed_count'] as int? ?? 0
+    ..statusesCount = json['statuses_count'] as int? ?? 0
+    ..profileImageUrl = json['profile_image_url_https'] as String? ?? ''
     ..profileBackgroundImageUrl =
-        json['profile_background_image_url_https'] as String
+        json['profile_background_image_url_https'] as String? ?? ''
     ..profileUseBackgroundImage =
-        json['profile_use_background_image'] as bool ?? false;
+        json['profile_use_background_image'] as bool? ?? false;
 }
 
 Map<String, dynamic> _$TwitterUserToJson(TwitterUser instance) =>

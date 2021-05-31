@@ -8,37 +8,37 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class StyledFormTextInput extends StatelessWidget {
-  static EdgeInsets kDefaultTextInputPadding = EdgeInsets.only(bottom: Insets.sm, top: 4);
+  static const EdgeInsets kDefaultTextInputPadding = EdgeInsets.only(bottom: Insets.sm, top: 4);
 
   final String label;
   final bool autoFocus;
-  final String initialValue;
+  final String? initialValue;
   final String hintText;
   final EdgeInsets contentPadding;
-  final TextStyle textStyle;
-  final int maxLines;
-  final TextEditingController controller;
+  final TextStyle? textStyle;
+  final int? maxLines;
+  final TextEditingController? controller;
   final TextCapitalization capitalization;
-  final Function(String) onChanged;
-  final Function() onEditingComplete;
-  final Function(bool) onFocusChanged;
-  final Function(FocusNode) onFocusCreated;
+  final void Function(String)? onChanged;
+  final VoidCallback? onEditingComplete;
+  final void Function(bool)? onFocusChanged;
+  final void Function(FocusNode)? onFocusCreated;
 
   const StyledFormTextInput(
-      {Key key,
-      this.label,
-      this.autoFocus,
+      {Key? key,
+      this.label = "",
+      this.autoFocus = false,
       this.initialValue,
       this.onChanged,
       this.onEditingComplete,
-      this.hintText,
+      this.hintText = "",
       this.onFocusChanged,
       this.onFocusCreated,
       this.controller,
-      this.contentPadding,
-      this.capitalization,
+      this.contentPadding = kDefaultTextInputPadding,
+      this.capitalization = TextCapitalization.none,
       this.textStyle,
-      this.maxLines})
+      this.maxLines = 1})
       : super(key: key);
 
   @override
@@ -57,7 +57,7 @@ class StyledFormTextInput extends StatelessWidget {
       maxLines: maxLines,
       inputDecoration: InputDecoration(
         isDense: true,
-        contentPadding: contentPadding ?? kDefaultTextInputPadding,
+        contentPadding: contentPadding,
         border: ThinUnderlineBorder(borderSide: BorderSide(width: 5, color: Colors.red)),
         //focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: .5, color: Colors.red)),
         hintText: hintText,
@@ -68,51 +68,51 @@ class StyledFormTextInput extends StatelessWidget {
 
 class StyledSearchTextInput extends StatefulWidget {
   final String label;
-  final TextStyle style;
+  final TextStyle? style;
   final EdgeInsets contentPadding;
   final bool autoFocus;
   final bool obscureText;
-  final IconData icon;
-  final String initialValue;
-  final int maxLines;
-  final TextEditingController controller;
+  final IconData? icon;
+  final String? initialValue;
+  final int? maxLines;
+  final TextEditingController? controller;
   final TextCapitalization capitalization;
   final TextInputType type;
   final bool enabled;
   final bool autoValidate;
   final bool enableSuggestions;
   final bool autoCorrect;
-  final String errorText;
-  final String hintText;
-  final Widget prefixIcon;
-  final Widget suffixIcon;
-  final InputDecoration inputDecoration;
+  final String? errorText;
+  final String? hintText;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final InputDecoration? inputDecoration;
 
-  final Function(String) onChanged;
-  final Function() onEditingComplete;
-  final Function() onEditingCancel;
-  final Function(bool) onFocusChanged;
-  final Function(FocusNode) onFocusCreated;
-  final Function(String) onFieldSubmitted;
-  final Function(String) onSaved;
-  final VoidCallback onTap;
+  final void Function(String)? onChanged;
+  final VoidCallback? onEditingComplete;
+  final VoidCallback? onEditingCancel;
+  final void Function(bool)? onFocusChanged;
+  final void Function(FocusNode)? onFocusCreated;
+  final void Function(String)? onFieldSubmitted;
+  final void Function(String?)? onSaved;
+  final VoidCallback? onTap;
 
   const StyledSearchTextInput({
-    Key key,
-    this.label,
+    Key? key,
+    this.label = "",
     this.autoFocus = false,
     this.obscureText = false,
     this.type = TextInputType.text,
     this.icon,
-    this.initialValue = "",
+    this.initialValue,
     this.controller,
-    this.enabled,
+    this.enabled = true,
     this.autoValidate = false,
     this.enableSuggestions = true,
     this.autoCorrect = true,
     this.errorText,
     this.style,
-    this.contentPadding,
+    this.contentPadding = const EdgeInsets.all(Insets.m),
     this.prefixIcon,
     this.suffixIcon,
     this.inputDecoration,
@@ -125,8 +125,8 @@ class StyledSearchTextInput extends StatefulWidget {
     this.onSaved,
     this.onTap,
     this.hintText,
-    this.capitalization,
-    this.maxLines,
+    this.capitalization = TextCapitalization.none,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
@@ -134,14 +134,14 @@ class StyledSearchTextInput extends StatefulWidget {
 }
 
 class StyledSearchTextInputState extends State<StyledSearchTextInput> {
-  TextEditingController _controller;
-  FocusNode _focusNode;
+  late TextEditingController _controller;
+  late FocusNode _focusNode;
 
   @override
   void initState() {
     _controller = widget.controller ?? TextEditingController(text: widget.initialValue);
     _focusNode = FocusNode(
-      debugLabel: widget.label ?? "",
+      debugLabel: widget.label,
       onKey: (FocusNode node, RawKeyEvent evt) {
         if (evt is RawKeyDownEvent) {
           if (evt.logicalKey == LogicalKeyboardKey.escape) {
@@ -156,8 +156,8 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
     // Listen for focus out events
     _focusNode.addListener(() => widget.onFocusChanged?.call(_focusNode.hasFocus));
     widget.onFocusCreated?.call(_focusNode);
-    if(widget.autoFocus ?? false){
-      scheduleMicrotask(()=>_focusNode.requestFocus());
+    if (widget.autoFocus) {
+      scheduleMicrotask(() => _focusNode.requestFocus());
     }
     super.initState();
   }
@@ -186,7 +186,7 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
         onFieldSubmitted: widget.onFieldSubmitted,
         onSaved: widget.onSaved,
         onTap: widget.onTap,
-        autofocus: widget.autoFocus ?? false,
+        autofocus: widget.autoFocus,
         focusNode: _focusNode,
         keyboardType: widget.type,
         obscureText: widget.obscureText,
@@ -199,12 +199,12 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
         showCursor: true,
         enabled: widget.enabled,
         maxLines: widget.maxLines,
-        textCapitalization: widget.capitalization ?? TextCapitalization.none,
+        textCapitalization: widget.capitalization,
         decoration: widget.inputDecoration ??
             InputDecoration(
-                prefixIcon: widget.prefixIcon ?? null,
-                suffixIcon: widget.suffixIcon ?? null,
-                contentPadding: widget.contentPadding ?? EdgeInsets.all(Insets.m),
+                prefixIcon: widget.prefixIcon,
+                suffixIcon: widget.suffixIcon,
+                contentPadding: widget.contentPadding,
                 border: OutlineInputBorder(borderSide: BorderSide.none),
                 isDense: true,
                 icon: widget.icon == null ? null : Icon(widget.icon),
@@ -235,8 +235,7 @@ class ThinUnderlineBorder extends InputBorder {
       topLeft: Radius.circular(4.0),
       topRight: Radius.circular(4.0),
     ),
-  })  : assert(borderRadius != null),
-        super(borderSide: borderSide);
+  }) : super(borderSide: borderSide);
 
   /// The radii of the border's rounded rectangle corners.
   ///
@@ -253,7 +252,7 @@ class ThinUnderlineBorder extends InputBorder {
   bool get isOutline => false;
 
   @override
-  UnderlineInputBorder copyWith({BorderSide borderSide, BorderRadius borderRadius}) {
+  UnderlineInputBorder copyWith({BorderSide? borderSide, BorderRadius? borderRadius}) {
     return UnderlineInputBorder(
       borderSide: borderSide ?? this.borderSide,
       borderRadius: borderRadius ?? this.borderRadius,
@@ -271,33 +270,35 @@ class ThinUnderlineBorder extends InputBorder {
   }
 
   @override
-  Path getInnerPath(Rect rect, {TextDirection textDirection}) {
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
     return Path()
       ..addRect(Rect.fromLTWH(rect.left, rect.top, rect.width, math.max(0.0, rect.height - borderSide.width)));
   }
 
   @override
-  Path getOuterPath(Rect rect, {TextDirection textDirection}) {
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
     return Path()..addRRect(borderRadius.resolve(textDirection).toRRect(rect));
   }
 
   @override
-  ShapeBorder lerpFrom(ShapeBorder a, double t) {
-    if (a is UnderlineInputBorder) {
+  ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
+    final ShapeBorder? shape = a;
+    if (shape is UnderlineInputBorder) {
       return UnderlineInputBorder(
-        borderSide: BorderSide.lerp(a.borderSide, borderSide, t),
-        borderRadius: BorderRadius.lerp(a.borderRadius, borderRadius, t),
+        borderSide: BorderSide.lerp(shape.borderSide, borderSide, t),
+        borderRadius: BorderRadius.lerp(shape.borderRadius, borderRadius, t)!,
       );
     }
     return super.lerpFrom(a, t);
   }
 
   @override
-  ShapeBorder lerpTo(ShapeBorder b, double t) {
-    if (b is UnderlineInputBorder) {
+  ShapeBorder? lerpTo(ShapeBorder? b, double t) {
+    final ShapeBorder? shape = b;
+    if (shape is UnderlineInputBorder) {
       return UnderlineInputBorder(
-        borderSide: BorderSide.lerp(borderSide, b.borderSide, t),
-        borderRadius: BorderRadius.lerp(borderRadius, b.borderRadius, t),
+        borderSide: BorderSide.lerp(borderSide, shape.borderSide, t),
+        borderRadius: BorderRadius.lerp(borderRadius, shape.borderRadius, t)!,
       );
     }
     return super.lerpTo(b, t);
@@ -311,10 +312,10 @@ class ThinUnderlineBorder extends InputBorder {
   void paint(
     Canvas canvas,
     Rect rect, {
-    double gapStart,
+    double? gapStart,
     double gapExtent = 0.0,
     double gapPercentage = 0.0,
-    TextDirection textDirection,
+    TextDirection? textDirection,
   }) {
     print("Width: ${borderSide.width}");
     if (borderRadius.bottomLeft != Radius.zero || borderRadius.bottomRight != Radius.zero)

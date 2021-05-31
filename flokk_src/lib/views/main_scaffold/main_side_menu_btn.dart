@@ -5,16 +5,14 @@ import 'package:flokk/_internal/utils/build_utils.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styled_components/styled_image_icon.dart';
 import 'package:flokk/styles.dart';
-import 'package:flokk/themes.dart';
 import 'package:flokk/views/main_scaffold/main_scaffold.dart';
 import 'package:flokk/views/main_scaffold/main_side_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class MainMenuBtn extends StatefulWidget {
   final AssetImage icon;
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool isSelected;
   final double iconSize;
   final bool compact;
@@ -24,7 +22,7 @@ class MainMenuBtn extends StatefulWidget {
   final bool dottedBorder;
 
   MainMenuBtn(this.icon, this.label,
-      {Key key,
+      {Key? key,
       this.onPressed,
       this.isSelected = false,
       this.iconSize = 26,
@@ -42,12 +40,10 @@ class MainMenuBtn extends StatefulWidget {
 class MainMenuBtnState extends State<MainMenuBtn> {
   @override
   Widget build(BuildContext context) {
-    AppTheme theme = context.watch();
-
     /// If we have a pageType, send a notification to the parent menu, so it know the position of each btn, and can position it's current-page indicator
     if (widget.pageType != PageType.None) {
       Future.delayed(1.milliseconds, () {
-        Offset o = BuildUtils.getOffsetFromContext(context);
+        Offset o = BuildUtils.getOffsetFromContext(context) ?? Offset.zero;
         MainMenuOffsetNotification(widget.pageType, o).dispatch(context);
       });
     }

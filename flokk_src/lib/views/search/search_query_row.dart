@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 class SearchQueryRow extends StatelessWidget {
   final SearchBarState state;
 
-  const SearchQueryRow(this.state, {Key key}) : super(key: key);
+  const SearchQueryRow(this.state, {Key? key}) : super(key: key);
 
   double calcTagWidth(String tag) {
     //Calculate all padding in the row (searchIcon + padding + closeIcon + padding)
@@ -35,82 +35,84 @@ class SearchQueryRow extends StatelessWidget {
       builder: (_, constraints) {
         //Bind to search engine for results
         return ListenableBuilder(
-          listenable: state.tmpSearch,
-          builder: (_, __) {
-            // Calculate the width of the text input based off of the width of the search bar
-            double contentWidth = constraints.maxWidth - Insets.l + Insets.m;
-            // Remove size of the close and search icons (in mobile mode, they are combined)
-            double barQueryWidth = max(0, contentWidth - (Sizes.iconMed + Insets.l));
-            if (state.widget.narrowMode == false) {
-              barQueryWidth -= (Sizes.iconMed + Insets.m * 1.5);
-            }
-            //Subtract widths of tags and contacts, to get the max size for text input
-            double barTextFieldWidth = barQueryWidth;
-            state.tmpSearch.tagList.forEach((t) => barTextFieldWidth -= calcTagWidth(t));
-            state.tmpSearch.filterContactList.forEach((fc) => barTextFieldWidth -= calcTagWidth(fc));
-            //Enforce min-size of 200px for search input
-            barTextFieldWidth = max(200, barTextFieldWidth);
+            listenable: state.tmpSearch,
+            builder: (_, __) {
+              // Calculate the width of the text input based off of the width of the search bar
+              double contentWidth = constraints.maxWidth - Insets.l + Insets.m;
+              // Remove size of the close and search icons (in mobile mode, they are combined)
+              double barQueryWidth = max(0, contentWidth - (Sizes.iconMed + Insets.l));
+              if (state.widget.narrowMode == false) {
+                barQueryWidth -= (Sizes.iconMed + Insets.m * 1.5);
+              }
+              //Subtract widths of tags and contacts, to get the max size for text input
+              double barTextFieldWidth = barQueryWidth;
+              state.tmpSearch.tagList.forEach((t) => barTextFieldWidth -= calcTagWidth(t));
+              state.tmpSearch.filterContactList.forEach((fc) => barTextFieldWidth -= calcTagWidth(fc));
+              //Enforce min-size of 200px for search input
+              barTextFieldWidth = max(200, barTextFieldWidth);
 
-            return Row(
-              children: [
-                HSpace(Insets.l),
-                if (state.widget.narrowMode == false) ...{
-                  _SearchIconBtn(state.handleSearchIconPressed),
-                  HSpace(Insets.m),
-                },
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: barQueryWidth),
-                  child: StyledHorizontalScrollView(
-                    autoScrollDuration: Durations.fast,
-                    autoScrollCurve: Curves.easeOut,
-                    child: Row(
-                      children: <Widget>[
-                        for (var tag in state.tmpSearch.tagList) ...{
-                          StyledGroupLabel(icon: StyledIcons.label, text: tag, onClose: () => state.handleRemoveTag(tag))
-                              .padding(right: Insets.m),
-                        },
-                        for (var filterContact in state.tmpSearch.filterContactList) ...{
-                          StyledGroupLabel(
-                              icon: StyledIcons.user,
-                              text: filterContact,
-                              onClose: () => state.handleRemoveFilterContact(filterContact)).padding(right: Insets.m),
-                        },
-                        Container(
-                          constraints: BoxConstraints(maxWidth: barTextFieldWidth),
-                          child: StyledSearchTextInput(
-                            contentPadding: EdgeInsets.all(Insets.m * 1.25 - 0.5).copyWith(left: 0),
-                            hintText: state.widget.narrowMode ? "" : "Search for contacts",
-                            key: state.textKey,
-                            onChanged: state.handleSearchChanged,
-                            // Disabled because this callback has different behavior on web for some reason,
-                            // the hook is now in the states _handleRawKeyPressed method
-                            //onFieldSubmitted: (s) => state.handleSearchSubmitted(),
-                            onEditingCancel: state.cancel,
-                            onFocusChanged: state.handleFocusChanged,
-                            onFocusCreated: state.handleTextFocusCreated,
+              return Row(
+                children: [
+                  HSpace(Insets.l),
+                  if (state.widget.narrowMode == false) ...{
+                    _SearchIconBtn(state.handleSearchIconPressed),
+                    HSpace(Insets.m),
+                  },
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: barQueryWidth),
+                    child: StyledHorizontalScrollView(
+                      autoScrollDuration: Durations.fast,
+                      autoScrollCurve: Curves.easeOut,
+                      child: Row(
+                        children: <Widget>[
+                          for (var tag in state.tmpSearch.tagList) ...{
+                            StyledGroupLabel(
+                                icon: StyledIcons.label,
+                                text: tag,
+                                onClose: () => state.handleRemoveTag(tag)).padding(right: Insets.m),
+                          },
+                          for (var filterContact in state.tmpSearch.filterContactList) ...{
+                            StyledGroupLabel(
+                                icon: StyledIcons.user,
+                                text: filterContact,
+                                onClose: () => state.handleRemoveFilterContact(filterContact)).padding(right: Insets.m),
+                          },
+                          Container(
+                            constraints: BoxConstraints(maxWidth: barTextFieldWidth),
+                            child: StyledSearchTextInput(
+                              contentPadding: EdgeInsets.all(Insets.m * 1.25 - 0.5).copyWith(left: 0),
+                              hintText: state.widget.narrowMode ? "" : "Search for contacts",
+                              key: state.textKey,
+                              onChanged: state.handleSearchChanged,
+                              // Disabled because this callback has different behavior on web for some reason,
+                              // the hook is now in the states _handleRawKeyPressed method
+                              //onFieldSubmitted: (s) => state.handleSearchSubmitted(),
+                              onEditingCancel: state.cancel,
+                              onFocusChanged: state.handleFocusChanged,
+                              onFocusCreated: state.handleTextFocusCreated,
+                            ),
                           ),
-                        ),
-                      ],
-            ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                if (state.hasQuery) ...{
-                  ColorShiftIconBtn(
-                    StyledIcons.closeLarge,
-                    padding: EdgeInsets.zero,
-                    size: 16,
-                    minHeight: 0,
-                    minWidth: 0,
-                    color: theme.grey,
-                    onPressed: state.clearSearch,
-                  ),
-                } else if (state.widget.narrowMode) ...{
-                  _SearchIconBtn(state.handleSearchIconPressed),
-                },
-                HSpace(Insets.m),
-              ],
-            );
-          });
+                  if (state.hasQuery) ...{
+                    ColorShiftIconBtn(
+                      StyledIcons.closeLarge,
+                      padding: EdgeInsets.zero,
+                      size: 16,
+                      minHeight: 0,
+                      minWidth: 0,
+                      color: theme.grey,
+                      onPressed: state.clearSearch,
+                    ),
+                  } else if (state.widget.narrowMode) ...{
+                    _SearchIconBtn(state.handleSearchIconPressed),
+                  },
+                  HSpace(Insets.m),
+                ],
+              );
+            });
       },
     );
   }
@@ -119,7 +121,7 @@ class SearchQueryRow extends StatelessWidget {
 class _SearchIconBtn extends StatelessWidget {
   final void Function() onPressed;
 
-  const _SearchIconBtn(this.onPressed, {Key key}) : super(key: key);
+  const _SearchIconBtn(this.onPressed, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

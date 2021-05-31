@@ -4,17 +4,17 @@ typedef Widget SeparatorBuilder();
 
 class SeparatedRow extends StatelessWidget {
   final List<Widget> children;
-  final SeparatorBuilder separatorBuilder;
+  final SeparatorBuilder? separatorBuilder;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisSize mainAxisSize;
-  final TextBaseline textBaseline;
-  final TextDirection textDirection;
+  final TextBaseline? textBaseline;
+  final TextDirection? textDirection;
   final VerticalDirection verticalDirection;
 
   const SeparatedRow({
-    Key key,
-    this.children,
+    Key? key,
+    required this.children,
     this.separatorBuilder,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
@@ -28,7 +28,7 @@ class SeparatedRow extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> c = children.toList();
     for (var i = c.length; i-- > 0;) {
-      if (i > 0) c.insert(i, separatorBuilder());
+      if (i > 0 && separatorBuilder != null) c.insert(i, separatorBuilder!());
     }
     return Row(
       children: c,
@@ -44,17 +44,17 @@ class SeparatedRow extends StatelessWidget {
 
 class SeparatedColumn extends StatelessWidget {
   final List<Widget> children;
-  final SeparatorBuilder separatorBuilder;
+  final SeparatorBuilder? separatorBuilder;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisSize mainAxisSize;
-  final TextBaseline textBaseline;
-  final TextDirection textDirection;
+  final TextBaseline? textBaseline;
+  final TextDirection? textDirection;
   final VerticalDirection verticalDirection;
 
   const SeparatedColumn({
-    Key key,
-    this.children,
+    Key? key,
+    required this.children,
     this.separatorBuilder,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
@@ -68,7 +68,7 @@ class SeparatedColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> c = children.toList();
     for (var i = c.length; i-- > 0;) {
-      if (i > 0 && separatorBuilder != null) c.insert(i, separatorBuilder());
+      if (i > 0 && separatorBuilder != null) c.insert(i, separatorBuilder!());
     }
     return Column(
       children: c,

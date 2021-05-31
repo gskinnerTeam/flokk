@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 /// A container that will animate when you change colors.
 class StyledContainer extends StatelessWidget {
   final Color color;
-  final BorderRadiusGeometry borderRadius;
-  final List<BoxShadow> shadows;
-  final Widget child;
-  final double width;
-  final double height;
-  final Alignment align;
-  final EdgeInsets margin;
+  final BorderRadiusGeometry? borderRadius;
+  final List<BoxShadow>? shadows;
+  final Widget? child;
+  final double? width;
+  final double? height;
+  final Alignment? align;
+  final EdgeInsets? margin;
   final Duration duration;
-  final BoxBorder border;
+  final BoxBorder? border;
 
   const StyledContainer(this.color,
-      {Key key,
+      {Key? key,
       this.borderRadius,
       this.shadows,
       this.child,
@@ -23,7 +23,7 @@ class StyledContainer extends StatelessWidget {
       this.height,
       this.align,
       this.margin,
-      this.duration,
+      this.duration = Durations.medium,
       this.border})
       : super(key: key);
 
@@ -35,7 +35,7 @@ class StyledContainer extends StatelessWidget {
         child: child,
         margin: margin,
         alignment: align,
-        duration: duration ?? Durations.medium,
+        duration: duration,
         decoration: BoxDecoration(
             color: color, borderRadius: borderRadius, boxShadow: shadows, border: border));
   }

@@ -9,7 +9,7 @@ class PathUtil {
     if (Platform.isLinux) {
       result = "${xdgDirectories.dataHome.path}/flokk-contacts";
     } else {
-      result = (await getApplicationSupportDirectory().catchError(print)).path;
+      result = (await getApplicationSupportDirectory()).path;
     }
     return result;
   }

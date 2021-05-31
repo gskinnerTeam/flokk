@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class TranslateAndAlign extends StatelessWidget {
   final Offset offset;
   final Alignment align;
-  final Widget child;
+  final Widget? child;
 
-  TranslateAndAlign({this.child, this.offset, this.align});
+  TranslateAndAlign({this.child, this.offset = Offset.zero, this.align = Alignment.topLeft});
 
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: align ?? Alignment.topLeft,
+      alignment: align,
       child: Transform.translate(
-        offset: offset ?? Offset.zero,
+        offset: offset,
         child: child,
       ),
     );

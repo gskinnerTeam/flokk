@@ -7,16 +7,15 @@ import 'package:flutter/src/widgets/framework.dart';
 class RenameLabelCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   RenameLabelCommand(BuildContext c) : super(c);
 
-  Future<GroupData> execute(GroupData group) async {
-    if (group == null) return null;
+  Future<GroupData?> execute(GroupData group) async {
+    if (group == GroupData()) return group;
     Log.p("[RenameLabelCommand]");
-    ServiceResult<GroupData> result;
-    await executeAuthServiceCmd(() async {
-      result = await googleRestService.groups.set(authModel.googleAccessToken, group);
+    ServiceResult<GroupData> result = await executeAuthServiceCmd(() async {
+      ServiceResult<GroupData> result = await googleRestService.groups.set(authModel.googleAccessToken, group);
       if (result.success) {
-        contactsModel.swapGroupById(result.content);
+        contactsModel.swapGroupById(result.content!);
       }
-      return result.response;
+      return result;
     });
     return result.success ? result.content : null;
   }

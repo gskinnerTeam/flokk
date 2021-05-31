@@ -12,17 +12,25 @@ class StyledScrollbar extends StatefulWidget {
   final double size;
   final Axis axis;
   final ScrollController controller;
-  final Function(double) onDrag;
+  final void Function(double)? onDrag;
   final bool showTrack;
-  final Color handleColor;
-  final Color trackColor;
+  final Color? handleColor;
+  final Color? trackColor;
 
   // TODO: Remove contentHeight if we can fix this issue
   // https://stackoverflow.com/questions/60855712/flutter-how-to-force-scrollcontroller-to-recalculate-position-maxextents
-  final double contentSize;
+  final double? contentSize;
 
   const StyledScrollbar(
-      {Key key, this.size, this.axis, this.controller, this.onDrag, this.contentSize, this.showTrack = false, this.handleColor, this.trackColor})
+      {Key? key,
+      required this.size,
+      required this.axis,
+      required this.controller,
+      this.onDrag,
+      this.contentSize,
+      this.showTrack = false,
+      this.handleColor,
+      this.trackColor})
       : super(key: key);
 
   @override
@@ -45,7 +53,6 @@ class ScrollbarState extends State<StyledScrollbar> {
     super.didUpdateWidget(oldWidget);
   }
 
-
 //  void calculateSize() {
 //    //[SB] Only hack I can find  to make the ScrollController update it's maxExtents.
 //    //Call this whenever the content changes, so the scrollbar can recalculate it's size
@@ -57,23 +64,26 @@ class ScrollbarState extends State<StyledScrollbar> {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
+
+    final double? contentSize = widget.contentSize;
+
     return LayoutBuilder(
       builder: (_, BoxConstraints constraints) {
         double maxExtent;
         switch (widget.axis) {
           case Axis.vertical:
             // Use supplied contentSize if we have it, otherwise just fallback to maxScrollExtents
-            maxExtent = (widget.contentSize != null && widget.contentSize > 0)
-                ? widget.contentSize - constraints.maxHeight
-                : widget.controller?.position?.maxScrollExtent ?? 0;
+            maxExtent = (contentSize != null && contentSize > 0)
+                ? contentSize - constraints.maxHeight
+                : widget.controller.position.maxScrollExtent;
             _viewExtent = constraints.maxHeight;
 
             break;
           case Axis.horizontal:
             // Use supplied contentSize if we have it, otherwise just fallback to maxScrollExtents
-            maxExtent = (widget.contentSize != null && widget.contentSize > 0)
-                ? widget.contentSize - constraints.maxWidth
-                : widget.controller?.position?.maxScrollExtent ?? 0;
+            maxExtent = (contentSize != null && contentSize > 0)
+                ? contentSize - constraints.maxWidth
+                : widget.controller.position.maxScrollExtent;
             _viewExtent = constraints.maxWidth;
 
             break;
@@ -97,11 +107,10 @@ class ScrollbarState extends State<StyledScrollbar> {
         // Hide the handle if content is < the viewExtent
         bool showHandle = contentExtent > _viewExtent && contentExtent > 0;
         // Handle color
-        Color handleColor = widget.handleColor ?? (
-            theme.isDark ? theme.greyWeak.withOpacity(.2) : theme.greyWeak);
+        Color handleColor = widget.handleColor ?? (theme.isDark ? theme.greyWeak.withOpacity(.2) : theme.greyWeak);
         // Track color
-        Color trackColor = widget.trackColor ?? (
-            theme.isDark ? theme.greyWeak.withOpacity(.1) : theme.greyWeak.withOpacity(.3));
+        Color trackColor =
+            widget.trackColor ?? (theme.isDark ? theme.greyWeak.withOpacity(.1) : theme.greyWeak.withOpacity(.3));
 
         //Layout the stack, it just contains a child, and
         return Stack(children: <Widget>[
@@ -131,7 +140,8 @@ class ScrollbarState extends State<StyledScrollbar> {
                 builder: (_, isHovered) => Container(
                   width: widget.axis == Axis.vertical ? widget.size : handleExtent,
                   height: widget.axis == Axis.horizontal ? widget.size : handleExtent,
-                  decoration: BoxDecoration(color: handleColor.withOpacity(isHovered? 1 : .85), borderRadius: Corners.s3Border),
+                  decoration: BoxDecoration(
+                      color: handleColor.withOpacity(isHovered ? 1 : .85), borderRadius: Corners.s3Border),
                 ),
               ),
             ),
@@ -159,16 +169,25 @@ class ScrollbarState extends State<StyledScrollbar> {
 class ScrollbarListStack extends StatelessWidget {
   final double barSize;
   final Axis axis;
-  final ChangeNotifier rebuildNotifier;
+  final ChangeNotifier? rebuildNotifier;
   final Widget child;
   final ScrollController controller;
-  final double contentSize;
+  final double? contentSize;
   final EdgeInsets scrollbarPadding;
-  final Color handleColor;
-  final Color trackColor;
+  final Color? handleColor;
+  final Color? trackColor;
 
   const ScrollbarListStack(
-      {Key key, this.barSize, this.axis, this.rebuildNotifier, this.child, this.controller, this.contentSize, this.scrollbarPadding, this.handleColor, this.trackColor})
+      {Key? key,
+      required this.barSize,
+      required this.axis,
+      this.rebuildNotifier,
+      required this.child,
+      required this.controller,
+      this.contentSize,
+      this.scrollbarPadding = EdgeInsets.zero,
+      this.handleColor,
+      this.trackColor})
       : super(key: key);
 
   @override
@@ -184,7 +203,7 @@ class ScrollbarListStack extends StatelessWidget {
 
         /// SCROLLBAR
         Padding(
-          padding: scrollbarPadding ?? EdgeInsets.zero,
+          padding: scrollbarPadding,
           child: StyledScrollbar(
             size: barSize,
             axis: axis,

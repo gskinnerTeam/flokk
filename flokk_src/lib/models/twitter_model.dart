@@ -25,9 +25,9 @@ class TwitterModel extends AbstractModel {
   @override
   TwitterModel copyFromJson(Map<String, dynamic> json) {
     _twitterAccessToken = json["_twitterAccessToken"] ?? "";
-    _tweetHash = (json["_tweetHash"] as Map<String, dynamic>)?.map((key, value) =>
-        MapEntry<String, List<Tweet>>(key, (value as List).map((x) => Tweet.fromJson(x))?.toList())) ??
-                 {};
+    Map<String, dynamic> jsonTweetHash = json["_tweetHash"] ?? <String, dynamic>{};
+    _tweetHash = jsonTweetHash.map((key, value) => MapEntry<String, List<Tweet>>(
+        key, (value as List?)?.where((value) => value != null).map((x) => Tweet.fromJson(x)).toList() ?? []));
     return this;
   }
 
@@ -51,7 +51,7 @@ class TwitterModel extends AbstractModel {
 
   /////////////////////////////////////////////////////////////////////
   // Access Token
-  String _twitterAccessToken;
+  String _twitterAccessToken = "";
 
   String get twitterAccessToken => _twitterAccessToken;
 
@@ -86,10 +86,7 @@ class TwitterModel extends AbstractModel {
 
   //Get tweets for single contact
   List<Tweet> getTweetsByContact(ContactData contact) {
-    if (_tweetHash.containsKey(contact.twitterHandle)) {
-      return _tweetHash[contact.twitterHandle];
-    }
-    return [];
+    return _tweetHash[contact.twitterHandle] ?? [];
   }
 
   void addTweets(String twitterHandle, List<Tweet> tweets) {

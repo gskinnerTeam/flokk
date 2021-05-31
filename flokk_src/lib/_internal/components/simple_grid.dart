@@ -11,10 +11,10 @@ class SimpleGrid extends StatelessWidget {
 
   //TODO SB: Refactor this class to support Hz scrolling
   const SimpleGrid({
-    Key key,
+    Key? key,
     this.hSpace = 0,
     this.vSpace = 0,
-    this.kids,
+    required this.kids,
     this.colCount = 2,
     this.kidHeight = 40,
     this.align = CrossAxisAlignment.start,

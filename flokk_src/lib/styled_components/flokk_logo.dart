@@ -5,18 +5,18 @@ class FlokkLogo extends StatelessWidget {
   final double size;
   final Color color;
 
-  const FlokkLogo(this.size, this.color, {Key key}) : super(key: key);
+  const FlokkLogo(this.size, this.color, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset("assets/images/flokk-logo.png", color: color ?? Colors.grey, height: size);
+    return Image.asset("assets/images/flokk-logo.png", color: color, height: size);
   }
 }
 
 class FlokkSidebarLogo extends StatelessWidget {
   final bool skinny;
 
-  const FlokkSidebarLogo(this.skinny, {Key key}) : super(key: key);
+  const FlokkSidebarLogo(this.skinny, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

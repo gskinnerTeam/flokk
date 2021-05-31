@@ -7,7 +7,7 @@ class GridLayout {
   final int numCols;
   final double breakPt;
 
-  GridLayout({this.gutters, this.padding, this.numCols, this.breakPt});
+  GridLayout({this.gutters = EdgeInsets.zero, this.padding = 0, this.numCols = 0, this.breakPt = 0});
 }
 
 class DesignGridOverlay extends StatefulWidget {
@@ -17,7 +17,13 @@ class DesignGridOverlay extends StatefulWidget {
   final List<GridLayout> grids;
   final bool isEnabled;
 
-  DesignGridOverlay({Key key, this.child, this.grids, this.isEnabled = true, this.alignment}) : super(key: key);
+  DesignGridOverlay(
+      {Key? key,
+      required this.child,
+      this.grids = const <GridLayout>[],
+      this.isEnabled = true,
+      this.alignment = Alignment.center})
+      : super(key: key);
 
   @override
   _DesignGridOverlayState createState() => _DesignGridOverlayState();
@@ -50,7 +56,7 @@ class _DesignGridOverlayState extends State<DesignGridOverlay> {
 class _DesignGridView extends StatelessWidget {
   final _DesignGridOverlayState state;
 
-  const _DesignGridView(this.state, {Key key}) : super(key: key);
+  const _DesignGridView(this.state, {Key? key}) : super(key: key);
 
   GridLayout getGrid(BuildContext context) {
     for (var i = 0; i < state.widget.grids.length; i++) {

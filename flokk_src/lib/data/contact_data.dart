@@ -23,14 +23,14 @@ class ContactData {
   /// ////////////////////////////////////////
 
   String get firstPhone {
-    if (phoneList?.isNotEmpty ?? false) {
+    if (phoneList.isNotEmpty) {
       return phoneList.first.number;
     }
     return "";
   }
 
   String get firstEmail {
-    if (emailList?.isNotEmpty ?? false) {
+    if (emailList.isNotEmpty) {
       return emailList.first.value;
     }
     return "";
@@ -73,46 +73,46 @@ class ContactData {
     bool hasTitle = !StringUtils.isEmpty(jobTitle);
     bool hasCompany = !StringUtils.isEmpty(jobCompany);
     if (hasTitle && hasCompany) return "$jobTitle, $jobCompany";
-    return hasTitle ? jobTitle : jobCompany ?? "";
+    return hasTitle ? jobTitle : jobCompany;
   }
 
   //Profile
   String profilePic = "";
   bool isDefaultPic = true;
   @JsonKey(ignore: true)
-  String profilePicBase64 = ""; //base 64 encoded bytes of profile pic (from picker)
+  String? profilePicBase64; //base 64 encoded bytes of profile pic (from picker)
   @JsonKey(ignore: true)
-  Uint8List profilePicBytes = null; //raw bytes of profile pic (from picker)
+  Uint8List? profilePicBytes; //raw bytes of profile pic (from picker)
   @JsonKey(ignore: true)
   bool hasNewProfilePic = false;
 
   //Phone
-  List<PhoneData> phoneList = [];
+  List<PhoneData> phoneList = const [];
 
   //Email
-  List<EmailData> emailList = [];
+  List<EmailData> emailList = const [];
 
   //Address
-  List<AddressData> addressList = [];
+  List<AddressData> addressList = const [];
 
   //Instant Messaging
-  List<InstantMessageData> imList = [];
+  List<InstantMessageData> imList = const [];
 
   //User fields
-  Map<String, String> customFields = {};
+  Map<String, String> customFields = const {};
 
   //Web Sites
-  List<WebsiteData> websiteList = [];
+  List<WebsiteData> websiteList = const [];
 
   //Relations
-  List<RelationData> relationList = [];
+  List<RelationData> relationList = const [];
 
   //Labels
   @JsonKey(ignore: true)
-  List<GroupData> groupList = [];
+  List<GroupData> groupList = const [];
 
   //Events
-  List<EventData> eventList = [];
+  List<EventData> eventList = const [];
 
   ContactData();
 
@@ -120,25 +120,25 @@ class ContactData {
 
   bool get hasName => !StringUtils.isEmpty("$nameGiven$nameMiddle$nameFamily$nameSuffix$namePrefix");
 
-  bool get hasLabel => groupList?.isNotEmpty;
+  bool get hasLabel => groupList.isNotEmpty;
 
-  bool get hasEmail => emailList?.isNotEmpty;
+  bool get hasEmail => emailList.isNotEmpty;
 
-  bool get hasPhone => phoneList?.isNotEmpty;
+  bool get hasPhone => phoneList.isNotEmpty;
 
-  bool get hasAddress => addressList?.isNotEmpty;
+  bool get hasAddress => addressList.isNotEmpty;
 
-  bool get hasLink => websiteList?.isNotEmpty;
+  bool get hasLink => websiteList.isNotEmpty;
 
-  bool get hasRelationship => relationList?.isNotEmpty;
+  bool get hasRelationship => relationList.isNotEmpty;
 
-  bool get hasEvents => eventList?.isNotEmpty;
+  bool get hasEvents => eventList.isNotEmpty;
 
   bool get hasJob => !StringUtils.isEmpty("$jobTitle$jobCompany$jobDepartment");
 
-  bool get hasNotes => notes?.isNotEmpty;
+  bool get hasNotes => notes.isNotEmpty;
 
-  bool get hasBirthday => !StringUtils.isEmpty(birthday?.text);
+  bool get hasBirthday => !StringUtils.isEmpty(birthday.text);
 
   bool get hasValidDateForBirthday => birthday.date != DateTime(0, 1, 1);
 
@@ -168,18 +168,18 @@ class ContactData {
 
   /// ////////////////////////////////////////////////
   /// SEARCHABLE
-  String _searchable;
+  late final String _searchable = _getSearchableFields().toLowerCase();
 
-  String get searchable => _searchable ??= _getSearchableFields().toLowerCase();
+  String get searchable => _searchable;
 
   String _getSearchableFields() => "$nameGiven $nameMiddle $nameFamily $nameMiddlePhonetic $nameGivenPhonetic "
       "$namePrefix $nameSuffix $nameFull $twitterHandle $gitUsername $notes $birthday $nickname"
-      "$jobTitle $jobDepartment $jobCompany ${phoneList?.map((x) => x.number)?.join(",") ?? ""}"
-      "${addressList?.map((x) => x.getFullAddress())?.join(",") ?? ""}"
-      "${imList?.map((x) => x.username)?.join(",") ?? ""}"
-      "${customFields?.values?.map((x) => x)?.join(",") ?? ""}"
-      "${relationList?.map((x) => x.person)?.join(",") ?? ""}"
-      "${emailList?.map((x) => x.value)?.join(",") ?? ""} ${groupList?.map((x) => x.name)?.join(",") ?? ""}";
+      "$jobTitle $jobDepartment $jobCompany ${phoneList.map((x) => x.number).join(",")}"
+      "${addressList.map((x) => x.getFullAddress()).join(",")}"
+      "${imList.map((x) => x.username).join(",")}"
+      "${customFields.values.map((x) => x).join(",")}"
+      "${relationList.map((x) => x.person).join(",")}"
+      "${emailList.map((x) => x.value).join(",")} ${groupList.map((x) => x.name).join(",")}";
 
   /// ////////////////////////////////////////////////
   /// PUBLIC API
@@ -207,11 +207,16 @@ class ContactData {
   ContactData copy() => ContactData.fromJson(toJson())..groupList = groupList;
 
   bool equals(ContactData value) {
-    if (value == null) return false;
     return jsonEncode(value.toJson()).hashCode == jsonEncode(toJson()).hashCode;
   }
 
   Map<String, dynamic> toJson() => _$ContactDataToJson(this);
+
+  @override
+  bool operator==(covariant ContactData other) => other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 @JsonSerializable()
@@ -235,7 +240,7 @@ class AddressData {
   Map<String, dynamic> toJson() => _$AddressDataToJson(this);
 
   String getFullAddress() {
-    String ss(String value, [String extra]) => StringUtils.safeGet(value, extra);
+    String ss(String value, [String? extra]) => StringUtils.safeGet(value, extra);
 
     String streetAddress = "${ss(street, ", ")}${ss(formattedAddress)}";
     String address = "${ss(streetAddress, " \n")}";
@@ -338,7 +343,7 @@ class EventData with DateMixin {
   @override
   String getType() => type;
 
-  get isEmpty => date == DateTime(0, 1, 1) || date == null || date.toString().isEmpty;
+  get isEmpty => date == DateTime(0, 1, 1) || date.toString().isEmpty;
 
   factory EventData.fromJson(Map<String, dynamic> json) => _$EventDataFromJson(json);
 

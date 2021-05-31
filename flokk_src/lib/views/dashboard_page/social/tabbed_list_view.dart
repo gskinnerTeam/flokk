@@ -19,25 +19,25 @@ class TabbedListView extends StatelessWidget {
   final List<Widget> list2;
   final String list2Title;
 
-  final Widget list1Placeholder;
-  final Widget list2Placeholder;
+  final Widget? list1Placeholder;
+  final Widget? list2Placeholder;
   final AssetImage list1Icon;
   final AssetImage list2Icon;
 
-  final void Function(int) onTabPressed;
+  final void Function(int)? onTabPressed;
 
   final int index;
 
   const TabbedListView(
-      {Key key,
-      @required this.list1,
-      @required this.list1Title,
-      @required this.list2,
-      @required this.list2Title,
+      {Key? key,
+      required this.list1,
+      required this.list1Title,
+      required this.list2,
+      required this.list2Title,
       this.list1Placeholder,
       this.list2Placeholder,
       this.index = 0,
-      this.onTabPressed, this.list1Icon, this.list2Icon})
+      this.onTabPressed, required this.list1Icon, required this.list2Icon})
       : super(key: key);
 
   @override
@@ -47,7 +47,7 @@ class TabbedListView extends StatelessWidget {
 
     ShapeDecoration buildTabDec(bool isBg) {
       return ShapeDecoration(
-        shape: TabBorder(selectedTab: isBg ? null : index, barHeight: barHeight),
+        shape: TabBorder(selectedTab: isBg ? -1 : index, barHeight: barHeight),
         color: isBg ? theme.surface : ColorUtils.blend(theme.bg1, theme.bg2, .35),
         shadows: isBg ? Shadows.m(theme.accent1) : null,
       );
@@ -109,12 +109,12 @@ class TabbedListView extends StatelessWidget {
 class _TransparentTabBtn extends StatelessWidget {
   final bool isSelected;
   final SocialActivityType type;
-  final void Function() onPressed;
+  final VoidCallback? onPressed;
   final double height;
   final String title;
   final AssetImage icon;
 
-  const _TransparentTabBtn({Key key, this.isSelected = false, this.type, this.onPressed, this.height, this.title, this.icon})
+  const _TransparentTabBtn({Key? key, this.isSelected = false, required this.type, this.onPressed, this.height = 0, this.title = "", required this.icon})
       : super(key: key);
 
   @override
@@ -144,16 +144,16 @@ class TabBorder extends ShapeBorder {
   final int selectedTab;
   final double barHeight;
 
-  TabBorder({this.selectedTab, this.barHeight});
+  TabBorder({this.selectedTab = -1, this.barHeight = 0});
 
   @override
   EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
 
   @override
-  Path getInnerPath(Rect rect, {TextDirection textDirection}) => null;
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => Path();
 
   @override
-  Path getOuterPath(Rect rect, {TextDirection textDirection}) {
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
     var radius = Radius.circular(8);
 
     void drawBody(Path p) {
@@ -170,7 +170,7 @@ class TabBorder extends ShapeBorder {
     }
 
     //Bg mode draws 2 tabs and a body section. Otherwise, just the un-selected tab is drawn.
-    bool bgMode = selectedTab == null;
+    bool bgMode = selectedTab == -1;
     Path path = Path();
     //Draw Left side?
     if (bgMode || selectedTab == 1) {
@@ -187,7 +187,7 @@ class TabBorder extends ShapeBorder {
   }
 
   @override
-  void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {}
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
 
   @override
   ShapeBorder scale(double t) => this;

@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormState> {
-  ContactEditFormView(ContactEditFormState state, {Key key}) : super(state, key: key);
+  ContactEditFormView(ContactEditFormState state, {Key? key}) : super(state, key: key);
 
   BuildContext get context => state.context;
 
@@ -38,7 +38,6 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
-    if (widget.contact == null || contact == null) return Container();
     return state.isLoading
         ? Center(child: StyledProgressSpinner())
         : Column(
@@ -67,8 +66,12 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
                 child: Column(
                   children: [
                     VSpace(3),
+
                     /// Profile Pic
-                    StyledUserAvatar(contact: contact, size: 110),
+                    StyledUserAvatar(
+                      contact: contact,
+                      size: 110,
+                    ),
 
                     VSpace(Insets.sm),
 
@@ -76,7 +79,7 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
                       "Upload a photo",
                       bigMode: true,
                       onPressed: state.handlePhotoPressed,
-                      ),
+                    ),
 
                     VSpace(Insets.l),
 
@@ -126,18 +129,18 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
 
                         if (!contact.isNew)
                           BaseStyledBtn(
-                            hoverColor: theme.isDark? ColorUtils.shiftHsl(theme.bg1, .2) : theme.bg2.withOpacity(.35),
+                            hoverColor: theme.isDark ? ColorUtils.shiftHsl(theme.bg1, .2) : theme.bg2.withOpacity(.35),
                             child: Text("DELETE THIS CONTACT", style: TextStyles.T1.textColor(theme.error)),
                             onPressed: state.handleDeletePressed,
-                            ).padding(vertical: Insets.m),
+                          ).padding(vertical: Insets.m),
 
                         //Add some extra padding at the bottom to account for the Relationship Dropdown menu
                         VSpace(30),
                       ],
-                      ).padding(horizontal: Insets.l, bottom: Insets.m)
+                    ).padding(horizontal: Insets.l, bottom: Insets.m)
                   ],
-                  ),
-                ).flexible(),
+                ),
+              ).flexible(),
               SizedBox(height: Insets.m),
             ],
           );

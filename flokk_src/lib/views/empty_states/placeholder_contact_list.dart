@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class ContactListPlaceholder extends StatelessWidget {
   final bool isSearching;
 
-  const ContactListPlaceholder({Key key, this.isSearching = false}) : super(key: key);
+  const ContactListPlaceholder({Key? key, this.isSearching = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

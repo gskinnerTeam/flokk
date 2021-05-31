@@ -12,9 +12,8 @@ class TestRepeatCommand extends AbstractCommand {
     _isCancelled = true;
   }
 
-  Future<List<String>> execute({bool poll = false, Duration pollInterval, bool calledBySelf = false}) async {
-    pollInterval = pollInterval ?? Duration(seconds: 5); //default interval
-
+  Future<List<String>> execute(
+      {bool poll = false, Duration pollInterval = const Duration(seconds: 5), bool calledBySelf = false}) async {
     //reset the _isCancelled flag if poll is true and executed by self, allows proper restart of polling
     if (poll && !calledBySelf) {
       _isCancelled = false;

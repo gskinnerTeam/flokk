@@ -31,10 +31,11 @@ class ContactSectionType {
 class ContactEditForm extends StatefulWidget {
   final ContactData contact;
   final ContactsModel contactsModel;
-  final Function(ContactData contact) onEditComplete;
+  final void Function(ContactData contact)? onEditComplete;
   final String initialSection;
 
-  const ContactEditForm({Key key, this.contact, this.contactsModel, this.onEditComplete, this.initialSection})
+  const ContactEditForm(
+      {Key? key, required this.contact, required this.contactsModel, this.onEditComplete, this.initialSection = ""})
       : super(key: key);
 
   @override
@@ -42,9 +43,9 @@ class ContactEditForm extends StatefulWidget {
 }
 
 class ContactEditFormState extends State<ContactEditForm> {
-  ContactData tmpContact;
+  late ContactData tmpContact;
   bool isLoading = false;
-  String currentSection;
+  late String currentSection;
 
   // Convenience lookup method for the mini-forms.
   // Since they are stateless, and use a lot of internal buildMethods, it's a lot less
@@ -52,7 +53,6 @@ class ContactEditFormState extends State<ContactEditForm> {
   AppTheme get theme => Provider.of(context, listen: false);
 
   bool get isDirty {
-    if (tmpContact == null) return false;
     // Create a copy of our tmp object, and strip it of empty listItems,
     var tc = tmpContact.copy().trimLists();
     return !tc.equals(widget.contact);
@@ -67,7 +67,7 @@ class ContactEditFormState extends State<ContactEditForm> {
 
   @override
   void didUpdateWidget(ContactEditForm oldWidget) {
-    if (tmpContact == null || oldWidget.contact != widget.contact) {
+    if (oldWidget.contact != widget.contact) {
       tmpContact = widget.contact.copy();
     }
     super.didUpdateWidget(oldWidget);
@@ -76,10 +76,16 @@ class ContactEditFormState extends State<ContactEditForm> {
   void handleSavePressed() async {
     bool success = true;
     print("================= SAVE PRESSED ======================");
+    setState(() => isLoading = true);
+
+    // Upload their image if it's changed.
+    final profilePicData = tmpContact.profilePicBase64;
+    if (tmpContact.hasNewProfilePic && profilePicData != null) {
+      await UpdatePicCommand(context).execute(tmpContact, profilePicData);
+    }
 
     /// Strip contact of any empty list items before saving
     ContactData contact = tmpContact.copy().trimLists();
-
     // Adding a new contact?
     if (contact.isNew) {
       //Prevent them from adding an empty contact
@@ -92,32 +98,23 @@ class ContactEditFormState extends State<ContactEditForm> {
       }
       //Continue to add new contact
       else {
-        setState(() => isLoading = true);
         // Wait for add-new command to complete, since it would be overly complicated to create a tmpUser
         contact = await UpdateContactCommand(context).execute(contact, updateSocial: contact.hasAnySocial);
-        // Upload their image if it's changed
-        if (tmpContact.hasNewProfilePic) {
-          UpdatePicCommand(context).execute(contact, tmpContact.profilePicBase64);
-        }
+
         // If we have a valid contact here, all is good
-        success = contact != null;
-        if(mounted){
-          setState(() => isLoading = false);
-        }
+        success = contact != ContactData();
       }
     } else {
-      // Updating a contact, don't wait, just assume it will work. Data will get updated locally.
-      UpdateContactCommand(context).execute(contact, updateSocial: !contact.hasSameSocial(widget.contact));
-      // Upload their image if it's changed.
-      if (tmpContact.hasNewProfilePic) {
-        UpdatePicCommand(context).execute(contact, tmpContact.profilePicBase64);
-      }
+      bool hasSocialChanged = contact.hasSameSocial(widget.contact) == false;
+      await UpdateContactCommand(context).execute(contact, updateSocial: hasSocialChanged);
     }
     if (success) {
       widget.onEditComplete?.call(contact);
       //Edit is complete, make sure this contact is the currently selected
-      context?.read<AppModel>()?.selectedContact = contact;
-
+      context.read<AppModel>().selectedContact = contact;
+    }
+    if (mounted) {
+      setState(() => isLoading = false);
     }
   }
 
@@ -128,9 +125,9 @@ class ContactEditFormState extends State<ContactEditForm> {
     if (isDirty) {
       doCancel = await ShowDiscardWarningCommand(context).execute();
     }
-    if (doCancel ?? false) {
+    if (doCancel) {
       /// If we're cancelling a new contact, return null indicating that it should be discarded
-      widget.onEditComplete?.call(tmpContact.isNew ? null : widget.contact);
+      widget.onEditComplete?.call(tmpContact.isNew ? ContactData() : widget.contact);
     }
   }
 
@@ -146,6 +143,7 @@ class ContactEditFormState extends State<ContactEditForm> {
       tmpContact.profilePicBase64 = picker.base64Data;
       tmpContact.profilePicBytes = picker.byteData;
       tmpContact.hasNewProfilePic = true;
+      rebuild();
     };
 
     picker.open();

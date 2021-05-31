@@ -9,16 +9,15 @@ class DeleteLabelCommand extends AbstractCommand with AuthorizedServiceCommandMi
   DeleteLabelCommand(BuildContext c) : super(c);
 
   Future<bool> execute(GroupData group) async {
-    if (group == null) return false;
+    if (group == GroupData()) return false;
     Log.p("[DeleteLabelCommand]");
-    ServiceResult result;
-    await executeAuthServiceCmd(() async {
-      result = await googleRestService.groups.delete(authModel.googleAccessToken, group);
+    ServiceResult result = await executeAuthServiceCmd(() async {
+      ServiceResult result = await googleRestService.groups.delete(authModel.googleAccessToken, group);
       if (result.success) {
         //refresh the groups to ensure labels synced
         await RefreshContactGroupsCommand(context).execute(forceUpdate: true);
       }
-      return result.response;
+      return result;
     });
     return result.success;
   }

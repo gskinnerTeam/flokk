@@ -23,7 +23,7 @@ class TwitterRestService {
         headers: {"Authorization": "Basic $auth", "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
         body: "grant_type=client_credentials");
 
-    TwitterAuthResult result;
+    TwitterAuthResult? result;
     if (response.success) {
       Map<String, dynamic> data = jsonDecode(response.body);
       result = TwitterAuthResult(tokenType: data["token_type"], accessToken: data["access_token"]);
@@ -40,15 +40,15 @@ class TwitterRestService {
 
     HttpResponse response = await HttpClient.get(url, headers: {"Authorization": "Bearer $accessToken"});
 
-    print("REQUEST: $url /// RESPONSE: ${response?.statusCode}");
+    print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
 
     List<Tweet> tweets = [];
     if (response.success) {
       List<Map<String, dynamic>> tweetsData = List.from(jsonDecode(response.body));
-      for (int i = 0; i < tweetsData?.length ?? 0; i++) {
+      for (int i = 0; i < tweetsData.length; i++) {
         Map<String, dynamic> data = tweetsData[i];
         Tweet t = Tweet.fromJson(data);
-        t.text = parse(t.text).documentElement.text;
+        t.text = parse(t.text).documentElement?.text ?? "";
         tweets.add(t);
       }
     }
@@ -61,5 +61,5 @@ class TwitterAuthResult {
   final String tokenType;
   final String accessToken;
 
-  TwitterAuthResult({this.tokenType, this.accessToken});
+  TwitterAuthResult({required this.tokenType, required this.accessToken});
 }

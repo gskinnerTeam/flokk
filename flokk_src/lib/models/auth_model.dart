@@ -1,14 +1,15 @@
 import 'package:flokk/_internal/log.dart';
+import "package:flokk/_internal/utils/date_utils.dart";
 import "package:flokk/_internal/utils/string_utils.dart";
 import "package:flokk/models/abstract_model.dart";
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthModel extends AbstractModel {
-  String googleRefreshToken;
-  String googleEmail;
-  String googleSyncToken;
-  DateTime _expiry = DateTime.fromMillisecondsSinceEpoch(0);
-  GoogleSignIn googleSignIn; //instance of google sign in; only set if web
+  String? googleRefreshToken;
+  String? googleEmail;
+  String? googleSyncToken;
+  DateTime _expiry = DateTime.utc(2099);
+  GoogleSignIn? googleSignIn; //instance of google sign in; only set if web
 
   AuthModel() {
     enableSerialization("auth.dat");
@@ -32,9 +33,9 @@ class AuthModel extends AbstractModel {
 
   /////////////////////////////////////////////////////////////////////
   // Access Token
-  String _googleAccessToken;
+  String? _googleAccessToken;
 
-  String get googleAccessToken => _googleAccessToken;
+  String get googleAccessToken => _googleAccessToken ?? "";
 
   set googleAccessToken(String value) {
     _googleAccessToken = value;
@@ -48,10 +49,8 @@ class AuthModel extends AbstractModel {
     googleRefreshToken = null;
     googleSyncToken = null;
     googleEmail = null;
-    _expiry = null;
-    if (googleSignIn != null) {
-      googleSignIn.disconnect();
-    }
+    _expiry = DateTime.utc(2099);
+    googleSignIn?.disconnect();
     super.reset(notify);
   }
 
@@ -65,7 +64,7 @@ class AuthModel extends AbstractModel {
       ..googleRefreshToken = json["googleRefreshToken"]
       ..googleSyncToken = json["googleSyncToken"]
       ..googleEmail = json["googleEmail"]
-      .._expiry = json["_expiry"] != null ? DateTime.parse(json["_expiry"]) : DateTime.fromMillisecondsSinceEpoch(0);
+      .._expiry = json["_expiry"] != null ? DateTime.parse(json["_expiry"]) : Dates.epoch;
     ;
   }
 

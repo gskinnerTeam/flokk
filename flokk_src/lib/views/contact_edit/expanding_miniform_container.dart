@@ -34,11 +34,16 @@ class ExpandingMiniformContainer<T> extends StatefulWidget {
   final String activeSectionType;
   final BoolCallback hasContent;
   final FormBuilder<T> formBuilder;
-  final Function(String) onOpened;
+  final void Function(String)? onOpened;
   final bool autoFocus;
 
   const ExpandingMiniformContainer(this.sectionType, this.icon,
-      {Key key, this.activeSectionType, this.hasContent, this.formBuilder, this.onOpened, this.autoFocus = false})
+      {Key? key,
+      this.activeSectionType = "",
+      required this.hasContent,
+      required this.formBuilder,
+      this.onOpened,
+      this.autoFocus = false})
       : assert((icon is AssetImage) || (icon is IconData)),
         super(key: key);
 
@@ -47,9 +52,9 @@ class ExpandingMiniformContainer<T> extends StatefulWidget {
 }
 
 class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer> with TickerProviderStateMixin {
-  bool _isOpen;
-  String _hint;
-  Timer timer;
+  bool? _isOpen;
+  String _hint = "";
+  Timer? timer;
 
   set isOpen(bool value) => setState(() => _isOpen = value);
 
@@ -111,12 +116,11 @@ class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer>
               HSpace(Insets.l),
 
               /// Content - Either the miniform, or the StyledText
-              (_isOpen
+              (_isOpen!
                       // Mini-Form
                       ? widget.formBuilder()
                       // Empty Prompt Text
-                      : StyledFormTextInput(
-                              hintText: _hint, onFocusChanged: _handlePromptFocusChanged)
+                      : StyledFormTextInput(hintText: _hint, onFocusChanged: _handlePromptFocusChanged)
                           .padding(right: Insets.l * 1.5 - 2))
                   .padding(right: Insets.m)
                   .flexible(),

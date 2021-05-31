@@ -9,16 +9,16 @@ import 'universal_picker.dart';
 
 class DesktopPicker implements UniversalPicker {
   @override
-  ValueChanged<String> onChange;
+  ValueChanged<String>? onChange;
 
   @override
-  Uint8List byteData;
+  Uint8List? byteData;
 
   @override
-  String base64Data;
+  String? base64Data;
 
   //accept: filters for files (ie. images, etc), expecting the same format as that found for html input accept https://www.w3schools.com/TAGS/att_input_accept.asp
-  DesktopPicker({String accept}) {
+  DesktopPicker({required String accept}) {
     // The desktop file picker plugin doesn't accept these input accept strings,
     // the pickImage function has a hardcoded image filter in it
   }
@@ -32,7 +32,7 @@ class DesktopPicker implements UniversalPicker {
     byteData = bytes;
     base64Data = Base64Encoder().convert(bytes.toList());
 
-    onChange(base64Data);
+    onChange?.call(base64Data ?? "");
   }
 
   @override
@@ -41,4 +41,4 @@ class DesktopPicker implements UniversalPicker {
   }
 }
 
-UniversalPicker getPlatformPicker({String accept}) => DesktopPicker(accept: accept);
+UniversalPicker getPlatformPicker({required String accept}) => DesktopPicker(accept: accept);

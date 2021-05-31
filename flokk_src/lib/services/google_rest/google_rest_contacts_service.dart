@@ -92,20 +92,20 @@ class GoogleRestContactsService {
       }
     }
 
-    list = result.content.contacts;
-    nextPageToken = result.content.nextPageToken;
-    syncToken = result.content.syncToken;
+    list = result.content?.contacts ?? [];
+    nextPageToken = result.content?.nextPageToken ?? "";
+    syncToken = result.content?.syncToken ?? "";
 
     //Attempt to load all chunks of data, just for edge cases that have > 2000 contacts (max page size)
-    while ((nextPageToken?.isNotEmpty ?? false) && retryCount < 3) {
+    while (nextPageToken.isNotEmpty && retryCount < 3) {
       ServiceResult<GetContactsResult> result = await get(
         accessToken,
         nextPageToken: nextPageToken,
       );
 
       if (result.success) {
-        list.addAll(result.content.contacts);
-        nextPageToken = result.content.nextPageToken;
+        list.addAll(result.content?.contacts ?? []);
+        nextPageToken = result.content?.nextPageToken ?? "";
       } else {
         //Possible for subsequent calls to fail and return 503
         retryCount++;
@@ -116,38 +116,40 @@ class GoogleRestContactsService {
 
   //List of valid PersonFields can be found here https://developers.google.com/people/api/rest/v1/people.connections/list
   Future<ServiceResult<GetContactsResult>> get(String accessToken,
-      {List<String> personFields, String nextPageToken, String syncToken, bool requestSyncToken}) async {
+      {List<String> personFields = const [],
+        String nextPageToken = "",
+        String syncToken = "",
+        bool requestSyncToken = true}) async {
     // Default to all person fields if none are passed
-    personFields ??= kAllPersonFields;
+    if (personFields.isEmpty) {
+      personFields = kAllPersonFields;
+    }
     String url = "https://people.googleapis.com/v1/people/me/connections?"
         "access_token=$accessToken"
         "&personFields=${kAllPersonFields.join(',')}"
         "&sortOrder=FIRST_NAME_ASCENDING"
         "&pageSize=2000";
 
-    if (!StringUtils.isEmpty(nextPageToken)) {
+    if (nextPageToken.isNotEmpty) {
       url += "&pageToken=$nextPageToken";
     }
 
-    if (!StringUtils.isEmpty(syncToken)) {
+    if (syncToken.isNotEmpty) {
       url += "&syncToken=$syncToken";
     }
 
-    if (requestSyncToken != null) {
-      url += "&requestSyncToken=$requestSyncToken";
-    }
+    url += "&requestSyncToken=$requestSyncToken";
     HttpResponse response = await HttpClient.get(url);
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    List<ContactData> list;
+    List<ContactData> list = [];
     String newNextPageToken = "";
     String newSyncToken = "";
-    if (response?.success == true) {
+    if (response.success == true) {
       Map<String, dynamic> data = jsonDecode(response.body);
       newNextPageToken = data["nextPageToken"] ?? "";
       newSyncToken = data["nextSyncToken"] ?? "";
       List<dynamic> entries = data["connections"] ?? [];
       print("token: $newNextPageToken ${entries.length} out of ${data["totalPeople"]}");
-      list = [];
       for (int i = 0, l = entries.length; i < l; i++) {
         ContactData c = contactFromJson(entries[i]);
         list.add(c);
@@ -163,16 +165,17 @@ class GoogleRestContactsService {
   }
 
   //List of valid PersonFields can be found here https://developers.google.com/people/api/rest/v1/people/updateContact
-  Future<ServiceResult<ContactData>> set(String accessToken, ContactData contact, {List<String> personFields}) async {
-    personFields ??= kAllUpdatePersonFields;
+  Future<ServiceResult<ContactData>> set(String accessToken, ContactData contact, {List<String> personFields = const[]}) async {
+    if (personFields.isEmpty)
+      personFields = kAllUpdatePersonFields;
     String url = "https://people.googleapis.com/v1/${contact.googleId}:updateContact?"
         "updatePersonFields=${personFields.join(',')}";
 
     HttpResponse response = await HttpClient.patch(url,
         headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(contactToJson(contact)));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    ContactData updatedContact;
-    if (response?.success == true) {
+    ContactData updatedContact = ContactData();
+    if (response.success == true) {
       //updated contact returned from server
       updatedContact = contactFromJson(jsonDecode(response.body));
     }
@@ -185,8 +188,8 @@ class GoogleRestContactsService {
     HttpResponse response = await HttpClient.post(url,
         headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(contactToJson(contact)));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    ContactData newContact;
-    if (response?.success == true) {
+    ContactData newContact = ContactData();
+    if (response.success == true) {
       //new contact with proper "resourceName"(googleId) and "etag" properties set
       newContact = contactFromJson(jsonDecode(response.body));
     }
@@ -210,8 +213,8 @@ class GoogleRestContactsService {
     HttpResponse response =
         await HttpClient.patch(url, headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(bodyJson));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
-    ContactData updatedContact;
-    if (response?.success == true) {
+    ContactData updatedContact = ContactData();
+    if (response.success == true) {
       updatedContact = contactFromJson(jsonDecode(response.body)["person"]);
     }
     return ServiceResult(updatedContact, response);
@@ -231,81 +234,81 @@ class GoogleRestContactsService {
     ContactData c = ContactData()
       ..googleId = p.resourceName ?? ""
       ..etag = p.etag ?? ""
-      ..nameGiven = p.names?.first?.givenName ?? ""
-      ..nameGivenPhonetic = p.names?.first?.phoneticGivenName ?? ""
-      ..nameMiddle = p.names?.first?.middleName ?? ""
-      ..nameMiddlePhonetic = p.names?.first?.phoneticMiddleName ?? ""
-      ..nameFamily = p.names?.first?.familyName ?? ""
-      ..nameFull = p.names?.first?.displayName ?? ""
-      ..namePrefix = p.names?.first?.honorificPrefix ?? ""
-      ..nameSuffix = p.names?.first?.honorificSuffix ?? ""
-      ..nickname = p.nicknames?.first?.value ?? ""
-      ..profilePic = p.photos?.first?.url ?? ""
-      ..isDefaultPic = p.photos?.first?.default_ ?? false
+      ..nameGiven = p.names?.first.givenName ?? ""
+      ..nameGivenPhonetic = p.names?.first.phoneticGivenName ?? ""
+      ..nameMiddle = p.names?.first.middleName ?? ""
+      ..nameMiddlePhonetic = p.names?.first.phoneticMiddleName ?? ""
+      ..nameFamily = p.names?.first.familyName ?? ""
+      ..nameFull = p.names?.first.displayName ?? ""
+      ..namePrefix = p.names?.first.honorificPrefix ?? ""
+      ..nameSuffix = p.names?.first.honorificSuffix ?? ""
+      ..nickname = p.nicknames?.first.value ?? ""
+      ..profilePic = p.photos?.first.url ?? ""
+      ..isDefaultPic = p.photos?.first.default_ ?? false
       ..isDeleted = p.metadata?.deleted ?? false
-      ..jobCompany = p.organizations?.first?.name ?? ""
-      ..jobDepartment = p.organizations?.first?.department ?? ""
-      ..jobTitle = p.organizations?.first?.title ?? ""
-      ..notes = p.biographies?.first?.value ?? ""
+      ..jobCompany = p.organizations?.first.name ?? ""
+      ..jobDepartment = p.organizations?.first.department ?? ""
+      ..jobTitle = p.organizations?.first.title ?? ""
+      ..notes = p.biographies?.first.value ?? ""
       ..emailList = p.emailAddresses
-              ?.where((x) => x?.metadata?.source?.type != "DOMAIN_PROFILE")
-              ?.map((x) => EmailData()
-                ..value = x.value
-                ..type = x.formattedType)
-              ?.toList() ??
+              ?.where((x) => x.metadata?.source?.type != "DOMAIN_PROFILE")
+              .map((x) => EmailData()
+                ..value = x.value ?? ""
+                ..type = x.formattedType ?? "")
+              .toList() ??
           []
       ..phoneList = p.phoneNumbers
               ?.map((x) => PhoneData()
-                ..number = x.value
-                ..type = x.formattedType)
-              ?.toList() ??
+                ..number = x.value ?? ""
+                ..type = x.formattedType ?? "")
+              .toList() ??
           []
       ..websiteList = p.urls
               ?.map((x) => WebsiteData()
-                ..href = x.value
-                ..type = x.formattedType)
-              ?.toList() ??
+                ..href = x.value ?? ""
+                ..type = x.formattedType ?? "")
+              .toList() ??
           []
       ..imList = p.imClients
               ?.map((x) => InstantMessageData()
-                ..username = x.username
-                ..type = x.formattedType)
-              ?.toList() ??
+                ..username = x.username ?? ""
+                ..type = x.formattedType ?? "")
+              .toList() ??
           []
       ..relationList = p.relations
               ?.map((x) => RelationData()
-                ..person = x.person
-                ..type = x.formattedType)
-              ?.toList() ??
+                ..person = x.person ?? ""
+                ..type = x.formattedType ?? "")
+              .toList() ??
           []
       ..eventList = p.events
               ?.map((x) => EventData()
                 ..date = DateTime(x.date?.year ?? 0, x.date?.month ?? 1, x.date?.day ?? 1)
-                ..type = x.formattedType)
-              ?.toList() ??
+                ..type = x.formattedType ?? "")
+              .toList() ??
           []
       ..addressList = p.addresses
               ?.map((x) => AddressData()
-                ..city = x.city
-                ..country = x.country
-                ..poBox = x.poBox
-                ..street = x.streetAddress
-                ..formattedAddress = x.extendedAddress
-                ..postcode = x.postalCode
-                ..region = x.region
-                ..type = x.formattedType)
-              ?.toList() ??
+                ..city = x.city ?? ""
+                ..country = x.country ?? ""
+                ..poBox = x.poBox ?? ""
+                ..street = x.streetAddress ?? ""
+                ..formattedAddress = x.extendedAddress ?? ""
+                ..postcode = x.postalCode ?? ""
+                ..region = x.region ?? ""
+                ..type = x.formattedType ?? "")
+              .toList() ??
           [];
 
     if (p.birthdays?.isNotEmpty ?? false) {
       c.birthday = BirthdayData()
         ..date = DateTime(
-            p.birthdays.first.date?.year ?? 0, p.birthdays.first.date?.month ?? 1, p.birthdays.first.date?.day ?? 1)
-        ..text = p.birthdays.first?.text ?? "";
+            p.birthdays?.first.date?.year ?? 0, p.birthdays?.first.date?.month ?? 1, p.birthdays?.first.date?.day ?? 1)
+        ..text = p.birthdays?.first.text ?? "";
 
       if (c.birthday.date == DateTime(0, 1, 1)) {
         try {
-          c.birthday.date = DateFormats.google.parse(c.birthday.text) ?? DateTime(0, 1, 1);
+          c.birthday.date = DateFormats.google.parse(c.birthday.text);
         } catch (e) {
           c.birthday.date = DateTime(0, 1, 1);
         }
@@ -314,11 +317,11 @@ class GoogleRestContactsService {
 
     if (p.userDefined?.isNotEmpty ?? false) {
       c.customFields =
-          Map.fromIterable(p.userDefined, key: (x) => (x as UserDefined).key, value: (x) => (x as UserDefined).value);
+          Map.fromIterable(p.userDefined ?? [], key: (x) => (x as UserDefined).key ?? "", value: (x) => (x as UserDefined).value ?? "");
 
       /// Inject known custom fields into Contact, and remove from Map
-      c.twitterHandle = c.customFields.remove(kTwitterParam);
-      c.gitUsername = c.customFields.remove(kGitParam);
+      c.twitterHandle = c.customFields.remove(kTwitterParam) ?? "";
+      c.gitUsername = c.customFields.remove(kGitParam) ?? "";
     }
 
     c.groupList = []; //will be populated by GroupData
@@ -331,63 +334,63 @@ class GoogleRestContactsService {
 
   Map<String, dynamic> contactToJson(ContactData contact) {
     Person p = Person()
-      ..resourceName = contact.googleId ?? ""
-      ..etag = contact.etag ?? ""
+      ..resourceName = contact.googleId
+      ..etag = contact.etag
       ..names = [
         Name()
-          ..givenName = contact.nameGiven ?? ""
-          ..phoneticGivenName = contact.nameGivenPhonetic ?? ""
-          ..middleName = contact.nameMiddle ?? ""
-          ..phoneticMiddleName = contact.nameMiddlePhonetic ?? ""
-          ..familyName = contact.nameFamily ?? ""
-          ..displayName = contact.nameFull ?? ""
-          ..honorificPrefix = contact.namePrefix ?? ""
-          ..honorificSuffix = contact.nameSuffix ?? ""
+          ..givenName = contact.nameGiven
+          ..phoneticGivenName = contact.nameGivenPhonetic
+          ..middleName = contact.nameMiddle
+          ..phoneticMiddleName = contact.nameMiddlePhonetic
+          ..familyName = contact.nameFamily
+          ..displayName = contact.nameFull
+          ..honorificPrefix = contact.namePrefix
+          ..honorificSuffix = contact.nameSuffix
       ]
-      ..nicknames = [Nickname()..value = contact.nickname ?? ""]
+      ..nicknames = [Nickname()..value = contact.nickname]
       ..organizations = [
         Organization()
-          ..name = contact.jobCompany ?? ""
-          ..department = contact.jobDepartment ?? ""
-          ..title = contact.jobTitle ?? ""
+          ..name = contact.jobCompany
+          ..department = contact.jobDepartment
+          ..title = contact.jobTitle
       ]
-      ..biographies = [Biography()..value = contact.notes ?? ""]
+      ..biographies = [Biography()..value = contact.notes]
       ..emailAddresses = contact.emailList
-          ?.map((x) => EmailAddress()
+          .map((x) => EmailAddress()
             ..value = x.value
             ..type = x.type)
-          ?.toList()
+          .toList()
       ..phoneNumbers = contact.phoneList
-          ?.map((x) => PhoneNumber()
+          .map((x) => PhoneNumber()
             ..value = x.number
             ..type = x.type)
-          ?.toList()
+          .toList()
       ..urls = contact.websiteList
-          ?.map((x) => Url()
+          .map((x) => Url()
             ..value = x.href
             ..type = x.type)
-          ?.toList()
+          .toList()
       ..imClients = contact.imList
-          ?.map((x) => ImClient()
+          .map((x) => ImClient()
             ..username = x.username
             ..type = x.type)
-          ?.toList()
+          .toList()
       ..relations = contact.relationList
-          ?.map((x) => Relation()
+          .map((x) => Relation()
             ..person = x.person
             ..type = x.type)
-          ?.toList()
-      ..events = contact.eventList?.map((x) {
+          .toList()
+      ..events = contact.eventList.map((x) {
         Date d = Date()
-          ..year = x.date?.year
-          ..month = x.date?.month
-          ..day = x.date?.day;
+          ..year = x.date.year
+          ..month = x.date.month
+          ..day = x.date.day;
         return Event()
           ..date = d
           ..type = x.type;
-      })?.toList()
+      }).toList()
       ..addresses = contact.addressList
-          ?.map((x) => Address()
+          .map((x) => Address()
             ..city = x.city
             ..country = x.country
             ..poBox = x.poBox
@@ -396,17 +399,17 @@ class GoogleRestContactsService {
             ..postalCode = x.postcode
             ..region = x.region
             ..type = x.type)
-          ?.toList();
+          .toList();
 
-    if (contact.birthday?.isEmpty == false ?? false) {
+    if (contact.birthday.isEmpty == false) {
       p.birthdays = [Birthday()..text = contact.birthday.text];
     }
 
-    if (contact.hasGit || contact.hasTwitter || (contact.customFields?.isNotEmpty ?? false)) {
+    if (contact.hasGit || contact.hasTwitter || contact.customFields.isNotEmpty) {
       /// Inject known custom fields back into the payload
       void addUserDefined(String key, dynamic value) {
         if (value == null) return;
-        p.userDefined.add(UserDefined()
+        p.userDefined?.add(UserDefined()
           ..key = key
           ..value = value);
       }
@@ -430,5 +433,5 @@ class GetContactsResult {
   final String nextPageToken;
   final String syncToken;
 
-  GetContactsResult(this.contacts, {this.nextPageToken, this.syncToken});
+  GetContactsResult(this.contacts, {required this.nextPageToken, required this.syncToken});
 }

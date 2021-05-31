@@ -1,8 +1,7 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:rnd/rnd.dart';
+//import 'package:rnd/rnd.dart';
 
 class AnimatedBirdSplashClipper extends CustomClipper<Path> {
   final GooeyEdge gooeyEdge;
@@ -22,12 +21,15 @@ class AnimatedBirdSplashClipper extends CustomClipper<Path> {
 
 
 class GooeyEdge {
-  List<_Point> points;
+
+  static Random random = Random(4444);
+
+  List<_Point> points = [];
   double damping = 0.85;
   double tension = 0.005;
   double roundness = 0.6;
-  int count;
-  double edgeFactor;
+  int count = 0;
+  double edgeFactor = 0.0;
   int lastT = 0;
 
   // TODO: initValues?
@@ -40,7 +42,7 @@ class GooeyEdge {
   }
 
   Path buildPath(Size size) {
-    if (points == null || points.length == 0) { return null; }
+    if (points.isEmpty) { return Path(); }
 
     double w = size.width, h = size.height;
     double rowH = h / (count * 2 - 1), capSize = rowH * 0.67;
@@ -86,10 +88,10 @@ class GooeyEdge {
 
 
   void tick(Duration duration) {
-    if (points == null || points.isEmpty) { return; }
+    if (points.isEmpty) { return; }
     double t = min(1.5, (duration.inMilliseconds - lastT) / 1000 * 60);
     lastT = duration.inMilliseconds;
-    double dampingT = pow(damping, t);
+    double dampingT = pow(damping, t) as double;
 
     points.forEach((pt) {
       pt.vel += (pt.target - pt.value) * pt.tension;
@@ -103,22 +105,22 @@ class GooeyEdge {
   }
 
   _Point _updatePoint(_Point pt, [bool jump = false]) {
-    pt.target = rnd.nextDouble();
+    pt.target = random.nextDouble();
     if (jump) {
       pt.value = pt.target;
       pt.vel = 0.0;
     }
-    pt.tension = rnd.getDouble(0.1, 1) * tension;
-    pt.next = rnd.getDouble(jump ? 0 : 120, 480);
+    pt.tension = 0.1 + random.nextDouble() * 0.9 * tension;
+    pt.next = jump ? 0.0 : 120.0 + random.nextDouble() * 480.0;
     return pt;
   }
 }
 
 class _Point {
-  double next;
-  double value;
-  double target;
-  double tension;
+  double next = 0.0;
+  double value = 0.0;
+  double target = 0.0;
+  double tension = 0.0;
   double vel = 0.0;
 }
 

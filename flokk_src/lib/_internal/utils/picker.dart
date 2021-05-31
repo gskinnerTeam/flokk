@@ -1,27 +1,19 @@
-import 'package:file_chooser/file_chooser.dart';
+import 'package:file_selector/file_selector.dart';
 
 import 'path.dart';
 
-Future<String> pickImage({String confirmText, String initialPath}) async {
-  confirmText ??= "Pick Image";
-  initialPath ??= await PathUtil.dataPath;
+Future<String?> pickImage({String confirmText = "", String initialPath = ""}) async {
+  if (confirmText.isEmpty) confirmText = "Pick Image";
+  if (initialPath.isEmpty) initialPath = await PathUtil.homePath;
 
-  final result = await showOpenPanel(
+  final typeGroup = XTypeGroup(label: 'images', extensions: ['jpg', 'jpeg', 'png']);
+  XFile? file = (await openFile(
     initialDirectory: initialPath,
-    allowedFileTypes: [
-      FileTypeFilterGroup(
-        label: "images",
-        fileExtensions: ["png", "jpg", "jpeg", "gif", "webm"],
-      ),
-    ],
-    allowsMultipleSelection: false,
-    canSelectDirectories: false,
     confirmButtonText: confirmText,
-  );
-
-  if (result.canceled || result.paths.isEmpty) {
-    return null;
+    acceptedTypeGroups: [typeGroup],
+  ));
+  if (file != null) {
+    return file.path;
   }
-
-  return result.paths[0];
+  return null;
 }

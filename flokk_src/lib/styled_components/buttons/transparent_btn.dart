@@ -8,17 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TransparentBtn extends StatelessWidget {
-  final Widget child;
-  final Function() onPressed;
+  final Widget? child;
+  final VoidCallback? onPressed;
   final bool bigMode;
-  final EdgeInsets contentPadding;
-  final Color bgColor;
-  final Color hoverColor;
-  final Color downColor;
+  final EdgeInsets? contentPadding;
+  final Color? bgColor;
+  final Color? hoverColor;
+  final Color? downColor;
   final double borderRadius;
 
   const TransparentBtn(
-      {Key key,
+      {Key? key,
       this.onPressed,
       this.child,
       this.bigMode = false,
@@ -26,7 +26,7 @@ class TransparentBtn extends StatelessWidget {
       this.bgColor,
       this.hoverColor,
       this.downColor,
-      this.borderRadius})
+      this.borderRadius = Corners.s5})
       : super(key: key);
 
   @override
@@ -43,7 +43,7 @@ class TransparentBtn extends StatelessWidget {
       bgColor: bgColor ?? Colors.transparent,
       hoverColor: hoverColor ?? (theme.isDark ? ColorUtils.shiftHsl(theme.bg1, .2) : theme.bg2.withOpacity(.35)),
       downColor: downColor ?? ColorUtils.shiftHsl(theme.bg2, .1),
-      borderRadius: borderRadius ?? Corners.s5,
+      borderRadius: borderRadius,
       child: child,
       onPressed: onPressed,
     );
@@ -52,14 +52,14 @@ class TransparentBtn extends StatelessWidget {
 
 class TransparentTextBtn extends StatelessWidget {
   final String label;
-  final Function() onPressed;
-  final Color color;
+  final VoidCallback? onPressed;
+  final Color? color;
   final bool bigMode;
-  final TextStyle style;
-  final Color bgColor;
+  final TextStyle? style;
+  final Color? bgColor;
 
   const TransparentTextBtn(this.label,
-      {Key key, this.onPressed, this.color, this.bigMode = false, this.style, this.bgColor})
+      {Key? key, this.onPressed, this.color, this.bigMode = false, this.style, this.bgColor})
       : super(key: key);
 
   @override
@@ -82,14 +82,14 @@ class TransparentIconAndTextBtn extends StatelessWidget {
   final String label;
   final AssetImage icon;
   final double iconSize;
-  final Function() onPressed;
-  final Color color;
-  final Color textColor;
+  final VoidCallback? onPressed;
+  final Color? color;
+  final Color? textColor;
   final bool bigMode;
-  final TextStyle style;
+  final TextStyle? style;
 
   const TransparentIconAndTextBtn(this.label, this.icon,
-      {Key key, this.onPressed, this.color, this.textColor, this.bigMode = false, this.iconSize, this.style})
+      {Key? key, this.onPressed, this.color, this.textColor, this.bigMode = false, this.iconSize = 16, this.style})
       : super(key: key);
 
   @override
@@ -100,7 +100,7 @@ class TransparentIconAndTextBtn extends StatelessWidget {
       bigMode: bigMode,
       child: Row(
         children: [
-          StyledImageIcon(icon, size: iconSize ?? 16, color: c),
+          StyledImageIcon(icon, size: iconSize, color: c),
           HSpace(Insets.sm),
           Text(label, style: style ?? TextStyles.Body1.textColor(textColor ?? c)),
           HSpace(3), // Add a bit of extra padding to the right, seems like Icon() has it's own baked in padding

@@ -1,3 +1,4 @@
+import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/data/contact_data.dart';
@@ -10,7 +11,6 @@ class UpdateContactLabelsCommand extends AbstractCommand with AuthorizedServiceC
 
   Future<ContactData> execute(ContactData contact) async {
     Log.p("[UpdateContactLabelsCommand]");
-    ServiceResult result;
     await executeAuthServiceCmd(() async {
       //Get the existing labels for contact
       List<GroupData> existingGroups = contactsModel.getContactById(contact.id)?.groupList ?? [];
@@ -21,6 +21,7 @@ class UpdateContactLabelsCommand extends AbstractCommand with AuthorizedServiceC
       List<GroupData> removeFrom = existingGroups.where((x) => !updatedGroups.any((y) => y.id == x.id)).toList();
       List<GroupData> addTo = updatedGroups.where((x) => !existingGroups.any((y) => y.id == x.id)).toList();
 
+      ServiceResult result = ServiceResult(null, HttpResponse.empty());
       //Remove contact from groups they are no longer in
       for (var n in removeFrom) {
         result = await googleRestService.groups.modify(authModel.googleAccessToken, n, removeContacts: [contact]);
@@ -32,7 +33,7 @@ class UpdateContactLabelsCommand extends AbstractCommand with AuthorizedServiceC
         result = await googleRestService.groups.modify(authModel.googleAccessToken, n, addContacts: [contact]);
         print("Added: ${n.name} to ${contact.nameFull}");
       }
-      return result?.response;
+      return result;
     });
     return contactsModel.getContactById(contact.id);
   }

@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 /// It's composed mainly of sub-builds methods, which should probably be refactored into
 /// individual FormWidgets, but it works for now.
 abstract class BaseMiniForm extends StatelessWidget {
-  BaseMiniForm(this.form, this.sectionType, {Key key}) : super(key: key);
+  BaseMiniForm(this.form, this.sectionType, {Key? key}) : super(key: key);
 
   double get rightPadding => Insets.l * 1.5 - 2;
 
@@ -80,7 +80,7 @@ abstract class BaseMiniForm extends StatelessWidget {
   /// //////////////////////////////////////////////////////////////
   /// Creates an ExpandingMiniformContainer with some shared boilerplate (auto-focus check, and onOpened handler).
   /// Every miniform calls this fxn.
-  Widget buildExpandingContainer(dynamic icon, {BoolCallback hasContent, FormBuilder formBuilder}) {
+  Widget buildExpandingContainer(dynamic icon, {required BoolCallback hasContent, required FormBuilder formBuilder}) {
     return ExpandingMiniformContainer(
       sectionType,
       icon,
@@ -89,19 +89,22 @@ abstract class BaseMiniForm extends StatelessWidget {
       // Auto-focus if we're the current form section
       autoFocus: form.currentSection == sectionType,
       // When we open, let the form know that we're the current section
-      onOpened: (s) => form?.handleSectionChanged(s),
+      onOpened: form.handleSectionChanged,
     );
   }
 
   /// //////////////////////////////////////////////////
   /// Builds a basic TextInput that dispatches focusChanged
   /// //TODO SB: Move this and the other components into their own widgets. They just need to be passed the miniform as a component.
-  Widget buildTextInput(BuildContext context, String hint, String initial, Function(String) onChanged,
-      {bool autoFocus = false, EdgeInsets padding, int maxLines = 1, TextEditingController controller}) {
+  Widget buildTextInput(BuildContext context, String hint, String? initial, void Function(String)? onChanged,
+      {bool autoFocus = false,
+      EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding,
+      int? maxLines = 1,
+      TextEditingController? controller}) {
     return StyledFormTextInput(
         controller: controller,
         hintText: hint,
-        contentPadding: padding ?? StyledFormTextInput.kDefaultTextInputPadding,
+        contentPadding: padding,
         autoFocus: autoFocus,
         initialValue: initial,
         maxLines: maxLines,
@@ -114,7 +117,7 @@ abstract class BaseMiniForm extends StatelessWidget {
   /// Builds a dual-column TextInput like those used in Address
   Widget buildDualTextInput(BuildContext context, String hint1, String initial1, Function(String) onChanged1,
       String hint2, String initial2, Function(String) onChanged2,
-      {bool autoFocus = false, EdgeInsets padding, int maxLines = 1}) {
+      {bool autoFocus = false, EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding, int maxLines = 1}) {
     return Row(
       children: <Widget>[
         buildTextInput(context, hint1, initial1, onChanged1, autoFocus: autoFocus, padding: padding, maxLines: maxLines)
@@ -129,15 +132,15 @@ abstract class BaseMiniForm extends StatelessWidget {
   /// Builds a single-row widget that is a combination of Text and AutoCompleteDropdown
   /// This is your classic EMAIL / TYPE DROPDOWN field
   Widget buildTextWithDropdown(BuildContext context, dynamic item,
-      {String hint,
-      String typeHint,
-      String initialText,
-      String initialType,
-      List<String> types,
-      Function(String) onTextChanged,
-      Function(String) onTypeChanged,
-      Function() onDelete,
-      bool showDelete,
+      {String hint = "",
+      String typeHint = "",
+      String? initialText,
+      String? initialType,
+      List<String> types = const<String>[],
+      void Function(String)? onTextChanged,
+      void Function(String)? onTypeChanged,
+      VoidCallback? onDelete,
+      bool showDelete = true,
       bool autoFocus = false,
       double maxDropdownHeight = 300,
       double typeWidth = 100}) {
@@ -181,15 +184,15 @@ abstract class BaseMiniForm extends StatelessWidget {
     BuildContext context,
     String hint,
     String typeHint, {
-    List<T> itemList,
-    List<String> types,
-    T Function() newItemBuilder,
-    bool Function(T) isEmpty,
-    String Function(T) getValue,
-    Function(T, String) setValue,
-    String Function(T) getType,
-    Function(T, String) setType,
-    double maxDropdownHeight,
+    List<T> itemList = const [], // NOTE CE: Dart really fails here, default argument values must be const but generic type arguments cannot be used in a const context
+    List<String> types = const <String>[],
+    required T Function() newItemBuilder,
+    required bool Function(T) isEmpty,
+    required String? Function(T) getValue,
+    required Function(T, String) setValue,
+    required String? Function(T) getType,
+    required void Function(T, String) setType,
+    double maxDropdownHeight = 300,
   }) {
     //If we've been given an empty list, populate it with at least one item.
     if (itemList.isEmpty) itemList.add(newItemBuilder());

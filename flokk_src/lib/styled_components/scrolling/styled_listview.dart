@@ -16,21 +16,24 @@ class StyledScrollPhysics extends AlwaysScrollableScrollPhysics {}
 /// Wraps a [ScrollbarListStack] + [ListView.builder] and assigns the 'Styled' scroll physics for the app
 /// Exposes a controller so other widgets can manipulate the list
 class StyledListView extends StatefulWidget {
-  final double itemExtent;
+  final double? itemExtent;
   final int itemCount;
   final Axis axis;
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
   final EdgeInsets scrollbarPadding;
   final double barSize;
 
   final IndexedWidgetBuilder itemBuilder;
 
   StyledListView({
-    Key key,
-    @required this.itemBuilder,
-    @required this.itemCount,
+    Key? key,
+    required this.itemBuilder,
+    required this.itemCount,
     this.itemExtent,
-    this.axis = Axis.vertical, this.padding, this.barSize, this.scrollbarPadding,
+    this.axis = Axis.vertical,
+    this.padding,
+    this.barSize = 12,
+    this.scrollbarPadding = EdgeInsets.zero,
   }) : super(key: key) {
     assert(itemExtent != 0, "Item extent should never be 0, null is ok.");
   }
@@ -41,7 +44,7 @@ class StyledListView extends StatefulWidget {
 
 /// State is public so this can easily be controlled externally
 class StyledListViewState extends State<StyledListView> {
-  ScrollController scrollController;
+  late ScrollController scrollController;
 
   @override
   void initState() {
@@ -65,12 +68,12 @@ class StyledListViewState extends State<StyledListView> {
 
   @override
   Widget build(BuildContext context) {
-    double contentSize = (widget.itemCount ?? 0.0) * (widget.itemExtent ?? 00.0);
+    double contentSize = widget.itemCount * (widget.itemExtent ?? 0.0);
     Widget listContent = ScrollbarListStack(
       contentSize: contentSize,
       axis: widget.axis,
       controller: scrollController,
-      barSize: widget.barSize ?? 12,
+      barSize: widget.barSize,
       scrollbarPadding: widget.scrollbarPadding,
       child: ListView.builder(
         padding: widget.padding,
@@ -87,12 +90,12 @@ class StyledListViewState extends State<StyledListView> {
 }
 
 class StyledListViewWithTitle extends StatelessWidget {
-  final Color bgColor;
+  final Color? bgColor;
   final String title;
-  final AssetImage icon;
+  final AssetImage? icon;
   final List<Widget> listItems;
 
-  const StyledListViewWithTitle({Key key, this.bgColor, this.title, this.listItems, this.icon}) : super(key: key);
+  const StyledListViewWithTitle({Key? key, this.bgColor, this.title = "", this.listItems = const <Widget>[], this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +108,7 @@ class StyledListViewWithTitle extends StatelessWidget {
           Row(
             children: [
               if (icon != null) ...{
-                StyledImageIcon(icon, color: theme.accent1Darker),
+                StyledImageIcon(icon!, color: theme.accent1Darker),
                 HSpace(Insets.sm),
               },
               Text(title, style: TextStyles.T2.textColor(theme.accent1Darker)),

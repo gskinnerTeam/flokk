@@ -6,13 +6,13 @@ import 'package:textstyle_extensions/textstyle_extensions.dart';
 export 'package:textstyle_extensions/textstyle_extensions.dart';
 
 class Durations {
-  static Duration get fastest => .15.seconds;
+  static const Duration fastest = Duration(milliseconds: 150);
 
-  static Duration get fast => .25.seconds;
+  static const Duration fast = Duration(milliseconds: 250);
 
-  static Duration get medium => .35.seconds;
+  static const Duration medium = Duration(milliseconds: 350);
 
-  static Duration get slow => .7.seconds;
+  static const Duration slow = Duration(milliseconds: 700);
 }
 
 class Fonts {
@@ -36,50 +36,50 @@ class PageBreaks {
 class Insets {
   static double gutterScale = 1;
 
-  static double scale = 1;
+  static const double scale = 1;
 
   /// Dynamic insets, may get scaled with the device size
-  static double get mGutter => m * gutterScale;
+  static double mGutter = m * gutterScale;
 
-  static double get lGutter => l * gutterScale;
+  static double lGutter = l * gutterScale;
 
-  static double get xs => 2 * scale;
+  static const double xs = 2 * scale;
 
-  static double get sm => 6 * scale;
+  static const double sm = 6 * scale;
 
-  static double get m => 12 * scale;
+  static const double m = 12 * scale;
 
-  static double get l => 24 * scale;
+  static const double l = 24 * scale;
 
-  static double get xl => 36 * scale;
+  static const double xl = 36 * scale;
 }
 
 class FontSizes {
-  static double get scale => 1;
+  static const double scale = 1;
 
-  static double get s11 => 11 * scale;
+  static const double s11 = 11 * scale;
 
-  static double get s12 => 12 * scale;
+  static const double s12 = 12 * scale;
 
-  static double get s14 => 14 * scale;
+  static const double s14 = 14 * scale;
 
-  static double get s16 => 16 * scale;
+  static const double s16 = 16 * scale;
 
-  static double get s18 => 18 * scale;
+  static const double s18 = 18 * scale;
 }
 
 class Sizes {
-  static double hitScale = 1;
+  static const double hitScale = 1;
 
-  static double get hit => 40 * hitScale;
+  static const double hit = 40 * hitScale;
 
-  static double get iconMed => 20;
+  static const double iconMed = 20;
 
-  static double get sideBarSm => 150 * hitScale;
+  static const double sideBarSm = 150 * hitScale;
 
-  static double get sideBarMed => 200 * hitScale;
+  static const double sideBarMed = 200 * hitScale;
 
-  static double get sideBarLg => 290 * hitScale;
+  static const double sideBarLg = 290 * hitScale;
 }
 
 class TextStyles {
@@ -137,50 +137,50 @@ class Shadows {
     return enabled
         ? [
             BoxShadow(
-              color: color.withOpacity(opacity ?? .03),
+              color: color.withOpacity(opacity),
               blurRadius: mRadius,
               spreadRadius: mRadius / 2,
               offset: Offset(1, 0),
             ),
             BoxShadow(
-              color: color.withOpacity(opacity ?? .04),
+              color: color.withOpacity(opacity),
               blurRadius: mRadius / 2,
               spreadRadius: mRadius / 4,
               offset: Offset(1, 0),
             )
           ]
-        : null;
+        : const<BoxShadow>[];
   }
 }
 
 class Corners {
-  static double get btn => s5;
+  static const double btn = s5;
 
-  static double get dialog => 12;
+  static const double dialog = 12;
 
   /// Xs
-  static double get s3 => 3;
+  static const double s3 = 3;
 
   static BorderRadius get s3Border => BorderRadius.all(s3Radius);
 
   static Radius get s3Radius => Radius.circular(s3);
 
   /// Small
-  static double get s5 => 5;
+  static const double s5 = 5;
 
   static BorderRadius get s5Border => BorderRadius.all(s5Radius);
 
   static Radius get s5Radius => Radius.circular(s5);
 
   /// Medium
-  static double get s8 => 8;
+  static const double s8 = 8;
 
-  static BorderRadius get s8Border => BorderRadius.all(s8Radius);
+  static const BorderRadius s8Border = BorderRadius.all(s8Radius);
 
-  static Radius get s8Radius => Radius.circular(s8);
+  static const Radius s8Radius = Radius.circular(s8);
 
   /// Large
-  static double get s10 => 10;
+  static const double s10 = 10;
 
   static BorderRadius get s10Border => BorderRadius.all(s10Radius);
 

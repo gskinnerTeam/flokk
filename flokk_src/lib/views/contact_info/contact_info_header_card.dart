@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactInfoHeaderCard extends StatefulWidget {
-  const ContactInfoHeaderCard({Key key}) : super(key: key);
+  const ContactInfoHeaderCard({Key? key}) : super(key: key);
 
   @override
   _ContactInfoHeaderCardState createState() => _ContactInfoHeaderCardState();
@@ -46,7 +46,7 @@ class _ContactInfoHeaderCardState extends State<ContactInfoHeaderCard> {
         VSpace(Insets.sm - 1),
 
         /// PROFILE PIC
-        StyledUserAvatar(key: ValueKey(contact.id), size: 110, contact: contact),
+        StyledUserAvatar(key: ValueKey(contact.id + contact.profilePic), size: 110, contact: contact),
 
         /// TITLE
         Row(
@@ -77,7 +77,7 @@ class SocialIconStrip extends StatelessWidget {
   final ContactData contact;
   final bool vtMode;
 
-  const SocialIconStrip({Key key, this.contact, this.vtMode = false}) : super(key: key);
+  const SocialIconStrip({Key? key, required this.contact, this.vtMode = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

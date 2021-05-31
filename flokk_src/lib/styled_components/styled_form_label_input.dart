@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 class StyledFormLabelInput extends StatefulWidget {
   //TODO SB@CE - Is this necessary, can't we just pass null and let the default inside StyledSearchTextInput handle it?
-  static EdgeInsets kDefaultTextInputPadding = EdgeInsets.only(bottom: Insets.sm, top: 4);
+  static const EdgeInsets kDefaultTextInputPadding = EdgeInsets.only(bottom: Insets.sm, top: 4);
 
   final String hintText;
   final bool autoFocus;
@@ -21,23 +21,23 @@ class StyledFormLabelInput extends StatefulWidget {
   final List<String> labels;
   final void Function(String) onAddLabel;
   final void Function(String) onRemoveLabel;
-  final void Function(String) onChanged;
-  final void Function(String) onFieldSubmitted;
-  final VoidCallback onEditingCancel;
-  final void Function(bool) onFocusChanged;
+  final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
+  final VoidCallback? onEditingCancel;
+  final void Function(bool)? onFocusChanged;
 
   const StyledFormLabelInput({
-    this.hintText,
-    this.autoFocus,
-    this.contentPadding,
-    this.labels,
-    this.onAddLabel,
-    this.onRemoveLabel,
+    this.hintText = "",
+    this.autoFocus = false,
+    this.contentPadding = kDefaultTextInputPadding,
+    this.labels = const <String>[],
+    required this.onAddLabel,
+    required this.onRemoveLabel,
     this.onChanged,
     this.onFieldSubmitted,
     this.onEditingCancel,
     this.onFocusChanged,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class StyledFormLabelInput extends StatefulWidget {
 
 class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
   final GlobalKey<StyledSearchTextInputState> _textKey = GlobalKey();
-  FocusNode _textFocusNode;
+  FocusNode? _textFocusNode;
   bool _focused = false;
 
   @override
@@ -65,7 +65,7 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
   void didUpdateWidget(StyledFormLabelInput oldWidget) {
     // Detect when a new label was added from the parent and run the same logic as when we add a label from inside this widget
     if (widget.labels.length > oldWidget.labels.length) {
-      _textKey?.currentState?.text = "";
+      _textKey.currentState?.text = "";
       // At a later time, make sure this field is focused
       Future.microtask(() => _textFocusNode?.requestFocus());
     }
@@ -74,7 +74,7 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
 
   void _handleAddLabel(String label) {
     widget.onAddLabel(label);
-    _textKey?.currentState?.text = "";
+    _textKey.currentState?.text = "";
     // At a later time, make sure this field is focused
     Future.microtask(() => _textFocusNode?.requestFocus());
   }
@@ -89,14 +89,14 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
   }
 
   void _handleFocusChanged(bool value) {
-    widget.onFocusChanged(value);
+    widget.onFocusChanged?.call(value);
     setState(() => _focused = value);
   }
 
   void _handleRawKeyPressed(RawKeyEvent evt) {
     if (evt is RawKeyDownEvent) {
-      if (_textFocusNode.hasFocus && evt.logicalKey == LogicalKeyboardKey.backspace) {
-        if (_textKey != null && _textKey.currentState != null && _textKey.currentState.text.isEmpty) {
+      if ((_textFocusNode?.hasFocus ?? false) && evt.logicalKey == LogicalKeyboardKey.backspace) {
+        if (_textKey.currentState != null && (_textKey.currentState?.text.isEmpty ?? false)) {
           final tl = widget.labels;
           if (tl.isNotEmpty) {
             _handleRemoveLabel(tl.last);
@@ -145,7 +145,7 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
                 Container(
                   constraints: BoxConstraints(maxWidth: max(100, inputWidth)),
                   child: StyledSearchTextInput(
-                    contentPadding: widget.contentPadding ?? StyledFormLabelInput.kDefaultTextInputPadding,
+                    contentPadding: widget.contentPadding,
                     autoFocus: widget.autoFocus,
                     hintText: "Add label",
                     maxLines: 1,

@@ -12,14 +12,13 @@ class RemoveLabelFromContactCommand extends AbstractCommand with AuthorizedServi
   Future<ContactData> execute(ContactData contact, GroupData group) async {
     Log.p("[RemoveLabelFromContactCommand]");
 
-    ServiceResult result;
     await executeAuthServiceCmd(() async {
-      result = await googleRestService.groups.modify(authModel.googleAccessToken, group, removeContacts: [contact]);
+      ServiceResult result = await googleRestService.groups.modify(authModel.googleAccessToken, group, removeContacts: [contact]);
       if (result.success) {
         //refresh the groups to ensure labels synced
         await RefreshContactGroupsCommand(context).execute(forceUpdate: true);
       }
-      return result.response;
+      return result;
     });
     return contactsModel.getContactById(contact.id);
   }

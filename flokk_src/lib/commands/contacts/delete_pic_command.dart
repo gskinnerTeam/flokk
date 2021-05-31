@@ -11,7 +11,7 @@ class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
   DeletePicCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact) async {
-    if (contact == null || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return false;
     Log.p("[DeletePicCommand]");
 
     bool doDelete = await Dialogs.show(
@@ -19,24 +19,23 @@ class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
         message: "Are you sure you want to delete profile pic?",
         okLabel: "Yes",
         cancelLabel: "No",
-        onOkPressed: () => rootNav.pop(true),
-        onCancelPressed: () => rootNav.pop(false),
+        onOkPressed: () => rootNav?.pop(true),
+        onCancelPressed: () => rootNav?.pop(false),
       ),
     );
     if (!doDelete) return false;
 
     //TODO: replace the profile pic
     //Update local data optimistically
-    ServiceResult result;
-    await executeAuthServiceCmd(() async {
+    ServiceResult result = await executeAuthServiceCmd(() async {
       //Update remove database
-      result = await googleRestService.contacts.deletePic(authModel.googleAccessToken, contact);
+      ServiceResult result = await googleRestService.contacts.deletePic(authModel.googleAccessToken, contact);
       //Request succeeded?
       if (result.success) {
         RefreshContactsCommand(context).execute();
       }
-      return result.response;
+      return result;
     });
-    return result?.success;
+    return result.success;
   }
 }

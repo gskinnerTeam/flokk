@@ -6,27 +6,43 @@ import 'package:flokk/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class StyledCheckbox extends StatelessWidget {
-  final bool value;
-  final double size;
-  final Function(bool) onChanged;
+enum StyledCheckboxValue {
+  All,
+  None,
+  Partial,
+}
 
-  const StyledCheckbox({Key key, this.value, this.size = 18, this.onChanged}) : super(key: key);
+class StyledCheckbox extends StatelessWidget {
+  final StyledCheckboxValue value;
+  final double size;
+  final void Function(StyledCheckboxValue)? onChanged;
+
+  const StyledCheckbox({Key? key, this.value = StyledCheckboxValue.None, this.size = 18, this.onChanged})
+      : super(key: key);
 
   void _handleTapUp(TapUpDetails details) {
-    if (value == true) {
-      onChanged(false);
-    } else if (value == false) {
-      onChanged(null);
-    } else if (value == null) {
-      onChanged(true);
+    switch (value) {
+      case StyledCheckboxValue.All:
+        onChanged?.call(StyledCheckboxValue.None);
+        break;
+      case StyledCheckboxValue.None:
+        onChanged?.call(StyledCheckboxValue.Partial);
+        break;
+      case StyledCheckboxValue.Partial:
+        onChanged?.call(StyledCheckboxValue.All);
+        break;
     }
   }
 
   Widget _getIconForCurrentState() {
-    if (value == true) return StyledImageIcon(StyledIcons.checkboxSelected, color: Colors.white, size: 15);
-    if (value == null) return StyledImageIcon(StyledIcons.checkboxPartial, color: Colors.white, size: 15);
-    return Container();
+    switch (value) {
+      case StyledCheckboxValue.All:
+        return StyledImageIcon(StyledIcons.checkboxSelected, color: Colors.white, size: 15);
+      case StyledCheckboxValue.None:
+        return Container();
+      case StyledCheckboxValue.Partial:
+        return StyledImageIcon(StyledIcons.checkboxPartial, color: Colors.white, size: 15);
+    }
   }
 
   Widget _wrapGestures(Widget child) {
@@ -41,9 +57,9 @@ class StyledCheckbox extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-          color: value == false ? Colors.transparent : theme.accent1Darker,
+          color: value == StyledCheckboxValue.None ? Colors.transparent : theme.accent1Darker,
           borderRadius: Corners.s3Border,
-          border: Border.all(color: value == false ? theme.grey : theme.accent1Darker, width: 1.5)),
+          border: Border.all(color: value == StyledCheckboxValue.None ? theme.grey : theme.accent1Darker, width: 1.5)),
       child: _wrapGestures(_getIconForCurrentState()),
     );
   }

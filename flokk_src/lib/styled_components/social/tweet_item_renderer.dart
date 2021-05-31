@@ -15,7 +15,7 @@ import '../styled_icons.dart';
 class TweetListItem extends StatelessWidget {
   final Tweet tweet;
 
-  const TweetListItem(this.tweet, {Key key}) : super(key: key);
+  const TweetListItem(this.tweet, {Key? key}) : super(key: key);
 
   void _handleRowPressed() {
     UrlLauncher.openHttp(tweet.url);

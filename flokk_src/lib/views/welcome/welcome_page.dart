@@ -32,7 +32,7 @@ import 'package:universal_platform/universal_platform.dart';
 class WelcomePage extends StatefulWidget {
   final bool initialPanelOpen;
 
-  const WelcomePage({Key key, this.initialPanelOpen = false}) : super(key: key);
+  const WelcomePage({Key? key, this.initialPanelOpen = false}) : super(key: key);
 
   @override
   WelcomePageState createState() => WelcomePageState();
@@ -41,8 +41,8 @@ class WelcomePage extends StatefulWidget {
 /// WelcomePage will hold the state for the sub-views, this primarily to easily avoid any issues
 /// with state of [WelcomePageStep2] being lost when we re-arrange the widget tree
 class WelcomePageState extends State<WelcomePage> {
-  GoogleRestService googleRest;
-  GoogleAuthEndpointInfo authInfo;
+  late GoogleRestService googleRest;
+  GoogleAuthEndpointInfo? authInfo;
   String authUrl = "https://google.com";
   String authCode = "10001";
   bool httpError = false;
@@ -54,8 +54,8 @@ class WelcomePageState extends State<WelcomePage> {
 
   set isLoading(bool value) => setState(() => _isLoading = value);
 
-  Size prevSize;
-  bool showContent;
+  Size prevSize = Size.zero;
+  bool showContent = false;
   bool twoColumnMode = true;
 
   @override
@@ -82,8 +82,8 @@ class WelcomePageState extends State<WelcomePage> {
     ServiceResult result = await googleRest.auth.getAuthEndpoint();
     authInfo = result.content;
     if (authInfo != null) {
-      authCode = authInfo.userCode;
-      authUrl = authInfo.verificationUrl;
+      authCode = authInfo!.userCode;
+      authUrl = authInfo!.verificationUrl;
     } else {
       httpError = true;
     }
@@ -133,8 +133,8 @@ class WelcomePageState extends State<WelcomePage> {
     isLoading = true;
     authCodeError = false;
     await Future.delayed(Duration(milliseconds: 500));
-    ServiceResult result = await googleRest.auth.authorizeDevice(authInfo.deviceCode);
-    GoogleAuthResults authResults = result.content;
+    ServiceResult result = await googleRest.auth.authorizeDevice(authInfo!.deviceCode);
+    GoogleAuthResults? authResults = result.content;
     if (authResults != null) {
       //We have a token! Update the model.
       AuthModel model = Provider.of(context, listen: false);
@@ -224,7 +224,7 @@ class _WelcomePageStateView extends StatelessWidget {
 
 /// Holds the 2 WelcomePages and an IndexedStack to switch between them
 class _WelcomeContentStack extends StatelessWidget {
-  const _WelcomeContentStack({Key key}) : super(key: key);
+  const _WelcomeContentStack({Key? key}) : super(key: key);
 
   void _handlePrivacyPolicyPressed(String value) {
     UrlLauncher.openHttp("https://flokk.app/privacy.html");
@@ -234,7 +234,7 @@ class _WelcomeContentStack extends StatelessWidget {
   Widget build(BuildContext context) {
     WelcomePageState state = context.watch();
     //Bg shape is rounded on the left corners when in dual-column mode, but square in full-screen
-    BorderRadius getBgShape() => state.twoColumnMode
+    BorderRadius? getBgShape() => state.twoColumnMode
         ? BorderRadius.only(topLeft: Radius.circular(Corners.s10), bottomLeft: Radius.circular(Corners.s10))
         : null;
 

@@ -4,7 +4,7 @@
 import 'universal_file_locator.dart' if (dart.library.html) 'web_file.dart' if (dart.library.io) 'io_file.dart';
 
 abstract class UniversalFile {
-  String fileName;
+  String fileName = "";
 
   Future write(String value, [bool append = false]);
 

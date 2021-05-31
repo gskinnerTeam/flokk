@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class DashboardPage extends StatefulWidget {
   final ContactData selectedContact;
 
-  const DashboardPage({Key key, this.selectedContact}) : super(key: key);
+  const DashboardPage({Key? key, required this.selectedContact}) : super(key: key);
 
   @override
   DashboardPageState createState() => DashboardPageState();

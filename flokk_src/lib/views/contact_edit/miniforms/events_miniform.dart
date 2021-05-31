@@ -13,7 +13,7 @@ import 'package:flokk/views/contact_edit/miniforms/controls/textfield_with_date_
 import 'package:flutter/material.dart';
 
 class ContactEventsMiniForm extends BaseMiniForm {
-  ContactEventsMiniForm(ContactEditFormState form, {Key key}) : super(form, ContactSectionType.events, key: key);
+  ContactEventsMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.events, key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,15 +56,15 @@ class ContactEventsMiniForm extends BaseMiniForm {
   }
 
   Widget buildTextWithDatePickerAndDropdown(BuildContext context, dynamic item,
-      {String hint,
-      String typeHint,
-      String initialText,
-      String initialType,
-      List<String> types,
-      Function(String, DateTime) onDateChanged,
-      Function(String) onTypeChanged,
-      Function() onDelete,
-      bool showDelete,
+      {String hint = "",
+      String typeHint = "",
+      String? initialText,
+      String? initialType,
+      List<String> types = const <String>[],
+      void Function(String, DateTime)? onDateChanged,
+      void Function(String)? onTypeChanged,
+      VoidCallback? onDelete,
+      bool showDelete = true,
       bool autoFocus = false,
       double typeWidth = 100}) {
     return Row(

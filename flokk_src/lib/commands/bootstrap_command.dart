@@ -1,3 +1,4 @@
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/_internal/utils/path.dart';
 import 'package:flokk/_internal/utils/string_utils.dart';
@@ -15,7 +16,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:window_size/window_size.dart';
 
 class BootstrapCommand extends AbstractCommand {
   BootstrapCommand(BuildContext context) : super(context);
@@ -37,8 +37,7 @@ class BootstrapCommand extends AbstractCommand {
     Intl.defaultLocale = 'en_US';
 
     /// Set minimal Window size
-    // TODO: Remove condition once other implementations are available
-    if (UniversalPlatform.isMacOS) setWindowMinSize(Size(500, 500));
+    DesktopWindow.setMinWindowSize(Size(750, 600));
 
     /// Handle version upgrades
     if (appModel.version != AppModel.kCurrentVersion) {
@@ -98,7 +97,7 @@ class BootstrapCommand extends AbstractCommand {
         // On desktop, refresh the authToken manually
         authSuccess = await RefreshAuthTokensCommand(context).execute();
         // Make a special exemption for a failed auth-refresh, if we have no key at all. Assume this is running in a test mode.
-        if(!authSuccess && StringUtils.isEmpty(ApiKeys().googleClientId)){
+        if (!authSuccess && StringUtils.isEmpty(ApiKeys().googleClientId)) {
           authSuccess = true;
           AppModel.forceIgnoreGoogleApiCalls = true;
         }

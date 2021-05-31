@@ -23,16 +23,16 @@ class ResponsiveDoubleList extends StatefulWidget {
   final AssetImage list2Icon;
 
   const ResponsiveDoubleList(
-      {Key key,
-      @required this.list1,
-      @required this.list2,
-      @required this.list1Title = "",
-      @required this.list2Title = "",
-      @required this.list1Placeholder,
-      @required this.list2Placeholder,
-      @required this.useTabView,
-      @required this.list1Icon,
-      @required this.list2Icon})
+      {Key? key,
+      required this.list1,
+      required this.list2,
+      required this.list1Title,
+      required this.list2Title,
+      required this.list1Placeholder,
+      required this.list2Placeholder,
+      required this.useTabView,
+      required this.list1Icon,
+      required this.list2Icon})
       : super(key: key);
 
   @override

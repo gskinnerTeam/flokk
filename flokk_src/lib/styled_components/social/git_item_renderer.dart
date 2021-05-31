@@ -1,3 +1,4 @@
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/_internal/url_launcher/url_launcher.dart';
 import 'package:flokk/app_extensions.dart';
@@ -76,7 +77,7 @@ class GitUtils {
 class GitEventListItem extends StatelessWidget {
   final GitEvent gitEvent;
 
-  const GitEventListItem(this.gitEvent, {Key key}) : super(key: key);
+  const GitEventListItem(this.gitEvent, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +85,9 @@ class GitEventListItem extends StatelessWidget {
     return Column(
       children: [
         Row(children: [
-          Text("${gitEvent.event.actor.login}", style: titleStyle.bold),
+          Text("${gitEvent.event.actor?.login ?? ""}", style: titleStyle.bold),
           Text(
-              "  ·  ${GitUtils.getStringForType(gitEvent.event.type)}  ·  ${GitUtils.monthDayFmt.format(gitEvent.createdAt)}",
+              "  ·  ${GitUtils.getStringForType(gitEvent.event.type ?? "")}  ·  ${GitUtils.monthDayFmt.format(gitEvent.createdAt)}",
               style: titleStyle),
         ]),
         VSpace(Insets.xs * 1.5),
@@ -101,7 +102,7 @@ class GitEventListItem extends StatelessWidget {
 class GitRepoListItem extends StatelessWidget {
   final GitRepo repo;
 
-  const GitRepoListItem(this.repo, {Key key}) : super(key: key);
+  const GitRepoListItem(this.repo, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,8 +110,8 @@ class GitRepoListItem extends StatelessWidget {
     return Column(
       children: [
         Row(children: [
-          Text("${repo.contacts?.first?.nameGiven ?? "?"}", style: titleStyle.bold),
-          Text("  ·  ${GitUtils.monthDayFmt.format(repo.repository.updatedAt)}", style: titleStyle),
+          Text("${repo.contacts.first.nameGiven}", style: titleStyle.bold),
+          Text("  ·  ${GitUtils.monthDayFmt.format(repo.repository.updatedAt ?? Dates.epoch)}", style: titleStyle),
         ]),
         VSpace(Insets.xs * 1.5),
         GitRepoInfo(repo.repository),
@@ -124,7 +125,7 @@ class GitRepoListItem extends StatelessWidget {
 class _GitPill extends StatelessWidget {
   final String label;
 
-  const _GitPill(this.label, {Key key}) : super(key: key);
+  const _GitPill(this.label, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -137,11 +138,14 @@ class _GitPill extends StatelessWidget {
 
 /// This is used in both renderers to show the core Repo info
 class GitRepoInfo extends StatelessWidget {
-  final Repository repo;
+  final Repository? repo;
 
-  const GitRepoInfo(this.repo, {Key key}) : super(key: key);
+  const GitRepoInfo(this.repo, {Key? key}) : super(key: key);
 
-  void _handleRepoPressed() => UrlLauncher.openHttp(repo.htmlUrl);
+  void _handleRepoPressed() {
+    if (repo != null)
+      UrlLauncher.openHttp(repo!.htmlUrl);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +168,7 @@ class GitRepoInfo extends StatelessWidget {
         VSpace(Insets.sm * 1.5),
         Row(children: [
           if (repo?.language != null) ...{
-            _GitPill(repo?.language),
+            _GitPill(repo!.language),
             HSpace(Insets.sm),
           },
           StyledImageIcon(StyledIcons.starFilled, size: 12, color: theme.grey),

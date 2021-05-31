@@ -39,12 +39,12 @@ class MainScaffoldState extends State<MainScaffold> {
 
   SimpleValueNotifier<List<ContactData>> checkedContactsNotifier = SimpleValueNotifier([]);
 
-  AppModel appModel;
+  late AppModel appModel;
 
   /// Easily lookup the current state of the SidePanel
-  ContactPanelState get contactsPanel => MainScaffold.sidePanelKey.currentState;
+  ContactPanelState? get contactsPanel => MainScaffold.sidePanelKey.currentState;
 
-  SearchBarState get searchBar => MainScaffold.searchBarKey.currentState;
+  SearchBarState? get searchBar => MainScaffold.searchBarKey.currentState;
 
   /// Disable scaffold animations, used when changing pages, so the new page does not animate in
   bool skipScaffoldAnims = false;
@@ -68,8 +68,9 @@ class MainScaffoldState extends State<MainScaffold> {
     appModel.selectedContact = ContactData();
   }
 
-  void editSelectedContact(String section) => contactsPanel.showEditView(section);
+  void editSelectedContact(String section) => contactsPanel?.showEditView(section);
 
+  //TODO: This should be a command
   /// Attempt to change current page, this might not complete if user is currently editing
   Future<void> trySetCurrentPage(PageType t, [bool refresh = true]) async {
     if (t == appModel.currentMainPage) return;
@@ -85,10 +86,10 @@ class MainScaffoldState extends State<MainScaffold> {
     searchBar?.cancel();
 
     //Skip Scaffold animations if the editPanel is currently open, we don't want the new page animating with the closing panel
-    if (appModel.selectedContact != null) skipScaffoldAnims = true;
+    if (appModel.selectedContact != ContactData()) skipScaffoldAnims = true;
 
     //Clear any selected contact, causing the editPanel to close
-    appModel.selectedContact = null;
+    appModel.selectedContact = ContactData();
 
     // Clear any checked contacts
     checkedContactsNotifier.value = [];
@@ -104,8 +105,8 @@ class MainScaffoldState extends State<MainScaffold> {
     if (!await showDiscardWarningIfNecessary()) return;
     //De-select?
     bool hasSocialChanged = showSocial != appModel.showSocialTabOnInfoView;
-    if (!hasSocialChanged && appModel.selectedContact != null && appModel.selectedContact?.id == value?.id) {
-      value = null;
+    if (!hasSocialChanged && appModel.selectedContact != ContactData() && appModel.selectedContact.id == value.id) {
+      value = ContactData();
     }
     appModel.selectedContact = value;
     appModel.showSocialTabOnInfoView = showSocial;
@@ -137,7 +138,7 @@ class MainScaffoldState extends State<MainScaffold> {
     }
   }
 
-  void openMenu() => MainScaffold.scaffoldKey.currentState.openDrawer();
+  void openMenu() => MainScaffold.scaffoldKey.currentState?.openDrawer();
 
   void handleBgTapped() {
     Utils.unFocus();

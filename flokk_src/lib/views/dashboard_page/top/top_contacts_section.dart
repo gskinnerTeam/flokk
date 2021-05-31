@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TopContactsSection extends StatefulWidget {
-  const TopContactsSection({Key key}) : super(key: key);
+  const TopContactsSection({Key? key}) : super(key: key);
 
   @override
   _TopContactsSectionState createState() => _TopContactsSectionState();
@@ -89,13 +89,10 @@ class _ContactCardList extends StatelessWidget {
   final List<ContactData> contacts;
   final Widget placeholder;
 
-  const _ContactCardList(this.state, {Key key, this.contacts, this.placeholder}) : super(key: key);
+  const _ContactCardList(this.state, {Key? key, this.contacts = const<ContactData>[], required this.placeholder}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    /// Create list of item renderers
-    List<Widget> contactCards = contacts.map((c) => SmallContactCard(c)).toList();
-
     /// Layout content
     EdgeInsets padding = EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m);
     // Placeholder content-box

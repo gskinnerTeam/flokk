@@ -5,46 +5,52 @@ import 'package:flutter/material.dart';
 import 'pinned_stack.dart';
 
 class Pin {
-  final double startPx;
-  final double startPct;
-  final double endPx;
-  final double endPct;
-  final double sizePx;
-  final double centerPct;
+  final double? startPx;
+  final double? startPct;
+  final double? endPx;
+  final double? endPct;
+  final double? sizePx;
+  final double? centerPct;
 
-  Pin({this.startPx, this.startPct, this.endPx, this.endPct, this.sizePx, this.centerPct});
+  const Pin({this.startPx, this.startPct, this.endPx, this.endPct, this.sizePx, this.centerPct});
 }
 
 class Pinned extends StatelessWidget {
   final Pin hzPin;
   final Pin vtPin;
-  final Widget child;
+  final Widget? child;
 
-  const Pinned({Key key, this.hzPin, this.vtPin, this.child}) : super(key: key);
+  const Pinned({Key? key, required this.hzPin, required this.vtPin, this.child}) : super(key: key);
 
   _Span calculateSpanFromPin(Pin pin, double maxSize) {
     var s = _Span();
+
+    double start = pin.startPx ?? (pin.startPct ?? 0) * maxSize;
+    double end = pin.endPx ?? (pin.endPct ?? 0) * maxSize;
+    double size = pin.sizePx ?? 0;
+    double centerPct = pin.centerPct ?? .5;
+
     //Size is unknown, so we must be pinned on both sides
     if (pin.sizePx == null) {
-      s.start = pin.startPx ?? pin.startPct * maxSize;
-      s.end = maxSize - (pin.endPx ?? pin.endPct * maxSize);
+      s.start = start;
+      s.end = maxSize - end;
     }
     //We know the size, figure out which side we're pinned on, if any
     else {
       //Pinned to start
       if (pin.startPx != null || pin.startPct != null) {
-        s.start = pin.startPx ?? pin.startPct * maxSize;
-        s.end = s.start + pin.sizePx;
+        s.start = start;
+        s.end = s.start + size;
       }
       //Pinned to end
       else if (pin.endPx != null || pin.endPct != null) {
-        s.end = maxSize - (pin.endPx ?? pin.endPct * maxSize);
-        s.start = s.end - pin.sizePx;
+        s.end = maxSize - end;
+        s.start = s.end - size;
       }
       //Both sides are % pinned, use center - size/2 to position
       else {
-        s.start = (pin.centerPct * maxSize) - pin.sizePx * .5;
-        s.end = s.start + pin.sizePx;
+        s.start = (centerPct * maxSize) - size * .5;
+        s.end = s.start + size;
       }
     }
     return s;
@@ -53,7 +59,7 @@ class Pinned extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Check to see if we have been provided some StackConstraints by [ PinnedStack ]
-    StackConstraints constraints = context.dependOnInheritedWidgetOfExactType<StackConstraints>();
+    StackConstraints? constraints = context.dependOnInheritedWidgetOfExactType<StackConstraints>();
     if (constraints != null) {
       return _buildContent(constraints.constraints);
     }
@@ -81,12 +87,12 @@ class Pinned extends StatelessWidget {
 }
 
 class _Span {
-  double start;
-  double end;
+  double start = 0;
+  double end = 0;
 
   double get size => max(0, end - start);
 }
 
 extension PinnedExtensions on Widget {
-  Pinned pin({Pin hz, Pin vt}) => Pinned(hzPin: hz, vtPin: vt, child: this);
+  Pinned pin({required Pin hz, required Pin vt}) => Pinned(hzPin: hz, vtPin: vt, child: this);
 }

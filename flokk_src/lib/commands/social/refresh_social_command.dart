@@ -11,14 +11,14 @@ class RefreshSocialCommand extends AbstractCommand {
   /// Pass in list of contacts to update; can be used to pass in single contact (manual refresh) or else multiple (ie. all contacts on background poll)
   Future<void> execute(List<ContactData> contacts) async {
     //Ignore if contacts are empty or null
-    if (contacts?.isEmpty ?? true) {
+    if (contacts.isEmpty) {
       return;
     }
 
     List<String> githubHandles =
-        contacts.where((x) => !StringUtils.isEmpty(x.gitUsername))?.map((x) => x.gitUsername)?.toList() ?? [];
+        contacts.where((x) => !StringUtils.isEmpty(x.gitUsername)).map((x) => x.gitUsername).toList();
     List<String> twitterHandles =
-        contacts.where((x) => !StringUtils.isEmpty(x.twitterHandle))?.map((x) => x.twitterHandle)?.toList() ?? [];
+        contacts.where((x) => !StringUtils.isEmpty(x.twitterHandle)).map((x) => x.twitterHandle).toList();
 
     List<Future<void>> gitFutures = githubHandles.map((x) => RefreshGithubCommand(context).execute(x)).toList();
     await Future.wait(gitFutures);

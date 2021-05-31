@@ -26,7 +26,7 @@ class GithubRestService {
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
 
     List<GitEvent> events = [];
-    if (response?.success == true) {
+    if (response.success == true) {
       List<Map<String, dynamic>> data = List.from(jsonDecode(response.body));
       for (Map<String, dynamic> n in data) {
         events.add(GitEvent()..event = Event.fromJson(n));
@@ -42,7 +42,7 @@ class GithubRestService {
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
 
     List<GitRepo> repos = [];
-    if (response?.success == true) {
+    if (response.success == true) {
       List<Map<String, dynamic>> data = List.from(jsonDecode(response.body));
       for (Map<String, dynamic> n in data) {
         repos.add(GitRepo()
@@ -59,8 +59,8 @@ class GithubRestService {
     HttpResponse response = await HttpClient.get(url, headers: _getAuthHeader());
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
 
-    GitRepo repo;
-    if (response?.success == true) {
+    GitRepo? repo;
+    if (response.success == true) {
       repo = GitRepo()
         ..repository = Repository.fromJson(jsonDecode(response.body))
         ..lastUpdated = DateTime.now();

@@ -24,11 +24,11 @@ class MainMenuOffsetNotification extends Notification {
 }
 
 class MainSideMenu extends StatefulWidget {
-  final Function(PageType t) onPageSelected;
-  final Function() onAddNewPressed;
+  final void Function(PageType t)? onPageSelected;
+  final VoidCallback? onAddNewPressed;
   final bool skinnyMode;
 
-  const MainSideMenu({Key key, this.onPageSelected, this.onAddNewPressed, this.skinnyMode = false}) : super(key: key);
+  const MainSideMenu({Key? key, this.onPageSelected, this.onAddNewPressed, this.skinnyMode = false}) : super(key: key);
 
   @override
   _MainSideMenuState createState() => _MainSideMenuState();
@@ -37,7 +37,7 @@ class MainSideMenu extends StatefulWidget {
 class _MainSideMenuState extends State<MainSideMenu> {
 
   Map<PageType, Offset> _menuBtnOffsetsByType = {};
-  PageType _prevPage;
+  PageType? _prevPage;
 
   double get _headerHeight => 106;
 
@@ -45,7 +45,7 @@ class _MainSideMenuState extends State<MainSideMenu> {
 
   double get _btnHeight => 60;
 
-  double _indicatorY;
+  double _indicatorY = 0.0;
 
   @override
   void initState() {
@@ -62,7 +62,7 @@ class _MainSideMenuState extends State<MainSideMenu> {
 
   void _updateIndicatorState(PageType type) {
     if (_menuBtnOffsetsByType.containsKey(type)) {
-      Offset o = _menuBtnOffsetsByType[type];
+      Offset o = _menuBtnOffsetsByType[type] ?? Offset.zero;
       setState(() => _indicatorY = o.dy - _headerHeight + _btnHeight * .5 - _indicatorHeight * .5);
     }
   }
@@ -128,7 +128,7 @@ class _MainSideMenuState extends State<MainSideMenu> {
                             iconSize: 20,
                             isSelected: true,
                             dottedBorder: true,
-                            onPressed: () => widget.onAddNewPressed()),
+                            onPressed: widget.onAddNewPressed),
 
                         VSpace(Insets.l),
 
@@ -176,7 +176,7 @@ class _MainSideMenuState extends State<MainSideMenu> {
                     )).padding(all: Insets.l, bottom: Insets.m).constrained(maxWidth: 280),
 
                 /// Animated line that moves up and down to select the current page
-                _AnimatedMenuIndicator(_indicatorY ?? 0, height: _indicatorHeight)
+                _AnimatedMenuIndicator(_indicatorY, height: _indicatorHeight)
               ],
             ).flexible(),
           ],
@@ -209,6 +209,6 @@ class _AnimatedMenuIndicatorState extends State<_AnimatedMenuIndicator> {
         width: widget.width,
         height: widget.height,
         child: StyledContainer(theme.surface),
-        margin: EdgeInsets.only(top: widget.indicatorY ?? 0));
+        margin: EdgeInsets.only(top: widget.indicatorY));
   }
 }

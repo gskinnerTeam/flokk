@@ -25,10 +25,10 @@ import 'package:universal_platform/universal_platform.dart';
 const bool kForceWebLogin = bool.fromEnvironment('flokk.forceWebLogin', defaultValue: false);
 
 bool tryAndLoadDevSpike(BuildContext c) {
-  Widget spike;
+  Widget? spike;
 
   /// Load spike if we have one
-  if (spike != null) AppGlobals.nav.pushReplacement(PageRoutes.fade(() => spike));
+  if (spike != null) AppGlobals.nav?.pushReplacement(PageRoutes.fade(() => spike));
   return spike != null;
 }
 
@@ -82,8 +82,8 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   final GlobalKey<WelcomePageState> _welcomePageKey = GlobalKey();
-  CheckConnectionCommand _connectionChecker;
-  PollSocialCommand _pollSocialCommand;
+  late CheckConnectionCommand _connectionChecker;
+  late PollSocialCommand _pollSocialCommand;
   bool _settingsLoaded = false;
 
   @override
@@ -108,13 +108,13 @@ class _MainAppState extends State<MainApp> {
       // First, allow dev-spike to take precedence over normal startup flow
       if (tryAndLoadDevSpike(context)) return;
       // Use welcome-page to complete remaining sign-in flow
-      WelcomePageState welcomePage = _welcomePageKey.currentState;
+      WelcomePageState? welcomePage = _welcomePageKey.currentState;
       if (isSignedIn == true) {
         // Login into the main app
-        welcomePage.refreshDataAndLoadApp();
+        welcomePage?.refreshDataAndLoadApp();
       } else {
         // Show login panel so user can sign-in
-        welcomePage.showPanel(true);
+        welcomePage?.showPanel(true);
       }
     });
     super.initState();
@@ -159,6 +159,7 @@ class _MainAppState extends State<MainApp> {
 
         /// Wrap root navigator in various styling widgets
         builder: (_, navigator) {
+          if (navigator == null) return Container();
           // Wrap root page in a builder, so we can make initial responsive tweaks based on MediaQuery
           return Builder(builder: (c) {
             //Responsive: Reduce size of our gutter scale when we're below a certain size

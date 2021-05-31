@@ -6,7 +6,7 @@ typedef Widget HoverBuilder(BuildContext context, bool isHovering);
 class MouseHoverBuilder extends StatefulWidget {
   final bool isClickable;
 
-  MouseHoverBuilder({Key key, this.builder, this.isClickable = false}) : super(key: key);
+  MouseHoverBuilder({Key? key, required this.builder, this.isClickable = false}) : super(key: key);
 
   final HoverBuilder builder;
 

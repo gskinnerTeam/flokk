@@ -22,7 +22,7 @@ class _AnimatedTextSpikeState extends AnimatedState<AnimatedTextSpike> {
 }
 
 abstract class AnimatedState<T> extends State with SingleTickerProviderStateMixin {
-  AnimationController animation;
+  late AnimationController animation;
 
   AnimationController createAnim({double lowerBound = 0, double upperBound = 1, double seconds = .2}) {
     return AnimationController(
@@ -43,7 +43,7 @@ abstract class AnimatedState<T> extends State with SingleTickerProviderStateMixi
 
   @override
   void dispose() {
-    animation?.dispose();
+    animation.dispose();
     super.dispose();
   }
 
