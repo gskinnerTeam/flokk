@@ -121,9 +121,8 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
               all: context.read<ContactsModel>().allContacts,
               onCheckChanged: () => setState(() {}),
             )
-                //.opacity(checked.isEmpty ? 0 : 1, animate: true)
+                .opacity(checked.isEmpty ? 0 : 1, animate: true)
                 .scale(all: checked.isEmpty ? .98 : 1, animate: true)
-                .translate(offset: Offset(0, checked.isEmpty ? -4 : 0), animate: true)
                 .animate(.1.seconds, Curves.easeOut)
           ],
         );

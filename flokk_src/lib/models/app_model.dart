@@ -14,7 +14,7 @@ enum DashboardSocialSectionType { All, Git, Twitter }
 /// A mix of different values: Current theme, app version, settings, online status, selected sections etc.
 /// Some of the values are serialized in app.settings file
 class AppModel extends AbstractModel {
-  static const kCurrentVersion = "1.0.1";
+  static const kCurrentVersion = "1.1.0";
 
   static bool forceIgnoreGoogleApiCalls = false;
 

@@ -70,6 +70,7 @@ class MainScaffoldState extends State<MainScaffold> {
 
   void editSelectedContact(String section) => contactsPanel?.showEditView(section);
 
+  //TODO: This should be a command
   /// Attempt to change current page, this might not complete if user is currently editing
   Future<void> trySetCurrentPage(PageType t, [bool refresh = true]) async {
     if (t == appModel.currentMainPage) return;
