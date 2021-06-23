@@ -28,13 +28,13 @@ class IoFileWriter implements UniversalFile {
   @override
   Future<String> read() async {
     await getDataPath();
-    return await File("$fullPath").readAsString();
+    return await File(fullPath).readAsString();
   }
 
   @override
   Future write(String value, [bool append = false]) async {
     await getDataPath();
-    await File("$fullPath").writeAsString(
+    await File(fullPath).writeAsString(
       value,
       mode: append ? FileMode.append : FileMode.write,
     );

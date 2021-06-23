@@ -37,7 +37,9 @@ class TabbedListView extends StatelessWidget {
       this.list1Placeholder,
       this.list2Placeholder,
       this.index = 0,
-      this.onTabPressed, required this.list1Icon, required this.list2Icon})
+      this.onTabPressed,
+      required this.list1Icon,
+      required this.list2Icon})
       : super(key: key);
 
   @override
@@ -63,41 +65,35 @@ class TabbedListView extends StatelessWidget {
         /// Top Row of Btns
         Row(
           children: [
-            Container(
-              child: _TransparentTabBtn(
-                title: list1Title,
-                icon: list1Icon,
-                isSelected: firstSelected,
-                height: barHeight,
-                type: SocialActivityType.Git,
-                onPressed: () => onTabPressed?.call(0),
-              ),
+            _TransparentTabBtn(
+              title: list1Title,
+              icon: list1Icon,
+              isSelected: firstSelected,
+              height: barHeight,
+              type: SocialActivityType.Git,
+              onPressed: () => onTabPressed?.call(0),
             ).expanded(),
-            Container(
-              child: _TransparentTabBtn(
-                title: list2Title,
-                icon: list2Icon,
-                isSelected: !firstSelected,
-                height: barHeight,
-                type: SocialActivityType.Twitter,
-                onPressed: () => onTabPressed?.call(1),
-              ),
+            _TransparentTabBtn(
+              title: list2Title,
+              icon: list2Icon,
+              isSelected: !firstSelected,
+              height: barHeight,
+              type: SocialActivityType.Twitter,
+              onPressed: () => onTabPressed?.call(1),
             ).expanded(),
           ],
         ).height(barHeight),
 
         /// Content
         Container(
-          child: Container(
-            margin: EdgeInsets.all(Insets.l).copyWith(right: Insets.m, top: Insets.m * 1.5),
-            child: PlaceholderContentSwitcher(
-              hasContent: () => firstSelected ? list1.isNotEmpty : list2.isNotEmpty,
-              placeholderPadding: EdgeInsets.only(right: Insets.m),
-              placeholder: (firstSelected ? list1Placeholder : list2Placeholder) ?? Container(),
-              content: StyledListView(
-                itemCount: firstSelected ? list1.length : list2.length,
-                itemBuilder: (_, i) => firstSelected ? list1[i] : list2[i],
-              ),
+          margin: const EdgeInsets.all(Insets.l).copyWith(right: Insets.m, top: Insets.m * 1.5),
+          child: PlaceholderContentSwitcher(
+            hasContent: () => firstSelected ? list1.isNotEmpty : list2.isNotEmpty,
+            placeholderPadding: const EdgeInsets.only(right: Insets.m),
+            placeholder: (firstSelected ? list1Placeholder : list2Placeholder) ?? Container(),
+            content: StyledListView(
+              itemCount: firstSelected ? list1.length : list2.length,
+              itemBuilder: (_, i) => firstSelected ? list1[i] : list2[i],
             ),
           ),
         ).positioned(top: barHeight, bottom: 0, left: 0, right: 0),
@@ -114,7 +110,14 @@ class _TransparentTabBtn extends StatelessWidget {
   final String title;
   final AssetImage icon;
 
-  const _TransparentTabBtn({Key? key, this.isSelected = false, required this.type, this.onPressed, this.height = 0, this.title = "", required this.icon})
+  const _TransparentTabBtn(
+      {Key? key,
+      this.isSelected = false,
+      required this.type,
+      this.onPressed,
+      this.height = 0,
+      this.title = "",
+      required this.icon})
       : super(key: key);
 
   @override
@@ -130,9 +133,9 @@ class _TransparentTabBtn extends StatelessWidget {
       onPressed: isSelected ? null : onPressed,
       child: Row(
         children: [
-          HSpace(Insets.m * 1.5),
+          const HSpace(Insets.m * 1.5),
           StyledImageIcon(icon, color: color, size: 26),
-          HSpace(Insets.sm),
+          const HSpace(Insets.sm),
           OneLineText(title, style: titleStyle).flexible(),
         ],
       ),
@@ -144,7 +147,7 @@ class TabBorder extends ShapeBorder {
   final int selectedTab;
   final double barHeight;
 
-  TabBorder({this.selectedTab = -1, this.barHeight = 0});
+  const TabBorder({this.selectedTab = -1, this.barHeight = 0});
 
   @override
   EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
@@ -154,7 +157,7 @@ class TabBorder extends ShapeBorder {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    var radius = Radius.circular(8);
+    var radius = const Radius.circular(8);
 
     void drawBody(Path p) {
       Rect tabRect = Rect.fromLTWH(rect.left, rect.top + barHeight, rect.width, rect.height - barHeight);

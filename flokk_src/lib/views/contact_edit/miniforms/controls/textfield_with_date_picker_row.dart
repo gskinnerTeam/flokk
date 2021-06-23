@@ -10,7 +10,6 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class TextfieldWithDatePickerRow extends StatefulWidget {
   final BaseMiniForm miniform;
   final bool isSelected;
@@ -32,7 +31,6 @@ class TextfieldWithDatePickerRow extends StatefulWidget {
 }
 
 class _TextfieldWithDatePickerRowState extends State<TextfieldWithDatePickerRow> {
-
   late TextEditingController textController;
 
   void handleDatePicked(BuildContext context) async {
@@ -80,7 +78,7 @@ class _TextfieldWithDatePickerRowState extends State<TextfieldWithDatePickerRow>
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.only(right: 80),
+          margin: const EdgeInsets.only(right: 80),
           child: widget.miniform.buildTextInput(
             context,
             widget.hint,
@@ -100,5 +98,4 @@ class _TextfieldWithDatePickerRowState extends State<TextfieldWithDatePickerRow>
       ],
     );
   }
-
 }

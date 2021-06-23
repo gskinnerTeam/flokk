@@ -57,19 +57,19 @@ class AppTheme {
           isDark: false,
           txt: Colors.black,
           accentTxt: Colors.white,
-          bg1: Color(0xfff1f7f0),
-          bg2: Color(0xffc1dcbc),
+          bg1: const Color(0xfff1f7f0),
+          bg2: const Color(0xffc1dcbc),
           surface: Colors.white,
-          accent1: Color(0xff00a086),
-          accent1Dark: Color(0xff00856f),
-          accent1Darker: Color(0xff006b5a),
-          accent2: Color(0xfff09433),
-          accent3: Color(0xff5bc91a),
-          greyWeak: Color(0xff909f9c),
-          grey: Color(0xff515d5a),
-          greyStrong: Color(0xff151918),
+          accent1: const Color(0xff00a086),
+          accent1Dark: const Color(0xff00856f),
+          accent1Darker: const Color(0xff006b5a),
+          accent2: const Color(0xfff09433),
+          accent3: const Color(0xff5bc91a),
+          greyWeak: const Color(0xff909f9c),
+          grey: const Color(0xff515d5a),
+          greyStrong: const Color(0xff151918),
           error: Colors.red.shade900,
-          focus: Color(0xFF0ee2b1),
+          focus: const Color(0xFF0ee2b1),
         );
 
       case ThemeType.FlockGreen_Dark:
@@ -77,19 +77,19 @@ class AppTheme {
           isDark: true,
           txt: Colors.white,
           accentTxt: Colors.black,
-          bg1: Color(0xff121212),
-          bg2: Color(0xff2c2c2c),
-          surface: Color(0xff252525),
-          accent1: Color(0xff00a086),
-          accent1Dark: Color(0xff00caa5),
-          accent1Darker: Color(0xff00caa5),
-          accent2: Color(0xfff19e46),
-          accent3: Color(0xff5BC91A),
-          greyWeak: Color(0xffa8b3b0),
-          grey: Color(0xffced4d3),
-          greyStrong: Color(0xffffffff),
-          error: Color(0xffe55642),
-          focus: Color(0xff0ee2b1),
+          bg1: const Color(0xff121212),
+          bg2: const Color(0xff2c2c2c),
+          surface: const Color(0xff252525),
+          accent1: const Color(0xff00a086),
+          accent1Dark: const Color(0xff00caa5),
+          accent1Darker: const Color(0xff00caa5),
+          accent2: const Color(0xfff19e46),
+          accent3: const Color(0xff5BC91A),
+          greyWeak: const Color(0xffa8b3b0),
+          grey: const Color(0xffced4d3),
+          greyStrong: const Color(0xffffffff),
+          error: const Color(0xffe55642),
+          focus: const Color(0xff0ee2b1),
         );
       /*
            case ThemeType.FlockGreen_Dark:
@@ -130,17 +130,20 @@ class AppTheme {
           error: error),
     );
     return t.copyWith(
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           border: ThinUnderlineBorder(),
         ),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        // ignore: deprecated_member_use
         textSelectionColor: greyWeak,
+        // ignore: deprecated_member_use
         textSelectionHandleColor: Colors.transparent,
         buttonColor: accent1,
+        // ignore: deprecated_member_use
         cursorColor: accent1,
         highlightColor: accent1,
         toggleableActiveColor: accent1);
   }
 
-  Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark? -1 : 1));
+  Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
 }

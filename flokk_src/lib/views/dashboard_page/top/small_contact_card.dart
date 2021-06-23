@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SmallContactCard extends StatelessWidget {
-
   static const double cardWidth = 162;
 
   final ContactData contact;
@@ -29,12 +28,12 @@ class SmallContactCard extends StatelessWidget {
     return StyledCard(
       onPressed: () => _handleCardPressed(context),
       child: Container(
-        margin: EdgeInsets.all(Insets.m),
+        margin: const EdgeInsets.all(Insets.m),
         width: cardWidth - Insets.m * 2,
         child: Column(
           children: [
             StyledUserAvatar(contact: contact, size: 60),
-            VSpace(Insets.m),
+            const VSpace(Insets.m),
             Text(
               contact.nameFull,
               maxLines: 2,
@@ -42,7 +41,7 @@ class SmallContactCard extends StatelessWidget {
               style: TextStyles.H2.textHeight(1.3).textColor(txtColor).regular,
               textAlign: TextAlign.center,
             ).center().height(30),
-            Spacer(),
+            const Spacer(),
             ClickableSocialBadges(contact, showTimeSince: true),
           ],
         ),

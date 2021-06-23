@@ -41,7 +41,7 @@ class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with Sing
   }
 
   void _tick() {
-    _gooeyEdge.tick(_animationController.lastElapsedDuration ?? Duration(milliseconds: 0));
+    _gooeyEdge.tick(_animationController.lastElapsedDuration ?? const Duration(milliseconds: 0));
     _cloudXOffset += _animationController.velocity * 0.08;
     while (_cloudXOffset > 800.0) {
       _cloudXOffset -= 800.0;
@@ -87,7 +87,7 @@ class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with Sing
             textAlign: TextAlign.center,
           ) //Bottom positioned, fades in and out
               .alignment(Alignment.bottomCenter)
-              .translate(offset: Offset(0, 46)) // Offset text below the bottom edge of the images
+              .translate(offset: const Offset(0, 46)) // Offset text below the bottom edge of the images
               .opacity(widget.showText ? 1 : 0, animate: true)
               .animate(Durations.slow, Curves.easeOut)
               .positioned(left: 0, top: 0, right: 0, bottom: 0)
@@ -95,10 +95,10 @@ class _AnimatedBirdSplashState extends State<AnimatedBirdSplashWidget> with Sing
 
         /// Flock Logo
         if (widget.showLogo)
-          FlokkLogo(56, Color(0xff116d5a))
+          const FlokkLogo(56, Color(0xff116d5a))
               .center()
               .constrained(width: 156, height: 56)
-              .alignment(Alignment(-0.84, -0.84)),
+              .alignment(const Alignment(-0.84, -0.84)),
       ],
     );
   }

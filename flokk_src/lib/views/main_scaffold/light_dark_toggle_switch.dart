@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LightDarkToggleSwitch extends StatefulWidget {
+  const LightDarkToggleSwitch({Key? key}) : super(key: key);
+
   @override
   _LightDarkToggleSwitchState createState() => _LightDarkToggleSwitchState();
 }
@@ -35,7 +37,7 @@ class _LightDarkToggleSwitchState extends State<LightDarkToggleSwitch> {
     return Row(
       children: [
         StyledImageIcon(StyledIcons.lightMode, size: iconSize, color: Colors.white),
-        HSpace(Insets.sm),
+        const HSpace(Insets.sm),
         Stack(children: [
           StyledContainer(
             theme.accent1Darker,
@@ -49,15 +51,14 @@ class _LightDarkToggleSwitchState extends State<LightDarkToggleSwitch> {
             builder: (_, value, __) => StyledContainer(
               theme.surface,
               duration: Durations.medium,
-              margin: EdgeInsets.only(
-                  top: 2, left: 2 + (innerWidth - 20 - 4) * (value as double? ?? 1), right: 2),
+              margin: EdgeInsets.only(top: 2, left: 2 + (innerWidth - 20 - 4) * (value as double? ?? 1), right: 2),
               borderRadius: BorderRadius.circular(99),
               width: 20,
               height: 20,
             ),
           ),
         ]),
-        HSpace(Insets.sm),
+        const HSpace(Insets.sm),
         StyledImageIcon(StyledIcons.darkMode, size: iconSize - 2, color: ColorUtils.shiftHsl(theme.accent1, -.1)),
       ],
     ).clickable(() => _handleTogglePressed(context), opaque: true);
@@ -69,7 +70,7 @@ class _AnimatedMenuIndicator extends StatefulWidget {
   final double width;
   final double height;
 
-  _AnimatedMenuIndicator(this.indicatorY, {this.width = 6, this.height = 24});
+  const _AnimatedMenuIndicator(this.indicatorY, {this.width = 6, this.height = 24});
 
   @override
   _AnimatedMenuIndicatorState createState() => _AnimatedMenuIndicatorState();

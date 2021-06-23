@@ -61,4 +61,3 @@ extension AnimatedPanelExtensions on Widget {
         closedX: closePos.dx, closedY: closePos.dy, child: this, isClosed: isClosed, duration: duration, curve: curve);
   }
 }
-

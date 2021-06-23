@@ -28,12 +28,12 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
     TextStyle headerTxtStyle = TextStyles.CalloutFocus.bold.size(24).textColor(Colors.white);
 
     return state.isLoading
-        ? StyledProgressSpinner()
+        ? const StyledProgressSpinner()
         : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text("Authorization", style: headerTxtStyle, textAlign: TextAlign.center),
-              VSpace(Insets.l * 2),
+              const VSpace(Insets.l * 2),
 
               /// ////////////////////////////////////////////////
               /// STEP 1
@@ -47,11 +47,11 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
               /// DEVICE CODE BOX
               StyledOutlinedBox(
                 child: state.isLoading
-                    ? StyledProgressSpinner()
+                    ? const StyledProgressSpinner()
                     : Stack(
                         fit: StackFit.expand,
                         children: [
-                          SelectableText("${state.authCode}", style: bodyTxtStyle.size(16)).center(),
+                          SelectableText(state.authCode, style: bodyTxtStyle.size(16)).center(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -64,7 +64,7 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
                         ],
                       ),
               ).padding(vertical: Insets.l),
-              VSpace(Insets.m),
+              const VSpace(Insets.m),
 
               /// ////////////////////////////////////////////////
               /// STEP 2
@@ -78,11 +78,11 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
               /// DEVICE URL BOX
               StyledOutlinedBox(
                 child: state.isLoading
-                    ? StyledProgressSpinner()
+                    ? const StyledProgressSpinner()
                     : Stack(
                         fit: StackFit.expand,
                         children: [
-                          SelectableText("${state.authUrl}", style: bodyTxtStyle.size(16)).center(),
+                          SelectableText(state.authUrl, style: bodyTxtStyle.size(16)).center(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -93,7 +93,7 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
                         ],
                       ),
               ).padding(vertical: Insets.l),
-              VSpace(Insets.m),
+              const VSpace(Insets.m),
 
               /// ////////////////////////////////////////////////
               /// STEP 3
@@ -103,13 +103,13 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
                 style: bodyTxtStyle,
                 textAlign: TextAlign.center,
               ),
-              VSpace(Insets.m),
+              const VSpace(Insets.m),
               PrimaryTextBtn(
                 "CONTINUE",
                 bigMode: true,
                 onPressed: state.handleCompletePressed,
               ).padding(top: Insets.m).width(215),
-              VSpace(Insets.l),
+              const VSpace(Insets.l),
               if (state.authCodeError || state.httpError)
                 Text(
                   "Error: ${getCurrentErrorCode(state)}",

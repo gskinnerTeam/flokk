@@ -57,7 +57,7 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
             /// TOP ICON ROW
             Row(children: <Widget>[
               ColorShiftIconBtn(StyledIcons.closeLarge, size: 16, color: theme.grey, onPressed: widget.onClosePressed),
-              Spacer(),
+              const Spacer(),
               ColorShiftIconBtn(StyledIcons.edit,
                   size: 22, color: theme.accent1Dark, onPressed: () => widget.onEditPressed("")),
             ]).padding(horizontal: Insets.l),
@@ -71,25 +71,22 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
                 duration: (value == 0 ? 0 : .35).seconds,
                 child: StyledScrollView(
                   child: Column(
-
                     children: <Widget>[
-                      VSpace(2),
-                      /// HEADER CARD
-                      ContactInfoHeaderCard(),
-                      VSpace(Insets.l),
+                      const VSpace(2),
 
+                      /// HEADER CARD
+                      const ContactInfoHeaderCard(),
+                      const VSpace(Insets.l),
 
                       /// INFO & SOCIAL
                       _DetailsAndSocialTabView(
                         onEditPressed: widget.onEditPressed,
-                        ),
+                      ),
                     ],
-                    ).padding(horizontal: Insets.l),
-                  ),
+                  ).padding(horizontal: Insets.l),
                 ),
-              ).flexible(),
-
-
+              ),
+            ).flexible(),
           ],
         );
       },
@@ -136,12 +133,12 @@ class _DetailsAndSocialTabViewState extends State<_DetailsAndSocialTabView> with
       children: <Widget>[
         StyledTabBar(
           index: index,
-          sections: ["DETAILS", "SOCIAL"],
+          sections: const ["DETAILS", "SOCIAL"],
           onTabPressed: _handleTabPressed,
         ),
         IndexedStack(
           index: index,
-          children: <Widget>[
+          children: const [
             ContactInfoDetailsCard(),
             ContactInfoSocialCard(),
           ],

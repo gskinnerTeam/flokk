@@ -18,7 +18,12 @@ class ContactsPage extends StatefulWidget {
   final List<ContactData> checkedContacts;
   final ContactData selectedContact;
 
-  const ContactsPage({Key? key, required this.searchEngine, this.checkedContacts = const<ContactData>[], required this.selectedContact}) : super(key: key);
+  const ContactsPage(
+      {Key? key,
+      required this.searchEngine,
+      this.checkedContacts = const <ContactData>[],
+      required this.selectedContact})
+      : super(key: key);
 
   @override
   ContactsPageState createState() => ContactsPageState();
@@ -32,7 +37,7 @@ class ContactsPageState extends State<ContactsPage> {
 }
 
 class _ContactsPageView extends WidgetView<ContactsPage, ContactsPageState> {
-  _ContactsPageView(ContactsPageState state) : super(state);
+  const _ContactsPageView(ContactsPageState state) : super(state);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ class _ContactsPageView extends WidgetView<ContactsPage, ContactsPageState> {
       alignment: Alignment.center,
       children: <Widget>[
         Column(children: <Widget>[
-          VSpace(Insets.sm),
+          const VSpace(Insets.sm),
 
           /// Bind to SearchEngine
           ListenableBuilder(
@@ -55,7 +60,7 @@ class _ContactsPageView extends WidgetView<ContactsPage, ContactsPageState> {
                 hasContent: () => sorted.isNotEmpty,
                 placeholder: ContactListPlaceholder(isSearching: widget.searchEngine.hasQuery),
                 showOutline: false,
-                placeholderPadding: EdgeInsets.only(top: Insets.m * 1.5, right: Insets.m, bottom: Insets.m),
+                placeholderPadding: const EdgeInsets.only(top: Insets.m * 1.5, right: Insets.m, bottom: Insets.m),
 
                 /// ContactList
                 content: ContactsListWithHeaders(
@@ -70,7 +75,7 @@ class _ContactsPageView extends WidgetView<ContactsPage, ContactsPageState> {
               );
             },
           ).expanded(),
-          VSpace(Insets.m),
+          const VSpace(Insets.m),
         ]),
       ],
     );

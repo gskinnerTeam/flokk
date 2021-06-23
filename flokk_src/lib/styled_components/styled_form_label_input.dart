@@ -112,7 +112,7 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
     double formWidth = 200;
     double inputWidth = formWidth;
     //TODO SB@CE - This could be  more readable
-    final labelWidth = (String label) {
+    labelWidth(String label) {
       return Insets.m +
           StringUtils.measure(label.toUpperCase(), TextStyles.Footnote.letterSpace(0)).width +
           Insets.sm +
@@ -120,7 +120,8 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
           16 +
           Insets.sm +
           Insets.sm;
-    };
+    }
+
     //TODO SB@CE - Not a big fan of ommitting type here, reduces scanability
     for (final label in widget.labels) {
       //TODO SB@CE - This should be called something like measureLabel, or calculateLabelWidth
@@ -128,7 +129,7 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
     }
 
     return Container(
-      margin: EdgeInsets.only(bottom: Insets.m),
+      margin: const EdgeInsets.only(bottom: Insets.m),
       child: Stack(
         children: [
           StyledHorizontalScrollView(
@@ -163,7 +164,7 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
           ),
           //TODO SB@CE - This should respect focus color like other form underlines.
           Container(
-            margin: EdgeInsets.only(top: 38),
+            margin: const EdgeInsets.only(top: 38),
             height: _focused ? 1.8 : 1.2,
             color: _focused ? (theme.isDark ? theme.accent2 : theme.accent1Dark) : theme.greyWeak.withOpacity(.35),
           )

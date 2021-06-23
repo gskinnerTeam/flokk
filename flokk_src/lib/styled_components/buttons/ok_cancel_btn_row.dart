@@ -11,8 +11,7 @@ class OkCancelBtnRow extends StatelessWidget {
   final String? okLabel;
   final String? cancelLabel;
 
-  const OkCancelBtnRow(
-      {Key? key, this.onOkPressed, this.onCancelPressed, this.okLabel, this.cancelLabel})
+  const OkCancelBtnRow({Key? key, this.onOkPressed, this.onCancelPressed, this.okLabel, this.cancelLabel})
       : super(key: key);
 
   @override
@@ -21,7 +20,7 @@ class OkCancelBtnRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         if (onOkPressed != null) PrimaryTextBtn(okLabel ?? S.BTN_OK.toUpperCase(), onPressed: onOkPressed),
-        HSpace(Insets.m),
+        const HSpace(Insets.m),
         if (onCancelPressed != null)
           SecondaryTextBtn(cancelLabel ?? S.BTN_CANCEL.toUpperCase(), onPressed: onCancelPressed),
       ],

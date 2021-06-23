@@ -17,7 +17,7 @@ class DesignGridOverlay extends StatefulWidget {
   final List<GridLayout> grids;
   final bool isEnabled;
 
-  DesignGridOverlay(
+  const DesignGridOverlay(
       {Key? key,
       required this.child,
       this.grids = const <GridLayout>[],
@@ -81,7 +81,7 @@ class _DesignGridView extends StatelessWidget {
       if (state.gridAlpha > 0)
         IgnorePointer(
           child: Padding(
-            padding: grid.gutters ?? EdgeInsets.zero,
+            padding: grid.gutters,
             child: Row(children: content),
           ),
         ),
@@ -90,10 +90,10 @@ class _DesignGridView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text("   ${context.widthPx} x ${context.heightPx}   ",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
             Text(
                 "   ${(context.widthInches).toStringAsPrecision(3)}'' x ${(context.heightInches).toStringAsPrecision(3)}''   ",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
           ],
         ).padding(all: 4),
       )

@@ -8,7 +8,7 @@ import 'package:flokk/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-typedef IndexedWidgetBuilder(BuildContext context, int index);
+typedef IndexedWidgetBuilder = Function(BuildContext context, int index);
 
 class StyledScrollPhysics extends AlwaysScrollableScrollPhysics {}
 
@@ -95,7 +95,8 @@ class StyledListViewWithTitle extends StatelessWidget {
   final AssetImage? icon;
   final List<Widget> listItems;
 
-  const StyledListViewWithTitle({Key? key, this.bgColor, this.title = "", this.listItems = const <Widget>[], this.icon}) : super(key: key);
+  const StyledListViewWithTitle({Key? key, this.bgColor, this.title = "", this.listItems = const <Widget>[], this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,12 +110,12 @@ class StyledListViewWithTitle extends StatelessWidget {
             children: [
               if (icon != null) ...{
                 StyledImageIcon(icon!, color: theme.accent1Darker),
-                HSpace(Insets.sm),
+                const HSpace(Insets.sm),
               },
               Text(title, style: TextStyles.T2.textColor(theme.accent1Darker)),
             ],
           ),
-          VSpace(Insets.sm),
+          const VSpace(Insets.sm),
           StyledListView(itemCount: listItems.length, itemBuilder: (_, i) => listItems[i]).flexible()
         ],
       ).padding(left: Insets.l * .75, right: Insets.m, vertical: Insets.m),

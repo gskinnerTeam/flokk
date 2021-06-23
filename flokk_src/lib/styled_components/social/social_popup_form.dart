@@ -71,7 +71,7 @@ class _SocialPopupFormState extends State<SocialPopupForm> {
                   onChanged: _handleGitChanged,
                   autoFocus: widget.socialActivityType == SocialActivityType.Git,
                 ),
-                VSpace(Insets.sm),
+                const VSpace(Insets.sm),
 
                 /// TWITTER ICON + TEXT
                 _SocialTextInput(
@@ -81,13 +81,13 @@ class _SocialPopupFormState extends State<SocialPopupForm> {
                   onChanged: _handleTwitterChanged,
                   autoFocus: widget.socialActivityType == SocialActivityType.Twitter,
                 ),
-                VSpace(Insets.l),
+                const VSpace(Insets.l),
 
                 /// SUBMIT BUTTONS
                 Row(
                   children: [
                     PrimaryTextBtn("SAVE", onPressed: () => _handleBtnPressed(true)),
-                    HSpace(Insets.m),
+                    const HSpace(Insets.m),
                     SecondaryTextBtn("CANCEL", onPressed: () => _handleBtnPressed(false)),
                   ],
                 ),
@@ -108,7 +108,12 @@ class _SocialTextInput extends StatelessWidget {
   final void Function(String) onChanged;
 
   const _SocialTextInput(
-      {Key? key, this.hint = "", required this.onChanged, this.initial = "", required this.icon, this.autoFocus = false})
+      {Key? key,
+      this.hint = "",
+      required this.onChanged,
+      this.initial = "",
+      required this.icon,
+      this.autoFocus = false})
       : super(key: key);
 
   @override
@@ -121,7 +126,7 @@ class _SocialTextInput extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         StyledImageIcon(icon, color: ColorUtils.shiftHsl(theme.accent1, theme.isDark ? .2 : -.2), size: 30),
-        HSpace(Insets.m),
+        const HSpace(Insets.m),
         Stack(
           children: <Widget>[
             /// Prefix text, non-interactive
@@ -139,7 +144,11 @@ class _SocialTextInput extends StatelessWidget {
   }
 
   buildTextInput(BuildContext context,
-      {String hint = "", String initial = "", bool autoFocus = false, void Function(String)? onChanged, EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding}) {
+      {String hint = "",
+      String initial = "",
+      bool autoFocus = false,
+      void Function(String)? onChanged,
+      EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding}) {
     return StyledFormTextInput(
         contentPadding: padding,
         hintText: hint,

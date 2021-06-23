@@ -21,7 +21,7 @@ class MainMenuBtn extends StatefulWidget {
   final PageType pageType;
   final bool dottedBorder;
 
-  MainMenuBtn(this.icon, this.label,
+  const MainMenuBtn(this.icon, this.label,
       {Key? key,
       this.onPressed,
       this.isSelected = false,
@@ -29,7 +29,8 @@ class MainMenuBtn extends StatefulWidget {
       this.compact = false,
       this.transparent = true,
       this.height = 60,
-      this.pageType = PageType.None, this.dottedBorder = false})
+      this.pageType = PageType.None,
+      this.dottedBorder = false})
       : assert((icon is AssetImage) || (icon is IconData)),
         super(key: key);
 
@@ -53,26 +54,27 @@ class MainMenuBtnState extends State<MainMenuBtn> {
     Widget btnContents = Row(
       mainAxisAlignment: widget.compact ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: <Widget>[
-        if (!widget.compact) HSpace(Insets.l),
+        if (!widget.compact) const HSpace(Insets.l),
         Padding(
-          padding: EdgeInsets.all(2.0),
+          padding: const EdgeInsets.all(2.0),
           child: StyledImageIcon(widget.icon, size: widget.iconSize - 4.0, color: Colors.white),
         ),
-        if (!widget.compact)... {
-          HSpace(Insets.l * .5),
+        if (!widget.compact) ...{
+          const HSpace(Insets.l * .5),
           OneLineText(widget.label.toUpperCase(), style: btnStyle).flexible()
         }
       ],
     ).height(widget.height).opacity(widget.isSelected ? 1 : .8, animate: true).animate(.3.seconds, Curves.easeOut);
 
-
     //Wrap btn in a border... maybe
-    btnContents = widget.dottedBorder? DottedBorder(
-        dashPattern: [3, 5],
-        color: Colors.white.withOpacity(.7),
-        borderType: widget.compact? BorderType.Circle : BorderType.RRect,
-        radius: Corners.s8Radius,
-        child: Center(child: btnContents)) : btnContents;
+    btnContents = widget.dottedBorder
+        ? DottedBorder(
+            dashPattern: const [3, 5],
+            color: Colors.white.withOpacity(.7),
+            borderType: widget.compact ? BorderType.Circle : BorderType.RRect,
+            radius: Corners.s8Radius,
+            child: Center(child: btnContents))
+        : btnContents;
 
     /// Wrap contents in a btn
     return RawMaterialButton(
@@ -84,9 +86,8 @@ class MainMenuBtnState extends State<MainMenuBtn> {
         highlightElevation: 0,
         elevation: 0,
         padding: EdgeInsets.zero,
-        shape: widget.compact ? CircleBorder() : RoundedRectangleBorder(borderRadius: Corners.s8Border),
+        shape: widget.compact ? const CircleBorder() : const RoundedRectangleBorder(borderRadius: Corners.s8Border),
         onPressed: widget.onPressed,
         child: btnContents);
-
   }
 }

@@ -71,8 +71,7 @@ class ContactPanelState extends State<ContactPanel> {
 
           /// When contact has been set to null, we want to use the prevContact so we get a clean transition out
           /// Bit of a hack, but not sure how else to maintain state as we slide out.
-          if (contact == ContactData())
-            contact = _prevContact ?? ContactData();
+          if (contact == ContactData()) contact = _prevContact ?? ContactData();
           if (contact != ContactData()) _prevContact = contact;
 
           /// Anytime we're working on a new contact, we want to be in edit mode

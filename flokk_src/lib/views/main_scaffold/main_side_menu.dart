@@ -35,8 +35,7 @@ class MainSideMenu extends StatefulWidget {
 }
 
 class _MainSideMenuState extends State<MainSideMenu> {
-
-  Map<PageType, Offset> _menuBtnOffsetsByType = {};
+  final Map<PageType, Offset> _menuBtnOffsetsByType = {};
   PageType? _prevPage;
 
   double get _headerHeight => 106;
@@ -71,116 +70,114 @@ class _MainSideMenuState extends State<MainSideMenu> {
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
     String versionNum = context.select<AppModel, String>((m) => m.version);
+
     /// Bind to AppModel when currentPage changes
     var currentPage = context.select<AppModel, PageType>((value) => value.currentMainPage);
     if (currentPage != _prevPage) {
       _updateIndicatorState(currentPage);
     }
     _prevPage = currentPage;
-    Color bgColor = theme.isDark? ColorUtils.blend(theme.bg1, theme.accent1, .08) : theme.accent1;
+    Color bgColor = theme.isDark ? ColorUtils.blend(theme.bg1, theme.accent1, .08) : theme.accent1;
     return FocusTraversalGroup(
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            /// ////////////////////////////////////////////////////////
-            /// HEADER
-            Stack(
-              children: <Widget>[
-                // Background layer, scaled a bit on the Y axis so it under-hangs the menu below
-                // This opaque background is only needed when the menu is in the slide-out drawer state
-                StyledContainer(theme.bg1).transform(transform: Matrix4.diagonal3Values(1.0, 1.2, 1.0)),
+      child: Column(
+        children: <Widget>[
+          /// ////////////////////////////////////////////////////////
+          /// HEADER
+          Stack(
+            children: <Widget>[
+              // Background layer, scaled a bit on the Y axis so it under-hangs the menu below
+              // This opaque background is only needed when the menu is in the slide-out drawer state
+              StyledContainer(theme.bg1).transform(transform: Matrix4.diagonal3Values(1.0, 1.2, 1.0)),
 
-                /// ////////////////////////////////////////////////
-                /// Main Flock Logo
-                FlokkSidebarLogo(widget.skinnyMode).center(),
-                //Text("APP NAME", style: TextStyles.T1).textColor(theme.accent1Dark).center(),
-              ],
-            ).height(_headerHeight),
+              /// ////////////////////////////////////////////////
+              /// Main Flock Logo
+              FlokkSidebarLogo(widget.skinnyMode).center(),
+              //Text("APP NAME", style: TextStyles.T1).textColor(theme.accent1Dark).center(),
+            ],
+          ).height(_headerHeight),
 
-            /// ////////////////////////////////////////////////////////
-            /// MENU
-            Stack(
-              children: <Widget>[
-                /// Menu-Background
-                StyledContainer(bgColor, borderRadius: BorderRadius.only(topRight: Corners.s10Radius)),
+          /// ////////////////////////////////////////////////////////
+          /// MENU
+          Stack(
+            children: <Widget>[
+              /// Menu-Background
+              StyledContainer(bgColor, borderRadius: BorderRadius.only(topRight: Corners.s10Radius)),
 
-                /// Version
-                Text("v$versionNum", style: TextStyles.Caption.textColor(Colors.white)).positioned(left: 4, bottom: 4),
+              /// Version
+              Text("v$versionNum", style: TextStyles.Caption.textColor(Colors.white)).positioned(left: 4, bottom: 4),
 
-                /// ////////////////////////////////////////////////////////
-                /// Buttons
-                NotificationListener<MainMenuOffsetNotification>(
-                    // Listen for [MainMenuOffsetNotification], dispatched from each [MainMenuBtn] that is assigned a pageType.
-                    // We use these to position the animated indicator in [_updateIndicatorState]
-                    onNotification: (n) {
-                      _menuBtnOffsetsByType[n.pageType] = n.offset;
-                      return true; // Return true so the notification stops here
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        VSpace(Insets.l),
+              /// ////////////////////////////////////////////////////////
+              /// Buttons
+              NotificationListener<MainMenuOffsetNotification>(
+                  // Listen for [MainMenuOffsetNotification], dispatched from each [MainMenuBtn] that is assigned a pageType.
+                  // We use these to position the animated indicator in [_updateIndicatorState]
+                  onNotification: (n) {
+                    _menuBtnOffsetsByType[n.pageType] = n.offset;
+                    return true; // Return true so the notification stops here
+                  },
+                  child: Column(
+                    children: <Widget>[
+                      const VSpace(Insets.l),
 
-                        /// New Contact Btn
-                        MainMenuBtn(StyledIcons.add, "Create Contact",
-                            compact: widget.skinnyMode,
-                            height: _btnHeight,
-                            transparent: false,
-                            iconSize: 20,
-                            isSelected: true,
-                            dottedBorder: true,
-                            onPressed: widget.onAddNewPressed),
-
-                        VSpace(Insets.l),
-
-                        /// Dashboard Btn
-                        MainMenuBtn(
-                          StyledIcons.dashboard,
-                          "DASHBOARD",
+                      /// New Contact Btn
+                      MainMenuBtn(StyledIcons.add, "Create Contact",
                           compact: widget.skinnyMode,
-                          pageType: PageType.Dashboard,
                           height: _btnHeight,
-                          isSelected: currentPage == PageType.Dashboard,
-                          onPressed: () => _handlePageSelected(PageType.Dashboard),
-                        ),
+                          transparent: false,
+                          iconSize: 20,
+                          isSelected: true,
+                          dottedBorder: true,
+                          onPressed: widget.onAddNewPressed),
 
-                        /// Contacts Out Btn
-                        MainMenuBtn(
-                          StyledIcons.user,
-                          "CONTACTS",
-                          compact: widget.skinnyMode,
-                          pageType: PageType.ContactsList,
-                          height: _btnHeight,
-                          isSelected: currentPage == PageType.ContactsList,
-                          onPressed: () => _handlePageSelected(PageType.ContactsList),
-                        ),
+                      const VSpace(Insets.l),
 
-                        Spacer(),
+                      /// Dashboard Btn
+                      MainMenuBtn(
+                        StyledIcons.dashboard,
+                        "DASHBOARD",
+                        compact: widget.skinnyMode,
+                        pageType: PageType.Dashboard,
+                        height: _btnHeight,
+                        isSelected: currentPage == PageType.Dashboard,
+                        onPressed: () => _handlePageSelected(PageType.Dashboard),
+                      ),
 
-                        /// Light / Dark Toggle
-                        //Use a row to easily center the Toggle inside the column
-                        [
-                          LightDarkToggleSwitch(),
-                        ].toRow(mainAxisAlignment: MainAxisAlignment.center),
+                      /// Contacts Out Btn
+                      MainMenuBtn(
+                        StyledIcons.user,
+                        "CONTACTS",
+                        compact: widget.skinnyMode,
+                        pageType: PageType.ContactsList,
+                        height: _btnHeight,
+                        isSelected: currentPage == PageType.ContactsList,
+                        onPressed: () => _handlePageSelected(PageType.ContactsList),
+                      ),
 
-                        VSpace(Insets.m),
+                      const Spacer(),
 
-                        /// Sign Out Btn
-                        TransparentBtn(
-                          hoverColor: theme.txt.withOpacity(.05),
-                          contentPadding: EdgeInsets.all(Insets.m),
-                          child: Text("SIGN OUT", style: TextStyles.Btn.textColor(Colors.white)),
-                          onPressed: _handleLogoutPressed,
-                          ),
+                      /// Light / Dark Toggle
+                      //Use a row to easily center the Toggle inside the column
+                      [
+                        const LightDarkToggleSwitch(),
+                      ].toRow(mainAxisAlignment: MainAxisAlignment.center),
 
-                      ],
-                    )).padding(all: Insets.l, bottom: Insets.m).constrained(maxWidth: 280),
+                      const VSpace(Insets.m),
 
-                /// Animated line that moves up and down to select the current page
-                _AnimatedMenuIndicator(_indicatorY, height: _indicatorHeight)
-              ],
-            ).flexible(),
-          ],
-        ),
+                      /// Sign Out Btn
+                      TransparentBtn(
+                        hoverColor: theme.txt.withOpacity(.05),
+                        contentPadding: const EdgeInsets.all(Insets.m),
+                        child: Text("SIGN OUT", style: TextStyles.Btn.textColor(Colors.white)),
+                        onPressed: _handleLogoutPressed,
+                      ),
+                    ],
+                  )).padding(all: Insets.l, bottom: Insets.m).constrained(maxWidth: 280),
+
+              /// Animated line that moves up and down to select the current page
+              _AnimatedMenuIndicator(_indicatorY, height: _indicatorHeight)
+            ],
+          ).flexible(),
+        ],
       ),
     );
   }
@@ -191,7 +188,7 @@ class _AnimatedMenuIndicator extends StatefulWidget {
   final double width;
   final double height;
 
-  _AnimatedMenuIndicator(this.indicatorY, {this.width = 6, this.height = 24});
+  const _AnimatedMenuIndicator(this.indicatorY, {this.width = 6, this.height = 24});
 
   @override
   _AnimatedMenuIndicatorState createState() => _AnimatedMenuIndicatorState();

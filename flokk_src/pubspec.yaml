@@ -2,7 +2,7 @@ name: flokk
 description: A fresh and modern Google Contacts manager that integrates with GitHub and Twitter.
 version: 1.1.0
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -18,10 +18,10 @@ dependencies:
   file_selector_macos: ^0.0.4
   file_selector_linux: ^0.0.2
   file_selector_web: ^0.8.1
-  flutter_hooks: ^0.16.0
+  flutter_hooks: ^0.17.0
   github: ^8.1.0
   google_sign_in: ^5.0.1
-  googleapis: ^2.0.0
+  googleapis: ^3.0.0
   http: ^0.13.1
   html: ^0.15.0
   image: ^3.0.2
@@ -44,6 +44,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.0.0
+  flutter_lints: ^1.0.0
   json_serializable: ^4.1.0 # Generate JSON parsers: flutter pub run build_runner build --delete-conflicting-outputs
 
 flutter:
@@ -85,4 +86,3 @@ flutter:
     - assets/images/flokk-logo.svg
     - assets/images/avatars/
     - assets/icons/
-

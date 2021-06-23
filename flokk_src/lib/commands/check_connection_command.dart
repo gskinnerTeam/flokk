@@ -1,7 +1,7 @@
 import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/commands/abstract_command.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class CheckConnectionCommand extends AbstractCommand with CancelableCommandMixin {

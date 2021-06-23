@@ -92,7 +92,7 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
                       return Container(
                         child: Text("$headerText ($count)", style: TextStyles.T1.textColor(theme.accent1Dark)),
                         alignment: Alignment.bottomLeft,
-                        margin: EdgeInsets.only(bottom: Insets.l + 4),
+                        margin: const EdgeInsets.only(bottom: Insets.l + 4),
                       );
                     }
                     // Regular Row

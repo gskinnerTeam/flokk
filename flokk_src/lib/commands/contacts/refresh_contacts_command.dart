@@ -4,7 +4,7 @@ import 'package:flokk/commands/groups/refresh_contact_groups_command.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/services/google_rest/google_rest_contacts_service.dart';
 import 'package:flokk/services/service_result.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class RefreshContactsCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   RefreshContactsCommand(BuildContext c) : super(c);

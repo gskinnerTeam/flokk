@@ -34,40 +34,39 @@ class TweetListItem extends StatelessWidget {
       children: [
         Row(children: [
           OneLineText(tweet.user.name, style: titleStyle.bold).flexible(),
-          HSpace(Insets.sm),
+          const HSpace(Insets.sm),
           OneLineText(tweet.retweeted ? "Retweeted" : "Tweeted", style: titleStyle).flexible(),
           Text("  ·  ", style: titleStyle),
           Text(timeTxt, style: titleStyle),
         ]),
-        VSpace(Insets.sm),
+        const VSpace(Insets.sm),
         Row(children: [
           SelectableLinkText(
-                  text: "${tweet.text}",
+                  text: tweet.text,
                   linkStyle: TextStyles.Body1.textHeight(1.6).textColor(theme.accent1),
                   textStyle: TextStyles.Body1.textHeight(1.6).textColor(theme.txt))
               .flexible()
         ]),
-        VSpace(Insets.m),
+        const VSpace(Insets.m),
         Row(children: [
           StyledImageIcon(StyledIcons.socialLike, size: 12, color: theme.grey),
-          HSpace(Insets.sm),
+          const HSpace(Insets.sm),
           Text(
             "${tweet.favoriteCount}",
             style: TextStyles.Body3.textColor(theme.grey),
           ),
-          HSpace(Insets.m),
+          const HSpace(Insets.m),
           StyledImageIcon(StyledIcons.socialRetweet, size: 12, color: theme.grey),
-          HSpace(Insets.sm),
+          const HSpace(Insets.sm),
           Text(
             "${tweet.retweetCount}",
             style: TextStyles.Body3.textColor(theme.grey),
           ),
         ]),
-        VSpace(Insets.m),
+        const VSpace(Insets.m),
         Container(color: theme.greyWeak.withOpacity(.35), width: double.infinity, height: 1),
-        VSpace(Insets.l),
+        const VSpace(Insets.l),
       ],
     ).gestures(onTap: _handleRowPressed, behavior: HitTestBehavior.opaque);
   }
-
 }

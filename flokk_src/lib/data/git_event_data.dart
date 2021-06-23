@@ -13,7 +13,7 @@ class GitEvent implements DateSortable {
   DateTime get createdAt => event.createdAt ?? Dates.epoch; //Read only
 
   @override
-  void set createdAt(DateTime value) {}
+  set createdAt(DateTime value) {}
 
   GitEvent();
 

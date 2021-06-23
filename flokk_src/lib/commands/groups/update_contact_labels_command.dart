@@ -13,10 +13,10 @@ class UpdateContactLabelsCommand extends AbstractCommand with AuthorizedServiceC
     Log.p("[UpdateContactLabelsCommand]");
     await executeAuthServiceCmd(() async {
       //Get the existing labels for contact
-      List<GroupData> existingGroups = contactsModel.getContactById(contact.id)?.groupList ?? [];
+      List<GroupData> existingGroups = contactsModel.getContactById(contact.id).groupList;
 
       //The updated labels for contact
-      List<GroupData> updatedGroups = contact.groupList ?? [];
+      List<GroupData> updatedGroups = contact.groupList;
 
       List<GroupData> removeFrom = existingGroups.where((x) => !updatedGroups.any((y) => y.id == x.id)).toList();
       List<GroupData> addTo = updatedGroups.where((x) => !existingGroups.any((y) => y.id == x.id)).toList();

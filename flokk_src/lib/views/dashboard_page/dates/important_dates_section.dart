@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
 class UpcomingActivitiesSection extends StatelessWidget {
+  const UpcomingActivitiesSection({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
@@ -34,10 +36,10 @@ class UpcomingActivitiesSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text("UPCOMING IMPORTANT DATES", style: headerStyle.textColor(theme.accent1Darker)),
-            VSpace(Insets.l * .75),
+            const VSpace(Insets.l * .75),
             PlaceholderContentSwitcher(
               hasContent: () => kids.isNotEmpty,
-              placeholder: ImportantDatesPlaceholder(),
+              placeholder: const ImportantDatesPlaceholder(),
               content: SingleChildScrollView(
                 child: SimpleGrid(
                   kidHeight: 54,

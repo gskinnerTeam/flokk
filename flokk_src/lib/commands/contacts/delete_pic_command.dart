@@ -5,13 +5,15 @@ import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/app_model.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   DeletePicCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact) async {
-    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) {
+      return false;
+    }
     Log.p("[DeletePicCommand]");
 
     bool doDelete = await Dialogs.show(

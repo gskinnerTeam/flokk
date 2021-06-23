@@ -5,7 +5,7 @@ import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/data/group_data.dart';
 import 'package:flokk/services/google_rest/google_rest_service.dart';
 import 'package:flokk/services/service_result.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class ToggleFavoriteCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   ToggleFavoriteCommand(BuildContext c) : super(c);

@@ -85,14 +85,14 @@ class GitEventListItem extends StatelessWidget {
     return Column(
       children: [
         Row(children: [
-          Text("${gitEvent.event.actor?.login ?? ""}", style: titleStyle.bold),
+          Text(gitEvent.event.actor?.login ?? "", style: titleStyle.bold),
           Text(
               "  ·  ${GitUtils.getStringForType(gitEvent.event.type ?? "")}  ·  ${GitUtils.monthDayFmt.format(gitEvent.createdAt)}",
               style: titleStyle),
         ]),
-        VSpace(Insets.xs * 1.5),
+        const VSpace(Insets.xs * 1.5),
         GitRepoInfo(gitEvent.repository),
-        VSpace(Insets.l),
+        const VSpace(Insets.l),
       ],
     );
   }
@@ -110,12 +110,12 @@ class GitRepoListItem extends StatelessWidget {
     return Column(
       children: [
         Row(children: [
-          Text("${repo.contacts.first.nameGiven}", style: titleStyle.bold),
+          Text(repo.contacts.first.nameGiven, style: titleStyle.bold),
           Text("  ·  ${GitUtils.monthDayFmt.format(repo.repository.updatedAt ?? Dates.epoch)}", style: titleStyle),
         ]),
-        VSpace(Insets.xs * 1.5),
+        const VSpace(Insets.xs * 1.5),
         GitRepoInfo(repo.repository),
-        VSpace(Insets.l),
+        const VSpace(Insets.l),
       ],
     );
   }
@@ -143,8 +143,9 @@ class GitRepoInfo extends StatelessWidget {
   const GitRepoInfo(this.repo, {Key? key}) : super(key: key);
 
   void _handleRepoPressed() {
-    if (repo != null)
+    if (repo != null) {
       UrlLauncher.openHttp(repo!.htmlUrl);
+    }
   }
 
   @override
@@ -158,28 +159,29 @@ class GitRepoInfo extends StatelessWidget {
           RichText(
             text: TextSpan(
               children: <TextSpan>[
-                TextSpan(text: "${repo?.name}", style: contentTextStyle.textColor(theme.accent1Dark)),
+                TextSpan(text: repo?.name, style: contentTextStyle.textColor(theme.accent1Dark)),
                 TextSpan(text: " | ${repo?.description}", style: contentTextStyle.textColor(theme.txt)),
               ],
             ),
           ).flexible(),
           //ClickableText(repo.name, onPressed: _handleRepoPressed,),
         ]),
-        VSpace(Insets.sm * 1.5),
+        const VSpace(Insets.sm * 1.5),
         Row(children: [
           if (repo?.language != null) ...{
             _GitPill(repo!.language),
-            HSpace(Insets.sm),
+            const HSpace(Insets.sm),
           },
           StyledImageIcon(StyledIcons.starFilled, size: 12, color: theme.grey),
           Text("${repo?.stargazersCount ?? 0}", style: smallTextStyle).padding(left: Insets.xs),
-          HSpace(Insets.sm),
+          const HSpace(Insets.sm),
           StyledImageIcon(StyledIcons.socialFork, size: 12, color: theme.grey).translate(
-            offset: Offset(0, 1), // Add a bit of offset to the fork icon cause it's a bit tall and doesn't look right
+            offset:
+                const Offset(0, 1), // Add a bit of offset to the fork icon cause it's a bit tall and doesn't look right
           ),
           Text("${repo?.forksCount ?? 0}", style: smallTextStyle).padding(left: Insets.xs),
         ]),
-        VSpace(Insets.m * 1.5),
+        const VSpace(Insets.m * 1.5),
         Container(color: theme.greyWeak.withOpacity(.35), width: double.infinity, height: 1),
         //VSpace(Insets.l),
       ],

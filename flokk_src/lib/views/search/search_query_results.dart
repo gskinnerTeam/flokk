@@ -46,8 +46,9 @@ class SearchResults extends StatelessWidget {
             final List<StyledLabelPill> labelPills = tags
                 .take(maxResults)
                 .map((tag) => StyledLabelPill(tag.toUpperCase(),
-                        textStyle: TextStyles.Footnote.textColor(theme.grey).letterSpace(0).textHeight(1.63),
-                        borderRadius: Corners.s5, onPressed: () => state.handleTagPressed(tag)))
+                    textStyle: TextStyles.Footnote.textColor(theme.grey).letterSpace(0).textHeight(1.63),
+                    borderRadius: Corners.s5,
+                    onPressed: () => state.handleTagPressed(tag)))
                 .toList();
 
             final List<_ContactSearchListItem> contactListItems = contacts
@@ -76,6 +77,7 @@ class SearchResults extends StatelessWidget {
                       ),
                     ),
                   },
+
                   /// Contacts / People
                   if (contacts.isNotEmpty) ...{
                     _SearchCategory(
@@ -90,6 +92,7 @@ class SearchResults extends StatelessWidget {
                       ),
                     ),
                   },
+
                   /// Submit Btn
                   if (contacts.length > 6) ...{
                     TransparentTextBtn(
@@ -98,7 +101,7 @@ class SearchResults extends StatelessWidget {
                       bigMode: true,
                       onPressed: state.handleSearchSubmitted,
                     ).constrained(width: 220, height: 60).center().padding(top: Insets.l),
-                    VSpace(Insets.m * 1.5),
+                    const VSpace(Insets.m * 1.5),
                   },
                 ],
               ),
@@ -114,7 +117,7 @@ class _ContactSearchListItem extends StatelessWidget {
   final ContactData contact;
   final VoidCallback? onPressed;
 
-  _ContactSearchListItem({required this.contact, this.onPressed});
+  const _ContactSearchListItem({required this.contact, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -123,14 +126,12 @@ class _ContactSearchListItem extends StatelessWidget {
       bgColor: theme.surface,
       onPressed: onPressed,
       bigMode: true,
-      child: Container(
-        child: Row(
-          children: <Widget>[
-            StyledUserAvatar(contact: contact, size: 36),
-            HSpace(Insets.m * 1.5),
-            Text(contact.nameFull, style: TextStyles.H2.textColor(theme.txt)),
-          ],
-        ),
+      child: Row(
+        children: <Widget>[
+          StyledUserAvatar(contact: contact, size: 36),
+          const HSpace(Insets.m * 1.5),
+          Text(contact.nameFull, style: TextStyles.H2.textColor(theme.txt)),
+        ],
       ),
     );
   }
@@ -141,7 +142,7 @@ class _SearchCategory extends StatelessWidget {
   final String text;
   final Widget child;
 
-  _SearchCategory({required this.icon, required this.text, required this.child});
+  const _SearchCategory({required this.icon, required this.text, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +157,7 @@ class _SearchHeading extends StatelessWidget {
   final AssetImage icon;
   final String text;
 
-  _SearchHeading(this.icon, this.text);
+  const _SearchHeading(this.icon, this.text);
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +165,7 @@ class _SearchHeading extends StatelessWidget {
     TextStyle txtStyle = TextStyles.T1.size(FontSizes.s16).letterSpace(0.8).textColor(theme.accent1Darker);
     return Row(children: <Widget>[
       StyledImageIcon(icon, color: theme.grey),
-      HSpace(Insets.m * 1.5),
+      const HSpace(Insets.m * 1.5),
       Text(text.toUpperCase(), style: txtStyle),
     ]);
   }

@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormState> {
-  ContactEditFormView(ContactEditFormState state, {Key? key}) : super(state, key: key);
+  const ContactEditFormView(ContactEditFormState state, {Key? key}) : super(state, key: key);
 
   BuildContext get context => state.context;
 
@@ -39,10 +39,10 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
     return state.isLoading
-        ? Center(child: StyledProgressSpinner())
+        ? const Center(child: StyledProgressSpinner())
         : Column(
             children: <Widget>[
-              SizedBox(height: Insets.sm),
+              const SizedBox(height: Insets.sm),
 
               /// Top Buttons
               Row(
@@ -53,19 +53,19 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
                     bigMode: true,
                     color: theme.grey,
                     onPressed: state.handleCancelPressed,
-                  ).translate(offset: Offset(-Insets.sm, 0)),
+                  ).translate(offset: const Offset(-Insets.sm, 0)),
                   TransparentTextBtn(
                     "SAVE",
                     bigMode: true,
                     onPressed: state.handleSavePressed,
-                  ).translate(offset: Offset(Insets.sm, 0)),
+                  ).translate(offset: const Offset(Insets.sm, 0)),
                 ],
               ).padding(horizontal: Insets.l),
 
               StyledScrollView(
                 child: Column(
                   children: [
-                    VSpace(3),
+                    const VSpace(3),
 
                     /// Profile Pic
                     StyledUserAvatar(
@@ -73,7 +73,7 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
                       size: 110,
                     ),
 
-                    VSpace(Insets.sm),
+                    const VSpace(Insets.sm),
 
                     TransparentTextBtn(
                       "Upload a photo",
@@ -81,11 +81,11 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
                       onPressed: state.handlePhotoPressed,
                     ),
 
-                    VSpace(Insets.l),
+                    const VSpace(Insets.l),
 
                     /// Form fields
                     SeparatedColumn(
-                      separatorBuilder: () => VSpace(Insets.m),
+                      separatorBuilder: () => const VSpace(Insets.m),
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         /// Name
@@ -135,13 +135,13 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
                           ).padding(vertical: Insets.m),
 
                         //Add some extra padding at the bottom to account for the Relationship Dropdown menu
-                        VSpace(30),
+                        const VSpace(30),
                       ],
                     ).padding(horizontal: Insets.l, bottom: Insets.m)
                   ],
                 ),
               ).flexible(),
-              SizedBox(height: Insets.m),
+              const SizedBox(height: Insets.m),
             ],
           );
   }

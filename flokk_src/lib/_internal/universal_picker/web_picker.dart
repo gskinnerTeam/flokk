@@ -1,4 +1,5 @@
 import 'dart:convert';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 import 'dart:typed_data';
 
@@ -47,10 +48,11 @@ class WebPicker implements UniversalPicker {
 
   void handleFileLoad(ProgressEvent e) {
     base64Data = reader.result.toString().split(",").last;
-    if (base64Data != null)
-      byteData = Base64Decoder().convert(base64Data!);
+    if (base64Data != null) {
+      byteData = const Base64Decoder().convert(base64Data!);
+    }
     onChange?.call(base64Data ?? "");
   }
 }
 
-UniversalPicker getPlatformPicker({ required String accept }) => WebPicker(accept: accept);
+UniversalPicker getPlatformPicker({required String accept}) => WebPicker(accept: accept);

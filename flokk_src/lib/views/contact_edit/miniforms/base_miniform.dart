@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 /// It's composed mainly of sub-builds methods, which should probably be refactored into
 /// individual FormWidgets, but it works for now.
 abstract class BaseMiniForm extends StatelessWidget {
-  BaseMiniForm(this.form, this.sectionType, {Key? key}) : super(key: key);
+  const BaseMiniForm(this.form, this.sectionType, {Key? key}) : super(key: key);
 
   double get rightPadding => Insets.l * 1.5 - 2;
 
@@ -71,9 +71,9 @@ abstract class BaseMiniForm extends StatelessWidget {
         bigMode: true,
         textColor: form.theme.greyWeak,
         onPressed: () => handleAddPressed(itemBuilder(), list),
-      ).translate(offset: Offset(-4, 0));
+      ).translate(offset: const Offset(-4, 0));
       // Wrap the button in a row with a spacer, so it will not stretch all the way across the form
-      column.add(Row(children: [btn, Spacer()]));
+      column.add(Row(children: [btn, const Spacer()]));
     }
   }
 
@@ -122,7 +122,7 @@ abstract class BaseMiniForm extends StatelessWidget {
       children: <Widget>[
         buildTextInput(context, hint1, initial1, onChanged1, autoFocus: autoFocus, padding: padding, maxLines: maxLines)
             .flexible(),
-        HSpace(Insets.m),
+        const HSpace(Insets.m),
         buildTextInput(context, hint2, initial2, onChanged2, padding: padding, maxLines: maxLines).flexible(),
       ],
     );
@@ -136,7 +136,7 @@ abstract class BaseMiniForm extends StatelessWidget {
       String typeHint = "",
       String? initialText,
       String? initialType,
-      List<String> types = const<String>[],
+      List<String> types = const <String>[],
       void Function(String)? onTextChanged,
       void Function(String)? onTypeChanged,
       VoidCallback? onDelete,
@@ -155,24 +155,26 @@ abstract class BaseMiniForm extends StatelessWidget {
           onTextChanged,
           autoFocus: autoFocus,
         ).flexible(),
-        HSpace(Insets.m),
+        const HSpace(Insets.m),
 
         /// Type dropdown
         StyledAutoCompleteDropdown(
-            items: types,
-            hint: typeHint,
-            initialValue: initialType,
-            onChanged: onTypeChanged,
-            maxHeight: maxDropdownHeight,
-            onFocusChanged: (v) => handleFocusChanged(v, context)).width(typeWidth).translate(offset: Offset(0, 3)),
-        HSpace(2),
+                items: types,
+                hint: typeHint,
+                initialValue: initialType,
+                onChanged: onTypeChanged,
+                maxHeight: maxDropdownHeight,
+                onFocusChanged: (v) => handleFocusChanged(v, context))
+            .width(typeWidth)
+            .translate(offset: const Offset(0, 3)),
+        const HSpace(2),
 
         /// Delete Btn
         ColorShiftIconBtn(
           StyledIcons.formDelete,
           size: 20,
           onPressed: showDelete ? onDelete : null,
-          padding: EdgeInsets.all(Insets.sm),
+          padding: const EdgeInsets.all(Insets.sm),
         ).opacity(showDelete ? 1 : 0, animate: true).animate(Durations.fast, Curves.linear),
       ],
     );
@@ -184,7 +186,8 @@ abstract class BaseMiniForm extends StatelessWidget {
     BuildContext context,
     String hint,
     String typeHint, {
-    List<T> itemList = const [], // NOTE CE: Dart really fails here, default argument values must be const but generic type arguments cannot be used in a const context
+    List<T> itemList =
+        const [], // NOTE CE: Dart really fails here, default argument values must be const but generic type arguments cannot be used in a const context
     List<String> types = const <String>[],
     required T Function() newItemBuilder,
     required bool Function(T) isEmpty,
@@ -219,7 +222,7 @@ abstract class BaseMiniForm extends StatelessWidget {
 
     /// Return the actual Column of content
     return SeparatedColumn(
-      separatorBuilder: () => VSpace(Insets.sm),
+      separatorBuilder: () => const VSpace(Insets.sm),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: kids,
     );

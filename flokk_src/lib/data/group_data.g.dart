@@ -13,8 +13,7 @@ GroupData _$GroupDataFromJson(Map<String, dynamic> json) {
     ..name = json['name'] as String
     ..groupType = _$enumDecode(_$GroupTypeEnumMap, json['groupType'])
     ..memberCount = json['memberCount'] as int
-    ..members =
-        (json['members'] as List<dynamic>).map((e) => e as String).toList();
+    ..members = (json['members'] as List<dynamic>).map((e) => e as String).toList();
 }
 
 Map<String, dynamic> _$GroupDataToJson(GroupData instance) => <String, dynamic>{

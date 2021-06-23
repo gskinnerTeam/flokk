@@ -6,7 +6,8 @@ class StyledHorizontalScrollView extends StatefulWidget {
   final Curve autoScrollCurve;
   final Widget? child;
 
-  StyledHorizontalScrollView({required this.autoScrollDuration, required this.autoScrollCurve, this.child, Key? key})
+  const StyledHorizontalScrollView(
+      {required this.autoScrollDuration, required this.autoScrollCurve, this.child, Key? key})
       : super(key: key);
 
   @override

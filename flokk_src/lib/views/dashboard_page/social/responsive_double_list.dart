@@ -70,7 +70,7 @@ class _ResponsiveDoubleListState extends State<ResponsiveDoubleList> {
             placeholder: widget.list1Placeholder,
             content: StyledListViewWithTitle(listItems: widget.list1, title: widget.list1Title, icon: widget.list1Icon),
           ).flexible(),
-          HSpace(Insets.l),
+          const HSpace(Insets.l),
           PlaceholderContentSwitcher(
             hasContent: () => widget.list2.isNotEmpty,
             placeholder: widget.list2Placeholder,

@@ -22,7 +22,7 @@ abstract class AbstractModel extends ChangeNotifier {
   void scheduleSave() async {
     if (_isSaveScheduled) return;
     _isSaveScheduled = true;
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     save();
     _isSaveScheduled = false;
   }
@@ -57,11 +57,15 @@ abstract class AbstractModel extends ChangeNotifier {
   }
 
   List<T> toList<T>(dynamic json, dynamic Function(dynamic) fromJson) {
-    final List<T> list = (json as Iterable?)?.map((e) {
-      return e == null ? e : fromJson(e) as T?;
-    }).where((e) => e != null).whereType<T>().toList() ?? [];
+    final List<T> list = (json as Iterable?)
+            ?.map((e) {
+              return e == null ? e : fromJson(e) as T?;
+            })
+            .where((e) => e != null)
+            .whereType<T>()
+            .toList() ??
+        [];
 
     return list;
   }
 }
-

@@ -1,6 +1,5 @@
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/_internal/utils/date_utils.dart';
-import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/data/group_data.dart';
 import 'package:flokk/data/social_contact_data.dart';
@@ -11,9 +10,9 @@ import 'package:flokk/services/google_rest/google_rest_service.dart';
 import 'package:tuple/tuple.dart';
 
 class ContactsModel extends AbstractModel {
-  final gitEventsCooldown = Duration(minutes: 5);
-  final tweetsCooldown = Duration(minutes: 1);
-  final contactGroupsCooldown = Duration(seconds: 20);
+  final gitEventsCooldown = const Duration(minutes: 5);
+  final tweetsCooldown = const Duration(minutes: 1);
+  final contactGroupsCooldown = const Duration(seconds: 20);
 
   DateTime lastUpdatedGroups = Dates.epoch;
 
@@ -193,7 +192,9 @@ class ContactsModel extends AbstractModel {
     if (_allContacts.isEmpty) return;
 
     /// Clear all known existing groups
-    _allContacts..forEach((c) => c.groupList = []);
+    for (final c in _allContacts) {
+      c.groupList = [];
+    }
 
     /// Set the labels for each contact (groupList)
     for (GroupData g in _allGroups) {

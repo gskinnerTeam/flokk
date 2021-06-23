@@ -44,9 +44,7 @@ class AppModel extends AbstractModel {
     searchEngine.groupsList = contactsModel.allGroups;
 
     /// Watch selected contact and keep it updated when contacts model changes
-    if (selectedContact != null) {
-      selectedContact = contactsModel.getContactById(selectedContact.id);
-    }
+    selectedContact = contactsModel.getContactById(selectedContact.id);
   }
 
   /// //////////////////////////////////////////////////

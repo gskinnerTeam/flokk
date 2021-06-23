@@ -41,9 +41,9 @@ class _ContactInfoHeaderCardState extends State<ContactInfoHeaderCard> {
         .toList();
 
     return SeparatedColumn(
-      separatorBuilder: () => SizedBox(height: Insets.m * .5),
+      separatorBuilder: () => const SizedBox(height: Insets.m * .5),
       children: <Widget>[
-        VSpace(Insets.sm - 1),
+        const VSpace(Insets.sm - 1),
 
         /// PROFILE PIC
         StyledUserAvatar(key: ValueKey(contact.id + contact.profilePic), size: 110, contact: contact),
@@ -54,7 +54,7 @@ class _ContactInfoHeaderCardState extends State<ContactInfoHeaderCard> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             OneLineText(contact.nameFull, style: TextStyles.H1).flexible(),
-            HSpace(Insets.sm * .5),
+            const HSpace(Insets.sm * .5),
             ColorShiftIconBtn(
               contact.isStarred ? StyledIcons.starFilled : StyledIcons.starEmpty,
               color: contact.isStarred ? theme.accent1 : theme.grey,
@@ -69,7 +69,7 @@ class _ContactInfoHeaderCardState extends State<ContactInfoHeaderCard> {
         /// Social Icons
         //SocialIconStrip(contact: contact),
       ],
-    ).translate(offset: Offset(0, -Insets.m));
+    ).translate(offset: const Offset(0, -Insets.m));
   }
 }
 

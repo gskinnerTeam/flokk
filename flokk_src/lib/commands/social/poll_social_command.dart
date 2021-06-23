@@ -1,7 +1,7 @@
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/social/refresh_social_command.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class PollSocialCommand extends AbstractCommand with CancelableCommandMixin {
   PollSocialCommand(BuildContext c) : super(c);

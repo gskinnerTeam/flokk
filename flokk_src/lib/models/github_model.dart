@@ -8,8 +8,8 @@ import 'package:github/github.dart';
 import 'package:tuple/tuple.dart';
 
 class GithubModel extends AbstractModel {
-  final expiry = Duration(days: 30); //the period of which to cull events based on createdAt
-  final repoStaleTime = Duration(hours: 72);
+  final expiry = const Duration(days: 30); //the period of which to cull events based on createdAt
+  final repoStaleTime = const Duration(hours: 72);
   ContactsModel contactsModel;
 
   //Each event has a repo reference, however not all fields populated in repo object because full set of data not returned in service call. Need separate calls to look up and rely on model to inject as needed
@@ -152,8 +152,7 @@ class GithubModel extends AbstractModel {
     //inject the repos data for each event
     for (var n in sorted) {
       n.repository = _reposHash[n.event.repo?.name]?.repository ??
-          Repository(
-              id: n.event.repo?.id ?? 0, name: n.event.repo?.name ?? "", htmlUrl: n.event.repo?.htmlUrl ?? "");
+          Repository(id: n.event.repo?.id ?? 0, name: n.event.repo?.name ?? "", htmlUrl: n.event.repo?.htmlUrl ?? "");
     }
 
     return sorted;

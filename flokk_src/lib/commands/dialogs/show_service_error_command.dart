@@ -6,7 +6,7 @@ import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/check_connection_command.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class ShowServiceErrorCommand extends AbstractCommand {

@@ -22,7 +22,13 @@ class StyledAutoCompleteDropdown extends StatefulWidget {
   final void Function(bool)? onFocusChanged;
 
   const StyledAutoCompleteDropdown(
-      {Key? key, this.initialValue, this.hint = "", this.items = const<String>[], this.onChanged, this.onFocusChanged, this.maxHeight = 500})
+      {Key? key,
+      this.initialValue,
+      this.hint = "",
+      this.items = const <String>[],
+      this.onChanged,
+      this.onFocusChanged,
+      this.maxHeight = 500})
       : super(key: key);
 
   @override
@@ -128,7 +134,7 @@ class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown>
         children: <Widget>[
           StyledFormTextInput(
               capitalization: TextCapitalization.words,
-              contentPadding: EdgeInsets.only(right: 22, bottom: Insets.sm),
+              contentPadding: const EdgeInsets.only(right: 22, bottom: Insets.sm),
               controller: _textController,
               initialValue: widget.initialValue,
               hintText: widget.hint,
@@ -172,7 +178,7 @@ class _AutoCompleteDropdown extends StatelessWidget {
   final double rowHeight;
   final FocusScopeNode? focusNode;
 
-  _AutoCompleteDropdown(this.state, {Key? key, this.focusNode, this.rowHeight = 40}) : super(key: key);
+  const _AutoCompleteDropdown(this.state, {Key? key, this.focusNode, this.rowHeight = 40}) : super(key: key);
 
   List<String> get items => state.widget.items;
 
@@ -207,11 +213,11 @@ class _AutoCompleteDropdown extends StatelessWidget {
                   itemCount: matches.length,
                   itemBuilder: (_, index) {
                     return BaseStyledBtn(
-                      contentPadding: EdgeInsets.symmetric(horizontal: Insets.m),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: Insets.m),
                       minHeight: rowHeight,
                       onPressed: () => state._handleItemSelected(matches[index]),
                       child: OneLineText(
-                        "${matches[index].toUpperCase()}",
+                        matches[index].toUpperCase(),
                         style: TextStyles.Caption.textColor(theme.greyWeak),
                       ).alignment(Alignment.centerLeft),
                     );

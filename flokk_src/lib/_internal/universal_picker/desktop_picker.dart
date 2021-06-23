@@ -25,12 +25,13 @@ class DesktopPicker implements UniversalPicker {
 
   void _openPicker() async {
     final imagePath = await pickImage(confirmText: "Upload image");
-    if (imagePath == null)
+    if (imagePath == null) {
       // The user most likely pressed cancel or we don't have an image for some other reason, return
       return;
+    }
     final bytes = await File(imagePath).readAsBytes();
     byteData = bytes;
-    base64Data = Base64Encoder().convert(bytes.toList());
+    base64Data = const Base64Encoder().convert(bytes.toList());
 
     onChange?.call(base64Data ?? "");
   }

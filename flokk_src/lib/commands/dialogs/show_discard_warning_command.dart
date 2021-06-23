@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/commands/abstract_command.dart';

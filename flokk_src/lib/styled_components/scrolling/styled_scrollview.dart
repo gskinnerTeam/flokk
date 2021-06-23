@@ -11,12 +11,14 @@ class StyledScrollView extends StatefulWidget {
 
   final Widget child;
 
-  StyledScrollView({
+  const StyledScrollView({
     Key? key,
     required this.child,
     this.contentSize,
-    this.axis = Axis.vertical, this.trackColor, this.handleColor,
-  }) : super(key: key) {}
+    this.axis = Axis.vertical,
+    this.trackColor,
+    this.handleColor,
+  }) : super(key: key);
 
   @override
   _StyledScrollViewState createState() => _StyledScrollViewState();

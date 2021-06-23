@@ -3,7 +3,7 @@ import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/services/google_rest/google_rest_auth_service.dart';
 import 'package:flokk/services/service_result.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class RefreshAuthTokensCommand extends AbstractCommand {
   RefreshAuthTokensCommand(BuildContext context) : super(context);

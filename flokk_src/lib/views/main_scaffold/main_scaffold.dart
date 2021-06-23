@@ -18,6 +18,8 @@ import 'package:provider/provider.dart';
 enum PageType { None, Dashboard, ContactsList }
 
 class MainScaffold extends StatefulWidget {
+  const MainScaffold({Key? key}) : super(key: key);
+
   static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   static GlobalKey<ContactPanelState> sidePanelKey = GlobalKey();
   static GlobalKey<DashboardPageState> dashboardKey = GlobalKey();
@@ -159,5 +161,4 @@ class MainScaffoldState extends State<MainScaffold> {
         value: this,
         child: MainScaffoldView(this),
       );
-
 }

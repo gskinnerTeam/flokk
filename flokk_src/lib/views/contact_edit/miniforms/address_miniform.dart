@@ -23,7 +23,7 @@ class ContactAddressMiniForm extends BaseMiniForm {
           builder: (context) {
             if (c.addressList.isEmpty) c.addressList.add(AddressData());
             List<Widget> kids = c.addressList.map<Widget>((a) {
-              return SeparatedColumn(key: ObjectKey(a), separatorBuilder: () => VSpace(Insets.xs), children: [
+              return SeparatedColumn(key: ObjectKey(a), separatorBuilder: () => const VSpace(Insets.xs), children: [
                 /// Street + Type
                 buildTextWithDropdown(
                   context,
@@ -77,7 +77,7 @@ class ContactAddressMiniForm extends BaseMiniForm {
 //                  typeWidth: 160,
 //                ),
 
-                if (c.addressList.indexOf(a) < c.addressList.length - 1) VSpace(Insets.m),
+                if (c.addressList.indexOf(a) < c.addressList.length - 1) const VSpace(Insets.m),
               ]);
             }).toList();
 
@@ -85,7 +85,7 @@ class ContactAddressMiniForm extends BaseMiniForm {
             injectAddNewBtnIfNecessary<AddressData>(
                 "Add $sectionType", kids, c.addressList, (a) => a.isEmpty, () => AddressData());
             return SeparatedColumn(
-                separatorBuilder: () => VSpace(Insets.sm),
+                separatorBuilder: () => const VSpace(Insets.sm),
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: kids);
           },

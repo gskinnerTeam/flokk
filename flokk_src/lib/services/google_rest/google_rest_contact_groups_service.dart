@@ -73,7 +73,8 @@ class GoogleRestContactGroupsService {
   }
 
   Future<ServiceResult<void>> modify(String accessToken, GroupData group,
-      {List<ContactData> addContacts = const<ContactData>[], List<ContactData> removeContacts = const<ContactData>[]}) async {
+      {List<ContactData> addContacts = const <ContactData>[],
+      List<ContactData> removeContacts = const <ContactData>[]}) async {
     String url = "https://people.googleapis.com/v1/${group.id}/members:modify";
 
     Map<String, dynamic> data = {};

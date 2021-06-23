@@ -4,13 +4,15 @@ import 'package:flokk/commands/contacts/refresh_contacts_command.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/app_model.dart';
 import 'package:flokk/services/service_result.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class UpdatePicCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   UpdatePicCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact, String base64Pic) async {
-    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) {
+      return false;
+    }
     Log.p("[UpdatePicCommand]");
 
     ServiceResult result = await executeAuthServiceCmd(() async {

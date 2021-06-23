@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flokk/app_extensions.dart';
-import 'package:flokk/commands/groups/create_label_command.dart';
 import 'package:flokk/data/group_data.dart';
 import 'package:flokk/styled_components/styled_form_label_input.dart';
 import 'package:flokk/styled_components/styled_group_label.dart';
@@ -21,12 +20,7 @@ class ContactLabelMiniForm extends BaseMiniForm {
     if (label.isEmpty || c.groupList.any((g) => g.name == label)) return;
     //TODO SB@CE - This (form.widget.contactsModel) is probably ok, since these miniforms are tightly coupled to form. But no need to reach out for contactsModel. Instead just look it up with provider: ContactsModel contactsModel = context.watch();
     GroupData groupToAdd = form.widget.contactsModel.getGroupByName(label);
-    if (groupToAdd != null) {
-      setFormState(() => c.groupList.add(groupToAdd));
-    } else {
-      // We must make a new group, add that group to this contact when the creation has finished
-      CreateLabelCommand(context).execute(label).then((g) => setFormState(() => c.groupList.add(g)));
-    }
+    setFormState(() => c.groupList.add(groupToAdd));
   }
 
   void _handleRemoveLabel(String label) {
@@ -65,7 +59,7 @@ class _LabelMiniformWithSearch extends StatefulWidget {
   final List<String> contactLabels;
   final List<String> allLabels;
 
-  _LabelMiniformWithSearch({
+  const _LabelMiniformWithSearch({
     this.autoFocus = false,
     required this.onAddLabel,
     required this.onRemoveLabel,
@@ -99,7 +93,7 @@ class _LabelMiniformWithSearchState extends State<_LabelMiniformWithSearch> {
   bool _handleFocusChanged(bool value) {
     if (value == false) {
       _timer?.cancel();
-      _timer = Timer(Duration(milliseconds: 750), () {
+      _timer = Timer(const Duration(milliseconds: 750), () {
         setState(() => _isOpen = false);
       });
     } else {

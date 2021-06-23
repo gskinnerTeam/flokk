@@ -1,4 +1,3 @@
-
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/views/contact_edit/contact_edit_panel.dart';
 import 'package:flokk/views/empty_states/placeholder_widget_helpers.dart';
@@ -27,15 +26,16 @@ class GitPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) => Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        if (constraints.maxHeight > 250) PlaceholderImageAndBgStack("dashboard-github", height: 126, top: 43, left: -30),
+        if (constraints.maxHeight > 250)
+          const PlaceholderImageAndBgStack("dashboard-github", height: 126, top: 43, left: -30),
         EmptyStateTitleAndClickableText(
           title: isTrending ? "NO TRENDING REPOS" : "NO GITHUB ACTIVITY",
           startText: contact == ContactData() ? "Add GitHub ID in " : "Add ",
           linkText: contact == ContactData() ? "contacts" : "GitHub ID",
           endText: " to show ${isTrending ? "trending repos" : "recent activity"}",
           onPressed: () => _handleLinkPressed(context),
-          ),
+        ),
       ]),
-      );
+    );
   }
 }

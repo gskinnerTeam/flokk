@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SocialActivitySection extends StatefulWidget {
+  const SocialActivitySection({Key? key}) : super(key: key);
+
   @override
   _SocialActivitySectionState createState() => _SocialActivitySectionState();
 }
@@ -45,7 +47,8 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
         bool useTabView = constraints.maxWidth < PageBreaks.TabletPortrait - 100;
 
         /// Determine which tab should be selected
-        var sectionType = layoutContext.select<AppModel, DashboardSocialSectionType>((model) => model.dashSocialSection);
+        var sectionType =
+            layoutContext.select<AppModel, DashboardSocialSectionType>((model) => model.dashSocialSection);
         int tabIndex = 0;
         if (sectionType == DashboardSocialSectionType.Twitter) tabIndex = 1;
         if (sectionType == DashboardSocialSectionType.Git) tabIndex = 2;
@@ -103,12 +106,12 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
                 OneLineText("SOCIAL ACTIVITIES", style: headerStyle.textColor(theme.accent1Darker)).flexible(),
                 StyledTabBar(
                   index: tabIndex,
-                  sections: ["All", "Twitter", "GitHub"],
+                  sections: const ["All", "Twitter", "GitHub"],
                   onTabPressed: _handleTabPressed,
                 ).constrained(maxWidth: tabWidth, animate: true).animate(Durations.medium, Curves.easeOut),
               ],
             ),
-            VSpace(Insets.l * .75),
+            const VSpace(Insets.l * .75),
             FadingIndexedStack(
               index: tabIndex,
               duration: Durations.fastest,

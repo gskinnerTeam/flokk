@@ -116,7 +116,7 @@ class _BaseStyledBtnState extends State<BaseStyledBtn> {
         fillColor: Colors.transparent,
         hoverColor: widget.hoverColor ?? theme.surface,
         highlightColor: widget.downColor ?? theme.accent1.withOpacity(.1),
-        focusColor: widget.focusColor?? Colors.grey.withOpacity(0.35),
+        focusColor: widget.focusColor ?? Colors.grey.withOpacity(0.35),
         child: Opacity(
           child: Padding(
             padding: widget.contentPadding,
