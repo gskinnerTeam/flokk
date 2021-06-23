@@ -1,7 +1,7 @@
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/api_keys.dart';
 import 'package:flokk/commands/abstract_command.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class WebSignInCommand extends AbstractCommand {
@@ -17,8 +17,7 @@ class WebSignInCommand extends AbstractCommand {
 
       GoogleSignInAccount? account = silentSignIn ? await gs.signInSilently() : await gs.signIn();
       GoogleSignInAuthentication? auth;
-      if (account != null)
-        auth = await account.authentication;
+      if (account != null) auth = await account.authentication;
 
       if (auth != null) {
         Log.p("[WebSignInCommand] Success");

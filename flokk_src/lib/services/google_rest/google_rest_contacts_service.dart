@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/_internal/utils/date_utils.dart';
-import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:googleapis/people/v1.dart';
 
 class GoogleRestContactsService {
-  static final String kTwitterParam = "Twitter";
-  static final String kGitParam = "Github";
+  static const String kTwitterParam = "Twitter";
+  static const String kGitParam = "Github";
 
   //The requested fields to fetch, full list here: https://developers.google.com/people/api/rest/v1/people.connections/list?hl=ru
   static const List<String> kAllPersonFields = [
@@ -117,9 +116,9 @@ class GoogleRestContactsService {
   //List of valid PersonFields can be found here https://developers.google.com/people/api/rest/v1/people.connections/list
   Future<ServiceResult<GetContactsResult>> get(String accessToken,
       {List<String> personFields = const [],
-        String nextPageToken = "",
-        String syncToken = "",
-        bool requestSyncToken = true}) async {
+      String nextPageToken = "",
+      String syncToken = "",
+      bool requestSyncToken = true}) async {
     // Default to all person fields if none are passed
     if (personFields.isEmpty) {
       personFields = kAllPersonFields;
@@ -165,9 +164,11 @@ class GoogleRestContactsService {
   }
 
   //List of valid PersonFields can be found here https://developers.google.com/people/api/rest/v1/people/updateContact
-  Future<ServiceResult<ContactData>> set(String accessToken, ContactData contact, {List<String> personFields = const[]}) async {
-    if (personFields.isEmpty)
+  Future<ServiceResult<ContactData>> set(String accessToken, ContactData contact,
+      {List<String> personFields = const []}) async {
+    if (personFields.isEmpty) {
       personFields = kAllUpdatePersonFields;
+    }
     String url = "https://people.googleapis.com/v1/${contact.googleId}:updateContact?"
         "updatePersonFields=${personFields.join(',')}";
 
@@ -316,8 +317,7 @@ class GoogleRestContactsService {
     }
 
     if (p.userDefined?.isNotEmpty ?? false) {
-      c.customFields =
-          Map.fromIterable(p.userDefined ?? [], key: (x) => (x as UserDefined).key ?? "", value: (x) => (x as UserDefined).value ?? "");
+      c.customFields = {for (var x in p.userDefined ?? []) (x as UserDefined).key ?? "": (x).value ?? ""};
 
       /// Inject known custom fields into Contact, and remove from Map
       c.twitterHandle = c.customFields.remove(kTwitterParam) ?? "";
@@ -420,7 +420,9 @@ class GoogleRestContactsService {
       contact.customFields.forEach(addUserDefined);
 
       /// Inject our own, known fields
-      if (contact.hasTwitter) addUserDefined(kTwitterParam, contact.twitterHandle);
+      if (contact.hasTwitter) {
+        addUserDefined(kTwitterParam, contact.twitterHandle);
+      }
       if (contact.hasGit) addUserDefined(kGitParam, contact.gitUsername);
     }
     //NOTE: Person.Photos are not needed in this, they are read-only

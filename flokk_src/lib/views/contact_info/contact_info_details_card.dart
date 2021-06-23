@@ -90,7 +90,7 @@ class ContactInfoDetailsCard extends StatelessWidget {
           icon: StyledIcons.calendar,
           rows: contact.eventList.map((d) => Tuple2(DateFormats.google.format(d.date), d.type)).toList(),
           editType: ContactSectionType.events,
-          ),
+        ),
 
         /// LINKS
         if (contact.hasLink)

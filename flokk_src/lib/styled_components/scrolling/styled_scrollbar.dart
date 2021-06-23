@@ -117,7 +117,7 @@ class ScrollbarState extends State<StyledScrollbar> {
           /// TRACK, thin strip, aligned along the end of the parent
           if (widget.showTrack)
             Align(
-              alignment: Alignment(1, 1),
+              alignment: const Alignment(1, 1),
               child: Container(
                 color: trackColor,
                 width: widget.axis == Axis.vertical ? widget.size : double.infinity,

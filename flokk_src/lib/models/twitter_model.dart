@@ -6,7 +6,7 @@ import 'package:flokk/models/contacts_model.dart';
 import 'package:tuple/tuple.dart';
 
 class TwitterModel extends AbstractModel {
-  final expiry = Duration(days: 30); //the period of which to cull tweets based on createdAt
+  final expiry = const Duration(days: 30); //the period of which to cull tweets based on createdAt
 
   ContactsModel contactsModel;
 

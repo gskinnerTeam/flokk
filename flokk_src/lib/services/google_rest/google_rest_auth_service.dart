@@ -114,7 +114,7 @@ class GoogleAuthResults {
 
   String getProfileFromToken(String idToken) {
     List<String> parts = idToken.split(".");
-    var decoder = Base64Codec();
+    var decoder = const Base64Codec();
     String payload = decoder.normalize(parts[1]);
     return utf8.decode(decoder.decode(payload));
   }

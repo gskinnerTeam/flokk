@@ -47,7 +47,7 @@ class ContactEventsMiniForm extends BaseMiniForm {
 
         /// Return the actual Column of content
         return SeparatedColumn(
-          separatorBuilder: ()=>VSpace(Insets.sm * 1.5),
+          separatorBuilder: () => const VSpace(Insets.sm * 1.5),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: kids,
         );
@@ -78,23 +78,25 @@ class ContactEventsMiniForm extends BaseMiniForm {
           onDateChanged: onDateChanged,
           isSelected: autoFocus,
         ).flexible(),
-        HSpace(Insets.m),
+        const HSpace(Insets.m),
 
         /// Type dropdown
         StyledAutoCompleteDropdown(
-            items: types,
-            hint: typeHint,
-            initialValue: initialType,
-            onChanged: onTypeChanged,
-            onFocusChanged: (v) => handleFocusChanged(v, context)).width(typeWidth).translate(offset: Offset(0, 3)),
-        HSpace(2),
+                items: types,
+                hint: typeHint,
+                initialValue: initialType,
+                onChanged: onTypeChanged,
+                onFocusChanged: (v) => handleFocusChanged(v, context))
+            .width(typeWidth)
+            .translate(offset: const Offset(0, 3)),
+        const HSpace(2),
 
         /// Delete Btn
         ColorShiftIconBtn(
           StyledIcons.formDelete,
           size: 20,
           onPressed: showDelete ? onDelete : null,
-          padding: EdgeInsets.all(Insets.sm),
+          padding: const EdgeInsets.all(Insets.sm),
         ).opacity(showDelete ? 1 : 0, animate: true).animate(Durations.fast, Curves.linear),
       ],
     );

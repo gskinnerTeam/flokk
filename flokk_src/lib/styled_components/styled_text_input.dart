@@ -58,7 +58,7 @@ class StyledFormTextInput extends StatelessWidget {
       inputDecoration: InputDecoration(
         isDense: true,
         contentPadding: contentPadding,
-        border: ThinUnderlineBorder(borderSide: BorderSide(width: 5, color: Colors.red)),
+        border: const ThinUnderlineBorder(borderSide: BorderSide(width: 5, color: Colors.red)),
         //focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: .5, color: Colors.red)),
         hintText: hintText,
       ),
@@ -179,7 +179,7 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
     return Container(
-      padding: EdgeInsets.symmetric(vertical: Insets.sm),
+      padding: const EdgeInsets.symmetric(vertical: Insets.sm),
       child: TextFormField(
         onChanged: widget.onChanged,
         onEditingComplete: widget.onEditingComplete,
@@ -191,6 +191,7 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
         keyboardType: widget.type,
         obscureText: widget.obscureText,
         autocorrect: widget.autoCorrect,
+        // ignore: deprecated_member_use
         autovalidate: widget.autoValidate,
         enableSuggestions: widget.enableSuggestions,
         style: widget.style ?? TextStyles.Body1,
@@ -205,7 +206,7 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
                 prefixIcon: widget.prefixIcon,
                 suffixIcon: widget.suffixIcon,
                 contentPadding: widget.contentPadding,
-                border: OutlineInputBorder(borderSide: BorderSide.none),
+                border: const OutlineInputBorder(borderSide: BorderSide.none),
                 isDense: true,
                 icon: widget.icon == null ? null : Icon(widget.icon),
                 errorText: widget.errorText,
@@ -318,8 +319,9 @@ class ThinUnderlineBorder extends InputBorder {
     TextDirection? textDirection,
   }) {
     print("Width: ${borderSide.width}");
-    if (borderRadius.bottomLeft != Radius.zero || borderRadius.bottomRight != Radius.zero)
+    if (borderRadius.bottomLeft != Radius.zero || borderRadius.bottomRight != Radius.zero) {
       canvas.clipPath(getOuterPath(rect, textDirection: textDirection));
+    }
     canvas.drawLine(rect.bottomLeft, rect.bottomRight, borderSide.toPaint());
   }
 

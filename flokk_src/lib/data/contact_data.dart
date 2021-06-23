@@ -197,7 +197,7 @@ class ContactData {
 
   List<DateMixin> get allDates {
     //Need to explicitly cast x as DateMixin, otherwise will throw CastError when trying to add birthday
-    List<DateMixin> dates = hasEvents ? eventList.map((x) => x as DateMixin).toList() : [];
+    List<DateMixin> dates = hasEvents ? eventList.toList() : [];
     if (hasValidDateForBirthday) {
       dates.add(birthday);
     }
@@ -213,7 +213,7 @@ class ContactData {
   Map<String, dynamic> toJson() => _$ContactDataToJson(this);
 
   @override
-  bool operator==(covariant ContactData other) => other.id == id;
+  bool operator ==(covariant ContactData other) => other.id == id;
 
   @override
   int get hashCode => id.hashCode;
@@ -243,7 +243,7 @@ class AddressData {
     String ss(String value, [String? extra]) => StringUtils.safeGet(value, extra);
 
     String streetAddress = "${ss(street, ", ")}${ss(formattedAddress)}";
-    String address = "${ss(streetAddress, " \n")}";
+    String address = ss(streetAddress, " \n");
 
     String cityRegion = ("${ss(city, ", ")}${ss(region)}");
     address += ss(cityRegion, " \n");
@@ -359,7 +359,7 @@ class BirthdayData with DateMixin {
   @override
   String getType() => "Birthday";
 
-  get isEmpty => StringUtils.isEmpty("$text");
+  get isEmpty => StringUtils.isEmpty(text);
 
   factory BirthdayData.fromJson(Map<String, dynamic> json) => _$BirthdayDataFromJson(json);
 

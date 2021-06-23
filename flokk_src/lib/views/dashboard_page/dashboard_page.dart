@@ -21,18 +21,18 @@ class DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedFlexView(850,
-        scrollPadding: EdgeInsets.only(right: Insets.m),
+        scrollPadding: const EdgeInsets.only(right: Insets.m),
         child: Column(
           children: <Widget>[
-            SizedBox(height: Insets.l),
-            TopContactsSection(),
-            VSpace(Insets.m),
-            SocialActivitySection().padding(horizontal: Insets.lGutter).flexible(),
-            SizedBox(height: Insets.l * 1.5),
+            const SizedBox(height: Insets.l),
+            const TopContactsSection(),
+            const VSpace(Insets.m),
+            const SocialActivitySection().padding(horizontal: Insets.lGutter).flexible(),
+            const SizedBox(height: Insets.l * 1.5),
             RepaintBoundary(
-              child: UpcomingActivitiesSection().height(170).padding(horizontal: Insets.lGutter),
+              child: const UpcomingActivitiesSection().height(170).padding(horizontal: Insets.lGutter),
             ),
-            SizedBox(height: Insets.l),
+            const SizedBox(height: Insets.l),
           ],
         ));
   }

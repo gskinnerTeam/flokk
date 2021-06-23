@@ -10,7 +10,6 @@ class TopContactsPlaceholder extends StatelessWidget {
 
   const TopContactsPlaceholder({Key? key, this.isRecent = false}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -22,18 +21,18 @@ class TopContactsPlaceholder extends StatelessWidget {
           children: [
             if (showImage) ...{
               isRecent
-                  ? PlaceholderImageAndBgStack("dashboard-recentActive", height: 157, top: 2)
-                  : PlaceholderImageAndBgStack("dashboard-favorites", height: 126, top: 22),
-              HSpace(Insets.xl),
+                  ? const PlaceholderImageAndBgStack("dashboard-recentActive", height: 157, top: 2)
+                  : const PlaceholderImageAndBgStack("dashboard-favorites", height: 126, top: 22),
+              const HSpace(Insets.xl),
             },
             EmptyStateTitleAndClickableText(
               title: isRecent ? "NO RECENT ACTIVITY" : "NO FAVORITE CONTACTS",
-              startText: "${isRecent ? "Add GitHub and Twitter handles in " : "Star "}",
+              startText: isRecent ? "Add GitHub and Twitter handles in " : "Star ",
               linkText: "contacts",
               endText: " to show their recent activity",
               onPressed: () => showContactPage(context),
               crossAxisAlign: showImage ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-            ).width(230).translate(offset: Offset(0, -15))
+            ).width(230).translate(offset: const Offset(0, -15))
           ],
         );
       },

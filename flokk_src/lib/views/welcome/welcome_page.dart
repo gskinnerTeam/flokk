@@ -14,7 +14,6 @@ import 'package:flokk/services/google_rest/google_rest_auth_service.dart';
 import 'package:flokk/services/google_rest/google_rest_service.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:flokk/styled_components/clickable_text.dart';
-import 'package:flokk/styled_components/scrolling/styled_scrollview.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
 import 'package:flokk/styled_components/styled_progress_spinner.dart';
 import 'package:flokk/styles.dart';
@@ -100,7 +99,7 @@ class WelcomePageState extends State<WelcomePage> {
     await RefreshSocialCommand(context).execute(context.read<ContactsModel>().allContacts);
 
     /// Show main app view
-    Navigator.push<void>(context, PageRoutes.fade(() => MainScaffold(), Durations.slow.inMilliseconds * .001));
+    Navigator.push<void>(context, PageRoutes.fade(() => const MainScaffold(), Durations.slow.inMilliseconds * .001));
   }
 
   void handleUrlClicked() => UrlLauncher.open(authUrl);
@@ -124,7 +123,7 @@ class WelcomePageState extends State<WelcomePage> {
 
   void handleCompletePressed() async {
     if (httpError) {
-      Dialogs.show(OkCancelDialog(
+      Dialogs.show(const OkCancelDialog(
         message: "We are unable to authorize with Google's servers. "
             "Check your internet connection and try again.",
       ));
@@ -132,7 +131,7 @@ class WelcomePageState extends State<WelcomePage> {
     }
     isLoading = true;
     authCodeError = false;
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     ServiceResult result = await googleRest.auth.authorizeDevice(authInfo!.deviceCode);
     GoogleAuthResults? authResults = result.content;
     if (authResults != null) {
@@ -203,7 +202,7 @@ class _WelcomePageStateView extends StatelessWidget {
                         skipBirdTransition ? 0.seconds : Durations.slow,
                         Curves.easeOut,
                       ),
-                  _WelcomeContentStack()
+                  const _WelcomeContentStack()
                       .width(contentWidth)
                       // Use an AnimatedPanel to slide the panel open/closed
                       .animatedPanelX(
@@ -235,12 +234,12 @@ class _WelcomeContentStack extends StatelessWidget {
     WelcomePageState state = context.watch();
     //Bg shape is rounded on the left corners when in dual-column mode, but square in full-screen
     BorderRadius? getBgShape() => state.twoColumnMode
-        ? BorderRadius.only(topLeft: Radius.circular(Corners.s10), bottomLeft: Radius.circular(Corners.s10))
+        ? const BorderRadius.only(topLeft: Radius.circular(Corners.s10), bottomLeft: Radius.circular(Corners.s10))
         : null;
 
     AppTheme theme = context.watch();
     return state.isLoading
-        ? StyledProgressSpinner().backgroundColor(theme.accent1)
+        ? const StyledProgressSpinner().backgroundColor(theme.accent1)
         : Stack(
             children: [
               FadingIndexedStack(
@@ -248,7 +247,7 @@ class _WelcomeContentStack extends StatelessWidget {
                 index: state.pageIndex,
                 children: <Widget>[
                   WelcomePageStep1(singleColumnMode: !state.twoColumnMode).scrollable().center(),
-                  WelcomePageStep2().scrollable().center(),
+                  const WelcomePageStep2().scrollable().center(),
                 ],
               ).padding(vertical: Insets.l * 1.5).center(),
               ClickableText(

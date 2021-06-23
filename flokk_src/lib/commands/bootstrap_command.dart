@@ -37,7 +37,7 @@ class BootstrapCommand extends AbstractCommand {
     Intl.defaultLocale = 'en_US';
 
     /// Set minimal Window size
-    DesktopWindow.setMinWindowSize(Size(750, 600));
+    DesktopWindow.setMinWindowSize(const Size(750, 600));
 
     /// Handle version upgrades
     if (appModel.version != AppModel.kCurrentVersion) {

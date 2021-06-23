@@ -60,7 +60,7 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
           borderRadius: Corners.s5Border,
           color: isMouseOver ? overColor : Colors.transparent,
         ),
-        padding: EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m),
+        padding: const EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -69,14 +69,14 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
               children: <Widget>[
                 if (widget.icon != null)
                   StyledImageIcon(widget.icon!, size: widget.size, color: widget.iconColor ?? theme.grey),
-                SizedBox(width: Insets.l),
+                const SizedBox(width: Insets.l),
                 // Wrap value in ClickableText widget, it will get colored if anyone is listening
                 //Text(value),
                 ClickableText(widget.value, onPressed: widget.onPressed).constrained(maxWidth: 300).flexible(),
-                SizedBox(width: Insets.m),
+                const SizedBox(width: Insets.m),
                 if (widget.label != null)
                   Text(widget.label!.toUpperCase(), style: TextStyles.Caption.textColor(theme.greyWeak))
-                      .translate(offset: Offset(0, 8)),
+                      .translate(offset: const Offset(0, 8)),
               ],
             ).padding(right: Insets.l * 1.5),
             if (isMouseOver)
@@ -109,7 +109,7 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
   }
 }
 
-typedef Widget SeparatorBuilder();
+typedef SeparatorBuilder = Widget Function();
 
 class MultilineClickableIconRow extends StatelessWidget {
   final void Function(String)? onPressed;

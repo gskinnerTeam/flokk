@@ -44,9 +44,7 @@ class ContactSocialMiniForm extends BaseMiniForm {
         children: <Widget>[
           /// Prefix text, non-interactive
           IgnorePointer(
-            child: FocusScope(
-                canRequestFocus: false,
-                child: buildTextInput(context, hint, "", (v) {})),
+            child: FocusScope(canRequestFocus: false, child: buildTextInput(context, hint, "", (v) {})),
           ),
 
           /// Value text

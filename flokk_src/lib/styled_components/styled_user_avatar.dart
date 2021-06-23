@@ -32,7 +32,6 @@ class _StyledUserAvatarState extends State<StyledUserAvatar> {
 
   @override
   Widget build(BuildContext context) {
-
     Widget child;
     if (widget.contact.profilePicBytes != null) {
       child = Image.memory(widget.contact.profilePicBytes!, fit: BoxFit.cover);
@@ -44,7 +43,7 @@ class _StyledUserAvatarState extends State<StyledUserAvatar> {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(99),
-      child: Container(
+      child: SizedBox(
         width: widget.size,
         height: widget.size,
         child: child,
@@ -56,7 +55,7 @@ class _StyledUserAvatarState extends State<StyledUserAvatar> {
 class AnimalAvatar extends StatelessWidget {
   final int? seed;
 
-  final List<Color> backgrounds = [
+  final List<Color> backgrounds = const [
     Color(0xFF44D3B8),
     Color(0xFFACC66B),
     Color(0xFF915599),

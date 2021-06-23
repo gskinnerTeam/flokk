@@ -46,7 +46,7 @@ class _ContactInfoSocialCardState extends State<ContactInfoSocialCard> {
     return Column(
       children: <Widget>[
         (isTwitterLoading
-                ? StyledCard(bgColor: theme.bg1, child: StyledProgressSpinner())
+                ? StyledCard(bgColor: theme.bg1, child: const StyledProgressSpinner())
                 : PlaceholderContentSwitcher(
                     hasContent: () => tweetItems.isNotEmpty,
                     placeholder: TwitterPlaceholder(contact: contact),
@@ -57,9 +57,9 @@ class _ContactInfoSocialCardState extends State<ContactInfoSocialCard> {
                     ),
                   ))
             .height(300),
-        VSpace(Insets.l),
+        const VSpace(Insets.l),
         (isGitLoading
-                ? StyledCard(bgColor: theme.bg1, child: StyledProgressSpinner())
+                ? StyledCard(bgColor: theme.bg1, child: const StyledProgressSpinner())
                 : PlaceholderContentSwitcher(
                     hasContent: () => gitItems.isNotEmpty,
                     placeholder: GitPlaceholder(contact: contact),

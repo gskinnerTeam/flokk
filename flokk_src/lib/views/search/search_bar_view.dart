@@ -15,7 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
-  SearchBarView(SearchBarState state, {Key? key}) : super(state, key: key);
+  const SearchBarView(SearchBarState state, {Key? key}) : super(state, key: key);
 
   bool get isOpen => state.isOpen;
 

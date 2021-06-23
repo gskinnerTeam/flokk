@@ -12,7 +12,7 @@ class GithubRestService {
   Map<String, String> _getAuthHeader() {
     final String key = Uri.encodeQueryComponent(ApiKeys().githubKey);
     final String secret = Uri.encodeQueryComponent(ApiKeys().githubSecret);
-    final Uint8List bytes = AsciiEncoder().convert("$key:$secret");
+    final Uint8List bytes = const AsciiEncoder().convert("$key:$secret");
     final String auth = base64Encode(bytes);
     return {
       "Authorization": "Basic $auth",

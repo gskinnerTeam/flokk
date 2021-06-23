@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AnimatedTextSpike extends StatefulWidget {
+  const AnimatedTextSpike({Key? key}) : super(key: key);
+
   @override
   _AnimatedTextSpikeState createState() => _AnimatedTextSpikeState();
 }
@@ -15,7 +17,7 @@ class _AnimatedTextSpikeState extends AnimatedState<AnimatedTextSpike> {
       opacity: animation.value,
       child: GestureDetector(
         onTap: () => animation.forward(from: 0),
-        child: Text("Hello Fade:"),
+        child: const Text("Hello Fade:"),
       ),
     );
   }

@@ -27,7 +27,7 @@ class TwitterPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) => Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        if (constraints.maxHeight > 250) PlaceholderImageAndBgStack("dashboard-twitter", height: 126, top: 43),
+        if (constraints.maxHeight > 250) const PlaceholderImageAndBgStack("dashboard-twitter", height: 126, top: 43),
         EmptyStateTitleAndClickableText(
           title: isPopular ? "NO POPULAR TWEETS" : "NO TWITTER ACTIVITY",
           startText: contact == ContactData() ? "Add Twitter Handles in " : "Add ",

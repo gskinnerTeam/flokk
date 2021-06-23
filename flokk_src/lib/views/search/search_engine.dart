@@ -113,10 +113,8 @@ class SearchEngine extends SimpleNotifier {
   set groupsList(List<GroupData> value) => setAndMarkDirty(() => _groupsList = value);
   List<GroupData> _groupsList = [];
 
-  List<ContactData> getResults(
-      [List<ContactData>? newContacts, ContactOrderBy _orderBy = ContactOrderBy.FirstName]) {
-    if (newContacts != null)
-      contactsList = newContacts;
+  List<ContactData> getResults([List<ContactData>? newContacts, ContactOrderBy _orderBy = ContactOrderBy.FirstName]) {
+    if (newContacts != null) contactsList = newContacts;
     orderBy = _orderBy;
     // If we have no data
     if (_contactsList.isEmpty) return [];

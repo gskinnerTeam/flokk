@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ValueListenableBuilder2<A, B> extends StatelessWidget {
-  ValueListenableBuilder2({Key? key, required this.value1, required this.value2, required this.builder, this.child}) : super(key: key);
+  const ValueListenableBuilder2(
+      {Key? key, required this.value1, required this.value2, required this.builder, this.child})
+      : super(key: key);
 
   final ValueListenable<A> value1;
   final ValueListenable<B> value2;
@@ -22,7 +24,9 @@ class ValueListenableBuilder2<A, B> extends StatelessWidget {
 }
 
 class ValueListenableBuilder3<A, B, C> extends StatelessWidget {
-  ValueListenableBuilder3({Key? key, required this.value1, required this.value2, required this.value3, required this.builder, this.child}) : super(key: key);
+  const ValueListenableBuilder3(
+      {Key? key, required this.value1, required this.value2, required this.value3, required this.builder, this.child})
+      : super(key: key);
 
   final ValueListenable<A> value1;
   final ValueListenable<B> value2;
@@ -44,7 +48,8 @@ class ValueListenableBuilder3<A, B, C> extends StatelessWidget {
 }
 
 class ValueListenableBuilder4<A, B, C, D> extends StatelessWidget {
-  ValueListenableBuilder4(this.value1, this.value2, this.value3, this.value4, {Key? key, required this.builder, this.child})
+  const ValueListenableBuilder4(this.value1, this.value2, this.value3, this.value4,
+      {Key? key, required this.builder, this.child})
       : super(key: key);
 
   final ValueListenable<A> value1;

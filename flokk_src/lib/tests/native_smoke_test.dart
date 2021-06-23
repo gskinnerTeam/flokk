@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class NativeSmokeTest extends StatefulWidget {
+  const NativeSmokeTest({Key? key}) : super(key: key);
+
   @override
   _NativeSmokeTestState createState() => _NativeSmokeTestState();
 }
@@ -33,11 +35,11 @@ class _NativeSmokeTestState extends State<NativeSmokeTest> {
   }
 
   void _handleSetWindowRect() async {
-    DesktopWindow.setWindowSize(Size(256, 256));
+    DesktopWindow.setWindowSize(const Size(256, 256));
   }
 
   void _handleSetWindowMinSize() async {
-    DesktopWindow.setMinWindowSize(Size(512, 512));
+    DesktopWindow.setMinWindowSize(const Size(512, 512));
   }
 
   @override
@@ -49,24 +51,24 @@ class _NativeSmokeTestState extends State<NativeSmokeTest> {
             Text("Data path: $_dataPath"),
             MaterialButton(
               onPressed: () => UrlLauncher.open("https://google.com"),
-              child: Text("Open url"),
+              child: const Text("Open url"),
             ),
             MaterialButton(
-              onPressed: () => Clipboard.setData(ClipboardData()),
-              child: Text("Copy \"clipboard test\" to clipboard"),
+              onPressed: () => Clipboard.setData(const ClipboardData()),
+              child: const Text("Copy \"clipboard test\" to clipboard"),
             ),
             MaterialButton(
               onPressed: _handlePickImage,
-              child: Text("Open file picker"),
+              child: const Text("Open file picker"),
             ),
             Text("Image path: $_imagePath"),
             MaterialButton(
               onPressed: _handleSetWindowRect,
-              child: Text("Set window dimensions"),
+              child: const Text("Set window dimensions"),
             ),
             MaterialButton(
               onPressed: _handleSetWindowMinSize,
-              child: Text("Set window min size"),
+              child: const Text("Set window min size"),
             ),
           ],
         ),

@@ -28,7 +28,9 @@ bool tryAndLoadDevSpike(BuildContext c) {
   Widget? spike;
 
   /// Load spike if we have one
-  if (spike != null) AppGlobals.nav?.pushReplacement(PageRoutes.fade(() => spike));
+  if (spike != null) {
+    AppGlobals.nav?.pushReplacement(PageRoutes.fade(() => spike));
+  }
   return spike != null;
 }
 
@@ -65,7 +67,7 @@ void main() {
         /// ROOT CONTEXT, Allows Commands to retrieve a 'safe' context that is not tied to any one view. Allows them to work on async tasks without issues.
         Provider<BuildContext>(create: (c) => c),
       ],
-      child: MainApp(),
+      child: const MainApp(),
       //child: SpikeApp(ImageTintSpike()),
     ),
   );
@@ -76,6 +78,8 @@ void main() {
 /// * Runs the BootStrapperCommand
 /// * Wraps a MaterialApp, assigning it a navKey so the Commands can access the root level navigator
 class MainApp extends StatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
+
   @override
   _MainAppState createState() => _MainAppState();
 }

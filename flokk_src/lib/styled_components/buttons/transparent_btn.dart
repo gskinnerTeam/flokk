@@ -101,9 +101,9 @@ class TransparentIconAndTextBtn extends StatelessWidget {
       child: Row(
         children: [
           StyledImageIcon(icon, size: iconSize, color: c),
-          HSpace(Insets.sm),
+          const HSpace(Insets.sm),
           Text(label, style: style ?? TextStyles.Body1.textColor(textColor ?? c)),
-          HSpace(3), // Add a bit of extra padding to the right, seems like Icon() has it's own baked in padding
+          const HSpace(3), // Add a bit of extra padding to the right, seems like Icon() has it's own baked in padding
         ],
       ),
       onPressed: onPressed,

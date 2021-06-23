@@ -22,8 +22,8 @@ class FocusChangedNotification extends Notification {
 /// [FocusChangedNotification] Dispatched from a mini-form up indicating we should close the container
 class CloseFormNotification extends Notification {}
 
-typedef Widget FormBuilder<T>();
-typedef bool BoolCallback();
+typedef FormBuilder<T> = Widget Function();
+typedef BoolCallback = bool Function();
 
 /// /////////////////////////////////////////////////////
 /// [ExpandingMiniformContainer] - Holds a textfield prompt that opens into a form, listens for focus [FocusChangedNotification]
@@ -70,7 +70,7 @@ class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer>
   bool _handleFormFocusChanged(bool value) {
     if (value == false) {
       timer?.cancel();
-      timer = Timer(Duration(milliseconds: 750), () {
+      timer = Timer(const Duration(milliseconds: 750), () {
         if (widget.hasContent()) return;
         isOpen = false;
       });
@@ -112,8 +112,8 @@ class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               /// Left Icon
-              StyledImageIcon(widget.icon, size: 20, color: theme.grey).translate(offset: Offset(0, 8)),
-              HSpace(Insets.l),
+              StyledImageIcon(widget.icon, size: 20, color: theme.grey).translate(offset: const Offset(0, 8)),
+              const HSpace(Insets.l),
 
               /// Content - Either the miniform, or the StyledText
               (_isOpen!

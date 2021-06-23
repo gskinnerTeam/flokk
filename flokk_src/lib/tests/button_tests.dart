@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ButtonTests extends StatelessWidget {
+  const ButtonTests({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     void p() => print("CLick1");
@@ -20,22 +22,22 @@ class ButtonTests extends StatelessWidget {
       body: Center(
         child: SeparatedRow(
           mainAxisAlignment: MainAxisAlignment.center,
-          separatorBuilder: () => HSpace(Insets.l),
+          separatorBuilder: () => const HSpace(Insets.l),
           children: [
             SeparatedColumn(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                separatorBuilder: () => VSpace(Insets.m),
+                separatorBuilder: () => const VSpace(Insets.m),
                 children: [
                   ColorShiftIconBtn(StyledIcons.add, color: theme.accent1, onPressed: p),
                 ]),
             SeparatedColumn(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              separatorBuilder: () => VSpace(Insets.m),
+              separatorBuilder: () => const VSpace(Insets.m),
               children: [
                 SecondaryIconBtn(StyledIcons.add, onPressed: p),
-                SecondaryBtn(child: FlutterLogo(), onPressed: p),
+                SecondaryBtn(child: const FlutterLogo(), onPressed: p),
                 SecondaryTextBtn("STAY ON THIS PAGE", onPressed: p),
                 TransparentBtn(
                     child: Text("CLICK ME!", style: TextStyles.Footnote.textColor(theme.accent1)), onPressed: p),
@@ -51,7 +53,7 @@ class ButtonTests extends StatelessWidget {
             SeparatedColumn(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              separatorBuilder: () => VSpace(Insets.m),
+              separatorBuilder: () => const VSpace(Insets.m),
               children: [
                 PrimaryTextBtn("SAVE", onPressed: p),
                 PrimaryTextBtn("SAVE", bigMode: true, onPressed: p),

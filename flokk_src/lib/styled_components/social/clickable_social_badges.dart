@@ -83,7 +83,7 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
                   hasAccount: widget.contact.hasTwitter,
                   onPressed: () => _handleSocialClicked(context, widget.contact, SocialActivityType.Twitter),
                 ),
-                HSpace(Insets.m),
+                const HSpace(Insets.m),
                 SocialBadge(
                   icon: StyledIcons.githubActive,
                   iconPlaceholder: StyledIcons.githubEmpty,
@@ -93,9 +93,9 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
                 ),
               ],
             ),
-            if (widget.showTimeSince) VSpace(Insets.sm * 1.5),
+            if (widget.showTimeSince) const VSpace(Insets.sm * 1.5),
             if (widget.showTimeSince) Text(bottomTxt, style: TextStyles.Body2.textColor(theme.greyWeak)),
-            VSpace(Insets.sm),
+            const VSpace(Insets.sm),
           ]),
         );
       },

@@ -6,7 +6,7 @@ import 'package:flokk/models/app_model.dart';
 import 'package:flokk/services/google_rest/google_rest_contact_groups_service.dart';
 import 'package:flokk/services/google_rest/google_rest_service.dart';
 import 'package:flokk/services/service_result.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
 class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
@@ -22,8 +22,7 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
         GoogleRestContactGroupsService groupsApi = googleRestService.groups;
         ServiceResult<GroupData> result = ServiceResult(null, HttpResponse.empty());
         if (onlyStarred) {
-          result =
-              await groupsApi.getById(authModel.googleAccessToken, GoogleRestService.kStarredGroupId);
+          result = await groupsApi.getById(authModel.googleAccessToken, GoogleRestService.kStarredGroupId);
           if (result.success) {
             GroupData starred = contactsModel.getGroupById(GoogleRestService.kStarredGroupId);
             if (starred != GroupData()) {

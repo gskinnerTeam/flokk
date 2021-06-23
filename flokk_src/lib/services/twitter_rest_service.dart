@@ -16,10 +16,10 @@ class TwitterRestService {
     final String authUrl = "${proxy}https://api.twitter.com/oauth2/token";
     final String key = Uri.encodeQueryComponent(ApiKeys().twitterKey);
     final String secret = Uri.encodeQueryComponent(ApiKeys().twitterSecret);
-    final Uint8List bytes = AsciiEncoder().convert("$key:$secret");
+    final Uint8List bytes = const AsciiEncoder().convert("$key:$secret");
     final String auth = base64Encode(bytes);
 
-    HttpResponse response = await HttpClient.post("$authUrl",
+    HttpResponse response = await HttpClient.post(authUrl,
         headers: {"Authorization": "Basic $auth", "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
         body: "grant_type=client_credentials");
 
@@ -28,7 +28,6 @@ class TwitterRestService {
       Map<String, dynamic> data = jsonDecode(response.body);
       result = TwitterAuthResult(tokenType: data["token_type"], accessToken: data["access_token"]);
     }
-
 
     return ServiceResult(result, response);
   }

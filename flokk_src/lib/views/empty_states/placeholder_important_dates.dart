@@ -2,6 +2,8 @@ import 'package:flokk/views/empty_states/placeholder_widget_helpers.dart';
 import 'package:flutter/material.dart';
 
 class ImportantDatesPlaceholder extends StatelessWidget {
+  const ImportantDatesPlaceholder({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -11,7 +13,7 @@ class ImportantDatesPlaceholder extends StatelessWidget {
           title: "NO UPCOMING IMPORTANT DATES",
           startText: "Add birthdays/special dates to your ",
           linkText: "contacts",
-          onPressed: ()=>showContactPage(context),
+          onPressed: () => showContactPage(context),
         ),
       ],
     );

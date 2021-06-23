@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-typedef Widget SeparatorBuilder();
+typedef SeparatorBuilder = Widget Function();
 
 class SeparatedRow extends StatelessWidget {
   final List<Widget> children;

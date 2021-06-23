@@ -17,7 +17,7 @@ class ContentUnderlay extends StatelessWidget {
       builder: (_, double opacity, __) {
         return opacity == 0
             // Don't return anything if we're totally invisible
-            ? SizedBox.shrink()
+            ? const SizedBox.shrink()
             // Use a RawMaterialButton to stop hover events to passing to buttons below
             : RawMaterialButton(
                 padding: EdgeInsets.zero,

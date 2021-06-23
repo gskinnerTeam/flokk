@@ -3,7 +3,7 @@ import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/commands/dialogs/show_service_error_command.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:flokk/services/twitter_rest_service.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class AuthenticateTwitterCommand extends AbstractCommand {
   AuthenticateTwitterCommand(BuildContext c) : super(c);

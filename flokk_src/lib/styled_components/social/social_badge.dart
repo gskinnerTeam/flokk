@@ -44,10 +44,10 @@ class SocialBadge extends StatelessWidget {
               align: Alignment.center,
               borderRadius: BorderRadius.circular(99),
               child: Text(
-                "$msgText",
+                msgText,
                 textAlign: TextAlign.center,
                 style: TextStyles.Footnote.textColor(theme.txt).letterSpace(1),
-              ).translate(offset: Offset(0, -1)),
+              ).translate(offset: const Offset(0, -1)),
             ).constrained(width: 19, height: 19).alignment(Alignment.bottomRight),
         ],
       ).width(size).height(size),

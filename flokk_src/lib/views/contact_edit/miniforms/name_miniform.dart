@@ -19,7 +19,7 @@ class ContactNameMiniForm extends BaseMiniForm {
         /// Wrap content in a builder so the FocusNotification will get caught by the ExpandingFormContainer
         return Builder(
           builder: (context) => SeparatedColumn(
-            separatorBuilder: ()=>VSpace(Insets.sm * .5),
+            separatorBuilder: () => const VSpace(Insets.sm * .5),
             children: <Widget>[
               buildTextInput(context, "First Name", c.nameGiven, (v) => c.nameGiven = v, autoFocus: isSelected),
               buildTextInput(context, "Middle Name", c.nameMiddle, (v) => c.nameMiddle = v),

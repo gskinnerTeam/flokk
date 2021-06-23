@@ -16,7 +16,7 @@ class ColorShiftIconBtn extends StatelessWidget {
   final AssetImage icon;
   final double size;
   final Color? color;
-  final Color ?bgColor;
+  final Color? bgColor;
   final EdgeInsets padding;
   final double? minWidth;
   final double? minHeight;

@@ -43,7 +43,7 @@ class StyledTabBar extends StatelessWidget {
 
   Widget _RoundedBox({double? width, Color? border, Color? fill}) {
     return Container(
-      width: width ?? null,
+      width: width,
       decoration: BoxDecoration(
           color: fill,
           borderRadius: Corners.s5Border,

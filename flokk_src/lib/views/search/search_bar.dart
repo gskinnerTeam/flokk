@@ -98,8 +98,7 @@ class SearchBarState extends State<SearchBar> {
 
   void handleContactPressed(ContactData c) async {
     MainScaffoldState scaffold = context.read();
-    if (!await scaffold.showDiscardWarningIfNecessary())
-      return;
+    if (!await scaffold.showDiscardWarningIfNecessary()) return;
     tmpSearch.addFilterContact(c.nameFull);
     clearQueryString();
     handleSearchSubmitted();
@@ -159,10 +158,11 @@ class SearchBarState extends State<SearchBar> {
     textKey.currentState?.text = "";
     tmpSearch.clearTags();
     tmpSearch.clearFilterContacts();
-    if (!isOpen)
+    if (!isOpen) {
       save();
-    else
+    } else {
       textFocusNode.requestFocus();
+    }
   }
 
   void save() {
@@ -171,5 +171,4 @@ class SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) => SearchBarView(this);
-
 }

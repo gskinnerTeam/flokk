@@ -18,8 +18,9 @@ class StyledGroupLabel extends StatelessWidget {
   final VoidCallback? onClose;
   final VoidCallback? onPressed;
 
-  StyledGroupLabel({this.icon, this.text = "", this.onFocusChanged, this.onClose, this.onPressed})
-      : assert(icon == null || (icon is AssetImage) || (icon is IconData));
+  const StyledGroupLabel({this.icon, this.text = "", this.onFocusChanged, this.onClose, this.onPressed, Key? key})
+      : assert(icon == null || (icon is AssetImage) || (icon is IconData)),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +45,16 @@ class StyledGroupLabel extends StatelessWidget {
             StyledIcons.closeLarge,
             minWidth: 0,
             minHeight: 0,
-           // 8 padding on either side + 8 icon size = design dimensions, minWidth doesn't seem to work for this so I'm using padding instead
-            padding: EdgeInsets.all(8),
+            // 8 padding on either side + 8 icon size = design dimensions, minWidth doesn't seem to work for this so I'm using padding instead
+            padding: const EdgeInsets.all(8),
             size: 8,
             color: theme.grey,
             bgColor: ColorUtils.blend(theme.surface, theme.bg2, .35),
             onFocusChanged: onFocusChanged,
             onPressed: onClose,
           ),
-        } else ... {
-          HSpace(Insets.m),
+        } else ...{
+          const HSpace(Insets.m),
         },
       ],
     );
@@ -65,7 +66,7 @@ class StyledGroupLabel extends StatelessWidget {
             onPressed: onPressed,
             onFocusChanged: onFocusChanged,
             borderRadius: Corners.s5,
-            contentPadding: EdgeInsets.all(Insets.sm),
+            contentPadding: const EdgeInsets.all(Insets.sm),
             child: content,
           )
         : Container(

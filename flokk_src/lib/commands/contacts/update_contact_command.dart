@@ -5,13 +5,15 @@ import 'package:flokk/commands/social/refresh_social_command.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/app_model.dart';
 import 'package:flokk/services/service_result.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   UpdateContactCommand(BuildContext c) : super(c);
 
-  Future<ContactData> execute(ContactData contact, {bool updateSocial: false, bool tryAgainOnError = true}) async {
-    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return ContactData();
+  Future<ContactData> execute(ContactData contact, {bool updateSocial = false, bool tryAgainOnError = true}) async {
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) {
+      return ContactData();
+    }
     Log.p("[UpdateContactCommand]");
 
     ServiceResult<ContactData> result = await executeAuthServiceCmd(() async {

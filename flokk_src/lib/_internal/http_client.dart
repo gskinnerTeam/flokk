@@ -11,7 +11,7 @@ enum NetErrorType {
   unknown,
 }
 
-typedef Future<http.Response> HttpRequest();
+typedef HttpRequest = Future<http.Response> Function();
 
 class HttpClient {
   static Future<HttpResponse> get(String url, {Map<String, String>? headers}) async {
@@ -75,17 +75,16 @@ class HttpResponse {
   int get statusCode => raw.statusCode;
 
   HttpResponse(this.raw) {
-    //No response at all, there must have been a connection error
-    if (raw == null)
-      errorType = NetErrorType.disconnected;
     //200 means all is good :)
-    else if (raw.statusCode == 200)
+    if (raw.statusCode == 200) {
       errorType = NetErrorType.none;
-    //500's, server is probably down
-    else if (raw.statusCode >= 500 && raw.statusCode < 600)
+      //500's, server is probably down
+    } else if (raw.statusCode >= 500 && raw.statusCode < 600) {
       errorType = NetErrorType.timedOut;
-    //400's server is denying our request, probably bad auth or malformed request
-    else if (raw.statusCode >= 400 && raw.statusCode < 500) errorType = NetErrorType.denied;
+      //400's server is denying our request, probably bad auth or malformed request
+    } else if (raw.statusCode >= 400 && raw.statusCode < 500) {
+      errorType = NetErrorType.denied;
+    }
   }
 
   // NOTE CE: This just crahes on construction

@@ -24,7 +24,7 @@ class Log {
   }
 
   static String _formatLine(String value, bool writeTimestamp) {
-    String date = writeTimestamp ? "${DateFormat("EEE MMM d @ H:m:s").format(DateTime.now())}" : "";
+    String date = writeTimestamp ? DateFormat("EEE MMM d @ H:m:s").format(DateTime.now()) : "";
     return "$date: $value \n";
   }
 

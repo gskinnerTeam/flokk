@@ -12,7 +12,7 @@ class DeleteContactCommand extends AbstractCommand with AuthorizedServiceCommand
   DeleteContactCommand(BuildContext c) : super(c);
 
   Future<bool> execute(List<ContactData> contacts, {VoidCallback? onDeleteConfirmed}) async {
-    if (contacts == null || contacts.isEmpty || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (contacts.isEmpty || AppModel.forceIgnoreGoogleApiCalls) return false;
     Log.p("[DeleteContactCommand]");
     String txt = contacts.length > 1 ? "these ${contacts.length} contacts" : "this contact";
     bool doDelete = await Dialogs.show(

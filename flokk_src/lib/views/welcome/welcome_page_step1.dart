@@ -17,14 +17,14 @@ class WelcomePageStep1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WelcomePageState state = context.watch();
-    TextStyle bodyTxtStyle = TextStyles.Body1.textColor(Color(0xfff1f7f0)).textHeight(1.6);
+    TextStyle bodyTxtStyle = TextStyles.Body1.textColor(const Color(0xfff1f7f0)).textHeight(1.6);
     return SeparatedColumn(
-      separatorBuilder: () => SizedBox(height: Insets.l),
+      separatorBuilder: () => const SizedBox(height: Insets.l),
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        if (singleColumnMode) FlokkLogo(50, Colors.white).center(),
+        if (singleColumnMode) const FlokkLogo(50, Colors.white).center(),
         if (singleColumnMode)
-          AnimatedBirdSplashWidget(alignment: Alignment.bottomCenter, showLogo: false)
+          const AnimatedBirdSplashWidget(alignment: Alignment.bottomCenter, showLogo: false)
               .padding(all: Insets.m * 1.5)
               .height(context.heightPx * .4),
         [

@@ -21,14 +21,11 @@ TwitterUser _$TwitterUserFromJson(Map<String, dynamic> json) {
     ..listedCount = json['listed_count'] as int? ?? 0
     ..statusesCount = json['statuses_count'] as int? ?? 0
     ..profileImageUrl = json['profile_image_url_https'] as String? ?? ''
-    ..profileBackgroundImageUrl =
-        json['profile_background_image_url_https'] as String? ?? ''
-    ..profileUseBackgroundImage =
-        json['profile_use_background_image'] as bool? ?? false;
+    ..profileBackgroundImageUrl = json['profile_background_image_url_https'] as String? ?? ''
+    ..profileUseBackgroundImage = json['profile_use_background_image'] as bool? ?? false;
 }
 
-Map<String, dynamic> _$TwitterUserToJson(TwitterUser instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TwitterUserToJson(TwitterUser instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'screen_name': instance.screenName,

@@ -31,6 +31,6 @@ class ClickableText extends StatelessWidget {
             () => onPressed?.call(text),
           );
     }
-    return t.translate(offset: Offset(0, 0));
+    return t.translate(offset: const Offset(0, 0));
   }
 }

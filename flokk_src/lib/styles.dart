@@ -1,4 +1,3 @@
-import 'package:flokk/app_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textstyle_extensions/textstyle_extensions.dart';
@@ -133,23 +132,23 @@ class Shadows {
 
   static double get mRadius => 8;
 
-  static List<BoxShadow> m(Color color, [ double opacity = 0]) {
+  static List<BoxShadow> m(Color color, [double opacity = 0]) {
     return enabled
         ? [
             BoxShadow(
               color: color.withOpacity(opacity),
               blurRadius: mRadius,
               spreadRadius: mRadius / 2,
-              offset: Offset(1, 0),
+              offset: const Offset(1, 0),
             ),
             BoxShadow(
               color: color.withOpacity(opacity),
               blurRadius: mRadius / 2,
               spreadRadius: mRadius / 4,
-              offset: Offset(1, 0),
+              offset: const Offset(1, 0),
             )
           ]
-        : const<BoxShadow>[];
+        : const <BoxShadow>[];
   }
 }
 
@@ -163,14 +162,14 @@ class Corners {
 
   static BorderRadius get s3Border => BorderRadius.all(s3Radius);
 
-  static Radius get s3Radius => Radius.circular(s3);
+  static Radius get s3Radius => const Radius.circular(s3);
 
   /// Small
   static const double s5 = 5;
 
   static BorderRadius get s5Border => BorderRadius.all(s5Radius);
 
-  static Radius get s5Radius => Radius.circular(s5);
+  static Radius get s5Radius => const Radius.circular(s5);
 
   /// Medium
   static const double s8 = 8;
@@ -184,6 +183,5 @@ class Corners {
 
   static BorderRadius get s10Border => BorderRadius.all(s10Radius);
 
-  static Radius get s10Radius => Radius.circular(s10);
+  static Radius get s10Radius => const Radius.circular(s10);
 }
-

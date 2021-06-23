@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
-  MainScaffoldView(MainScaffoldState state) : super(state);
+  const MainScaffoldView(MainScaffoldState state, {Key? key}) : super(state, key: key);
 
   @override
   Widget build(BuildContext context) {

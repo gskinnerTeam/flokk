@@ -33,32 +33,24 @@ ContactData _$ContactDataFromJson(Map<String, dynamic> json) {
     ..jobCompany = json['jobCompany'] as String
     ..profilePic = json['profilePic'] as String
     ..isDefaultPic = json['isDefaultPic'] as bool
-    ..phoneList = (json['phoneList'] as List<dynamic>)
-        .map((e) => PhoneData.fromJson(e as Map<String, dynamic>))
-        .toList()
-    ..emailList = (json['emailList'] as List<dynamic>)
-        .map((e) => EmailData.fromJson(e as Map<String, dynamic>))
-        .toList()
-    ..addressList = (json['addressList'] as List<dynamic>)
-        .map((e) => AddressData.fromJson(e as Map<String, dynamic>))
-        .toList()
-    ..imList = (json['imList'] as List<dynamic>)
-        .map((e) => InstantMessageData.fromJson(e as Map<String, dynamic>))
-        .toList()
+    ..phoneList =
+        (json['phoneList'] as List<dynamic>).map((e) => PhoneData.fromJson(e as Map<String, dynamic>)).toList()
+    ..emailList =
+        (json['emailList'] as List<dynamic>).map((e) => EmailData.fromJson(e as Map<String, dynamic>)).toList()
+    ..addressList =
+        (json['addressList'] as List<dynamic>).map((e) => AddressData.fromJson(e as Map<String, dynamic>)).toList()
+    ..imList =
+        (json['imList'] as List<dynamic>).map((e) => InstantMessageData.fromJson(e as Map<String, dynamic>)).toList()
     ..customFields = Map<String, String>.from(json['customFields'] as Map)
-    ..websiteList = (json['websiteList'] as List<dynamic>)
-        .map((e) => WebsiteData.fromJson(e as Map<String, dynamic>))
-        .toList()
-    ..relationList = (json['relationList'] as List<dynamic>)
-        .map((e) => RelationData.fromJson(e as Map<String, dynamic>))
-        .toList()
-    ..eventList = (json['eventList'] as List<dynamic>)
-        .map((e) => EventData.fromJson(e as Map<String, dynamic>))
-        .toList();
+    ..websiteList =
+        (json['websiteList'] as List<dynamic>).map((e) => WebsiteData.fromJson(e as Map<String, dynamic>)).toList()
+    ..relationList =
+        (json['relationList'] as List<dynamic>).map((e) => RelationData.fromJson(e as Map<String, dynamic>)).toList()
+    ..eventList =
+        (json['eventList'] as List<dynamic>).map((e) => EventData.fromJson(e as Map<String, dynamic>)).toList();
 }
 
-Map<String, dynamic> _$ContactDataToJson(ContactData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ContactDataToJson(ContactData instance) => <String, dynamic>{
       'isRecentlyAdded': instance.isRecentlyAdded,
       'isDeleted': instance.isDeleted,
       'googleId': instance.googleId,
@@ -107,8 +99,7 @@ AddressData _$AddressDataFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String;
 }
 
-Map<String, dynamic> _$AddressDataToJson(AddressData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AddressDataToJson(AddressData instance) => <String, dynamic>{
       'formattedAddress': instance.formattedAddress,
       'street': instance.street,
       'poBox': instance.poBox,
@@ -126,8 +117,7 @@ InstantMessageData _$InstantMessageDataFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String;
 }
 
-Map<String, dynamic> _$InstantMessageDataToJson(InstantMessageData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$InstantMessageDataToJson(InstantMessageData instance) => <String, dynamic>{
       'username': instance.username,
       'type': instance.type,
     };
@@ -151,8 +141,7 @@ WebsiteData _$WebsiteDataFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String;
 }
 
-Map<String, dynamic> _$WebsiteDataToJson(WebsiteData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$WebsiteDataToJson(WebsiteData instance) => <String, dynamic>{
       'href': instance.href,
       'type': instance.type,
     };
@@ -174,8 +163,7 @@ RelationData _$RelationDataFromJson(Map<String, dynamic> json) {
     ..type = json['type'] as String;
 }
 
-Map<String, dynamic> _$RelationDataToJson(RelationData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$RelationDataToJson(RelationData instance) => <String, dynamic>{
       'person': instance.person,
       'type': instance.type,
     };
@@ -197,8 +185,7 @@ BirthdayData _$BirthdayDataFromJson(Map<String, dynamic> json) {
     ..text = json['text'] as String;
 }
 
-Map<String, dynamic> _$BirthdayDataToJson(BirthdayData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BirthdayDataToJson(BirthdayData instance) => <String, dynamic>{
       'date': instance.date.toIso8601String(),
       'text': instance.text,
     };

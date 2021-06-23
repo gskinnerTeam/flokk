@@ -48,12 +48,12 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: crossAxisAlign,
       children: [
-        VSpace(Insets.l),
+        const VSpace(Insets.l),
         Text(
           title,
           style: TextStyles.T1.textColor(theme.grey),
         ),
-        VSpace(Insets.m),
+        const VSpace(Insets.m),
         RichText(
           text: TextSpan(
             style: style,
@@ -64,7 +64,7 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
             ],
           ),
         ),
-        VSpace(Insets.m * 1.5),
+        const VSpace(Insets.m * 1.5),
       ],
     );
   }
@@ -77,8 +77,7 @@ class PlaceholderImageAndBgStack extends StatelessWidget {
   final double? top;
   final double? left;
 
-  const PlaceholderImageAndBgStack(this.path,
-      {Key? key, this.height, this.top, this.left, this.bgWidget})
+  const PlaceholderImageAndBgStack(this.path, {Key? key, this.height, this.top, this.left, this.bgWidget})
       : super(key: key);
 
   @override

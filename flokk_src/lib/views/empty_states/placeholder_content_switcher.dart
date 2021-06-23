@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 export 'package:flokk/views/empty_states/placeholder_widget_helpers.dart';
 
-typedef bool HasContentCallback();
+typedef HasContentCallback = bool Function();
 
 /// [PlaceholderContentSwitcher] Takes content and a placeholder, and swaps between them depending on the results of the hasContent delegate.
 class PlaceholderContentSwitcher extends StatelessWidget {
@@ -30,7 +30,7 @@ class PlaceholderContentSwitcher extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        hasContent()? content : _buildPlaceholder(context),
+        hasContent() ? content : _buildPlaceholder(context),
       ],
     );
   }
@@ -42,6 +42,7 @@ class PlaceholderContentSwitcher extends StatelessWidget {
         margin: placeholderPadding,
         child: showOutline
             ? DottedBorder(
+                // ignore: prefer_const_literals_to_create_immutables
                 dashPattern: [2, 4],
                 color: theme.greyWeak.withOpacity(.7),
                 borderType: BorderType.RRect,

@@ -62,19 +62,19 @@ class _TopContactsSectionState extends State<TopContactsSection> {
                 OneLineText("CONTACTS", style: headerStyle.textColor(theme.accent1Darker)).flexible(),
                 StyledTabBar(
                   index: tabIndex,
-                  sections: ["Favorites", "Recently Active"],
+                  sections: const ["Favorites", "Recently Active"],
                   onTabPressed: _handleTabPressed,
                 ).constrained(maxWidth: tabWidth, animate: true).animate(Durations.medium, Curves.easeOut),
               ],
             ).padding(horizontal: Insets.lGutter),
-            VSpace(Insets.sm),
+            const VSpace(Insets.sm),
 
             /// Fading Stack to hold the 2 lists
             FadingIndexedStack(
               index: tabIndex,
               children: [
-                _ContactCardList(this, contacts: contacts, placeholder: TopContactsPlaceholder()),
-                _ContactCardList(this, contacts: contacts, placeholder: TopContactsPlaceholder(isRecent: true)),
+                _ContactCardList(this, contacts: contacts, placeholder: const TopContactsPlaceholder()),
+                _ContactCardList(this, contacts: contacts, placeholder: const TopContactsPlaceholder(isRecent: true)),
               ],
             ).height(cardHeight + Insets.m * 2),
           ],
@@ -89,12 +89,13 @@ class _ContactCardList extends StatelessWidget {
   final List<ContactData> contacts;
   final Widget placeholder;
 
-  const _ContactCardList(this.state, {Key? key, this.contacts = const<ContactData>[], required this.placeholder}) : super(key: key);
+  const _ContactCardList(this.state, {Key? key, this.contacts = const <ContactData>[], required this.placeholder})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     /// Layout content
-    EdgeInsets padding = EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m);
+    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m);
     // Placeholder content-box
     return PlaceholderContentSwitcher(
         hasContent: () => contacts.isNotEmpty,
@@ -104,8 +105,8 @@ class _ContactCardList extends StatelessWidget {
           axis: Axis.horizontal,
           itemCount: contacts.length,
           itemExtent: SmallContactCard.cardWidth,
-          padding: EdgeInsets.only(left: Insets.l),
-          scrollbarPadding: EdgeInsets.only(left: Insets.m, right: Insets.sm),
+          padding: const EdgeInsets.only(left: Insets.l),
+          scrollbarPadding: const EdgeInsets.only(left: Insets.m, right: Insets.sm),
           barSize: 6,
           itemBuilder: (_, index) => SmallContactCard(contacts[index]),
           //itemExtent: itemSize,

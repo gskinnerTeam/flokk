@@ -20,7 +20,7 @@ class FlokkSidebarLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: skinny ? 140 : 240,
       child: Stack(
         clipBehavior: Clip.none,

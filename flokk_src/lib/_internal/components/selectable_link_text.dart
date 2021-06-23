@@ -33,7 +33,9 @@ class _LinkTextState extends State<SelectableLinkText> {
 
   @override
   void dispose() {
-    _gestureRecognizers.forEach((recognizer) => recognizer.dispose());
+    for (final recognizer in _gestureRecognizers) {
+      recognizer.dispose();
+    }
     super.dispose();
   }
 
@@ -58,7 +60,7 @@ class _LinkTextState extends State<SelectableLinkText> {
     final textSpans = <TextSpan>[];
 
     int i = 0;
-    textParts.forEach((part) {
+    for (final part in textParts) {
       textSpans.add(TextSpan(text: part, style: textStyle));
       if (i < links.length) {
         final link = links.elementAt(i).group(0) ?? "";
@@ -69,7 +71,7 @@ class _LinkTextState extends State<SelectableLinkText> {
         );
         i++;
       }
-    });
+    }
 
     return RichText(text: TextSpan(children: textSpans), textAlign: widget.textAlign);
   }

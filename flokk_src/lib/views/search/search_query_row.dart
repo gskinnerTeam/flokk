@@ -46,17 +46,21 @@ class SearchQueryRow extends StatelessWidget {
               }
               //Subtract widths of tags and contacts, to get the max size for text input
               double barTextFieldWidth = barQueryWidth;
-              state.tmpSearch.tagList.forEach((t) => barTextFieldWidth -= calcTagWidth(t));
-              state.tmpSearch.filterContactList.forEach((fc) => barTextFieldWidth -= calcTagWidth(fc));
+              for (final t in state.tmpSearch.tagList) {
+                barTextFieldWidth -= calcTagWidth(t);
+              }
+              for (final fc in state.tmpSearch.filterContactList) {
+                barTextFieldWidth -= calcTagWidth(fc);
+              }
               //Enforce min-size of 200px for search input
               barTextFieldWidth = max(200, barTextFieldWidth);
 
               return Row(
                 children: [
-                  HSpace(Insets.l),
+                  const HSpace(Insets.l),
                   if (state.widget.narrowMode == false) ...{
                     _SearchIconBtn(state.handleSearchIconPressed),
-                    HSpace(Insets.m),
+                    const HSpace(Insets.m),
                   },
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: barQueryWidth),
@@ -80,7 +84,7 @@ class SearchQueryRow extends StatelessWidget {
                           Container(
                             constraints: BoxConstraints(maxWidth: barTextFieldWidth),
                             child: StyledSearchTextInput(
-                              contentPadding: EdgeInsets.all(Insets.m * 1.25 - 0.5).copyWith(left: 0),
+                              contentPadding: const EdgeInsets.all(Insets.m * 1.25 - 0.5).copyWith(left: 0),
                               hintText: state.widget.narrowMode ? "" : "Search for contacts",
                               key: state.textKey,
                               onChanged: state.handleSearchChanged,
@@ -109,7 +113,7 @@ class SearchQueryRow extends StatelessWidget {
                   } else if (state.widget.narrowMode) ...{
                     _SearchIconBtn(state.handleSearchIconPressed),
                   },
-                  HSpace(Insets.m),
+                  const HSpace(Insets.m),
                 ],
               );
             });

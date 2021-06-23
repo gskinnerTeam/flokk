@@ -2,7 +2,7 @@ import 'package:flokk/_internal/log.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/data/group_data.dart';
 import 'package:flokk/services/service_result.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class CreateLabelCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   CreateLabelCommand(BuildContext c) : super(c);

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class StackConstraints extends InheritedWidget {
   final BoxConstraints constraints;
 
-  StackConstraints({required this.constraints, required Widget child}) : super(child: child);
+  const StackConstraints({required this.constraints, required Widget child, Key? key}) : super(child: child, key: key);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {

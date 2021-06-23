@@ -28,7 +28,7 @@ class ContactsListRow extends StatefulWidget {
   final bool showDividers;
   final ShapeBorder shape;
 
-  ContactsListRow(
+  const ContactsListRow(
     this.contact, {
     Key? key,
     this.oddRow = false,
@@ -176,7 +176,8 @@ class _ProfileCheckboxWithLabels extends StatefulWidget {
   final ContactData contact;
   final bool isChecked;
 
-  const _ProfileCheckboxWithLabels(this.contact, {Key? key, required this.onChecked, this.isChecked = false}) : super(key: key);
+  const _ProfileCheckboxWithLabels(this.contact, {Key? key, required this.onChecked, this.isChecked = false})
+      : super(key: key);
 
   @override
   _ProfileCheckboxWithLabelsState createState() => _ProfileCheckboxWithLabelsState();
@@ -200,7 +201,7 @@ class _ProfileCheckboxWithLabelsState extends State<_ProfileCheckboxWithLabels> 
             );
           },
         ).gestures(onTapUp: (d) => widget.onChecked(!widget.isChecked), behavior: HitTestBehavior.opaque),
-        SizedBox(width: Insets.m),
+        const SizedBox(width: Insets.m),
         OneLineText(widget.contact.nameFull, style: TextStyles.Body1.size(15)).expanded(),
       ],
     );
@@ -222,7 +223,8 @@ class _FadingFlexContent extends StatelessWidget {
   final bool isVisible;
   final bool enableAnimations;
 
-  const _FadingFlexContent({Key? key, this.child, required this.flex, this.isVisible = true, this.enableAnimations = true})
+  const _FadingFlexContent(
+      {Key? key, this.child, required this.flex, this.isVisible = true, this.enableAnimations = true})
       : super(key: key);
 
   @override

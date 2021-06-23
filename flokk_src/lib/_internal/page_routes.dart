@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
-typedef Widget PageBuilder();
+typedef PageBuilder = Widget Function();
 
 class PageRoutes {
   static const double kDefaultDuration = .35;
@@ -65,7 +65,7 @@ class PageRoutes {
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         bool reverse = animation.status == AnimationStatus.reverse;
         return SlideTransition(
-          position: Tween<Offset>(begin: startOffset, end: Offset(0, 0))
+          position: Tween<Offset>(begin: startOffset, end: const Offset(0, 0))
               .animate(CurvedAnimation(parent: animation, curve: reverse ? easeReverse : easeFwd)),
           child: child,
         );
