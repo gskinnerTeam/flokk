@@ -4,7 +4,8 @@ import 'package:flokk/commands/abstract_command.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-class CheckConnectionCommand extends AbstractCommand with CancelableCommandMixin {
+class CheckConnectionCommand extends AbstractCommand
+    with CancelableCommandMixin {
   CheckConnectionCommand(BuildContext context) : super(context);
 
   /// Checks if we can connect to the internet.

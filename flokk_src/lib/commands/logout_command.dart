@@ -34,6 +34,7 @@ class LogoutCommand extends AbstractCommand {
     appModel.reset(false);
 
     //Show login page
-    rootNav?.pushReplacement(PageRoutes.fade(() => WelcomePage(initialPanelOpen: true)));
+    rootNav?.pushReplacement(
+        PageRoutes.fade(() => WelcomePage(initialPanelOpen: true)));
   }
 }

@@ -92,7 +92,8 @@ class ScrollbarState extends State<StyledScrollbar> {
         double contentExtent = maxExtent + _viewExtent;
         // Calculate the alignment for the handle, this is a value between 0 and 1,
         // it automatically takes the handle size into acct
-        double handleAlignment = maxExtent == 0 ? 0 : widget.controller.offset / maxExtent;
+        double handleAlignment =
+            maxExtent == 0 ? 0 : widget.controller.offset / maxExtent;
 
         // Convert handle alignment from [0, 1] to [-1, 1]
         handleAlignment *= 2.0;
@@ -107,10 +108,13 @@ class ScrollbarState extends State<StyledScrollbar> {
         // Hide the handle if content is < the viewExtent
         bool showHandle = contentExtent > _viewExtent && contentExtent > 0;
         // Handle color
-        Color handleColor = widget.handleColor ?? (theme.isDark ? theme.greyWeak.withOpacity(.2) : theme.greyWeak);
+        Color handleColor = widget.handleColor ??
+            (theme.isDark ? theme.greyWeak.withOpacity(.2) : theme.greyWeak);
         // Track color
-        Color trackColor =
-            widget.trackColor ?? (theme.isDark ? theme.greyWeak.withOpacity(.1) : theme.greyWeak.withOpacity(.3));
+        Color trackColor = widget.trackColor ??
+            (theme.isDark
+                ? theme.greyWeak.withOpacity(.1)
+                : theme.greyWeak.withOpacity(.3));
 
         //Layout the stack, it just contains a child, and
         return Stack(children: <Widget>[
@@ -120,8 +124,12 @@ class ScrollbarState extends State<StyledScrollbar> {
               alignment: Alignment(1, 1),
               child: Container(
                 color: trackColor,
-                width: widget.axis == Axis.vertical ? widget.size : double.infinity,
-                height: widget.axis == Axis.horizontal ? widget.size : double.infinity,
+                width: widget.axis == Axis.vertical
+                    ? widget.size
+                    : double.infinity,
+                height: widget.axis == Axis.horizontal
+                    ? widget.size
+                    : double.infinity,
               ),
             ),
 
@@ -138,10 +146,14 @@ class ScrollbarState extends State<StyledScrollbar> {
               // HANDLE SHAPE
               child: MouseHoverBuilder(
                 builder: (_, isHovered) => Container(
-                  width: widget.axis == Axis.vertical ? widget.size : handleExtent,
-                  height: widget.axis == Axis.horizontal ? widget.size : handleExtent,
+                  width:
+                      widget.axis == Axis.vertical ? widget.size : handleExtent,
+                  height: widget.axis == Axis.horizontal
+                      ? widget.size
+                      : handleExtent,
                   decoration: BoxDecoration(
-                      color: handleColor.withOpacity(isHovered ? 1 : .85), borderRadius: Corners.s3Border),
+                      color: handleColor.withOpacity(isHovered ? 1 : .85),
+                      borderRadius: Corners.s3Border),
                 ),
               ),
             ),
@@ -153,15 +165,21 @@ class ScrollbarState extends State<StyledScrollbar> {
 
   void _handleHorizontalDrag(DragUpdateDetails details) {
     double pos = widget.controller.offset;
-    double pxRatio = (widget.controller.position.maxScrollExtent + _viewExtent) / _viewExtent;
-    widget.controller.jumpTo((pos + details.delta.dx * pxRatio).clamp(0.0, widget.controller.position.maxScrollExtent));
+    double pxRatio =
+        (widget.controller.position.maxScrollExtent + _viewExtent) /
+            _viewExtent;
+    widget.controller.jumpTo((pos + details.delta.dx * pxRatio)
+        .clamp(0.0, widget.controller.position.maxScrollExtent));
     widget.onDrag?.call(details.delta.dx);
   }
 
   void _handleVerticalDrag(DragUpdateDetails details) {
     double pos = widget.controller.offset;
-    double pxRatio = (widget.controller.position.maxScrollExtent + _viewExtent) / _viewExtent;
-    widget.controller.jumpTo((pos + details.delta.dy * pxRatio).clamp(0.0, widget.controller.position.maxScrollExtent));
+    double pxRatio =
+        (widget.controller.position.maxScrollExtent + _viewExtent) /
+            _viewExtent;
+    widget.controller.jumpTo((pos + details.delta.dy * pxRatio)
+        .clamp(0.0, widget.controller.position.maxScrollExtent));
     widget.onDrag?.call(details.delta.dy);
   }
 }

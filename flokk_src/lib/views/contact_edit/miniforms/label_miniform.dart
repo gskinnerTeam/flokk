@@ -14,7 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactLabelMiniForm extends BaseMiniForm {
-  ContactLabelMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.label, key: key);
+  ContactLabelMiniForm(ContactEditFormState form, {Key? key})
+      : super(form, ContactSectionType.label, key: key);
 
   void _handleAddLabel(String label, BuildContext context) {
     // If the label is empty or we already have that label on our contact then dont add it
@@ -25,7 +26,9 @@ class ContactLabelMiniForm extends BaseMiniForm {
       setFormState(() => c.groupList.add(groupToAdd));
     } else {
       // We must make a new group, add that group to this contact when the creation has finished
-      CreateLabelCommand(context).execute(label).then((g) => setFormState(() => c.groupList.add(g)));
+      CreateLabelCommand(context)
+          .execute(label)
+          .then((g) => setFormState(() => c.groupList.add(g)));
     }
   }
 
@@ -47,7 +50,9 @@ class ContactLabelMiniForm extends BaseMiniForm {
               onAddLabel: (label) => _handleAddLabel(label, context),
               onRemoveLabel: _handleRemoveLabel,
               contactLabels: c.groupList.map((g) => g.name).toList(),
-              allLabels: form.widget.contactsModel.allGroups.map((g) => g.name).toList(),
+              allLabels: form.widget.contactsModel.allGroups
+                  .map((g) => g.name)
+                  .toList(),
               onFocusChanged: (v) => handleFocusChanged(v, context),
             ).padding(right: rightPadding);
           },
@@ -75,7 +80,8 @@ class _LabelMiniformWithSearch extends StatefulWidget {
   });
 
   @override
-  _LabelMiniformWithSearchState createState() => _LabelMiniformWithSearchState();
+  _LabelMiniformWithSearchState createState() =>
+      _LabelMiniformWithSearchState();
 }
 
 class _LabelMiniformWithSearchState extends State<_LabelMiniformWithSearch> {
@@ -143,7 +149,9 @@ class _LabelMiniformWithSearchState extends State<_LabelMiniformWithSearch> {
         onFocusChanged: _handleTextFocusChanged,
       ),
       if (_isOpen!) ...{
-        Text("Suggestions".toUpperCase(), style: TextStyles.Caption.textColor(theme.grey)).padding(bottom: Insets.m),
+        Text("Suggestions".toUpperCase(),
+                style: TextStyles.Caption.textColor(theme.grey))
+            .padding(bottom: Insets.m),
         Wrap(
           runSpacing: Insets.sm * 1.5,
           spacing: Insets.sm,

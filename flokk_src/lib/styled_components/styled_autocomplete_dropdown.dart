@@ -22,14 +22,22 @@ class StyledAutoCompleteDropdown extends StatefulWidget {
   final void Function(bool)? onFocusChanged;
 
   const StyledAutoCompleteDropdown(
-      {Key? key, this.initialValue, this.hint = "", this.items = const<String>[], this.onChanged, this.onFocusChanged, this.maxHeight = 500})
+      {Key? key,
+      this.initialValue,
+      this.hint = "",
+      this.items = const <String>[],
+      this.onChanged,
+      this.onFocusChanged,
+      this.maxHeight = 500})
       : super(key: key);
 
   @override
-  _StyledAutoCompleteDropdownState createState() => _StyledAutoCompleteDropdownState();
+  _StyledAutoCompleteDropdownState createState() =>
+      _StyledAutoCompleteDropdownState();
 }
 
-class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown> {
+class _StyledAutoCompleteDropdownState
+    extends State<StyledAutoCompleteDropdown> {
   bool _isOpen = false;
   OverlayEntry? _overlay;
   late ValueNotifier<List<String>> _itemsFiltered;
@@ -62,7 +70,9 @@ class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown>
   }
 
   void _updateFilteredItems() {
-    _itemsFiltered.value = widget.items.where((i) => i.contains(currentText.toUpperCase())).toList();
+    _itemsFiltered.value = widget.items
+        .where((i) => i.contains(currentText.toUpperCase()))
+        .toList();
   }
 
   void _handleArrowTap() {
@@ -77,12 +87,14 @@ class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown>
 
   void _handleRawKeyPressed(RawKeyEvent evt) {
     if (evt is RawKeyDownEvent) {
-      if ((_textFocusNode?.hasFocus ?? false) && evt.logicalKey == LogicalKeyboardKey.arrowDown) {
+      if ((_textFocusNode?.hasFocus ?? false) &&
+          evt.logicalKey == LogicalKeyboardKey.arrowDown) {
         _skipNextFocusOut = true;
         Future.microtask(() => _dropDownFocusNode.requestFocus());
       }
       if (_dropDownFocusNode.hasFocus &&
-          (evt.logicalKey == LogicalKeyboardKey.arrowRight || evt.logicalKey == LogicalKeyboardKey.arrowLeft)) {
+          (evt.logicalKey == LogicalKeyboardKey.arrowRight ||
+              evt.logicalKey == LogicalKeyboardKey.arrowLeft)) {
         _textFocusNode?.requestFocus();
       }
     }
@@ -137,7 +149,8 @@ class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown>
               onFocusCreated: _handleFocusCreate,
               onFocusChanged: _handleFocusChanged,
               onChanged: _handleValueChanged),
-          StyledImageIcon(StyledIcons.dropdownClose, size: 12, color: theme.greyStrong)
+          StyledImageIcon(StyledIcons.dropdownClose,
+                  size: 12, color: theme.greyStrong)
               .rotate(angle: downArrow ? 0 : pi, animate: true)
               .animate(Durations.fast, Curves.easeOut)
               .alignment(Alignment.topLeft)
@@ -150,7 +163,9 @@ class _StyledAutoCompleteDropdownState extends State<StyledAutoCompleteDropdown>
 
   void showOverlay([bool show = true]) {
     if (show && _overlay == null) {
-      final overlay = OverlayEntry(builder: (_) => _AutoCompleteDropdown(this, focusNode: _dropDownFocusNode));
+      final overlay = OverlayEntry(
+          builder: (_) =>
+              _AutoCompleteDropdown(this, focusNode: _dropDownFocusNode));
       _overlay = overlay;
       Overlay.of(context)?.insert(overlay);
     } else if (!show && _overlay != null) {
@@ -172,7 +187,9 @@ class _AutoCompleteDropdown extends StatelessWidget {
   final double rowHeight;
   final FocusScopeNode? focusNode;
 
-  _AutoCompleteDropdown(this.state, {Key? key, this.focusNode, this.rowHeight = 40}) : super(key: key);
+  _AutoCompleteDropdown(this.state,
+      {Key? key, this.focusNode, this.rowHeight = 40})
+      : super(key: key);
 
   List<String> get items => state.widget.items;
 
@@ -184,7 +201,8 @@ class _AutoCompleteDropdown extends StatelessWidget {
     RenderBox? rb = state.context.findRenderObject() as RenderBox?;
     if (rb == null) return Container();
     Size size = rb.size;
-    double longest = StringUtils.measureLongest(filteredItems, TextStyles.Caption, 50);
+    double longest =
+        StringUtils.measureLongest(filteredItems, TextStyles.Caption, 50);
     longest += Insets.m * 2;
     double maxHeight = state.widget.maxHeight;
 
@@ -207,9 +225,11 @@ class _AutoCompleteDropdown extends StatelessWidget {
                   itemCount: matches.length,
                   itemBuilder: (_, index) {
                     return BaseStyledBtn(
-                      contentPadding: EdgeInsets.symmetric(horizontal: Insets.m),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: Insets.m),
                       minHeight: rowHeight,
-                      onPressed: () => state._handleItemSelected(matches[index]),
+                      onPressed: () =>
+                          state._handleItemSelected(matches[index]),
                       child: OneLineText(
                         "${matches[index].toUpperCase()}",
                         style: TextStyles.Caption.textColor(theme.greyWeak),
@@ -217,8 +237,12 @@ class _AutoCompleteDropdown extends StatelessWidget {
                     );
                   },
                 )
-                    .decorated(color: theme.surface, boxShadow: Shadows.m(theme.accent1))
-                    .constrained(width: max(longest, size.width), height: min(matches.length * rowHeight, maxHeight))
+                    .decorated(
+                        color: theme.surface,
+                        boxShadow: Shadows.m(theme.accent1))
+                    .constrained(
+                        width: max(longest, size.width),
+                        height: min(matches.length * rowHeight, maxHeight))
                     .padding(top: 26)
                 //.positioned(left: pos.dx, top: pos.dy)
               ],

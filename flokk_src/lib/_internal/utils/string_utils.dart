@@ -12,18 +12,24 @@ class StringUtils {
 
   static bool isEmailValid(String value) {
     if (StringUtils.isEmpty(value)) return false;
-    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(value);
   }
 
   // Here it is!
-  static Size measure(String text, TextStyle style, {int maxLines: 1, TextDirection direction = TextDirection.ltr}) {
-    final TextPainter textPainter =
-        TextPainter(text: TextSpan(text: text, style: style), maxLines: maxLines, textDirection: direction)
-          ..layout(minWidth: 0, maxWidth: double.infinity);
+  static Size measure(String text, TextStyle style,
+      {int maxLines: 1, TextDirection direction = TextDirection.ltr}) {
+    final TextPainter textPainter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        maxLines: maxLines,
+        textDirection: direction)
+      ..layout(minWidth: 0, maxWidth: double.infinity);
     return textPainter.size;
   }
 
-  static double measureLongest(List<String> items, TextStyle style, [maxItems = null]) {
+  static double measureLongest(List<String> items, TextStyle style,
+      [maxItems = null]) {
     double l = 0;
     if (maxItems != null && maxItems < items.length) {
       items.length = maxItems;

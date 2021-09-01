@@ -37,7 +37,10 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
   }) : super(key: key);
 
   TextSpan _buildTapSpan(String text, TextStyle style, VoidCallback? handler) {
-    return TextSpan(text: text, style: style, recognizer: TapGestureRecognizer()..onTap = handler);
+    return TextSpan(
+        text: text,
+        style: style,
+        recognizer: TapGestureRecognizer()..onTap = handler);
   }
 
   @override
@@ -59,7 +62,9 @@ class EmptyStateTitleAndClickableText extends StatelessWidget {
             style: style,
             children: [
               if (StringUtils.isNotEmpty(startText)) TextSpan(text: startText),
-              if (StringUtils.isNotEmpty(linkText)) _buildTapSpan(linkText, style.textColor(theme.accent1), onPressed),
+              if (StringUtils.isNotEmpty(linkText))
+                _buildTapSpan(
+                    linkText, style.textColor(theme.accent1), onPressed),
               if (StringUtils.isNotEmpty(endText)) TextSpan(text: endText),
             ],
           ),
@@ -90,7 +95,8 @@ class PlaceholderImageAndBgStack extends StatelessWidget {
         Positioned(
           left: left,
           top: top,
-          child: Image.asset("assets/images/empty-$path@2x.png", height: height),
+          child:
+              Image.asset("assets/images/empty-$path@2x.png", height: height),
         )
       ],
     );
@@ -101,6 +107,7 @@ class _BgCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
-    return StyledContainer(theme.bg2, width: 157, height: 157, borderRadius: BorderRadius.circular(999));
+    return StyledContainer(theme.bg2,
+        width: 157, height: 157, borderRadius: BorderRadius.circular(999));
   }
 }

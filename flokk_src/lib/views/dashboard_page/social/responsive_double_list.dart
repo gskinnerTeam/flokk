@@ -68,13 +68,19 @@ class _ResponsiveDoubleListState extends State<ResponsiveDoubleList> {
           PlaceholderContentSwitcher(
             hasContent: () => widget.list1.isNotEmpty,
             placeholder: widget.list1Placeholder,
-            content: StyledListViewWithTitle(listItems: widget.list1, title: widget.list1Title, icon: widget.list1Icon),
+            content: StyledListViewWithTitle(
+                listItems: widget.list1,
+                title: widget.list1Title,
+                icon: widget.list1Icon),
           ).flexible(),
           HSpace(Insets.l),
           PlaceholderContentSwitcher(
             hasContent: () => widget.list2.isNotEmpty,
             placeholder: widget.list2Placeholder,
-            content: StyledListViewWithTitle(listItems: widget.list2, title: widget.list2Title, icon: widget.list2Icon),
+            content: StyledListViewWithTitle(
+                listItems: widget.list2,
+                title: widget.list2Title,
+                icon: widget.list2Icon),
           ).flexible(),
         ],
       );

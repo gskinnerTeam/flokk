@@ -14,38 +14,46 @@ enum NetErrorType {
 typedef Future<http.Response> HttpRequest();
 
 class HttpClient {
-  static Future<HttpResponse> get(String url, {Map<String, String>? headers}) async {
+  static Future<HttpResponse> get(String url,
+      {Map<String, String>? headers}) async {
     return await _request(() async {
       return await http.get(Uri.parse(url), headers: headers);
     });
   }
 
-  static Future<HttpResponse> post(String url, {Map<String, String>? headers, dynamic body, Encoding? encoding}) async {
+  static Future<HttpResponse> post(String url,
+      {Map<String, String>? headers, dynamic body, Encoding? encoding}) async {
     return await _request(() async {
-      return await http.post(Uri.parse(url), headers: headers, body: body, encoding: encoding);
+      return await http.post(Uri.parse(url),
+          headers: headers, body: body, encoding: encoding);
     });
   }
 
-  static Future<HttpResponse> put(String url, {Map<String, String>? headers, dynamic body, Encoding? encoding}) async {
+  static Future<HttpResponse> put(String url,
+      {Map<String, String>? headers, dynamic body, Encoding? encoding}) async {
     return await _request(() async {
-      return await http.put(Uri.parse(url), headers: headers, body: body, encoding: encoding);
+      return await http.put(Uri.parse(url),
+          headers: headers, body: body, encoding: encoding);
     });
   }
 
   static Future<HttpResponse> patch(String url,
       {Map<String, String>? headers, dynamic body, Encoding? encoding}) async {
     return await _request(() async {
-      return await http.patch(Uri.parse(url), headers: headers, body: body, encoding: encoding);
+      return await http.patch(Uri.parse(url),
+          headers: headers, body: body, encoding: encoding);
     });
   }
 
-  static Future<HttpResponse> delete(String url, {Map<String, String>? headers}) async {
+  static Future<HttpResponse> delete(String url,
+      {Map<String, String>? headers}) async {
     return await _request(() async {
       return await http.delete(Uri.parse(url), headers: headers);
     });
   }
 
-  static Future<HttpResponse> head(String url, {Map<String, String>? headers}) async {
+  static Future<HttpResponse> head(String url,
+      {Map<String, String>? headers}) async {
     return await _request(() async {
       return await http.head(Uri.parse(url), headers: headers);
     });
@@ -85,7 +93,8 @@ class HttpResponse {
     else if (raw.statusCode >= 500 && raw.statusCode < 600)
       errorType = NetErrorType.timedOut;
     //400's server is denying our request, probably bad auth or malformed request
-    else if (raw.statusCode >= 400 && raw.statusCode < 500) errorType = NetErrorType.denied;
+    else if (raw.statusCode >= 400 && raw.statusCode < 500)
+      errorType = NetErrorType.denied;
   }
 
   // NOTE CE: This just crahes on construction

@@ -142,5 +142,6 @@ class AppTheme {
         toggleableActiveColor: accent1);
   }
 
-  Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark? -1 : 1));
+  Color shift(Color c, double d) =>
+      ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
 }

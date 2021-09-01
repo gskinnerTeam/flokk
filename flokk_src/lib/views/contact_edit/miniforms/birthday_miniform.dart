@@ -5,7 +5,8 @@ import 'package:flokk/views/contact_edit/miniforms/controls/textfield_with_date_
 import 'package:flutter/material.dart';
 
 class ContactBirthdayMiniForm extends BaseMiniForm {
-  ContactBirthdayMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.birthday, key: key);
+  ContactBirthdayMiniForm(ContactEditFormState form, {Key? key})
+      : super(form, ContactSectionType.birthday, key: key);
 
   @override
   Widget build(BuildContext context) {

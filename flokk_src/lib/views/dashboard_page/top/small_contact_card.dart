@@ -12,15 +12,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SmallContactCard extends StatelessWidget {
-
   static const double cardWidth = 162;
 
   final ContactData contact;
 
   const SmallContactCard(this.contact, {Key? key}) : super(key: key);
 
-  void _handleCardPressed(BuildContext c) =>
-      c.read<MainScaffoldState>().trySetSelectedContact(contact, showSocial: false);
+  void _handleCardPressed(BuildContext c) => c
+      .read<MainScaffoldState>()
+      .trySetSelectedContact(contact, showSocial: false);
 
   @override
   Widget build(BuildContext context) {

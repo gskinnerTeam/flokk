@@ -1,1 +1,2 @@
-Future<bool> urlLauncherOpen(String url) => throw UnsupportedError('Unimplemented Url Opener');
+Future<bool> urlLauncherOpen(String url) =>
+    throw UnsupportedError('Unimplemented Url Opener');

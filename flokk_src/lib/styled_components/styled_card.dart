@@ -13,7 +13,13 @@ class StyledCard extends StatelessWidget {
   final VoidCallback? onPressed;
   final Alignment? align;
 
-  const StyledCard({Key? key, this.bgColor, this.enableShadow = true, this.child, this.onPressed, this.align})
+  const StyledCard(
+      {Key? key,
+      this.bgColor,
+      this.enableShadow = true,
+      this.child,
+      this.onPressed,
+      this.align})
       : super(key: key);
 
   @override
@@ -27,7 +33,8 @@ class StyledCard extends StatelessWidget {
         borderRadius: Corners.s8Border,
         shadows: enableShadow ? Shadows.m(theme.accent1Darker) : null);
 
-    if (onPressed != null) return TransparentBtn(child: content, onPressed: onPressed);
+    if (onPressed != null)
+      return TransparentBtn(child: content, onPressed: onPressed);
     return content;
   }
 }

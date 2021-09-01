@@ -7,11 +7,13 @@ import 'package:flokk/services/service_result.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
+class DeletePicCommand extends AbstractCommand
+    with AuthorizedServiceCommandMixin {
   DeletePicCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact) async {
-    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls)
+      return false;
     Log.p("[DeletePicCommand]");
 
     bool doDelete = await Dialogs.show(
@@ -29,7 +31,8 @@ class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
     //Update local data optimistically
     ServiceResult result = await executeAuthServiceCmd(() async {
       //Update remove database
-      ServiceResult result = await googleRestService.contacts.deletePic(authModel.googleAccessToken, contact);
+      ServiceResult result = await googleRestService.contacts
+          .deletePic(authModel.googleAccessToken, contact);
       //Request succeeded?
       if (result.success) {
         RefreshContactsCommand(context).execute();

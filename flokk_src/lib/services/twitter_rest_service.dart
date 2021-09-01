@@ -20,31 +20,38 @@ class TwitterRestService {
     final String auth = base64Encode(bytes);
 
     HttpResponse response = await HttpClient.post("$authUrl",
-        headers: {"Authorization": "Basic $auth", "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"},
+        headers: {
+          "Authorization": "Basic $auth",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
         body: "grant_type=client_credentials");
 
     TwitterAuthResult? result;
     if (response.success) {
       Map<String, dynamic> data = jsonDecode(response.body);
-      result = TwitterAuthResult(tokenType: data["token_type"], accessToken: data["access_token"]);
+      result = TwitterAuthResult(
+          tokenType: data["token_type"], accessToken: data["access_token"]);
     }
-
 
     return ServiceResult(result, response);
   }
 
-  Future<ServiceResult<List<Tweet>>> getTweets(String accessToken, String screenName) async {
-    String url = "${proxy}https://api.twitter.com/1.1/statuses/user_timeline.json"
+  Future<ServiceResult<List<Tweet>>> getTweets(
+      String accessToken, String screenName) async {
+    String url =
+        "${proxy}https://api.twitter.com/1.1/statuses/user_timeline.json"
         "?screen_name=$screenName"
         "&tweet_mode=extended";
 
-    HttpResponse response = await HttpClient.get(url, headers: {"Authorization": "Bearer $accessToken"});
+    HttpResponse response = await HttpClient.get(url,
+        headers: {"Authorization": "Bearer $accessToken"});
 
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
 
     List<Tweet> tweets = [];
     if (response.success) {
-      List<Map<String, dynamic>> tweetsData = List.from(jsonDecode(response.body));
+      List<Map<String, dynamic>> tweetsData =
+          List.from(jsonDecode(response.body));
       for (int i = 0; i < tweetsData.length; i++) {
         Map<String, dynamic> data = tweetsData[i];
         Tweet t = Tweet.fromJson(data);

@@ -5,7 +5,8 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 
 class ContactPhoneMiniForm extends BaseMiniForm {
-  ContactPhoneMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.phone, key: key);
+  ContactPhoneMiniForm(ContactEditFormState form, {Key? key})
+      : super(form, ContactSectionType.phone, key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,19 @@ class ContactPhoneMiniForm extends BaseMiniForm {
       formBuilder: () {
         /// Wrap content in a builder so the FocusNotification will get caught by the ExpandingFormContainer
         return Builder(
-          builder: (context) => buildColumnOfTextWithDropdown<PhoneData>(context, "Phone Number", "Type",
+          builder: (context) => buildColumnOfTextWithDropdown<PhoneData>(
+              context, "Phone Number", "Type",
               itemList: c.phoneList,
-              types: ["Work", "Other", "Mobile", "Main", "Home Fax", "Work Fax", "Google Voice", "Pager"],
+              types: [
+                "Work",
+                "Other",
+                "Mobile",
+                "Main",
+                "Home Fax",
+                "Work Fax",
+                "Google Voice",
+                "Pager"
+              ],
               newItemBuilder: () => PhoneData(),
               isEmpty: (PhoneData i) => i.isEmpty,
               getValue: (i) => i.number,

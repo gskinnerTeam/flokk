@@ -35,7 +35,8 @@ class _ContactInfoHeaderCardState extends State<ContactInfoHeaderCard> {
     AppTheme theme = context.watch();
 
     List<Widget> labels = contact.groupList
-        .map((e) => StyledGroupLabel(icon: null, text: e.name.toUpperCase()).padding(
+        .map((e) =>
+            StyledGroupLabel(icon: null, text: e.name.toUpperCase()).padding(
               horizontal: Insets.sm * .5,
             ))
         .toList();
@@ -46,7 +47,10 @@ class _ContactInfoHeaderCardState extends State<ContactInfoHeaderCard> {
         VSpace(Insets.sm - 1),
 
         /// PROFILE PIC
-        StyledUserAvatar(key: ValueKey(contact.id + contact.profilePic), size: 110, contact: contact),
+        StyledUserAvatar(
+            key: ValueKey(contact.id + contact.profilePic),
+            size: 110,
+            contact: contact),
 
         /// TITLE
         Row(
@@ -56,7 +60,9 @@ class _ContactInfoHeaderCardState extends State<ContactInfoHeaderCard> {
             OneLineText(contact.nameFull, style: TextStyles.H1).flexible(),
             HSpace(Insets.sm * .5),
             ColorShiftIconBtn(
-              contact.isStarred ? StyledIcons.starFilled : StyledIcons.starEmpty,
+              contact.isStarred
+                  ? StyledIcons.starFilled
+                  : StyledIcons.starEmpty,
               color: contact.isStarred ? theme.accent1 : theme.grey,
               onPressed: () => handleStarPressed(contact),
             ),
@@ -77,7 +83,8 @@ class SocialIconStrip extends StatelessWidget {
   final ContactData contact;
   final bool vtMode;
 
-  const SocialIconStrip({Key? key, required this.contact, this.vtMode = false}) : super(key: key);
+  const SocialIconStrip({Key? key, required this.contact, this.vtMode = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +93,8 @@ class SocialIconStrip extends StatelessWidget {
       ColorShiftIconBtn(StyledIcons.twitterActive),
       //StyledIconButton(child: Icon(Icons.contacts)),
     ];
-    return vtMode ? widgets.toColumn(mainAxisSize: MainAxisSize.min) : widgets.toRow(mainAxisSize: MainAxisSize.min);
+    return vtMode
+        ? widgets.toColumn(mainAxisSize: MainAxisSize.min)
+        : widgets.toRow(mainAxisSize: MainAxisSize.min);
   }
 }

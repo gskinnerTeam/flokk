@@ -25,8 +25,9 @@ class TopContactsSection extends StatefulWidget {
 
 class _TopContactsSectionState extends State<TopContactsSection> {
   void _handleTabPressed(int index) {
-    context.read<AppModel>().dashContactsSection =
-        index == 0 ? DashboardContactsSectionType.Favorites : DashboardContactsSectionType.RecentlyActive;
+    context.read<AppModel>().dashContactsSection = index == 0
+        ? DashboardContactsSectionType.Favorites
+        : DashboardContactsSectionType.RecentlyActive;
     context.read<AppModel>().scheduleSave();
   }
 
@@ -36,7 +37,8 @@ class _TopContactsSectionState extends State<TopContactsSection> {
     ContactsModel contactsModel = context.watch();
 
     /// Bind to section type on AppModel
-    var sectionType = context.select<AppModel, DashboardContactsSectionType>((model) => model.dashContactsSection);
+    var sectionType = context.select<AppModel, DashboardContactsSectionType>(
+        (model) => model.dashContactsSection);
     int tabIndex = 0;
     if (sectionType == DashboardContactsSectionType.RecentlyActive) {
       tabIndex = 1;
@@ -45,10 +47,14 @@ class _TopContactsSectionState extends State<TopContactsSection> {
     /// Use a layout builder so we can size this view responsively when the panel slides out
     return LayoutBuilder(
       builder: (_, constraints) {
-        List<ContactData> contacts = sectionType == DashboardContactsSectionType.Favorites
-            ? contactsModel.starred
-            : contactsModel.mostRecentSocialContacts.map((e) => e.contact).toList();
-        double tabWidth = constraints.maxWidth < PageBreaks.LargePhone ? 240 : 280;
+        List<ContactData> contacts =
+            sectionType == DashboardContactsSectionType.Favorites
+                ? contactsModel.starred
+                : contactsModel.mostRecentSocialContacts
+                    .map((e) => e.contact)
+                    .toList();
+        double tabWidth =
+            constraints.maxWidth < PageBreaks.LargePhone ? 240 : 280;
         TextStyle headerStyle = TextStyles.T1;
         double cardHeight = 208;
 
@@ -59,12 +65,16 @@ class _TopContactsSectionState extends State<TopContactsSection> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                OneLineText("CONTACTS", style: headerStyle.textColor(theme.accent1Darker)).flexible(),
+                OneLineText("CONTACTS",
+                        style: headerStyle.textColor(theme.accent1Darker))
+                    .flexible(),
                 StyledTabBar(
                   index: tabIndex,
                   sections: ["Favorites", "Recently Active"],
                   onTabPressed: _handleTabPressed,
-                ).constrained(maxWidth: tabWidth, animate: true).animate(Durations.medium, Curves.easeOut),
+                )
+                    .constrained(maxWidth: tabWidth, animate: true)
+                    .animate(Durations.medium, Curves.easeOut),
               ],
             ).padding(horizontal: Insets.lGutter),
             VSpace(Insets.sm),
@@ -73,8 +83,11 @@ class _TopContactsSectionState extends State<TopContactsSection> {
             FadingIndexedStack(
               index: tabIndex,
               children: [
-                _ContactCardList(this, contacts: contacts, placeholder: TopContactsPlaceholder()),
-                _ContactCardList(this, contacts: contacts, placeholder: TopContactsPlaceholder(isRecent: true)),
+                _ContactCardList(this,
+                    contacts: contacts, placeholder: TopContactsPlaceholder()),
+                _ContactCardList(this,
+                    contacts: contacts,
+                    placeholder: TopContactsPlaceholder(isRecent: true)),
               ],
             ).height(cardHeight + Insets.m * 2),
           ],
@@ -89,12 +102,17 @@ class _ContactCardList extends StatelessWidget {
   final List<ContactData> contacts;
   final Widget placeholder;
 
-  const _ContactCardList(this.state, {Key? key, this.contacts = const<ContactData>[], required this.placeholder}) : super(key: key);
+  const _ContactCardList(this.state,
+      {Key? key,
+      this.contacts = const <ContactData>[],
+      required this.placeholder})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     /// Layout content
-    EdgeInsets padding = EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m);
+    EdgeInsets padding =
+        EdgeInsets.symmetric(horizontal: Insets.l, vertical: Insets.m);
     // Placeholder content-box
     return PlaceholderContentSwitcher(
         hasContent: () => contacts.isNotEmpty,

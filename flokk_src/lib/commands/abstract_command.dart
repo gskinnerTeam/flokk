@@ -67,12 +67,14 @@ mixin AuthorizedServiceCommandMixin on AbstractCommand {
   bool ignoreErrors = false;
 
   /// Runs a service that refreshes Auth if needed, and checks for errors on completion
-  Future<ServiceResult<T>> executeAuthServiceCmd<T>(Future<ServiceResult<T>> Function() cmd) async {
+  Future<ServiceResult<T>> executeAuthServiceCmd<T>(
+      Future<ServiceResult<T>> Function() cmd) async {
     /// Bail early if we're offline
     if (!appModel.isOnline) {
       Dialogs.show(OkCancelDialog(
         title: "No Connection",
-        message: "It appears your device is offline. Please check your connection and try again.",
+        message:
+            "It appears your device is offline. Please check your connection and try again.",
         onOkPressed: () => rootNav?.pop(),
       ));
     }

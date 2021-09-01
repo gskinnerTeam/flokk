@@ -9,7 +9,8 @@ class SearchEngine extends SimpleNotifier {
   List<ContactData> _cachedResults = [];
   List<String> _tagCache = [];
 
-  get hasQuery => query.isNotEmpty || tags.isNotEmpty || filterContacts.isNotEmpty;
+  get hasQuery =>
+      query.isNotEmpty || tags.isNotEmpty || filterContacts.isNotEmpty;
 
   SearchEngine copy() => SearchEngine()..copyFrom(this);
 
@@ -38,7 +39,8 @@ class SearchEngine extends SimpleNotifier {
 
   set tags(String tags) => setAndMarkDirty(() => _tags = tags);
 
-  List<String> get tagList => tags.split(",").where((e) => e.isNotEmpty).toList();
+  List<String> get tagList =>
+      tags.split(",").where((e) => e.isNotEmpty).toList();
 
   void addTag(String tag) {
     final tl = tagList;
@@ -64,9 +66,11 @@ class SearchEngine extends SimpleNotifier {
   /// Filter contacts
   String get filterContacts => _filterContacts;
 
-  set filterContacts(String filterContacts) => setAndMarkDirty(() => _filterContacts = filterContacts);
+  set filterContacts(String filterContacts) =>
+      setAndMarkDirty(() => _filterContacts = filterContacts);
 
-  List<String> get filterContactList => filterContacts.split(",").where((e) => e.isNotEmpty).toList();
+  List<String> get filterContactList =>
+      filterContacts.split(",").where((e) => e.isNotEmpty).toList();
 
   void addFilterContact(String filterContact) {
     final fcl = filterContactList;
@@ -91,7 +95,8 @@ class SearchEngine extends SimpleNotifier {
   /// ORDER BY
   ContactOrderBy get orderBy => _orderBy;
 
-  set orderBy(ContactOrderBy orderBy) => setAndMarkDirty(() => _orderBy = orderBy);
+  set orderBy(ContactOrderBy orderBy) =>
+      setAndMarkDirty(() => _orderBy = orderBy);
   ContactOrderBy _orderBy = ContactOrderBy.FirstName;
 
   /// ////////////////////////////////////////////
@@ -105,18 +110,20 @@ class SearchEngine extends SimpleNotifier {
   /// DATA SOURCE
   List<ContactData> get contactsList => _contactsList;
 
-  set contactsList(List<ContactData> value) => setAndMarkDirty(() => _contactsList = value);
+  set contactsList(List<ContactData> value) =>
+      setAndMarkDirty(() => _contactsList = value);
   List<ContactData> _contactsList = [];
 
   List<GroupData> get groupsList => _groupsList;
 
-  set groupsList(List<GroupData> value) => setAndMarkDirty(() => _groupsList = value);
+  set groupsList(List<GroupData> value) =>
+      setAndMarkDirty(() => _groupsList = value);
   List<GroupData> _groupsList = [];
 
   List<ContactData> getResults(
-      [List<ContactData>? newContacts, ContactOrderBy _orderBy = ContactOrderBy.FirstName]) {
-    if (newContacts != null)
-      contactsList = newContacts;
+      [List<ContactData>? newContacts,
+      ContactOrderBy _orderBy = ContactOrderBy.FirstName]) {
+    if (newContacts != null) contactsList = newContacts;
     orderBy = _orderBy;
     // If we have no data
     if (_contactsList.isEmpty) return [];
@@ -141,7 +148,8 @@ class SearchEngine extends SimpleNotifier {
       List<ContactData> results = List.from(_contactsList);
       List<String> groups = _buildGroups();
       {
-        final lowerQuery = !StringUtils.isEmpty(_query) ? _query.toLowerCase() : "";
+        final lowerQuery =
+            !StringUtils.isEmpty(_query) ? _query.toLowerCase() : "";
         if (hasQuery) {
           results.retainWhere((c) {
             bool matchsGroups = false;
@@ -161,7 +169,8 @@ class SearchEngine extends SimpleNotifier {
             bool queryNotEmpty = lowerQuery.isNotEmpty;
             //bool hasTags = tagList.isNotEmpty || filterContactList.isNotEmpty;
             bool matchsTags = matchsGroups || matchsContact;
-            return (queryNotEmpty && c.searchable.contains(lowerQuery)) || matchsTags;
+            return (queryNotEmpty && c.searchable.contains(lowerQuery)) ||
+                matchsTags;
           });
         }
         groups.retainWhere((g) {
@@ -169,9 +178,11 @@ class SearchEngine extends SimpleNotifier {
         });
       }
       if (orderBy == ContactOrderBy.FirstName) {
-        results.sort((a, b) => _nullSafeSort(a.nameGiven, b.nameGiven, _orderDesc));
+        results.sort(
+            (a, b) => _nullSafeSort(a.nameGiven, b.nameGiven, _orderDesc));
       } else if (orderBy == ContactOrderBy.LastName) {
-        results.sort((a, b) => _nullSafeSort(a.nameFamily, b.nameFamily, _orderDesc));
+        results.sort(
+            (a, b) => _nullSafeSort(a.nameFamily, b.nameFamily, _orderDesc));
       }
       _cachedResults = results;
       _tagCache = groups;

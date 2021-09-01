@@ -8,7 +8,8 @@ import 'package:github/github.dart';
 import 'package:tuple/tuple.dart';
 
 class GithubModel extends AbstractModel {
-  final expiry = Duration(days: 30); //the period of which to cull events based on createdAt
+  final expiry = Duration(
+      days: 30); //the period of which to cull events based on createdAt
   final repoStaleTime = Duration(hours: 72);
   ContactsModel contactsModel;
 
@@ -31,17 +32,22 @@ class GithubModel extends AbstractModel {
 
   @override
   GithubModel copyFromJson(Map<String, dynamic> json) {
-    _eventsHash = (json["_eventsHash"] as Map<String, dynamic>?)?.map((key, value) =>
-            MapEntry<String, List<GitEvent>>(key, (value as List?)?.map((x) => GitEvent.fromJson(x)).toList() ?? [])) ??
+    _eventsHash = (json["_eventsHash"] as Map<String, dynamic>?)?.map(
+            (key, value) => MapEntry<String, List<GitEvent>>(
+                key,
+                (value as List?)?.map((x) => GitEvent.fromJson(x)).toList() ??
+                    [])) ??
         {};
-    _reposHash = (json["_reposHash"] as Map<String, dynamic>?)
-            ?.map((key, value) => MapEntry<String, GitRepo>(key, GitRepo.fromJson(value))) ??
+    _reposHash = (json["_reposHash"] as Map<String, dynamic>?)?.map(
+            (key, value) =>
+                MapEntry<String, GitRepo>(key, GitRepo.fromJson(value))) ??
         {};
     return this;
   }
 
   @override
-  Map<String, dynamic> toJson() => {"_eventsHash": _eventsHash, "_reposHash": _reposHash};
+  Map<String, dynamic> toJson() =>
+      {"_eventsHash": _eventsHash, "_reposHash": _reposHash};
 
   /// //////////////////////////////////////////////////////////////////
   /// Public API
@@ -59,7 +65,9 @@ class GithubModel extends AbstractModel {
 
   bool repoIsStale(String repoFullName) =>
       !repoExists(repoFullName) ||
-      DateTime.now().difference(_reposHash[repoFullName]?.lastUpdated ?? Dates.epoch) > repoStaleTime;
+      DateTime.now().difference(
+              _reposHash[repoFullName]?.lastUpdated ?? Dates.epoch) >
+          repoStaleTime;
 
   //Get all user repos
   List<GitRepo> get allRepos {
@@ -83,7 +91,8 @@ class GithubModel extends AbstractModel {
       List<GitEvent> events = getEventsByContact(contact);
 
       //Distinct (no duplicates) list of repo names from contact events
-      List<String> repoNames = events.map((x) => x.event.repo?.name ?? "").toSet().toList();
+      List<String> repoNames =
+          events.map((x) => x.event.repo?.name ?? "").toSet().toList();
 
       //Get repos either owned by contact or is part of the contact events
       List<GitRepo> repos = _reposHash.values
@@ -120,14 +129,16 @@ class GithubModel extends AbstractModel {
           .map((x) => x.event.actor?.login)
           .toSet()
           .toList() //get distinct git usernames for each event
-          .map((x) => contactsModel.getContactByGit(x ?? "")) //get contact by gitusername
+          .map((x) => contactsModel
+              .getContactByGit(x ?? "")) //get contact by gitusername
           .toList();
 
       //Get the latest date from the events associated with this repo or else fall back to repository.updatedAt
       associatedEvents.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      DateTime latestActivityDate = (associatedEvents.isNotEmpty && n.repository.updatedAt != null)
-          ? associatedEvents.first.createdAt
-          : n.repository.updatedAt ?? Dates.epoch;
+      DateTime latestActivityDate =
+          (associatedEvents.isNotEmpty && n.repository.updatedAt != null)
+              ? associatedEvents.first.createdAt
+              : n.repository.updatedAt ?? Dates.epoch;
 
       if (associatedContacts.isNotEmpty) {
         popular.add(Tuple2<int, GitRepo>(
@@ -153,7 +164,9 @@ class GithubModel extends AbstractModel {
     for (var n in sorted) {
       n.repository = _reposHash[n.event.repo?.name]?.repository ??
           Repository(
-              id: n.event.repo?.id ?? 0, name: n.event.repo?.name ?? "", htmlUrl: n.event.repo?.htmlUrl ?? "");
+              id: n.event.repo?.id ?? 0,
+              name: n.event.repo?.name ?? "",
+              htmlUrl: n.event.repo?.htmlUrl ?? "");
     }
 
     return sorted;
@@ -166,7 +179,9 @@ class GithubModel extends AbstractModel {
 
   void addEvents(String gitUsername, List<GitEvent> events) {
     final current = DateTime.now();
-    _eventsHash[gitUsername] = events.where((x) => (current.difference(x.createdAt)) < expiry).toList();
+    _eventsHash[gitUsername] = events
+        .where((x) => (current.difference(x.createdAt)) < expiry)
+        .toList();
     notifyListeners();
   }
 

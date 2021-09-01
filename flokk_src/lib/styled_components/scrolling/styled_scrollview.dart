@@ -15,7 +15,9 @@ class StyledScrollView extends StatefulWidget {
     Key? key,
     required this.child,
     this.contentSize,
-    this.axis = Axis.vertical, this.trackColor, this.handleColor,
+    this.axis = Axis.vertical,
+    this.trackColor,
+    this.handleColor,
   }) : super(key: key) {}
 
   @override

@@ -20,11 +20,14 @@ class UpcomingActivitiesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
     ContactsModel contactsModel = context.watch();
-    List<Tuple2<ContactData, DateMixin>> contactsWithDate = contactsModel.upcomingDateContacts;
+    List<Tuple2<ContactData, DateMixin>> contactsWithDate =
+        contactsModel.upcomingDateContacts;
     TextStyle headerStyle = TextStyles.T1;
 
     /// Create list of ItemRenderers
-    List<Widget> kids = contactsWithDate.map((cWithD) => ImportantEventCard(cWithD.item1, cWithD.item2)).toList();
+    List<Widget> kids = contactsWithDate
+        .map((cWithD) => ImportantEventCard(cWithD.item1, cWithD.item2))
+        .toList();
 
     /// Build list
     return LayoutBuilder(
@@ -33,7 +36,8 @@ class UpcomingActivitiesSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("UPCOMING IMPORTANT DATES", style: headerStyle.textColor(theme.accent1Darker)),
+            Text("UPCOMING IMPORTANT DATES",
+                style: headerStyle.textColor(theme.accent1Darker)),
             VSpace(Insets.l * .75),
             PlaceholderContentSwitcher(
               hasContent: () => kids.isNotEmpty,

@@ -21,7 +21,8 @@ class SelectableLinkText extends StatefulWidget {
 }
 
 class _LinkTextState extends State<SelectableLinkText> {
-  List<TapGestureRecognizer> _gestureRecognizers = const <TapGestureRecognizer>[];
+  List<TapGestureRecognizer> _gestureRecognizers =
+      const <TapGestureRecognizer>[];
   final RegExp _regex = RegExp(
       r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%.,_\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\,+.~#?&//=]*)");
 
@@ -46,7 +47,8 @@ class _LinkTextState extends State<SelectableLinkText> {
     final themeData = Theme.of(context);
     final textStyle = widget.textStyle ?? themeData.textTheme.bodyText1;
     final linkStyle = widget.linkStyle ??
-        themeData.textTheme.bodyText1?.copyWith(color: themeData.accentColor, decoration: TextDecoration.underline);
+        themeData.textTheme.bodyText1?.copyWith(
+            color: themeData.accentColor, decoration: TextDecoration.underline);
 
     final links = _regex.allMatches(widget.text);
 
@@ -62,7 +64,8 @@ class _LinkTextState extends State<SelectableLinkText> {
       textSpans.add(TextSpan(text: part, style: textStyle));
       if (i < links.length) {
         final link = links.elementAt(i).group(0) ?? "";
-        final recognizer = TapGestureRecognizer()..onTap = () => _launchUrl(link);
+        final recognizer = TapGestureRecognizer()
+          ..onTap = () => _launchUrl(link);
         _gestureRecognizers.add(recognizer);
         textSpans.add(
           TextSpan(text: link, style: linkStyle, recognizer: recognizer),
@@ -71,6 +74,7 @@ class _LinkTextState extends State<SelectableLinkText> {
       }
     });
 
-    return RichText(text: TextSpan(children: textSpans), textAlign: widget.textAlign);
+    return RichText(
+        text: TextSpan(children: textSpans), textAlign: widget.textAlign);
   }
 }

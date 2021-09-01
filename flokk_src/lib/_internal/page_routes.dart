@@ -8,7 +8,8 @@ class PageRoutes {
   static const Curve kDefaultEaseFwd = Curves.easeOut;
   static const Curve kDefaultEaseReverse = Curves.easeOut;
 
-  static Route<T> fade<T>(PageBuilder pageBuilder, [double duration = kDefaultDuration]) {
+  static Route<T> fade<T>(PageBuilder pageBuilder,
+      [double duration = kDefaultDuration]) {
     return PageRouteBuilder<T>(
       transitionDuration: Duration(milliseconds: (duration * 1000).round()),
       pageBuilder: (context, animation, secondaryAnimation) => pageBuilder(),
@@ -18,17 +19,22 @@ class PageRoutes {
     );
   }
 
-  static Route<T> fadeThrough<T>(PageBuilder pageBuilder, [double duration = kDefaultDuration]) {
+  static Route<T> fadeThrough<T>(PageBuilder pageBuilder,
+      [double duration = kDefaultDuration]) {
     return PageRouteBuilder<T>(
       transitionDuration: Duration(milliseconds: (duration * 1000).round()),
       pageBuilder: (context, animation, secondaryAnimation) => pageBuilder(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeThroughTransition(animation: animation, secondaryAnimation: secondaryAnimation, child: child);
+        return FadeThroughTransition(
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            child: child);
       },
     );
   }
 
-  static Route<T> fadeScale<T>(PageBuilder pageBuilder, [double duration = kDefaultDuration]) {
+  static Route<T> fadeScale<T>(PageBuilder pageBuilder,
+      [double duration = kDefaultDuration]) {
     return PageRouteBuilder<T>(
       transitionDuration: Duration(milliseconds: (duration * 1000).round()),
       pageBuilder: (context, animation, secondaryAnimation) => pageBuilder(),
@@ -39,7 +45,8 @@ class PageRoutes {
   }
 
   static Route<T> sharedAxis<T>(PageBuilder pageBuilder,
-      [SharedAxisTransitionType type = SharedAxisTransitionType.scaled, double duration = kDefaultDuration]) {
+      [SharedAxisTransitionType type = SharedAxisTransitionType.scaled,
+      double duration = kDefaultDuration]) {
     return PageRouteBuilder<T>(
       transitionDuration: Duration(milliseconds: (duration * 1000).round()),
       pageBuilder: (context, animation, secondaryAnimation) => pageBuilder(),
@@ -66,7 +73,8 @@ class PageRoutes {
         bool reverse = animation.status == AnimationStatus.reverse;
         return SlideTransition(
           position: Tween<Offset>(begin: startOffset, end: Offset(0, 0))
-              .animate(CurvedAnimation(parent: animation, curve: reverse ? easeReverse : easeFwd)),
+              .animate(CurvedAnimation(
+                  parent: animation, curve: reverse ? easeReverse : easeFwd)),
           child: child,
         );
       },

@@ -11,14 +11,17 @@ class StyledTabBar extends StatelessWidget {
   final int index;
   static const List<String> defaults = ["test", "foo", "bar"];
 
-  const StyledTabBar({Key? key, this.sections = defaults, this.index = 0, this.onTabPressed}) : super(key: key);
+  const StyledTabBar(
+      {Key? key, this.sections = defaults, this.index = 0, this.onTabPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
 
     /// Create List of expanding sections's to fill the tab bar
-    List<Widget> clickableLabels = sections.map((e) => _ClickableLabel(e, theme)).toList();
+    List<Widget> clickableLabels =
+        sections.map((e) => _ClickableLabel(e, theme)).toList();
 
     /// Calculate target alignment for animated bar
     double targetAlignX = -1 + (index * 1 / (sections.length - 1)) * 2;
@@ -47,7 +50,8 @@ class StyledTabBar extends StatelessWidget {
       decoration: BoxDecoration(
           color: fill,
           borderRadius: Corners.s5Border,
-          border: Border.all(color: border?.withOpacity(.35) ?? Colors.transparent)),
+          border: Border.all(
+              color: border?.withOpacity(.35) ?? Colors.transparent)),
     );
   }
 
@@ -58,10 +62,12 @@ class StyledTabBar extends StatelessWidget {
 
     return AnimatedDefaultTextStyle(
       duration: Durations.fast,
-      style: TextStyles.Footnote.textColor(isSelected ? selected : notSelected).scale(fontScale),
+      style: TextStyles.Footnote.textColor(isSelected ? selected : notSelected)
+          .scale(fontScale),
       child: OneLineText(e.toUpperCase())
           .center()
-          .clickable(() => onTabPressed?.call(sections.indexOf(e)), opaque: true)
+          .clickable(() => onTabPressed?.call(sections.indexOf(e)),
+              opaque: true)
           .expanded(),
     );
   }

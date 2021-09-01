@@ -19,9 +19,7 @@ class AnimatedBirdSplashClipper extends CustomClipper<Path> {
   }
 }
 
-
 class GooeyEdge {
-
   static Random random = Random(4444);
 
   List<_Point> points = [];
@@ -33,16 +31,18 @@ class GooeyEdge {
   int lastT = 0;
 
   // TODO: initValues?
-  GooeyEdge({this.count=8, this.edgeFactor=0.09}) {
+  GooeyEdge({this.count = 8, this.edgeFactor = 0.09}) {
     points = [];
     int ttl = count * 4 - 2;
-    for (int i=0; i<ttl; i++) {
+    for (int i = 0; i < ttl; i++) {
       points.add(_updatePoint(_Point(), true));
     }
   }
 
   Path buildPath(Size size) {
-    if (points.isEmpty) { return Path(); }
+    if (points.isEmpty) {
+      return Path();
+    }
 
     double w = size.width, h = size.height;
     double rowH = h / (count * 2 - 1), capSize = rowH * 0.67;
@@ -53,24 +53,26 @@ class GooeyEdge {
 
     _drawEdge(bool left) {
       int ttl = count * 2 - 1, start = 0;
-      double baseX = w/2 - edge, baseDir = 1;
+      double baseX = w / 2 - edge, baseDir = 1;
       double y = 0, yD = rowH;
 
       if (left) {
-        start = count * 2 -1;
-        baseX *= - 1.0;
+        start = count * 2 - 1;
+        baseX *= -1.0;
         baseDir = -1.0;
         y = h;
         yD *= -1.0;
       }
 
-      for (int i=0; i<ttl; i++) {
-        _Point pt = points[i+start];
+      for (int i = 0; i < ttl; i++) {
+        _Point pt = points[i + start];
         double dir = (i % 2 == 0 ? 1 : -1) * baseDir;
-        double curve = sin((i/ttl * roundness + (1.0 - roundness)/2) * pi); // cut off the top bit of a sin curve
-        double x = w/2 + baseX * curve + range * curve * pt.value * dir;
+        double curve = sin((i / ttl * roundness + (1.0 - roundness) / 2) *
+            pi); // cut off the top bit of a sin curve
+        double x = w / 2 + baseX * curve + range * curve * pt.value * dir;
         path.lineTo(x, y);
-        path.quadraticBezierTo(x + capSize * dir, y, x + capSize * dir, y + yD/2);
+        path.quadraticBezierTo(
+            x + capSize * dir, y, x + capSize * dir, y + yD / 2);
         path.quadraticBezierTo(x + capSize * dir, y + yD, x, y + yD);
         y += yD;
       }
@@ -85,10 +87,10 @@ class GooeyEdge {
     return path;
   }
 
-
-
   void tick(Duration duration) {
-    if (points.isEmpty) { return; }
+    if (points.isEmpty) {
+      return;
+    }
     double t = min(1.5, (duration.inMilliseconds - lastT) / 1000 * 60);
     lastT = duration.inMilliseconds;
     double dampingT = pow(damping, t) as double;
@@ -123,4 +125,3 @@ class _Point {
   double tension = 0.0;
   double vel = 0.0;
 }
-

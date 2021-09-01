@@ -25,9 +25,15 @@ class SocialActivitySection extends StatefulWidget {
 
 class _SocialActivitySectionState extends State<SocialActivitySection> {
   void _handleTabPressed(int index) {
-    if (index == 0) context.read<AppModel>().dashSocialSection = DashboardSocialSectionType.All;
-    if (index == 1) context.read<AppModel>().dashSocialSection = DashboardSocialSectionType.Twitter;
-    if (index == 2) context.read<AppModel>().dashSocialSection = DashboardSocialSectionType.Git;
+    if (index == 0)
+      context.read<AppModel>().dashSocialSection =
+          DashboardSocialSectionType.All;
+    if (index == 1)
+      context.read<AppModel>().dashSocialSection =
+          DashboardSocialSectionType.Twitter;
+    if (index == 2)
+      context.read<AppModel>().dashSocialSection =
+          DashboardSocialSectionType.Git;
     context.read<AppModel>().scheduleSave();
   }
 
@@ -39,13 +45,17 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
     return LayoutBuilder(
       builder: (layoutContext, constraints) {
         /// Responsively size tab bars
-        double tabWidth = constraints.maxWidth < PageBreaks.LargePhone ? 240 : 280;
+        double tabWidth =
+            constraints.maxWidth < PageBreaks.LargePhone ? 240 : 280;
         TextStyle headerStyle = TextStyles.T1;
 
-        bool useTabView = constraints.maxWidth < PageBreaks.TabletPortrait - 100;
+        bool useTabView =
+            constraints.maxWidth < PageBreaks.TabletPortrait - 100;
 
         /// Determine which tab should be selected
-        var sectionType = layoutContext.select<AppModel, DashboardSocialSectionType>((model) => model.dashSocialSection);
+        var sectionType =
+            layoutContext.select<AppModel, DashboardSocialSectionType>(
+                (model) => model.dashSocialSection);
         int tabIndex = 0;
         if (sectionType == DashboardSocialSectionType.Twitter) tabIndex = 1;
         if (sectionType == DashboardSocialSectionType.Git) tabIndex = 2;
@@ -64,31 +74,51 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
         switch (sectionType) {
           case DashboardSocialSectionType.All:
             list1Title = "TWITTER RECENT ACTIVITY";
-            list1 = twitterModel.allTweets.map((tweet) => TweetListItem(tweet)).take(maxItems).toList();
+            list1 = twitterModel.allTweets
+                .map((tweet) => TweetListItem(tweet))
+                .take(maxItems)
+                .toList();
             list1Placeholder = TwitterPlaceholder(contact: ContactData());
             icon1 = StyledIcons.twitterActive;
             list2Title = "GITHUB RECENT ACTIVITY";
-            list2 = gitModel.allEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
+            list2 = gitModel.allEvents
+                .map((event) => GitEventListItem(event))
+                .take(maxItems)
+                .toList();
             list2Placeholder = GitPlaceholder(contact: ContactData());
             icon2 = StyledIcons.githubActive;
             break;
           case DashboardSocialSectionType.Git:
             list1Title = "GITHUB RECENT ACTIVITY";
             list1Placeholder = GitPlaceholder(contact: ContactData());
-            list1 = gitModel.allEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
+            list1 = gitModel.allEvents
+                .map((event) => GitEventListItem(event))
+                .take(maxItems)
+                .toList();
             icon1 = StyledIcons.githubActive;
             list2Title = "TRENDING REPOSITORIES";
-            list2Placeholder = GitPlaceholder(contact: ContactData(), isTrending: true);
-            list2 = gitModel.popularRepos.map((repo) => GitRepoListItem(repo)).take(maxItems).toList();
+            list2Placeholder =
+                GitPlaceholder(contact: ContactData(), isTrending: true);
+            list2 = gitModel.popularRepos
+                .map((repo) => GitRepoListItem(repo))
+                .take(maxItems)
+                .toList();
             icon2 = StyledIcons.githubActive;
             break;
           case DashboardSocialSectionType.Twitter:
-            list1 = twitterModel.allTweets.map((e) => TweetListItem(e)).take(maxItems).toList();
+            list1 = twitterModel.allTweets
+                .map((e) => TweetListItem(e))
+                .take(maxItems)
+                .toList();
             list1Placeholder = TwitterPlaceholder(contact: ContactData());
             list1Title = "TWITTER RECENT ACTIVITY";
             icon1 = StyledIcons.twitterActive;
-            list2 = twitterModel.popularTweets.map((e) => TweetListItem(e)).take(maxItems).toList();
-            list2Placeholder = TwitterPlaceholder(contact: ContactData(), isPopular: true);
+            list2 = twitterModel.popularTweets
+                .map((e) => TweetListItem(e))
+                .take(maxItems)
+                .toList();
+            list2Placeholder =
+                TwitterPlaceholder(contact: ContactData(), isPopular: true);
             list2Title = "POPULAR TWEETS";
             icon2 = StyledIcons.twitterActive;
             break;
@@ -100,12 +130,16 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                OneLineText("SOCIAL ACTIVITIES", style: headerStyle.textColor(theme.accent1Darker)).flexible(),
+                OneLineText("SOCIAL ACTIVITIES",
+                        style: headerStyle.textColor(theme.accent1Darker))
+                    .flexible(),
                 StyledTabBar(
                   index: tabIndex,
                   sections: ["All", "Twitter", "GitHub"],
                   onTabPressed: _handleTabPressed,
-                ).constrained(maxWidth: tabWidth, animate: true).animate(Durations.medium, Curves.easeOut),
+                )
+                    .constrained(maxWidth: tabWidth, animate: true)
+                    .animate(Durations.medium, Curves.easeOut),
               ],
             ),
             VSpace(Insets.l * .75),

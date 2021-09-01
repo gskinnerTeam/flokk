@@ -6,14 +6,19 @@ class StyledHorizontalScrollView extends StatefulWidget {
   final Curve autoScrollCurve;
   final Widget? child;
 
-  StyledHorizontalScrollView({required this.autoScrollDuration, required this.autoScrollCurve, this.child, Key? key})
+  StyledHorizontalScrollView(
+      {required this.autoScrollDuration,
+      required this.autoScrollCurve,
+      this.child,
+      Key? key})
       : super(key: key);
 
   @override
   State createState() => _StyledHorizontalScrollViewState();
 }
 
-class _StyledHorizontalScrollViewState extends State<StyledHorizontalScrollView> {
+class _StyledHorizontalScrollViewState
+    extends State<StyledHorizontalScrollView> {
   late GlobalKey _childContainerKey;
   late GlobalKey _scrollViewKey;
   double _childWidth = 0.0;
@@ -62,8 +67,10 @@ class _StyledHorizontalScrollViewState extends State<StyledHorizontalScrollView>
   @override
   Widget build(BuildContext context) {
     /// Hook into these sub-widgets and rebuild once they callback with their current size
-    BuildUtils.getFutureSizeFromGlobalKey(_childContainerKey, (size) => childWidth = size.width);
-    BuildUtils.getFutureSizeFromGlobalKey(_scrollViewKey, (size) => scrollWidth = size.width);
+    BuildUtils.getFutureSizeFromGlobalKey(
+        _childContainerKey, (size) => childWidth = size.width);
+    BuildUtils.getFutureSizeFromGlobalKey(
+        _scrollViewKey, (size) => scrollWidth = size.width);
 
     return SingleChildScrollView(
       key: _scrollViewKey,

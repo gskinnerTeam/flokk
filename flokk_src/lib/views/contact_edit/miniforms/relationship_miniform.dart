@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 class ContactRelationshipMiniForm extends BaseMiniForm {
   final double maxDropdownHeight;
 
-  ContactRelationshipMiniForm(ContactEditFormState form, {Key? key, required this.maxDropdownHeight})
+  ContactRelationshipMiniForm(ContactEditFormState form,
+      {Key? key, required this.maxDropdownHeight})
       : super(form, ContactSectionType.relationship, key: key);
 
   @override

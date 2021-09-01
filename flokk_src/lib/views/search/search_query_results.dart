@@ -34,20 +34,27 @@ class SearchResults extends StatelessWidget {
           listenable: state.tmpSearch,
           builder: (_, __) {
             //Add a callback hook, so the column can pass us it's size after layout.
-            BuildUtils.getFutureSizeFromGlobalKey(state.resultsColumnKey, (size) => state.resultsHeight = size.height);
+            BuildUtils.getFutureSizeFromGlobalKey(state.resultsColumnKey,
+                (size) => state.resultsHeight = size.height);
 
             int maxResults = 6;
-            int colCount = max(1, (constraints.maxWidth / 280).floor()).clamp(1, maxResults);
+            int colCount = max(1, (constraints.maxWidth / 280).floor())
+                .clamp(1, maxResults);
 
             /// Create Result Items
-            List<ContactData> contacts = state.tmpSearch.hasQuery ? state.tmpSearch.getResults() : <ContactData>[];
+            List<ContactData> contacts = state.tmpSearch.hasQuery
+                ? state.tmpSearch.getResults()
+                : <ContactData>[];
 
             List<String> tags = state.tmpSearch.getTagResults();
             final List<StyledLabelPill> labelPills = tags
                 .take(maxResults)
                 .map((tag) => StyledLabelPill(tag.toUpperCase(),
-                        textStyle: TextStyles.Footnote.textColor(theme.grey).letterSpace(0).textHeight(1.63),
-                        borderRadius: Corners.s5, onPressed: () => state.handleTagPressed(tag)))
+                    textStyle: TextStyles.Footnote.textColor(theme.grey)
+                        .letterSpace(0)
+                        .textHeight(1.63),
+                    borderRadius: Corners.s5,
+                    onPressed: () => state.handleTagPressed(tag)))
                 .toList();
 
             final List<_ContactSearchListItem> contactListItems = contacts
@@ -76,6 +83,7 @@ class SearchResults extends StatelessWidget {
                       ),
                     ),
                   },
+
                   /// Contacts / People
                   if (contacts.isNotEmpty) ...{
                     _SearchCategory(
@@ -90,6 +98,7 @@ class SearchResults extends StatelessWidget {
                       ),
                     ),
                   },
+
                   /// Submit Btn
                   if (contacts.length > 6) ...{
                     TransparentTextBtn(
@@ -97,7 +106,10 @@ class SearchResults extends StatelessWidget {
                       bgColor: theme.surface,
                       bigMode: true,
                       onPressed: state.handleSearchSubmitted,
-                    ).constrained(width: 220, height: 60).center().padding(top: Insets.l),
+                    )
+                        .constrained(width: 220, height: 60)
+                        .center()
+                        .padding(top: Insets.l),
                     VSpace(Insets.m * 1.5),
                   },
                 ],
@@ -141,13 +153,17 @@ class _SearchCategory extends StatelessWidget {
   final String text;
   final Widget child;
 
-  _SearchCategory({required this.icon, required this.text, required this.child});
+  _SearchCategory(
+      {required this.icon, required this.text, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[_SearchHeading(icon, text), child.padding(horizontal: Insets.xl, top: Insets.m)],
+      children: <Widget>[
+        _SearchHeading(icon, text),
+        child.padding(horizontal: Insets.xl, top: Insets.m)
+      ],
     ).padding(horizontal: Insets.xl, top: Insets.l * 0.9);
   }
 }
@@ -161,7 +177,10 @@ class _SearchHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
-    TextStyle txtStyle = TextStyles.T1.size(FontSizes.s16).letterSpace(0.8).textColor(theme.accent1Darker);
+    TextStyle txtStyle = TextStyles.T1
+        .size(FontSizes.s16)
+        .letterSpace(0.8)
+        .textColor(theme.accent1Darker);
     return Row(children: <Widget>[
       StyledImageIcon(icon, color: theme.grey),
       HSpace(Insets.m * 1.5),

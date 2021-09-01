@@ -13,21 +13,25 @@ class RefreshGithubCommand extends AbstractCommand {
   Future<void> execute(String githubUsername) async {
     Log.p("[RefreshGithubCommand]");
 
-    if (contactsModel.canRefreshGitEventsFor(githubUsername) || AppModel.ignoreCooldowns) {
+    if (contactsModel.canRefreshGitEventsFor(githubUsername) ||
+        AppModel.ignoreCooldowns) {
       githubModel.isLoading = true;
-      ServiceResult eventResult = await gitService.getUserEvents(githubUsername);
+      ServiceResult eventResult =
+          await gitService.getUserEvents(githubUsername);
 
       contactsModel.updateSocialTimestamps(gitUsername: githubUsername);
 
       //set "hasValidGit" flag on contact, depending on success of call
-      contactsModel.updateContactDataGithubValidity(githubUsername, eventResult.success);
+      contactsModel.updateContactDataGithubValidity(
+          githubUsername, eventResult.success);
 
       //Suppress error dialogs if the git username is not found. Already updated the ContactData.hasValidGit flag above
       final int statusCode = eventResult.response.statusCode;
       switch (statusCode) {
         case 403: //rate limit (https://developer.github.com/v3/#rate-limiting)
-          ShowServiceErrorCommand(context)
-              .execute(eventResult.response, customMessage: "GitHub rate limit exceeded. Please try again later.");
+          ShowServiceErrorCommand(context).execute(eventResult.response,
+              customMessage:
+                  "GitHub rate limit exceeded. Please try again later.");
           break;
         case 404: //likely invalid git username, don't bother showing error dialog.
           break;
@@ -45,7 +49,8 @@ class RefreshGithubCommand extends AbstractCommand {
         String fullName = n.event.repo?.name ?? "";
 
         if (githubModel.repoIsStale(fullName)) {
-          ServiceResult<GitRepo> repoResult = await gitService.getRepo(fullName);
+          ServiceResult<GitRepo> repoResult =
+              await gitService.getRepo(fullName);
           if (repoResult.success == true) {
             GitRepo repo = repoResult.content!;
             githubModel.addRepo(repo);

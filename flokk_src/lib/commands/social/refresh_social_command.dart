@@ -15,15 +15,23 @@ class RefreshSocialCommand extends AbstractCommand {
       return;
     }
 
-    List<String> githubHandles =
-        contacts.where((x) => !StringUtils.isEmpty(x.gitUsername)).map((x) => x.gitUsername).toList();
-    List<String> twitterHandles =
-        contacts.where((x) => !StringUtils.isEmpty(x.twitterHandle)).map((x) => x.twitterHandle).toList();
+    List<String> githubHandles = contacts
+        .where((x) => !StringUtils.isEmpty(x.gitUsername))
+        .map((x) => x.gitUsername)
+        .toList();
+    List<String> twitterHandles = contacts
+        .where((x) => !StringUtils.isEmpty(x.twitterHandle))
+        .map((x) => x.twitterHandle)
+        .toList();
 
-    List<Future<void>> gitFutures = githubHandles.map((x) => RefreshGithubCommand(context).execute(x)).toList();
+    List<Future<void>> gitFutures = githubHandles
+        .map((x) => RefreshGithubCommand(context).execute(x))
+        .toList();
     await Future.wait(gitFutures);
 
-    List<Future<void>> twitterFutures = twitterHandles.map((x) => RefreshTwitterCommand(context).execute(x)).toList();
+    List<Future<void>> twitterFutures = twitterHandles
+        .map((x) => RefreshTwitterCommand(context).execute(x))
+        .toList();
     await Future.wait(twitterFutures);
   }
 }

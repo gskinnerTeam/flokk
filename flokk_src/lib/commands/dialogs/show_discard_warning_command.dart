@@ -14,7 +14,8 @@ class ShowDiscardWarningCommand extends AbstractCommand {
     return await Dialogs.show(OkCancelDialog(
       okLabel: "DISCARD",
       title: "UNSAVED CHANGES FOR ${isNew ? "NEW " : ""}CONTACT",
-      message: "You have unsaved changes which will be lost if you navigate away.\n"
+      message:
+          "You have unsaved changes which will be lost if you navigate away.\n"
           "Are you sure you wish to discard these changes?",
       onOkPressed: () => rootNav?.pop(true),
       onCancelPressed: () => rootNav?.pop(false),

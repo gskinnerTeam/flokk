@@ -22,19 +22,23 @@ import 'package:provider/provider.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 //Developer hook to force login while testing locally (sidesteps Oauth flow)
-const bool kForceWebLogin = bool.fromEnvironment('flokk.forceWebLogin', defaultValue: false);
+const bool kForceWebLogin =
+    bool.fromEnvironment('flokk.forceWebLogin', defaultValue: false);
 
 bool tryAndLoadDevSpike(BuildContext c) {
   Widget? spike;
 
   /// Load spike if we have one
-  if (spike != null) AppGlobals.nav?.pushReplacement(PageRoutes.fade(() => spike));
+  if (spike != null)
+    AppGlobals.nav?.pushReplacement(PageRoutes.fade(() => spike));
   return spike != null;
 }
 
 void main() {
   /// Need to add this in order to run on Desktop. See https://github.com/flutter/flutter/wiki/Desktop-shells#target-platform-override
-  if (UniversalPlatform.isWindows || UniversalPlatform.isLinux || UniversalPlatform.isMacOS) {
+  if (UniversalPlatform.isWindows ||
+      UniversalPlatform.isLinux ||
+      UniversalPlatform.isMacOS) {
     debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
   }
 
@@ -134,7 +138,8 @@ class _MainAppState extends State<MainApp> {
 
     // TODO: Use platform brightness to determine default theme. // MediaQuery.of(context).platformBrightness;
     /// Bind to AppModel.theme and get current theme
-    ThemeType themeType = context.select<AppModel, ThemeType>((value) => value.theme);
+    ThemeType themeType =
+        context.select<AppModel, ThemeType>((value) => value.theme);
     AppTheme theme = AppTheme.fromType(themeType);
 
     /// Disable shadows on web builds for better performance

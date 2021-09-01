@@ -4,7 +4,8 @@ class MouseAndPointerBlocker extends StatelessWidget {
   final Widget? child;
   final bool isEnabled;
 
-  const MouseAndPointerBlocker({Key? key, this.child, this.isEnabled = false}) : super(key: key);
+  const MouseAndPointerBlocker({Key? key, this.child, this.isEnabled = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

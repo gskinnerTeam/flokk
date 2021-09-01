@@ -19,10 +19,12 @@ class GithubRestService {
     };
   }
 
-  Future<ServiceResult<List<GitEvent>>> getUserEvents(String githubUsername) async {
+  Future<ServiceResult<List<GitEvent>>> getUserEvents(
+      String githubUsername) async {
     String url = "https://api.github.com/users/$githubUsername/events";
 
-    HttpResponse response = await HttpClient.get(url, headers: _getAuthHeader());
+    HttpResponse response =
+        await HttpClient.get(url, headers: _getAuthHeader());
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
 
     List<GitEvent> events = [];
@@ -35,10 +37,12 @@ class GithubRestService {
     return ServiceResult(events, response);
   }
 
-  Future<ServiceResult<List<GitRepo>>> getUserRepos(String githubUsername) async {
+  Future<ServiceResult<List<GitRepo>>> getUserRepos(
+      String githubUsername) async {
     String url = "https://api.github.com/users/$githubUsername/repos";
 
-    HttpResponse response = await HttpClient.get(url, headers: _getAuthHeader());
+    HttpResponse response =
+        await HttpClient.get(url, headers: _getAuthHeader());
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
 
     List<GitRepo> repos = [];
@@ -56,7 +60,8 @@ class GithubRestService {
   Future<ServiceResult<GitRepo>> getRepo(String repoName) async {
     String url = "https://api.github.com/repos/$repoName";
 
-    HttpResponse response = await HttpClient.get(url, headers: _getAuthHeader());
+    HttpResponse response =
+        await HttpClient.get(url, headers: _getAuthHeader());
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
 
     GitRepo? repo;

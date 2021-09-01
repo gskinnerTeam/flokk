@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class StackConstraints extends InheritedWidget {
   final BoxConstraints constraints;
 
-  StackConstraints({required this.constraints, required Widget child}) : super(child: child);
+  StackConstraints({required this.constraints, required Widget child})
+      : super(child: child);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
     var old = (oldWidget as StackConstraints).constraints;
-    return old.maxWidth != constraints.maxWidth || old.maxHeight != constraints.maxHeight;
+    return old.maxWidth != constraints.maxWidth ||
+        old.maxHeight != constraints.maxHeight;
   }
 }
 

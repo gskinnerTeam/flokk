@@ -26,7 +26,8 @@ class SocialPopupForm extends StatefulWidget {
   final ContactData contact;
   final SocialActivityType socialActivityType;
 
-  const SocialPopupForm(this.contact, {Key? key, this.onClosePressed, required this.socialActivityType})
+  const SocialPopupForm(this.contact,
+      {Key? key, this.onClosePressed, required this.socialActivityType})
       : super(key: key);
 
   @override
@@ -69,7 +70,8 @@ class _SocialPopupFormState extends State<SocialPopupForm> {
                   hint: "github.com/",
                   initial: widget.contact.gitUsername,
                   onChanged: _handleGitChanged,
-                  autoFocus: widget.socialActivityType == SocialActivityType.Git,
+                  autoFocus:
+                      widget.socialActivityType == SocialActivityType.Git,
                 ),
                 VSpace(Insets.sm),
 
@@ -79,16 +81,19 @@ class _SocialPopupFormState extends State<SocialPopupForm> {
                   hint: "@",
                   initial: widget.contact.twitterHandle,
                   onChanged: _handleTwitterChanged,
-                  autoFocus: widget.socialActivityType == SocialActivityType.Twitter,
+                  autoFocus:
+                      widget.socialActivityType == SocialActivityType.Twitter,
                 ),
                 VSpace(Insets.l),
 
                 /// SUBMIT BUTTONS
                 Row(
                   children: [
-                    PrimaryTextBtn("SAVE", onPressed: () => _handleBtnPressed(true)),
+                    PrimaryTextBtn("SAVE",
+                        onPressed: () => _handleBtnPressed(true)),
                     HSpace(Insets.m),
-                    SecondaryTextBtn("CANCEL", onPressed: () => _handleBtnPressed(false)),
+                    SecondaryTextBtn("CANCEL",
+                        onPressed: () => _handleBtnPressed(false)),
                   ],
                 ),
               ],
@@ -108,30 +113,44 @@ class _SocialTextInput extends StatelessWidget {
   final void Function(String) onChanged;
 
   const _SocialTextInput(
-      {Key? key, this.hint = "", required this.onChanged, this.initial = "", required this.icon, this.autoFocus = false})
+      {Key? key,
+      this.hint = "",
+      required this.onChanged,
+      this.initial = "",
+      required this.icon,
+      this.autoFocus = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
     double prefixSize = StringUtils.measure(hint, TextStyles.Body1).width;
-    EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding.copyWith(left: prefixSize + .5);
+    EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding
+        .copyWith(left: prefixSize + .5);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        StyledImageIcon(icon, color: ColorUtils.shiftHsl(theme.accent1, theme.isDark ? .2 : -.2), size: 30),
+        StyledImageIcon(icon,
+            color: ColorUtils.shiftHsl(theme.accent1, theme.isDark ? .2 : -.2),
+            size: 30),
         HSpace(Insets.m),
         Stack(
           children: <Widget>[
             /// Prefix text, non-interactive
             FocusScope(
                 canRequestFocus: false,
-                child: IgnorePointer(child: buildTextInput(context, hint: hint, onChanged: (v) {}))),
+                child: IgnorePointer(
+                    child: buildTextInput(context,
+                        hint: hint, onChanged: (v) {}))),
 
             /// Value text
             buildTextInput(context,
-                hint: "", initial: initial, onChanged: onChanged, autoFocus: autoFocus, padding: padding),
+                hint: "",
+                initial: initial,
+                onChanged: onChanged,
+                autoFocus: autoFocus,
+                padding: padding),
           ],
         ).flexible()
       ],
@@ -139,7 +158,11 @@ class _SocialTextInput extends StatelessWidget {
   }
 
   buildTextInput(BuildContext context,
-      {String hint = "", String initial = "", bool autoFocus = false, void Function(String)? onChanged, EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding}) {
+      {String hint = "",
+      String initial = "",
+      bool autoFocus = false,
+      void Function(String)? onChanged,
+      EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding}) {
     return StyledFormTextInput(
         contentPadding: padding,
         hintText: hint,

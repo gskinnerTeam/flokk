@@ -6,7 +6,8 @@ import 'package:flokk/models/contacts_model.dart';
 import 'package:tuple/tuple.dart';
 
 class TwitterModel extends AbstractModel {
-  final expiry = Duration(days: 30); //the period of which to cull tweets based on createdAt
+  final expiry = Duration(
+      days: 30); //the period of which to cull tweets based on createdAt
 
   ContactsModel contactsModel;
 
@@ -25,15 +26,25 @@ class TwitterModel extends AbstractModel {
   @override
   TwitterModel copyFromJson(Map<String, dynamic> json) {
     _twitterAccessToken = json["_twitterAccessToken"] ?? "";
-    Map<String, dynamic> jsonTweetHash = json["_tweetHash"] ?? <String, dynamic>{};
-    _tweetHash = jsonTweetHash.map((key, value) => MapEntry<String, List<Tweet>>(
-        key, (value as List?)?.where((value) => value != null).map((x) => Tweet.fromJson(x)).toList() ?? []));
+    Map<String, dynamic> jsonTweetHash =
+        json["_tweetHash"] ?? <String, dynamic>{};
+    _tweetHash = jsonTweetHash.map((key, value) =>
+        MapEntry<String, List<Tweet>>(
+            key,
+            (value as List?)
+                    ?.where((value) => value != null)
+                    .map((x) => Tweet.fromJson(x))
+                    .toList() ??
+                []));
     return this;
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {"_twitterAccessToken": _twitterAccessToken, "_tweetHash": _tweetHash};
+    return {
+      "_twitterAccessToken": _twitterAccessToken,
+      "_tweetHash": _tweetHash
+    };
   }
 
   /// //////////////////////////////////////////////////////////////////
@@ -91,7 +102,9 @@ class TwitterModel extends AbstractModel {
 
   void addTweets(String twitterHandle, List<Tweet> tweets) {
     final current = DateTime.now();
-    _tweetHash[twitterHandle] = tweets.where((x) => (current.difference(x.createdAt)) < expiry).toList();
+    _tweetHash[twitterHandle] = tweets
+        .where((x) => (current.difference(x.createdAt)) < expiry)
+        .toList();
     notifyListeners();
   }
 

@@ -7,18 +7,22 @@ import 'package:flokk/models/app_model.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
+class UpdateContactCommand extends AbstractCommand
+    with AuthorizedServiceCommandMixin {
   UpdateContactCommand(BuildContext c) : super(c);
 
-  Future<ContactData> execute(ContactData contact, {bool updateSocial: false, bool tryAgainOnError = true}) async {
-    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return ContactData();
+  Future<ContactData> execute(ContactData contact,
+      {bool updateSocial: false, bool tryAgainOnError = true}) async {
+    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls)
+      return ContactData();
     Log.p("[UpdateContactCommand]");
 
     ServiceResult<ContactData> result = await executeAuthServiceCmd(() async {
       ServiceResult<ContactData> result;
       if (contact.isNew) {
         /// Update remote database
-        result = await googleRestService.contacts.create(authModel.googleAccessToken, contact);
+        result = await googleRestService.contacts
+            .create(authModel.googleAccessToken, contact);
         if (result.success) {
           result.content!.isRecentlyAdded = true;
           contactsModel.addContact(result.content!);
@@ -48,7 +52,8 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
         if (updateSocial) RefreshSocialCommand(context).execute([contact]);
 
         /// Update remote database
-        result = await googleRestService.contacts.set(authModel.googleAccessToken, contact);
+        result = await googleRestService.contacts
+            .set(authModel.googleAccessToken, contact);
 
         /// Since we get back the updated object, we can inject it straight into the model to keep us in sync
         print("Success: ${result.success}, etag=${contact.etag}");

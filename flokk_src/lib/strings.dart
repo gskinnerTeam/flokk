@@ -20,20 +20,31 @@ class _Strings {
   String LBL_STEP_X = "Step {0}";
 
   String ERR_DEVICE_OAUTH_FAILED_TITLE = "Unable to connect to your account.";
-  String ERR_DEVICE_OAUTH_FAILED_MSG = "Please make sure you've completed the sign-in process in your browser.";
+  String ERR_DEVICE_OAUTH_FAILED_MSG =
+      "Please make sure you've completed the sign-in process in your browser.";
 
   String GOOGLE_OAUTH_TITLE = "GOOGLE SIGN-IN";
   String GOOGLE_OAUTH_INSTRUCTIONS_1 =
       "In order to import your Google Contacts, you'll need to authorize this application using your web browser.";
-  String GOOGLE_OAUTH_INSTRUCTIONS_2 = "Copy this code to your clipboard by clicking the icon or selecting the text:";
-  String GOOGLE_OAUTH_INSTRUCTIONS_3 = "Navigate to the following link in your web browser, and enter the above code:";
-  String GOOGLE_OAUTH_INSTRUCTIONS_4 = "Press the button below when you've completed signup:";
+  String GOOGLE_OAUTH_INSTRUCTIONS_2 =
+      "Copy this code to your clipboard by clicking the icon or selecting the text:";
+  String GOOGLE_OAUTH_INSTRUCTIONS_3 =
+      "Navigate to the following link in your web browser, and enter the above code:";
+  String GOOGLE_OAUTH_INSTRUCTIONS_4 =
+      "Press the button below when you've completed signup:";
 }
 
 _Strings get S => _Strings.instance;
 
 extension AddSupplant on String {
-  String sup([dynamic v0, dynamic v1, dynamic v2, dynamic v3, dynamic v4, dynamic v5, dynamic v6]) {
+  String sup(
+      [dynamic v0,
+      dynamic v1,
+      dynamic v2,
+      dynamic v3,
+      dynamic v4,
+      dynamic v5,
+      dynamic v6]) {
     var _s = this;
     if (v0 != null) _s = _s.replaceAll("{0}", "$v0");
     if (v1 != null) _s = _s.replaceAll("{1}", "$v1");

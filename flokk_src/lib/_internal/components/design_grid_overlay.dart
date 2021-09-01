@@ -7,7 +7,11 @@ class GridLayout {
   final int numCols;
   final double breakPt;
 
-  GridLayout({this.gutters = EdgeInsets.zero, this.padding = 0, this.numCols = 0, this.breakPt = 0});
+  GridLayout(
+      {this.gutters = EdgeInsets.zero,
+      this.padding = 0,
+      this.numCols = 0,
+      this.breakPt = 0});
 }
 
 class DesignGridOverlay extends StatefulWidget {
@@ -50,7 +54,8 @@ class _DesignGridOverlayState extends State<DesignGridOverlay> {
         : widget.child;
   }
 
-  void handleTap() => setState(() => gridAlpha >= 1 ? gridAlpha = 0 : gridAlpha += .48);
+  void handleTap() =>
+      setState(() => gridAlpha >= 1 ? gridAlpha = 0 : gridAlpha += .48);
 }
 
 class _DesignGridView extends StatelessWidget {
@@ -72,8 +77,10 @@ class _DesignGridView extends StatelessWidget {
     final List<Widget> content = [Container(width: grid.padding)];
     final int numCols = grid.numCols;
     for (var i = numCols; i-- > 0;) {
-      content.add(
-          Flexible(child: Container(color: Colors.red.withOpacity(state.gridAlpha * .4), height: double.infinity)));
+      content.add(Flexible(
+          child: Container(
+              color: Colors.red.withOpacity(state.gridAlpha * .4),
+              height: double.infinity)));
       content.add(Container(width: grid.padding));
     }
     print("CurrentBreak: ${grid.breakPt}");

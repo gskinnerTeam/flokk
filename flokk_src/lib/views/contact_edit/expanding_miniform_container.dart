@@ -48,10 +48,12 @@ class ExpandingMiniformContainer<T> extends StatefulWidget {
         super(key: key);
 
   @override
-  _ExpandingMiniformContainerState createState() => _ExpandingMiniformContainerState();
+  _ExpandingMiniformContainerState createState() =>
+      _ExpandingMiniformContainerState();
 }
 
-class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer> with TickerProviderStateMixin {
+class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer>
+    with TickerProviderStateMixin {
   bool? _isOpen;
   String _hint = "";
   Timer? timer;
@@ -112,7 +114,8 @@ class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               /// Left Icon
-              StyledImageIcon(widget.icon, size: 20, color: theme.grey).translate(offset: Offset(0, 8)),
+              StyledImageIcon(widget.icon, size: 20, color: theme.grey)
+                  .translate(offset: Offset(0, 8)),
               HSpace(Insets.l),
 
               /// Content - Either the miniform, or the StyledText
@@ -120,7 +123,9 @@ class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer>
                       // Mini-Form
                       ? widget.formBuilder()
                       // Empty Prompt Text
-                      : StyledFormTextInput(hintText: _hint, onFocusChanged: _handlePromptFocusChanged)
+                      : StyledFormTextInput(
+                              hintText: _hint,
+                              onFocusChanged: _handlePromptFocusChanged)
                           .padding(right: Insets.l * 1.5 - 2))
                   .padding(right: Insets.m)
                   .flexible(),

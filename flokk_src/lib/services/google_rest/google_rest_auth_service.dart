@@ -6,10 +6,12 @@ import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/services/service_result.dart';
 
 class GoogleRestAuthService {
-  final String discoveryUrl = "https://accounts.google.com/.well-known/openid-configuration";
+  final String discoveryUrl =
+      "https://accounts.google.com/.well-known/openid-configuration";
   final String authUrl = "https://oauth2.googleapis.com/token";
   final String redirectUri = "https://oauth2.googleapis.com/callback";
-  final String deviceCodeGrantType = "urn:ietf:params:oauth:grant-type:device_code";
+  final String deviceCodeGrantType =
+      "urn:ietf:params:oauth:grant-type:device_code";
   final String scope = "email https://www.googleapis.com/auth/contacts";
 
   final String _clientId;
@@ -45,21 +47,30 @@ class GoogleRestAuthService {
     return ServiceResult(null, discoverResponse);
   }
 
-  Future<ServiceResult<GoogleAuthResults>> authorizeDevice(String deviceCode) async =>
+  Future<ServiceResult<GoogleAuthResults>> authorizeDevice(
+          String deviceCode) async =>
       await _getAuthResults(deviceCode: deviceCode);
 
   Future<ServiceResult<GoogleAuthResults>> refresh(String refreshToken) async =>
       await _getAuthResults(refreshToken: refreshToken);
 
-  Future<ServiceResult<GoogleAuthResults>> _getAuthResults({String deviceCode = "", String refreshToken = ""}) async {
-    String grant = !StringUtils.isEmpty(refreshToken) ? "refresh_token" : deviceCodeGrantType;
-    Map<String, String> params = {"client_id": _clientId, "client_secret": _clientSecret, "grant_type": grant};
+  Future<ServiceResult<GoogleAuthResults>> _getAuthResults(
+      {String deviceCode = "", String refreshToken = ""}) async {
+    String grant = !StringUtils.isEmpty(refreshToken)
+        ? "refresh_token"
+        : deviceCodeGrantType;
+    Map<String, String> params = {
+      "client_id": _clientId,
+      "client_secret": _clientSecret,
+      "grant_type": grant
+    };
     if (!StringUtils.isEmpty(refreshToken)) {
       params.putIfAbsent("refreshToken", () => refreshToken);
     } else {
       params.putIfAbsent("device_code", () => deviceCode);
     }
-    HttpResponse response = await HttpClient.post("$authUrl?${RESTUtils.encodeParams(params)}");
+    HttpResponse response =
+        await HttpClient.post("$authUrl?${RESTUtils.encodeParams(params)}");
     print("Response: ${response.statusCode} / ${response.body}");
     GoogleAuthResults? results;
     if (response.success) {

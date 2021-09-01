@@ -11,7 +11,7 @@ class ImportantDatesPlaceholder extends StatelessWidget {
           title: "NO UPCOMING IMPORTANT DATES",
           startText: "Add birthdays/special dates to your ",
           linkText: "contacts",
-          onPressed: ()=>showContactPage(context),
+          onPressed: () => showContactPage(context),
         ),
       ],
     );

@@ -7,7 +7,8 @@ import 'package:flokk/services/google_rest/google_rest_service.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class ToggleFavoriteCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
+class ToggleFavoriteCommand extends AbstractCommand
+    with AuthorizedServiceCommandMixin {
   ToggleFavoriteCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact) async {
@@ -26,10 +27,13 @@ class ToggleFavoriteCommand extends AbstractCommand with AuthorizedServiceComman
 
       if (contact.isStarred) {
         //add to favorites group
-        result = await googleRestService.groups.modify(authModel.googleAccessToken, group, addContacts: [contact]);
+        result = await googleRestService.groups
+            .modify(authModel.googleAccessToken, group, addContacts: [contact]);
       } else {
         //remove from favorites group
-        result = await googleRestService.groups.modify(authModel.googleAccessToken, group, removeContacts: [contact]);
+        result = await googleRestService.groups.modify(
+            authModel.googleAccessToken, group,
+            removeContacts: [contact]);
       }
       // Dispatch background refresh command to make sure we're in sync
       RefreshContactGroupsCommand(context).execute(onlyStarred: true);

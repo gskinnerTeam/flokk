@@ -23,16 +23,19 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
     AppTheme theme = context.watch();
     WelcomePageState state = context.watch();
 
-    TextStyle bodyTxtStyle = TextStyles.Body1.textColor(Colors.white).textHeight(1.6);
+    TextStyle bodyTxtStyle =
+        TextStyles.Body1.textColor(Colors.white).textHeight(1.6);
     TextStyle titleTxtStyle = TextStyles.T1.textColor(theme.accent1Darker);
-    TextStyle headerTxtStyle = TextStyles.CalloutFocus.bold.size(24).textColor(Colors.white);
+    TextStyle headerTxtStyle =
+        TextStyles.CalloutFocus.bold.size(24).textColor(Colors.white);
 
     return state.isLoading
         ? StyledProgressSpinner()
         : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("Authorization", style: headerTxtStyle, textAlign: TextAlign.center),
+              Text("Authorization",
+                  style: headerTxtStyle, textAlign: TextAlign.center),
               VSpace(Insets.l * 2),
 
               /// ////////////////////////////////////////////////
@@ -51,14 +54,20 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
                     : Stack(
                         fit: StackFit.expand,
                         children: [
-                          SelectableText("${state.authCode}", style: bodyTxtStyle.size(16)).center(),
+                          SelectableText("${state.authCode}",
+                                  style: bodyTxtStyle.size(16))
+                              .center(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ColorShiftIconBtn(StyledIcons.refresh,
-                                  size: 28, color: Colors.white, onPressed: state.handleRefreshPressed),
+                                  size: 28,
+                                  color: Colors.white,
+                                  onPressed: state.handleRefreshPressed),
                               ColorShiftIconBtn(StyledIcons.copy,
-                                  size: 24, color: Colors.white, onPressed: state.handleCodeClicked),
+                                  size: 24,
+                                  color: Colors.white,
+                                  onPressed: state.handleCodeClicked),
                             ],
                           ).padding(horizontal: Insets.m),
                         ],
@@ -82,12 +91,16 @@ class _WelcomePageStep2State extends State<WelcomePageStep2> {
                     : Stack(
                         fit: StackFit.expand,
                         children: [
-                          SelectableText("${state.authUrl}", style: bodyTxtStyle.size(16)).center(),
+                          SelectableText("${state.authUrl}",
+                                  style: bodyTxtStyle.size(16))
+                              .center(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               ColorShiftIconBtn(StyledIcons.linkout,
-                                  size: 24, color: Colors.white, onPressed: state.handleUrlClicked),
+                                  size: 24,
+                                  color: Colors.white,
+                                  onPressed: state.handleUrlClicked),
                             ],
                           ).padding(horizontal: Insets.m),
                         ],

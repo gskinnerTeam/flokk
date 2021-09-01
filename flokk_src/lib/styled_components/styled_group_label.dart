@@ -18,7 +18,12 @@ class StyledGroupLabel extends StatelessWidget {
   final VoidCallback? onClose;
   final VoidCallback? onPressed;
 
-  StyledGroupLabel({this.icon, this.text = "", this.onFocusChanged, this.onClose, this.onPressed})
+  StyledGroupLabel(
+      {this.icon,
+      this.text = "",
+      this.onFocusChanged,
+      this.onClose,
+      this.onPressed})
       : assert(icon == null || (icon is AssetImage) || (icon is IconData));
 
   @override
@@ -37,14 +42,15 @@ class StyledGroupLabel extends StatelessWidget {
                 color: theme.accent1Darker,
               ),
         },
-        Text(text.toUpperCase(), style: TextStyles.Footnote.letterSpace(0).textColor(theme.grey))
+        Text(text.toUpperCase(),
+                style: TextStyles.Footnote.letterSpace(0).textColor(theme.grey))
             .padding(left: Insets.m),
         if (onClose != null) ...{
           ColorShiftIconBtn(
             StyledIcons.closeLarge,
             minWidth: 0,
             minHeight: 0,
-           // 8 padding on either side + 8 icon size = design dimensions, minWidth doesn't seem to work for this so I'm using padding instead
+            // 8 padding on either side + 8 icon size = design dimensions, minWidth doesn't seem to work for this so I'm using padding instead
             padding: EdgeInsets.all(8),
             size: 8,
             color: theme.grey,
@@ -52,7 +58,7 @@ class StyledGroupLabel extends StatelessWidget {
             onFocusChanged: onFocusChanged,
             onPressed: onClose,
           ),
-        } else ... {
+        } else ...{
           HSpace(Insets.m),
         },
       ],
@@ -70,7 +76,9 @@ class StyledGroupLabel extends StatelessWidget {
           )
         : Container(
             height: 30,
-            decoration: BoxDecoration(borderRadius: Corners.s5Border, color: theme.bg2.withOpacity(.35)),
+            decoration: BoxDecoration(
+                borderRadius: Corners.s5Border,
+                color: theme.bg2.withOpacity(.35)),
             child: content,
           );
   }

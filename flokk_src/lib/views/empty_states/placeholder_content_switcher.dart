@@ -30,7 +30,7 @@ class PlaceholderContentSwitcher extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        hasContent()? content : _buildPlaceholder(context),
+        hasContent() ? content : _buildPlaceholder(context),
       ],
     );
   }

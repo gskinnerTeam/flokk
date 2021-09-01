@@ -45,13 +45,17 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
 
   set isMouseOver(bool value) => setState(() => _isMouseOver = value);
 
-  void _handleEditPressed() => context.read<MainScaffoldState>().editSelectedContact(widget.editType);
-  void _handleCopyPressed() => Clipboard.setData(ClipboardData(text: widget.value));
+  void _handleEditPressed() =>
+      context.read<MainScaffoldState>().editSelectedContact(widget.editType);
+  void _handleCopyPressed() =>
+      Clipboard.setData(ClipboardData(text: widget.value));
 
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
-    Color overColor = theme.isDark ? ColorUtils.shiftHsl(theme.bg1, .2) : theme.bg2.withOpacity(.35);
+    Color overColor = theme.isDark
+        ? ColorUtils.shiftHsl(theme.bg1, .2)
+        : theme.bg2.withOpacity(.35);
     return MouseRegion(
       onEnter: (_) => isMouseOver = true,
       onExit: (_) => isMouseOver = false,
@@ -68,14 +72,18 @@ class _ClickableIconRowState extends State<ClickableIconRow> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 if (widget.icon != null)
-                  StyledImageIcon(widget.icon!, size: widget.size, color: widget.iconColor ?? theme.grey),
+                  StyledImageIcon(widget.icon!,
+                      size: widget.size, color: widget.iconColor ?? theme.grey),
                 SizedBox(width: Insets.l),
                 // Wrap value in ClickableText widget, it will get colored if anyone is listening
                 //Text(value),
-                ClickableText(widget.value, onPressed: widget.onPressed).constrained(maxWidth: 300).flexible(),
+                ClickableText(widget.value, onPressed: widget.onPressed)
+                    .constrained(maxWidth: 300)
+                    .flexible(),
                 SizedBox(width: Insets.m),
                 if (widget.label != null)
-                  Text(widget.label!.toUpperCase(), style: TextStyles.Caption.textColor(theme.greyWeak))
+                  Text(widget.label!.toUpperCase(),
+                          style: TextStyles.Caption.textColor(theme.greyWeak))
                       .translate(offset: Offset(0, 8)),
               ],
             ).padding(right: Insets.l * 1.5),

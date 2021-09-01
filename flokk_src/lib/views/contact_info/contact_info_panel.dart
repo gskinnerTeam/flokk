@@ -18,7 +18,9 @@ class ContactInfoPanel extends StatefulWidget {
   final VoidCallback? onClosePressed;
   final void Function(String?) onEditPressed;
 
-  const ContactInfoPanel({Key? key, this.onClosePressed, required this.onEditPressed}) : super(key: key);
+  const ContactInfoPanel(
+      {Key? key, this.onClosePressed, required this.onEditPressed})
+      : super(key: key);
 
   @override
   ContactInfoPanelState createState() => ContactInfoPanelState();
@@ -56,10 +58,15 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
           children: <Widget>[
             /// TOP ICON ROW
             Row(children: <Widget>[
-              ColorShiftIconBtn(StyledIcons.closeLarge, size: 16, color: theme.grey, onPressed: widget.onClosePressed),
+              ColorShiftIconBtn(StyledIcons.closeLarge,
+                  size: 16,
+                  color: theme.grey,
+                  onPressed: widget.onClosePressed),
               Spacer(),
               ColorShiftIconBtn(StyledIcons.edit,
-                  size: 22, color: theme.accent1Dark, onPressed: () => widget.onEditPressed("")),
+                  size: 22,
+                  color: theme.accent1Dark,
+                  onPressed: () => widget.onEditPressed("")),
             ]).padding(horizontal: Insets.l),
 
             /// CONTENT STACK
@@ -71,25 +78,22 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
                 duration: (value == 0 ? 0 : .35).seconds,
                 child: StyledScrollView(
                   child: Column(
-
                     children: <Widget>[
                       VSpace(2),
+
                       /// HEADER CARD
                       ContactInfoHeaderCard(),
                       VSpace(Insets.l),
 
-
                       /// INFO & SOCIAL
                       _DetailsAndSocialTabView(
                         onEditPressed: widget.onEditPressed,
-                        ),
+                      ),
                     ],
-                    ).padding(horizontal: Insets.l),
-                  ),
+                  ).padding(horizontal: Insets.l),
                 ),
-              ).flexible(),
-
-
+              ),
+            ).flexible(),
           ],
         );
       },
@@ -100,13 +104,16 @@ class ContactInfoPanelState extends State<ContactInfoPanel> {
 class _DetailsAndSocialTabView extends StatefulWidget {
   final void Function(String?) onEditPressed;
 
-  const _DetailsAndSocialTabView({Key? key, required this.onEditPressed}) : super(key: key);
+  const _DetailsAndSocialTabView({Key? key, required this.onEditPressed})
+      : super(key: key);
 
   @override
-  _DetailsAndSocialTabViewState createState() => _DetailsAndSocialTabViewState();
+  _DetailsAndSocialTabViewState createState() =>
+      _DetailsAndSocialTabViewState();
 }
 
-class _DetailsAndSocialTabViewState extends State<_DetailsAndSocialTabView> with SingleTickerProviderStateMixin {
+class _DetailsAndSocialTabViewState extends State<_DetailsAndSocialTabView>
+    with SingleTickerProviderStateMixin {
   late TabController tabController;
 
   void _handleTabPressed(int i) {
@@ -131,7 +138,10 @@ class _DetailsAndSocialTabViewState extends State<_DetailsAndSocialTabView> with
   @override
   Widget build(BuildContext context) {
     // Use .select to bind to the AppModel when showSocialTabOnInfoView changes
-    int index = context.select<AppModel, bool>((model) => model.showSocialTabOnInfoView) ? 1 : 0;
+    int index =
+        context.select<AppModel, bool>((model) => model.showSocialTabOnInfoView)
+            ? 1
+            : 0;
     return Column(
       children: <Widget>[
         StyledTabBar(

@@ -7,7 +7,8 @@ class StyledUserAvatar extends StatefulWidget {
   final ContactData contact;
   final double size;
 
-  const StyledUserAvatar({Key? key, required this.contact, this.size = 50}) : super(key: key);
+  const StyledUserAvatar({Key? key, required this.contact, this.size = 50})
+      : super(key: key);
 
   @override
   _StyledUserAvatarState createState() => _StyledUserAvatarState();
@@ -32,11 +33,11 @@ class _StyledUserAvatarState extends State<StyledUserAvatar> {
 
   @override
   Widget build(BuildContext context) {
-
     Widget child;
     if (widget.contact.profilePicBytes != null) {
       child = Image.memory(widget.contact.profilePicBytes!, fit: BoxFit.cover);
-    } else if (widget.contact.profilePic.isNotEmpty && !widget.contact.isDefaultPic) {
+    } else if (widget.contact.profilePic.isNotEmpty &&
+        !widget.contact.isDefaultPic) {
       child = Image.network(widget.contact.profilePic, fit: BoxFit.cover);
     } else {
       child = AnimalAvatar(seed: _seed);
@@ -92,7 +93,8 @@ class AnimalAvatar extends StatelessWidget {
         Container(
           color: backgrounds[r.nextInt(backgrounds.length)],
         ),
-        Image.asset("assets/images/birds/${foregrounds[r.nextInt(foregrounds.length)]}.png"),
+        Image.asset(
+            "assets/images/birds/${foregrounds[r.nextInt(foregrounds.length)]}.png"),
       ],
     );
   }

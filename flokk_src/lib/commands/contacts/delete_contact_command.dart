@@ -8,13 +8,19 @@ import 'package:flokk/services/service_result.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
 import 'package:flutter/cupertino.dart';
 
-class DeleteContactCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
+class DeleteContactCommand extends AbstractCommand
+    with AuthorizedServiceCommandMixin {
   DeleteContactCommand(BuildContext c) : super(c);
 
-  Future<bool> execute(List<ContactData> contacts, {VoidCallback? onDeleteConfirmed}) async {
-    if (contacts == null || contacts.isEmpty || AppModel.forceIgnoreGoogleApiCalls) return false;
+  Future<bool> execute(List<ContactData> contacts,
+      {VoidCallback? onDeleteConfirmed}) async {
+    if (contacts == null ||
+        contacts.isEmpty ||
+        AppModel.forceIgnoreGoogleApiCalls) return false;
     Log.p("[DeleteContactCommand]");
-    String txt = contacts.length > 1 ? "these ${contacts.length} contacts" : "this contact";
+    String txt = contacts.length > 1
+        ? "these ${contacts.length} contacts"
+        : "this contact";
     bool doDelete = await Dialogs.show(
       OkCancelDialog(
         message: "Are you sure you want to delete $txt?",
@@ -35,8 +41,9 @@ class DeleteContactCommand extends AbstractCommand with AuthorizedServiceCommand
       }
 
       /// Create a list of futures
-      List<Future<ServiceResult>> futures =
-          contacts.map((c) => service.delete(authModel.googleAccessToken, c)).toList();
+      List<Future<ServiceResult>> futures = contacts
+          .map((c) => service.delete(authModel.googleAccessToken, c))
+          .toList();
       // Dispatch them all at once
       List<ServiceResult> results = await Future.wait(futures);
       //Request succeeded?

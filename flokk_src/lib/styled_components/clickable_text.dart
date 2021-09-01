@@ -13,7 +13,12 @@ class ClickableText extends StatelessWidget {
   final Color? linkColor;
   final bool underline;
 
-  const ClickableText(this.text, {Key? key, this.onPressed, this.style, this.underline = false, this.linkColor})
+  const ClickableText(this.text,
+      {Key? key,
+      this.onPressed,
+      this.style,
+      this.underline = false,
+      this.linkColor})
       : super(key: key);
 
   @override

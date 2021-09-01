@@ -55,8 +55,10 @@ class _ContactsListRowState extends State<ContactsListRow> {
   Widget build(BuildContext context) => ContactListCardView(this);
 }
 
-class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowState> {
-  const ContactListCardView(_ContactsListRowState state, {Key? key}) : super(state, key: key);
+class ContactListCardView
+    extends WidgetView<ContactsListRow, _ContactsListRowState> {
+  const ContactListCardView(_ContactsListRowState state, {Key? key})
+      : super(state, key: key);
 
   ContactData get contact => widget.contact;
 
@@ -85,7 +87,9 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
     if (width > 1000) colCount = 4;
     if (width > 1300) colCount = 5;
 
-    TextStyle textStyle = !headerMode ? TextStyles.Body1.size(15) : TextStyles.H2.copyWith(color: theme.greyStrong);
+    TextStyle textStyle = !headerMode
+        ? TextStyles.Body1.size(15)
+        : TextStyles.H2.copyWith(color: theme.greyStrong);
     Widget rowText(String value) => OneLineText(value, style: textStyle);
 
     Widget btn = BaseStyledBtn(
@@ -99,11 +103,15 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
       child: Stack(
         children: <Widget>[
           /// DIVIDERS - Top and Bottom
-          if (!headerMode && widget.showDividers) Container(width: double.infinity, height: 1, color: theme.bg1),
+          if (!headerMode && widget.showDividers)
+            Container(width: double.infinity, height: 1, color: theme.bg1),
           if (headerMode)
             Align(
               alignment: Alignment.bottomLeft,
-              child: Container(width: double.infinity, height: 1, color: theme.grey.withOpacity(.6)),
+              child: Container(
+                  width: double.infinity,
+                  height: 1,
+                  color: theme.grey.withOpacity(.6)),
             ),
           Row(
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +122,8 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
                       : _ProfileCheckboxWithLabels(
                           contact,
                           isChecked: state.widget.isChecked,
-                          onChecked: (value) => _handleRowChecked(context, value),
+                          onChecked: (value) =>
+                              _handleRowChecked(context, value),
                         ))
                   .constrained(minWidth: 300)
                   .expanded(flex: 20 * 100),
@@ -123,7 +132,9 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
               _FadingFlexContent(
                 isVisible: colCount > 1,
                 flex: 10,
-                child: headerMode ? rowText("Social") : ClickableSocialBadges(contact, showTimeSince: false),
+                child: headerMode
+                    ? rowText("Social")
+                    : ClickableSocialBadges(contact, showTimeSince: false),
               ),
 
               /// Phone
@@ -144,7 +155,8 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
               _FadingFlexContent(
                 isVisible: colCount > 4,
                 flex: 16,
-                child: rowText(headerMode ? "Job / Company" : contact.jobCompany),
+                child:
+                    rowText(headerMode ? "Job / Company" : contact.jobCompany),
               ),
 
               //SizedBox(width: Insets.m),
@@ -154,8 +166,12 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
                   bigMode: true,
                   onPressed: state.handleStarPressed,
                   child: StyledImageIcon(
-                    widget.contact.isStarred ? StyledIcons.starFilled : StyledIcons.starEmpty,
-                    color: widget.contact.isStarred ? theme.accent1Dark : theme.greyWeak,
+                    widget.contact.isStarred
+                        ? StyledIcons.starFilled
+                        : StyledIcons.starEmpty,
+                    color: widget.contact.isStarred
+                        ? theme.accent1Dark
+                        : theme.greyWeak,
                   ).opacity(headerMode ? 0 : 1),
                 )
             ],
@@ -176,13 +192,17 @@ class _ProfileCheckboxWithLabels extends StatefulWidget {
   final ContactData contact;
   final bool isChecked;
 
-  const _ProfileCheckboxWithLabels(this.contact, {Key? key, required this.onChecked, this.isChecked = false}) : super(key: key);
+  const _ProfileCheckboxWithLabels(this.contact,
+      {Key? key, required this.onChecked, this.isChecked = false})
+      : super(key: key);
 
   @override
-  _ProfileCheckboxWithLabelsState createState() => _ProfileCheckboxWithLabelsState();
+  _ProfileCheckboxWithLabelsState createState() =>
+      _ProfileCheckboxWithLabelsState();
 }
 
-class _ProfileCheckboxWithLabelsState extends State<_ProfileCheckboxWithLabels> {
+class _ProfileCheckboxWithLabelsState
+    extends State<_ProfileCheckboxWithLabels> {
   @override
   Widget build(BuildContext context) {
     double size = 42;
@@ -199,9 +219,12 @@ class _ProfileCheckboxWithLabelsState extends State<_ProfileCheckboxWithLabels> 
               ],
             );
           },
-        ).gestures(onTapUp: (d) => widget.onChecked(!widget.isChecked), behavior: HitTestBehavior.opaque),
+        ).gestures(
+            onTapUp: (d) => widget.onChecked(!widget.isChecked),
+            behavior: HitTestBehavior.opaque),
         SizedBox(width: Insets.m),
-        OneLineText(widget.contact.nameFull, style: TextStyles.Body1.size(15)).expanded(),
+        OneLineText(widget.contact.nameFull, style: TextStyles.Body1.size(15))
+            .expanded(),
       ],
     );
   }
@@ -211,7 +234,11 @@ class _ProfileCheckboxWithLabelsState extends State<_ProfileCheckboxWithLabels> 
       width: size,
       height: size,
       alignment: Alignment.center,
-      child: StyledCheckbox(size: 18, value: widget.isChecked ? StyledCheckboxValue.All : StyledCheckboxValue.None),
+      child: StyledCheckbox(
+          size: 18,
+          value: widget.isChecked
+              ? StyledCheckboxValue.All
+              : StyledCheckboxValue.None),
     );
   }
 }
@@ -222,7 +249,12 @@ class _FadingFlexContent extends StatelessWidget {
   final bool isVisible;
   final bool enableAnimations;
 
-  const _FadingFlexContent({Key? key, this.child, required this.flex, this.isVisible = true, this.enableAnimations = true})
+  const _FadingFlexContent(
+      {Key? key,
+      this.child,
+      required this.flex,
+      this.isVisible = true,
+      this.enableAnimations = true})
       : super(key: key);
 
   @override
@@ -232,11 +264,14 @@ class _FadingFlexContent extends StatelessWidget {
     if (enableAnimations) {
       return TweenAnimationBuilder<double>(
           curve: !isVisible ? Curves.easeOut : Curves.easeIn,
-          tween: Tween<double>(begin: isVisible ? 1 : 0, end: isVisible ? 1 : 0),
+          tween:
+              Tween<double>(begin: isVisible ? 1 : 0, end: isVisible ? 1 : 0),
           duration: (isVisible ? .5 : .2).seconds,
           builder: (_, value, child) {
             if (value == 0 && !isVisible || child == null) return Container();
-            return child.opacity(value).expanded(flex: (targetFlex * value).round());
+            return child
+                .opacity(value)
+                .expanded(flex: (targetFlex * value).round());
 //
           },
           child: Container(child: child, alignment: Alignment.centerLeft));

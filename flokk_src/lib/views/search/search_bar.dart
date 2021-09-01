@@ -98,8 +98,7 @@ class SearchBarState extends State<SearchBar> {
 
   void handleContactPressed(ContactData c) async {
     MainScaffoldState scaffold = context.read();
-    if (!await scaffold.showDiscardWarningIfNecessary())
-      return;
+    if (!await scaffold.showDiscardWarningIfNecessary()) return;
     tmpSearch.addFilterContact(c.nameFull);
     clearQueryString();
     handleSearchSubmitted();
@@ -116,10 +115,13 @@ class SearchBarState extends State<SearchBar> {
     if (evt is RawKeyDownEvent) {
       if (evt.logicalKey == LogicalKeyboardKey.keyK && evt.isControlPressed) {
         isOpen = true;
-      } else if (textFocusNode.hasFocus && evt.logicalKey == LogicalKeyboardKey.enter) {
+      } else if (textFocusNode.hasFocus &&
+          evt.logicalKey == LogicalKeyboardKey.enter) {
         handleSearchSubmitted();
-      } else if (textFocusNode.hasFocus && evt.logicalKey == LogicalKeyboardKey.backspace) {
-        if (textKey.currentState != null && (textKey.currentState?.text.isEmpty ?? true)) {
+      } else if (textFocusNode.hasFocus &&
+          evt.logicalKey == LogicalKeyboardKey.backspace) {
+        if (textKey.currentState != null &&
+            (textKey.currentState?.text.isEmpty ?? true)) {
           final tl = tmpSearch.tagList;
           final cl = tmpSearch.filterContactList;
           if (cl.isNotEmpty) {
@@ -171,5 +173,4 @@ class SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) => SearchBarView(this);
-
 }

@@ -6,20 +6,22 @@ import 'package:flokk/services/google_rest/google_rest_contacts_service.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class RefreshContactsCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
+class RefreshContactsCommand extends AbstractCommand
+    with AuthorizedServiceCommandMixin {
   RefreshContactsCommand(BuildContext c) : super(c);
 
   Future<ServiceResult> execute({bool skipGroups = false}) async {
     Log.p("[RefreshContactsCommand]");
 
-    ServiceResult<GetContactsResult> result = await executeAuthServiceCmd(() async {
+    ServiceResult<GetContactsResult> result =
+        await executeAuthServiceCmd(() async {
       // Check if we have a sync token...
       String syncToken = authModel.googleSyncToken ?? "";
       if (contactsModel.allContacts.isEmpty) {
         syncToken = "";
       }
-      ServiceResult<GetContactsResult> result =
-          await googleRestService.contacts.getAll(authModel.googleAccessToken, syncToken);
+      ServiceResult<GetContactsResult> result = await googleRestService.contacts
+          .getAll(authModel.googleAccessToken, syncToken);
       // Now do we have a sync token?
       syncToken = result.content?.syncToken ?? "";
       List<ContactData> contacts = result.content?.contacts ?? [];
