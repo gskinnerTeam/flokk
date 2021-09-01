@@ -8,10 +8,12 @@ import 'package:flokk/data/group_data.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:flutter/cupertino.dart';
 
-class AddLabelToContactCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
+class AddLabelToContactCommand extends AbstractCommand
+    with AuthorizedServiceCommandMixin {
   AddLabelToContactCommand(BuildContext c) : super(c);
 
-  Future<List<ContactData>> execute(List<ContactData> contacts, {required GroupData existingGroup, String newLabel = ""}) async {
+  Future<List<ContactData>> execute(List<ContactData> contacts,
+      {required GroupData existingGroup, String newLabel = ""}) async {
     Log.p("[AddLabelToContactCommand]");
     await executeAuthServiceCmd(() async {
       GroupData group = GroupData();
@@ -24,7 +26,8 @@ class AddLabelToContactCommand extends AbstractCommand with AuthorizedServiceCom
       }
       ServiceResult result = ServiceResult(null, HttpResponse.empty());
       if (group != GroupData()) {
-        result = await googleRestService.groups.modify(authModel.googleAccessToken, group, addContacts: contacts);
+        result = await googleRestService.groups
+            .modify(authModel.googleAccessToken, group, addContacts: contacts);
       }
       return result;
     });

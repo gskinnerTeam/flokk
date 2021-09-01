@@ -19,7 +19,8 @@ class UrlLauncher {
   }
 
   static void openPhoneNumber(String value) {
-    value = RegExp(r"([\d+])").allMatches(value).map((m) => m.group(0)).join("");
+    value =
+        RegExp(r"([\d+])").allMatches(value).map((m) => m.group(0)).join("");
     open("https://hangouts.google.com/?action=chat&pn=%2B$value&");
   }
 
@@ -28,9 +29,11 @@ class UrlLauncher {
     open("mailto:$value");
   }
 
-  static void openGoogleMaps(String value) => open("https://www.google.com/maps/search/${Uri.encodeFull(value)}/");
+  static void openGoogleMaps(String value) =>
+      open("https://www.google.com/maps/search/${Uri.encodeFull(value)}/");
 
   static void openGitUser(String value) => open("https://$value/");
 
-  static void openTwitterUser(String value) => open("https://twitter.com/${value.replaceAll("@", "")}/");
+  static void openTwitterUser(String value) =>
+      open("https://twitter.com/${value.replaceAll("@", "")}/");
 }

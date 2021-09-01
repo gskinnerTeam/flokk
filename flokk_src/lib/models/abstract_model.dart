@@ -57,11 +57,15 @@ abstract class AbstractModel extends ChangeNotifier {
   }
 
   List<T> toList<T>(dynamic json, dynamic Function(dynamic) fromJson) {
-    final List<T> list = (json as Iterable?)?.map((e) {
-      return e == null ? e : fromJson(e) as T?;
-    }).where((e) => e != null).whereType<T>().toList() ?? [];
+    final List<T> list = (json as Iterable?)
+            ?.map((e) {
+              return e == null ? e : fromJson(e) as T?;
+            })
+            .where((e) => e != null)
+            .whereType<T>()
+            .toList() ??
+        [];
 
     return list;
   }
 }
-

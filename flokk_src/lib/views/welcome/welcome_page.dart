@@ -32,7 +32,8 @@ import 'package:universal_platform/universal_platform.dart';
 class WelcomePage extends StatefulWidget {
   final bool initialPanelOpen;
 
-  const WelcomePage({Key? key, this.initialPanelOpen = false}) : super(key: key);
+  const WelcomePage({Key? key, this.initialPanelOpen = false})
+      : super(key: key);
 
   @override
   WelcomePageState createState() => WelcomePageState();
@@ -97,10 +98,14 @@ class WelcomePageState extends State<WelcomePage> {
     /// Load initial contacts
     isLoading = true;
     await RefreshContactsCommand(context).execute();
-    await RefreshSocialCommand(context).execute(context.read<ContactsModel>().allContacts);
+    await RefreshSocialCommand(context)
+        .execute(context.read<ContactsModel>().allContacts);
 
     /// Show main app view
-    Navigator.push<void>(context, PageRoutes.fade(() => MainScaffold(), Durations.slow.inMilliseconds * .001));
+    Navigator.push<void>(
+        context,
+        PageRoutes.fade(
+            () => MainScaffold(), Durations.slow.inMilliseconds * .001));
   }
 
   void handleUrlClicked() => UrlLauncher.open(authUrl);
@@ -133,7 +138,8 @@ class WelcomePageState extends State<WelcomePage> {
     isLoading = true;
     authCodeError = false;
     await Future.delayed(Duration(milliseconds: 500));
-    ServiceResult result = await googleRest.auth.authorizeDevice(authInfo!.deviceCode);
+    ServiceResult result =
+        await googleRest.auth.authorizeDevice(authInfo!.deviceCode);
     GoogleAuthResults? authResults = result.content;
     if (authResults != null) {
       //We have a token! Update the model.
@@ -198,7 +204,11 @@ class _WelcomePageStateView extends StatelessWidget {
                     ),
                   )
                       .opacity(1.0)
-                      .padding(right: (state.showContent && state.twoColumnMode ? contentWidth : 0), animate: true)
+                      .padding(
+                          right: (state.showContent && state.twoColumnMode
+                              ? contentWidth
+                              : 0),
+                          animate: true)
                       .animate(
                         skipBirdTransition ? 0.seconds : Durations.slow,
                         Curves.easeOut,
@@ -213,7 +223,11 @@ class _WelcomePageStateView extends StatelessWidget {
                         duration: Durations.slow.inMilliseconds * .001,
                       )
                       // Pin the left side on fullscreen, respect existing width otherwise
-                      .positioned(top: 0, bottom: 0, right: 0, left: state.twoColumnMode ? null : 0)
+                      .positioned(
+                          top: 0,
+                          bottom: 0,
+                          right: 0,
+                          left: state.twoColumnMode ? null : 0)
                 ],
               ),
             ),
@@ -235,7 +249,9 @@ class _WelcomeContentStack extends StatelessWidget {
     WelcomePageState state = context.watch();
     //Bg shape is rounded on the left corners when in dual-column mode, but square in full-screen
     BorderRadius? getBgShape() => state.twoColumnMode
-        ? BorderRadius.only(topLeft: Radius.circular(Corners.s10), bottomLeft: Radius.circular(Corners.s10))
+        ? BorderRadius.only(
+            topLeft: Radius.circular(Corners.s10),
+            bottomLeft: Radius.circular(Corners.s10))
         : null;
 
     AppTheme theme = context.watch();
@@ -247,7 +263,9 @@ class _WelcomeContentStack extends StatelessWidget {
                 duration: Durations.slow,
                 index: state.pageIndex,
                 children: <Widget>[
-                  WelcomePageStep1(singleColumnMode: !state.twoColumnMode).scrollable().center(),
+                  WelcomePageStep1(singleColumnMode: !state.twoColumnMode)
+                      .scrollable()
+                      .center(),
                   WelcomePageStep2().scrollable().center(),
                 ],
               ).padding(vertical: Insets.l * 1.5).center(),

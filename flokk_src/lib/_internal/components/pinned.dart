@@ -12,7 +12,13 @@ class Pin {
   final double? sizePx;
   final double? centerPct;
 
-  const Pin({this.startPx, this.startPct, this.endPx, this.endPct, this.sizePx, this.centerPct});
+  const Pin(
+      {this.startPx,
+      this.startPct,
+      this.endPx,
+      this.endPct,
+      this.sizePx,
+      this.centerPct});
 }
 
 class Pinned extends StatelessWidget {
@@ -20,7 +26,8 @@ class Pinned extends StatelessWidget {
   final Pin vtPin;
   final Widget? child;
 
-  const Pinned({Key? key, required this.hzPin, required this.vtPin, this.child}) : super(key: key);
+  const Pinned({Key? key, required this.hzPin, required this.vtPin, this.child})
+      : super(key: key);
 
   _Span calculateSpanFromPin(Pin pin, double maxSize) {
     var s = _Span();
@@ -59,7 +66,8 @@ class Pinned extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Check to see if we have been provided some StackConstraints by [ PinnedStack ]
-    StackConstraints? constraints = context.dependOnInheritedWidgetOfExactType<StackConstraints>();
+    StackConstraints? constraints =
+        context.dependOnInheritedWidgetOfExactType<StackConstraints>();
     if (constraints != null) {
       return _buildContent(constraints.constraints);
     }
@@ -80,7 +88,10 @@ class Pinned extends StatelessWidget {
       offset: Offset(hzSpan.start, vtSpan.start),
       child: Align(
         alignment: Alignment.topLeft,
-        child: SizedBox(width: hzSpan.size, height: vtSpan.size, child: showChild ? child : null),
+        child: SizedBox(
+            width: hzSpan.size,
+            height: vtSpan.size,
+            child: showChild ? child : null),
       ),
     );
   }
@@ -94,5 +105,6 @@ class _Span {
 }
 
 extension PinnedExtensions on Widget {
-  Pinned pin({required Pin hz, required Pin vt}) => Pinned(hzPin: hz, vtPin: vt, child: this);
+  Pinned pin({required Pin hz, required Pin vt}) =>
+      Pinned(hzPin: hz, vtPin: vt, child: this);
 }

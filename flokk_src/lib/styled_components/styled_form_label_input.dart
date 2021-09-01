@@ -13,7 +13,8 @@ import 'package:provider/provider.dart';
 
 class StyledFormLabelInput extends StatefulWidget {
   //TODO SB@CE - Is this necessary, can't we just pass null and let the default inside StyledSearchTextInput handle it?
-  static const EdgeInsets kDefaultTextInputPadding = EdgeInsets.only(bottom: Insets.sm, top: 4);
+  static const EdgeInsets kDefaultTextInputPadding =
+      EdgeInsets.only(bottom: Insets.sm, top: 4);
 
   final String hintText;
   final bool autoFocus;
@@ -95,8 +96,10 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
 
   void _handleRawKeyPressed(RawKeyEvent evt) {
     if (evt is RawKeyDownEvent) {
-      if ((_textFocusNode?.hasFocus ?? false) && evt.logicalKey == LogicalKeyboardKey.backspace) {
-        if (_textKey.currentState != null && (_textKey.currentState?.text.isEmpty ?? false)) {
+      if ((_textFocusNode?.hasFocus ?? false) &&
+          evt.logicalKey == LogicalKeyboardKey.backspace) {
+        if (_textKey.currentState != null &&
+            (_textKey.currentState?.text.isEmpty ?? false)) {
           final tl = widget.labels;
           if (tl.isNotEmpty) {
             _handleRemoveLabel(tl.last);
@@ -114,7 +117,9 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
     //TODO SB@CE - This could be  more readable
     final labelWidth = (String label) {
       return Insets.m +
-          StringUtils.measure(label.toUpperCase(), TextStyles.Footnote.letterSpace(0)).width +
+          StringUtils.measure(
+                  label.toUpperCase(), TextStyles.Footnote.letterSpace(0))
+              .width +
           Insets.sm +
           Insets.sm +
           16 +
@@ -165,7 +170,9 @@ class _StyledFormLabelInputState extends State<StyledFormLabelInput> {
           Container(
             margin: EdgeInsets.only(top: 38),
             height: _focused ? 1.8 : 1.2,
-            color: _focused ? (theme.isDark ? theme.accent2 : theme.accent1Dark) : theme.greyWeak.withOpacity(.35),
+            color: _focused
+                ? (theme.isDark ? theme.accent2 : theme.accent1Dark)
+                : theme.greyWeak.withOpacity(.35),
           )
         ],
       ),

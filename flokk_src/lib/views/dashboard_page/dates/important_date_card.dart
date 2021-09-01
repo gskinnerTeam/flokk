@@ -14,7 +14,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ImportantEventCard extends StatelessWidget {
-  const ImportantEventCard(this.contact, this.event, {Key? key}) : super(key: key);
+  const ImportantEventCard(this.contact, this.event, {Key? key})
+      : super(key: key);
 
   static DateFormat get monthDayFmt => DateFormat("MMMMEEEEd");
 
@@ -30,7 +31,9 @@ class ImportantEventCard extends StatelessWidget {
     Color eventColor = isBirthday ? theme.accent3 : theme.accent2;
 
     return TransparentBtn(
-      onPressed: () => context.read<MainScaffoldState>().trySetSelectedContact(contact, showSocial: false),
+      onPressed: () => context
+          .read<MainScaffoldState>()
+          .trySetSelectedContact(contact, showSocial: false),
       borderRadius: Corners.s8,
       contentPadding: EdgeInsets.zero,
       child: StyledCard(
@@ -47,9 +50,11 @@ class ImportantEventCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Spacer(),
-                OneLineText(event.getType(), style: cardContentText.textColor(eventColor)),
+                OneLineText(event.getType(),
+                    style: cardContentText.textColor(eventColor)),
                 VSpace(Insets.sm),
-                OneLineText(monthDayFmt.format(event.date), style: cardContentText),
+                OneLineText(monthDayFmt.format(event.date),
+                    style: cardContentText),
                 Spacer(),
               ],
             ).width(110),

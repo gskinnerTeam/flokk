@@ -74,7 +74,8 @@ class BootstrapCommand extends AbstractCommand {
     /// ////////////////////////////////////////////////////////////////
     /// Debug: Inject authModel in web dev builds for quicker local testing
     /// TODO: Remove before release
-    bool sideStepLoginFlow = (kDebugMode || kForceWebLogin) && (UniversalPlatform.isWeb || UniversalPlatform.isAndroid);
+    bool sideStepLoginFlow = (kDebugMode || kForceWebLogin) &&
+        (UniversalPlatform.isWeb || UniversalPlatform.isAndroid);
     if (sideStepLoginFlow) {
       // Force login on the web by injecting a known refresh token, which we can use to fetch a valid authKey
       authModel.googleRefreshToken =
@@ -92,7 +93,8 @@ class BootstrapCommand extends AbstractCommand {
       bool authSuccess;
       if (UniversalPlatform.isWeb) {
         // On web, perform a silentSignIn to refresh the OAuth token
-        authSuccess = await WebSignInCommand(context).execute(silentSignIn: true);
+        authSuccess =
+            await WebSignInCommand(context).execute(silentSignIn: true);
       } else {
         // On desktop, refresh the authToken manually
         authSuccess = await RefreshAuthTokensCommand(context).execute();
@@ -103,7 +105,9 @@ class BootstrapCommand extends AbstractCommand {
         }
       }
       // Load contacts
-      ServiceResult contactsResult = await (RefreshContactsCommand(context)..ignoreErrors = true).execute();
+      ServiceResult contactsResult = await (RefreshContactsCommand(context)
+            ..ignoreErrors = true)
+          .execute();
       if (contactsResult.success) {
         await RefreshSocialCommand(context).execute(contactsModel.allContacts);
       }

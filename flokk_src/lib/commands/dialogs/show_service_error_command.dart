@@ -14,7 +14,8 @@ class ShowServiceErrorCommand extends AbstractCommand {
 
   static bool isShowingError = false;
 
-  Future<bool> execute(HttpResponse response, {String customMessage = ""}) async {
+  Future<bool> execute(HttpResponse response,
+      {String customMessage = ""}) async {
     //If response has no errors, return false to indicate no error was shown
     if (response.success) return false;
     Log.p("[ShowServiceErrorCommand]");
@@ -37,7 +38,8 @@ class ShowServiceErrorCommand extends AbstractCommand {
           if (json?.containsKey("message") ?? false) {
             msg = json!["message"];
           } else {
-            msg = "Unable to connect to online services: Internal Server Error (${response.statusCode})";
+            msg =
+                "Unable to connect to online services: Internal Server Error (${response.statusCode})";
           }
         }
       }
@@ -54,7 +56,8 @@ class ShowServiceErrorCommand extends AbstractCommand {
       }
       // No Connection
       else if (response.errorType == NetErrorType.disconnected) {
-        msg = "Unable to connect to the internet, please check your connection.";
+        msg =
+            "Unable to connect to the internet, please check your connection.";
         //Run an immediate connection check, it's likely that we've lost connection but we're not sure.
         await CheckConnectionCommand(context).execute(false);
       }

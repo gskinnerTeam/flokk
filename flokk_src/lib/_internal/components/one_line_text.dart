@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class OneLineText extends StatelessWidget {
@@ -8,6 +7,6 @@ class OneLineText extends StatelessWidget {
   const OneLineText(this.text, {Key? key, this.style}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      Text(text, style: style, maxLines: 1, softWrap: false, overflow: TextOverflow.fade);
+  Widget build(BuildContext context) => Text(text,
+      style: style, maxLines: 1, softWrap: false, overflow: TextOverflow.fade);
 }

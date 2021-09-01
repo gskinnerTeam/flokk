@@ -41,4 +41,5 @@ class DesktopPicker implements UniversalPicker {
   }
 }
 
-UniversalPicker getPlatformPicker({required String accept}) => DesktopPicker(accept: accept);
+UniversalPicker getPlatformPicker({required String accept}) =>
+    DesktopPicker(accept: accept);

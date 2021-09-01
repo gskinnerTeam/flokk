@@ -38,8 +38,11 @@ class _AnimatedPanelState extends State<AnimatedPanel> {
       ),
       duration: Duration(milliseconds: (duration * 1000).round()),
       builder: (_, Offset value, Widget? c) {
-        _isHidden = c == null || widget.isClosed && value == Offset(widget.closedX, widget.closedY);
-        return _isHidden ? Container() : Transform.translate(offset: value, child: c);
+        _isHidden = c == null ||
+            widget.isClosed && value == Offset(widget.closedX, widget.closedY);
+        return _isHidden
+            ? Container()
+            : Transform.translate(offset: value, child: c);
       },
       child: widget.child,
     );
@@ -48,17 +51,38 @@ class _AnimatedPanelState extends State<AnimatedPanel> {
 
 extension AnimatedPanelExtensions on Widget {
   Widget animatedPanelX(
-          {double closeX = 0, bool isClosed = false, double duration = .35, Curve curve = Curves.easeOut}) =>
-      animatedPanel(closePos: Offset(closeX, 0), isClosed: isClosed, curve: curve, duration: duration);
+          {double closeX = 0,
+          bool isClosed = false,
+          double duration = .35,
+          Curve curve = Curves.easeOut}) =>
+      animatedPanel(
+          closePos: Offset(closeX, 0),
+          isClosed: isClosed,
+          curve: curve,
+          duration: duration);
 
   Widget animatedPanelY(
-          {double closeY = 0, bool isClosed = false, double duration = .35, Curve curve = Curves.easeOut}) =>
-      animatedPanel(closePos: Offset(0, closeY), isClosed: isClosed, curve: curve, duration: duration);
+          {double closeY = 0,
+          bool isClosed = false,
+          double duration = .35,
+          Curve curve = Curves.easeOut}) =>
+      animatedPanel(
+          closePos: Offset(0, closeY),
+          isClosed: isClosed,
+          curve: curve,
+          duration: duration);
 
   Widget animatedPanel(
-      {Offset closePos = Offset.zero, bool isClosed = false, double duration = .35, Curve curve = Curves.easeOut}) {
+      {Offset closePos = Offset.zero,
+      bool isClosed = false,
+      double duration = .35,
+      Curve curve = Curves.easeOut}) {
     return AnimatedPanel(
-        closedX: closePos.dx, closedY: closePos.dy, child: this, isClosed: isClosed, duration: duration, curve: curve);
+        closedX: closePos.dx,
+        closedY: closePos.dy,
+        child: this,
+        isClosed: isClosed,
+        duration: duration,
+        curve: curve);
   }
 }
-

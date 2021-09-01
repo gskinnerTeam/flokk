@@ -17,5 +17,6 @@ abstract class UniversalPicker {
 
   void open();
 
-  factory UniversalPicker({String accept = ""}) => getPlatformPicker(accept: accept);
+  factory UniversalPicker({String accept = ""}) =>
+      getPlatformPicker(accept: accept);
 }

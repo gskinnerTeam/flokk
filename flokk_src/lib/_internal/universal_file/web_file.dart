@@ -14,8 +14,7 @@ class WebFileWriter implements UniversalFile {
   WebFileWriter(this.fileName);
 
   Future<void> initPrefs() async {
-    if (_hasPrefs)
-      return;
+    if (_hasPrefs) return;
     _hasPrefs = true;
     prefs = await SharedPreferences.getInstance();
   }
@@ -24,8 +23,7 @@ class WebFileWriter implements UniversalFile {
   Future<String> read() async {
     await initPrefs();
     String? value = prefs.getString(fileName);
-    if (value == null)
-      throw Exception("$fileName not found");
+    if (value == null) throw Exception("$fileName not found");
     //print("Reading pref: $fileName = $value");
     return value;
   }

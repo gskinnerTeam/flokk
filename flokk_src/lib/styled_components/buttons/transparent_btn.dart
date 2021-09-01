@@ -41,7 +41,10 @@ class TransparentBtn extends StatelessWidget {
             vertical: bigMode ? Insets.sm : Insets.xs,
           ),
       bgColor: bgColor ?? Colors.transparent,
-      hoverColor: hoverColor ?? (theme.isDark ? ColorUtils.shiftHsl(theme.bg1, .2) : theme.bg2.withOpacity(.35)),
+      hoverColor: hoverColor ??
+          (theme.isDark
+              ? ColorUtils.shiftHsl(theme.bg1, .2)
+              : theme.bg2.withOpacity(.35)),
       downColor: downColor ?? ColorUtils.shiftHsl(theme.bg2, .1),
       borderRadius: borderRadius,
       child: child,
@@ -59,7 +62,12 @@ class TransparentTextBtn extends StatelessWidget {
   final Color? bgColor;
 
   const TransparentTextBtn(this.label,
-      {Key? key, this.onPressed, this.color, this.bigMode = false, this.style, this.bgColor})
+      {Key? key,
+      this.onPressed,
+      this.color,
+      this.bigMode = false,
+      this.style,
+      this.bgColor})
       : super(key: key);
 
   @override
@@ -71,7 +79,11 @@ class TransparentTextBtn extends StatelessWidget {
       bgColor: bgColor,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [Text(label, style: style ?? (bigMode ? TextStyles.Body1 : TextStyles.T1).textColor(c))],
+        children: [
+          Text(label,
+              style: style ??
+                  (bigMode ? TextStyles.Body1 : TextStyles.T1).textColor(c))
+        ],
       ),
       onPressed: onPressed,
     );
@@ -89,7 +101,13 @@ class TransparentIconAndTextBtn extends StatelessWidget {
   final TextStyle? style;
 
   const TransparentIconAndTextBtn(this.label, this.icon,
-      {Key? key, this.onPressed, this.color, this.textColor, this.bigMode = false, this.iconSize = 16, this.style})
+      {Key? key,
+      this.onPressed,
+      this.color,
+      this.textColor,
+      this.bigMode = false,
+      this.iconSize = 16,
+      this.style})
       : super(key: key);
 
   @override
@@ -102,8 +120,10 @@ class TransparentIconAndTextBtn extends StatelessWidget {
         children: [
           StyledImageIcon(icon, size: iconSize, color: c),
           HSpace(Insets.sm),
-          Text(label, style: style ?? TextStyles.Body1.textColor(textColor ?? c)),
-          HSpace(3), // Add a bit of extra padding to the right, seems like Icon() has it's own baked in padding
+          Text(label,
+              style: style ?? TextStyles.Body1.textColor(textColor ?? c)),
+          HSpace(
+              3), // Add a bit of extra padding to the right, seems like Icon() has it's own baked in padding
         ],
       ),
       onPressed: onPressed,

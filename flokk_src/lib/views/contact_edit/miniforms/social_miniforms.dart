@@ -12,7 +12,12 @@ class ContactSocialMiniForm extends BaseMiniForm {
   final SocialActivityType type;
 
   ContactSocialMiniForm(ContactEditFormState form, this.type, {Key? key})
-      : super(form, type == SocialActivityType.Git ? ContactSectionType.github : ContactSectionType.twitter, key: key);
+      : super(
+            form,
+            type == SocialActivityType.Git
+                ? ContactSectionType.github
+                : ContactSectionType.twitter,
+            key: key);
 
   bool get isGit => type == SocialActivityType.Git;
 
@@ -25,9 +30,11 @@ class ContactSocialMiniForm extends BaseMiniForm {
         // Wrap content in a builder so the FocusNotification will get caught by the ExpandingFormContainer
         return Builder(builder: (context) {
           if (type == SocialActivityType.Git) {
-            return buildPrefixedTextInput(context, "github.com/", c.gitUsername, (v) => c.gitUsername = v);
+            return buildPrefixedTextInput(context, "github.com/", c.gitUsername,
+                (v) => c.gitUsername = v);
           } else {
-            return buildPrefixedTextInput(context, "@", c.twitterHandle, (v) => c.twitterHandle = v);
+            return buildPrefixedTextInput(
+                context, "@", c.twitterHandle, (v) => c.twitterHandle = v);
           }
         }).padding(right: rightPadding);
       },
@@ -35,10 +42,12 @@ class ContactSocialMiniForm extends BaseMiniForm {
   }
 
   /// Builds prefixed TextInput used for git/twitter
-  Widget buildPrefixedTextInput(BuildContext context, String hint, String initial, Function(String) onChanged,
+  Widget buildPrefixedTextInput(BuildContext context, String hint,
+      String initial, Function(String) onChanged,
       [bool autoFocus = false]) {
     double prefixSize = StringUtils.measure(hint, TextStyles.Body1).width;
-    EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding.copyWith(left: prefixSize + .5);
+    EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding
+        .copyWith(left: prefixSize + .5);
     return FocusTraversalGroup(
       child: Stack(
         children: <Widget>[
@@ -50,7 +59,8 @@ class ContactSocialMiniForm extends BaseMiniForm {
           ),
 
           /// Value text
-          buildTextInput(context, "", initial, onChanged, autoFocus: isSelected, padding: padding),
+          buildTextInput(context, "", initial, onChanged,
+              autoFocus: isSelected, padding: padding),
         ],
       ),
     );

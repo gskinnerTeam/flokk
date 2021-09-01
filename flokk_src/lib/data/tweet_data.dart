@@ -105,7 +105,7 @@ class Tweet implements DateSortable {
   Map<String, dynamic> toJson() => _$TweetToJson(this);
 
   @override
-  bool operator==(covariant Tweet other) => other.id == id;
+  bool operator ==(covariant Tweet other) => other.id == id;
 
   @override
   int get hashCode => id.hashCode;

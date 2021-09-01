@@ -17,11 +17,13 @@ class ContactInfoDetailsCard extends StatelessWidget {
 
   void _handleEmailPressed(String value) => UrlLauncher.openEmail(value);
 
-  void _handleLocationPressed(String value) => UrlLauncher.openGoogleMaps(value);
+  void _handleLocationPressed(String value) =>
+      UrlLauncher.openGoogleMaps(value);
 
   void _handleGitPressed(String value) => UrlLauncher.openGitUser(value);
 
-  void _handleTwitterPressed(String value) => UrlLauncher.openTwitterUser(value);
+  void _handleTwitterPressed(String value) =>
+      UrlLauncher.openTwitterUser(value);
 
   void _handleLinkPressed(String value) => UrlLauncher.openHttp(value);
 
@@ -39,7 +41,8 @@ class ContactInfoDetailsCard extends StatelessWidget {
             icon: StyledIcons.mail,
             onPressed: _handleEmailPressed,
             editType: ContactSectionType.email,
-            rows: contact.emailList.map((e) => Tuple2(e.value, e.type)).toList(),
+            rows:
+                contact.emailList.map((e) => Tuple2(e.value, e.type)).toList(),
           ),
 
         /// PHONE
@@ -48,7 +51,8 @@ class ContactInfoDetailsCard extends StatelessWidget {
             icon: StyledIcons.phone,
             onPressed: _handlePhonePressed,
             editType: ContactSectionType.phone,
-            rows: contact.phoneList.map((e) => Tuple2(e.number, e.type)).toList(),
+            rows:
+                contact.phoneList.map((e) => Tuple2(e.number, e.type)).toList(),
           ),
 
         /// SOCIAL
@@ -72,43 +76,59 @@ class ContactInfoDetailsCard extends StatelessWidget {
           MultilineClickableIconRow(
             icon: StyledIcons.address,
             onPressed: _handleLocationPressed,
-            rows: contact.addressList.map((a) => Tuple2(a.getFullAddress(), a.type)).toList(),
+            rows: contact.addressList
+                .map((a) => Tuple2(a.getFullAddress(), a.type))
+                .toList(),
             editType: ContactSectionType.address,
           ),
 
         /// Job
         if (contact.hasJob)
-          ClickableIconRow(icon: StyledIcons.work, value: contact.formattedJob, editType: ContactSectionType.job),
+          ClickableIconRow(
+              icon: StyledIcons.work,
+              value: contact.formattedJob,
+              editType: ContactSectionType.job),
 
         /// BIRTHDAY
         if (contact.hasBirthday)
           ClickableIconRow(
-              icon: StyledIcons.birthday, value: contact.birthday.text, editType: ContactSectionType.birthday),
+              icon: StyledIcons.birthday,
+              value: contact.birthday.text,
+              editType: ContactSectionType.birthday),
 
         /// Events
         MultilineClickableIconRow(
           icon: StyledIcons.calendar,
-          rows: contact.eventList.map((d) => Tuple2(DateFormats.google.format(d.date), d.type)).toList(),
+          rows: contact.eventList
+              .map((d) => Tuple2(DateFormats.google.format(d.date), d.type))
+              .toList(),
           editType: ContactSectionType.events,
-          ),
+        ),
 
         /// LINKS
         if (contact.hasLink)
           MultilineClickableIconRow(
               icon: StyledIcons.link,
               onPressed: _handleLinkPressed,
-              rows: contact.websiteList.map((a) => Tuple2(a.href, a.type)).toList(),
+              rows: contact.websiteList
+                  .map((a) => Tuple2(a.href, a.type))
+                  .toList(),
               editType: ContactSectionType.websites),
 
         /// NOTES
         if (contact.hasNotes)
-          ClickableIconRow(icon: StyledIcons.note, value: contact.notes, editType: ContactSectionType.notes),
+          ClickableIconRow(
+              icon: StyledIcons.note,
+              value: contact.notes,
+              editType: ContactSectionType.notes),
 
         /// RELATIONSHIP
         if (contact.hasRelationship)
           MultilineClickableIconRow(
             icon: StyledIcons.relationship,
-            rows: contact.relationList.map((a) => Tuple2(a.person, a.type)).toList(),
+            rows: contact.relationList
+                .map((a) => Tuple2(a.person, a.type))
+                .toList(),
             editType: ContactSectionType.relationship,
           ),
       ],

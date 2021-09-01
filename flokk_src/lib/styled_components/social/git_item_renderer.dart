@@ -36,7 +36,8 @@ class GitUtils {
     if (type == "GistEvent") return "Gist";
     if (type == "GollumEvent") return "Gollum";
     if (type == "InstallationEvent") return "Installation";
-    if (type == "InstallationRepositoriesEvent") return "Installation Repositories";
+    if (type == "InstallationRepositoriesEvent")
+      return "Installation Repositories";
     if (type == "IssueCommentEvent") return "Commented on Issue";
     if (type == "IssuesEvent") return "Issues";
     if (type == "LabelEvent") return "Labelled";
@@ -55,13 +56,15 @@ class GitUtils {
     if (type == "PublicEvent") return "Public";
     if (type == "PullRequestEvent") return "Pull Requested";
     if (type == "PullRequestReviewEvent") return "Reviewed Pull Request";
-    if (type == "PullRequestReviewCommentEvent") return "Commented Pull Request Review";
+    if (type == "PullRequestReviewCommentEvent")
+      return "Commented Pull Request Review";
     if (type == "PushEvent") return "Pushed";
     if (type == "ReleaseEvent") return "Released";
     if (type == "RepositoryDispatchEvent") return "Repository Dispatch";
     if (type == "RepositoryEvent") return "Repository";
     if (type == "RepositoryImportEvent") return "Repository Import";
-    if (type == "RepositoryVulnerabilityAlertEvent") return "Repository Vulnerability Alert";
+    if (type == "RepositoryVulnerabilityAlertEvent")
+      return "Repository Vulnerability Alert";
     if (type == "SecurityAdvisoryEvent") return "Security Advisory";
     if (type == "SponsorshipEvent") return "Sponsorship";
     if (type == "StarEvent") return "Starred";
@@ -111,7 +114,9 @@ class GitRepoListItem extends StatelessWidget {
       children: [
         Row(children: [
           Text("${repo.contacts.first.nameGiven}", style: titleStyle.bold),
-          Text("  ·  ${GitUtils.monthDayFmt.format(repo.repository.updatedAt ?? Dates.epoch)}", style: titleStyle),
+          Text(
+              "  ·  ${GitUtils.monthDayFmt.format(repo.repository.updatedAt ?? Dates.epoch)}",
+              style: titleStyle),
         ]),
         VSpace(Insets.xs * 1.5),
         GitRepoInfo(repo.repository),
@@ -143,8 +148,7 @@ class GitRepoInfo extends StatelessWidget {
   const GitRepoInfo(this.repo, {Key? key}) : super(key: key);
 
   void _handleRepoPressed() {
-    if (repo != null)
-      UrlLauncher.openHttp(repo!.htmlUrl);
+    if (repo != null) UrlLauncher.openHttp(repo!.htmlUrl);
   }
 
   @override
@@ -158,8 +162,12 @@ class GitRepoInfo extends StatelessWidget {
           RichText(
             text: TextSpan(
               children: <TextSpan>[
-                TextSpan(text: "${repo?.name}", style: contentTextStyle.textColor(theme.accent1Dark)),
-                TextSpan(text: " | ${repo?.description}", style: contentTextStyle.textColor(theme.txt)),
+                TextSpan(
+                    text: "${repo?.name}",
+                    style: contentTextStyle.textColor(theme.accent1Dark)),
+                TextSpan(
+                    text: " | ${repo?.description}",
+                    style: contentTextStyle.textColor(theme.txt)),
               ],
             ),
           ).flexible(),
@@ -172,15 +180,22 @@ class GitRepoInfo extends StatelessWidget {
             HSpace(Insets.sm),
           },
           StyledImageIcon(StyledIcons.starFilled, size: 12, color: theme.grey),
-          Text("${repo?.stargazersCount ?? 0}", style: smallTextStyle).padding(left: Insets.xs),
+          Text("${repo?.stargazersCount ?? 0}", style: smallTextStyle)
+              .padding(left: Insets.xs),
           HSpace(Insets.sm),
-          StyledImageIcon(StyledIcons.socialFork, size: 12, color: theme.grey).translate(
-            offset: Offset(0, 1), // Add a bit of offset to the fork icon cause it's a bit tall and doesn't look right
+          StyledImageIcon(StyledIcons.socialFork, size: 12, color: theme.grey)
+              .translate(
+            offset: Offset(0,
+                1), // Add a bit of offset to the fork icon cause it's a bit tall and doesn't look right
           ),
-          Text("${repo?.forksCount ?? 0}", style: smallTextStyle).padding(left: Insets.xs),
+          Text("${repo?.forksCount ?? 0}", style: smallTextStyle)
+              .padding(left: Insets.xs),
         ]),
         VSpace(Insets.m * 1.5),
-        Container(color: theme.greyWeak.withOpacity(.35), width: double.infinity, height: 1),
+        Container(
+            color: theme.greyWeak.withOpacity(.35),
+            width: double.infinity,
+            height: 1),
         //VSpace(Insets.l),
       ],
     ).gestures(onTap: _handleRepoPressed);

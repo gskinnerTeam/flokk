@@ -9,7 +9,8 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 
 class ContactAddressMiniForm extends BaseMiniForm {
-  ContactAddressMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.address, key: key);
+  ContactAddressMiniForm(ContactEditFormState form, {Key? key})
+      : super(form, ContactSectionType.address, key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,45 +24,51 @@ class ContactAddressMiniForm extends BaseMiniForm {
           builder: (context) {
             if (c.addressList.isEmpty) c.addressList.add(AddressData());
             List<Widget> kids = c.addressList.map<Widget>((a) {
-              return SeparatedColumn(key: ObjectKey(a), separatorBuilder: () => VSpace(Insets.xs), children: [
-                /// Street + Type
-                buildTextWithDropdown(
-                  context,
-                  null,
-                  autoFocus: getIsFocused<AddressData>(c.addressList, a),
-                  hint: "Street",
-                  typeHint: "Type",
-                  initialText: a.singleLineStreet,
-                  initialType: a.type,
-                  types: types.map((e) => e.toUpperCase()).toList(),
-                  onTextChanged: (value) => setFormState(() => a.street = value),
-                  onTypeChanged: (value) => setFormState(() => a.type = value),
-                  onDelete: () => handleDeletePressed<AddressData>(context, a, c.addressList),
-                  showDelete: !a.isEmpty,
-                  typeWidth: 160,
-                ),
+              return SeparatedColumn(
+                  key: ObjectKey(a),
+                  separatorBuilder: () => VSpace(Insets.xs),
+                  children: [
+                    /// Street + Type
+                    buildTextWithDropdown(
+                      context,
+                      null,
+                      autoFocus: getIsFocused<AddressData>(c.addressList, a),
+                      hint: "Street",
+                      typeHint: "Type",
+                      initialText: a.singleLineStreet,
+                      initialType: a.type,
+                      types: types.map((e) => e.toUpperCase()).toList(),
+                      onTextChanged: (value) =>
+                          setFormState(() => a.street = value),
+                      onTypeChanged: (value) =>
+                          setFormState(() => a.type = value),
+                      onDelete: () => handleDeletePressed<AddressData>(
+                          context, a, c.addressList),
+                      showDelete: !a.isEmpty,
+                      typeWidth: 160,
+                    ),
 
-                /// City / State
-                buildDualTextInput(
-                  context,
-                  "City",
-                  a.city,
-                  (v) => setFormState(() => a.city = v),
-                  "State",
-                  a.region,
-                  (v) => setFormState(() => a.region = v),
-                ).padding(right: rightPadding),
+                    /// City / State
+                    buildDualTextInput(
+                      context,
+                      "City",
+                      a.city,
+                      (v) => setFormState(() => a.city = v),
+                      "State",
+                      a.region,
+                      (v) => setFormState(() => a.region = v),
+                    ).padding(right: rightPadding),
 
-                /// Country / Postal Code
-                buildDualTextInput(
-                  context,
-                  "Postal Code",
-                  a.postcode,
-                  (v) => setFormState(() => a.postcode = v),
-                  "Country",
-                  a.country,
-                  (v) => setFormState(() => a.country = v),
-                ).padding(right: rightPadding),
+                    /// Country / Postal Code
+                    buildDualTextInput(
+                      context,
+                      "Postal Code",
+                      a.postcode,
+                      (v) => setFormState(() => a.postcode = v),
+                      "Country",
+                      a.country,
+                      (v) => setFormState(() => a.country = v),
+                    ).padding(right: rightPadding),
 //TODO: Put the country-dropdown back in when we have time to debug the height issue.
 //                buildTextWithDropdown(
 //                  context,
@@ -77,13 +84,14 @@ class ContactAddressMiniForm extends BaseMiniForm {
 //                  typeWidth: 160,
 //                ),
 
-                if (c.addressList.indexOf(a) < c.addressList.length - 1) VSpace(Insets.m),
-              ]);
+                    if (c.addressList.indexOf(a) < c.addressList.length - 1)
+                      VSpace(Insets.m),
+                  ]);
             }).toList();
 
             /// Maybe add addNew btn
-            injectAddNewBtnIfNecessary<AddressData>(
-                "Add $sectionType", kids, c.addressList, (a) => a.isEmpty, () => AddressData());
+            injectAddNewBtnIfNecessary<AddressData>("Add $sectionType", kids,
+                c.addressList, (a) => a.isEmpty, () => AddressData());
             return SeparatedColumn(
                 separatorBuilder: () => VSpace(Insets.sm),
                 crossAxisAlignment: CrossAxisAlignment.start,

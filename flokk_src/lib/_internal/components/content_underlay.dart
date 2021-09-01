@@ -6,7 +6,10 @@ class ContentUnderlay extends StatelessWidget {
   final Duration duration;
 
   const ContentUnderlay(
-      {Key? key, this.color = Colors.black87, this.isActive = true, this.duration = const Duration(milliseconds: 350)})
+      {Key? key,
+      this.color = Colors.black87,
+      this.isActive = true,
+      this.duration = const Duration(milliseconds: 350)})
       : super(key: key);
 
   @override

@@ -62,7 +62,8 @@ class AppModel extends AbstractModel {
   /// /////////////////////////////////////////////////
   /// Current dashboard sections (serialized)
   DashboardContactsSectionType get dashContactsSection => _dashContactsSection;
-  DashboardContactsSectionType _dashContactsSection = DashboardContactsSectionType.Favorites;
+  DashboardContactsSectionType _dashContactsSection =
+      DashboardContactsSectionType.Favorites;
 
   set dashContactsSection(DashboardContactsSectionType value) {
     _dashContactsSection = value;
@@ -70,7 +71,8 @@ class AppModel extends AbstractModel {
   }
 
   DashboardSocialSectionType get dashSocialSection => _dashSocialSection;
-  DashboardSocialSectionType _dashSocialSection = DashboardSocialSectionType.All;
+  DashboardSocialSectionType _dashSocialSection =
+      DashboardSocialSectionType.All;
 
   set dashSocialSection(DashboardSocialSectionType value) {
     _dashSocialSection = value;
@@ -82,7 +84,8 @@ class AppModel extends AbstractModel {
   ContactData get selectedContact => _selectedContact ?? ContactData();
   ContactData? _selectedContact;
 
-  void touchSelectedSocial() => contactsModel.touchSocialById(selectedContact.id);
+  void touchSelectedSocial() =>
+      contactsModel.touchSocialById(selectedContact.id);
 
   /// Current selected edit target, controls visibility of the edit panel
   set selectedContact(ContactData value) {
@@ -141,8 +144,10 @@ class AppModel extends AbstractModel {
     var v = ThemeType.values;
     int theme = json["_theme"] ?? 0;
     _theme = v[theme.clamp(0, v.length)];
-    _dashContactsSection = DashboardContactsSectionType.values[json['_dashContactsSection'] ?? 0];
-    _dashSocialSection = DashboardSocialSectionType.values[json['_dashSocialSection'] ?? 0];
+    _dashContactsSection =
+        DashboardContactsSectionType.values[json['_dashContactsSection'] ?? 0];
+    _dashSocialSection =
+        DashboardSocialSectionType.values[json['_dashSocialSection'] ?? 0];
     version = json['version'];
   }
 
@@ -156,6 +161,8 @@ class AppModel extends AbstractModel {
 
   /// [SB] Just for easy testing, remove later
   void nextTheme() {
-    theme = (theme == ThemeType.FlockGreen_Dark) ? ThemeType.FlockGreen : ThemeType.FlockGreen_Dark;
+    theme = (theme == ThemeType.FlockGreen_Dark)
+        ? ThemeType.FlockGreen
+        : ThemeType.FlockGreen_Dark;
   }
 }

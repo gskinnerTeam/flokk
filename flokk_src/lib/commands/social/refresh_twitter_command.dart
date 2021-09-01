@@ -13,24 +13,28 @@ class RefreshTwitterCommand extends AbstractCommand {
   Future<void> execute(String twitterHandle) async {
     Log.p("[RefreshTwitterCommand]");
 
-    if (contactsModel.canRefreshTweetsFor(twitterHandle) || AppModel.ignoreCooldowns) {
+    if (contactsModel.canRefreshTweetsFor(twitterHandle) ||
+        AppModel.ignoreCooldowns) {
       if (!twitterModel.isAuthenticated) {
         await AuthenticateTwitterCommand(context).execute();
       }
       twitterModel.isLoading = true;
-      ServiceResult result = await twitterService.getTweets(twitterModel.twitterAccessToken, twitterHandle);
+      ServiceResult result = await twitterService.getTweets(
+          twitterModel.twitterAccessToken, twitterHandle);
 
       contactsModel.updateSocialTimestamps(twitterHandle: twitterHandle);
 
       //set "hasValidTwitter" flag on contact, depending on success of call
-      contactsModel.updateContactDataTwitterValidity(twitterHandle, result.success);
+      contactsModel.updateContactDataTwitterValidity(
+          twitterHandle, result.success);
 
       //Suppress error dialogs if the twitter handle is not found. Already updated the ContactData.hasValidTwitter flag above
       final int statusCode = result.response.statusCode;
       switch (statusCode) {
         case 429: //rate limit (https://developer.twitter.com/en/docs/basics/rate-limiting)
-          ShowServiceErrorCommand(context)
-              .execute(result.response, customMessage: "Twitter rate limit exceeded. Please try again later.");
+          ShowServiceErrorCommand(context).execute(result.response,
+              customMessage:
+                  "Twitter rate limit exceeded. Please try again later.");
           break;
         case 404: //likely invalid twitter username, don't bother showing error dialog.
           break;
@@ -43,7 +47,10 @@ class RefreshTwitterCommand extends AbstractCommand {
       twitterModel.addTweets(twitterHandle, tweets);
       twitterModel.isLoading = false;
       twitterModel.scheduleSave();
-      int newTweets = contactsModel.getSocialContactByTwitter(twitterHandle).newTweets.length;
+      int newTweets = contactsModel
+          .getSocialContactByTwitter(twitterHandle)
+          .newTweets
+          .length;
       print("New Tweets = $newTweets");
     }
   }

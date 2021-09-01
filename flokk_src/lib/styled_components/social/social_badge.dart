@@ -34,10 +34,16 @@ class SocialBadge extends StatelessWidget {
       child: Stack(
         children: [
           /// PLACEHOLDER
-          if (!hasAccount) StyledImageIcon(iconPlaceholder, size: 32, color: theme.greyWeak.withOpacity(.7)).center(),
+          if (!hasAccount)
+            StyledImageIcon(iconPlaceholder,
+                    size: 32, color: theme.greyWeak.withOpacity(.7))
+                .center(),
 
           /// VALID ACCOUNT
-          if (hasAccount) StyledImageIcon(icon, size: 28, color: newMessageCount > 0 ? theme.accent1 : theme.grey),
+          if (hasAccount)
+            StyledImageIcon(icon,
+                size: 28,
+                color: newMessageCount > 0 ? theme.accent1 : theme.grey),
           if (hasAccount)
             StyledContainer(
               theme.bg1,
@@ -48,7 +54,9 @@ class SocialBadge extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyles.Footnote.textColor(theme.txt).letterSpace(1),
               ).translate(offset: Offset(0, -1)),
-            ).constrained(width: 19, height: 19).alignment(Alignment.bottomRight),
+            )
+                .constrained(width: 19, height: 19)
+                .alignment(Alignment.bottomRight),
         ],
       ).width(size).height(size),
     );

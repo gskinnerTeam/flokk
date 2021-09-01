@@ -31,7 +31,8 @@ class ContactsListWithHeaders extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ContactsListWithHeadersState createState() => _ContactsListWithHeadersState();
+  _ContactsListWithHeadersState createState() =>
+      _ContactsListWithHeadersState();
 }
 
 class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
@@ -40,14 +41,17 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
   List<ContactData> get checked => widget.checkedContacts;
 
   bool _getIsChecked(String id) {
-    ContactData c = widget.checkedContacts.firstWhere((_c) => _c.id == id, orElse: () => ContactData());
+    ContactData c = widget.checkedContacts
+        .firstWhere((_c) => _c.id == id, orElse: () => ContactData());
     return c != ContactData();
   }
 
   Tuple2<List<ContactData>, int> getSortedContactsWithFavoriteCount() {
-    List<ContactData> starred = widget.contacts.toList()..removeWhere((element) => !element.isStarred);
+    List<ContactData> starred = widget.contacts.toList()
+      ..removeWhere((element) => !element.isStarred);
     int starCount = starred.length;
-    List<ContactData> nonStarred = widget.contacts.toList()..removeWhere((element) => element.isStarred);
+    List<ContactData> nonStarred = widget.contacts.toList()
+      ..removeWhere((element) => element.isStarred);
     return Tuple2(starred..addAll({...nonStarred}), starCount);
   }
 
@@ -56,7 +60,8 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
     AppTheme theme = context.watch();
     return LayoutBuilder(
       builder: (_, constraints) {
-        Tuple2<List<ContactData>, int> contactsWithFavCount = getSortedContactsWithFavoriteCount();
+        Tuple2<List<ContactData>, int> contactsWithFavCount =
+            getSortedContactsWithFavoriteCount();
         List<ContactData> contacts = contactsWithFavCount.item1;
         int favCount = contactsWithFavCount.item2;
 
@@ -67,30 +72,38 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
             Column(
               children: <Widget>[
                 /// Header: Pass an empty contact, the renderer will switch to header mode
-                ContactsListRow(ContactData(), parentWidth: constraints.maxWidth)
+                ContactsListRow(ContactData(),
+                        parentWidth: constraints.maxWidth)
                     .constrained(height: 48)
                     .padding(right: Insets.lGutter - Insets.sm),
 
                 /// List
                 StyledListView(
                   itemExtent: 78,
-                  itemCount: widget.contacts.length + (favCount == 0 || favCount == widget.contacts.length ? 1 : 2),
+                  itemCount: widget.contacts.length +
+                      (favCount == 0 || favCount == widget.contacts.length
+                          ? 1
+                          : 2),
                   itemBuilder: (context, i) {
                     /// Inject 1 or 2 header rows into the results
                     bool isFirstHeader = i == 0;
                     bool isSecondHeader = i == favCount + 1 && favCount != 0;
-                    if (isFirstHeader || (isSecondHeader && !widget.searchMode)) {
+                    if (isFirstHeader ||
+                        (isSecondHeader && !widget.searchMode)) {
                       String headerText = "SEARCH RESULTS";
                       int count = contacts.length;
                       if (!widget.searchMode) {
                         bool isFavorite = i == 0 && favCount > 0;
-                        headerText = isFavorite ? "FAVORITE CONTACTS" : "OTHER CONTACTS";
-                        count = isFavorite ? favCount : contacts.length - favCount;
+                        headerText =
+                            isFavorite ? "FAVORITE CONTACTS" : "OTHER CONTACTS";
+                        count =
+                            isFavorite ? favCount : contacts.length - favCount;
                       }
 
                       /// Header text
                       return Container(
-                        child: Text("$headerText ($count)", style: TextStyles.T1.textColor(theme.accent1Dark)),
+                        child: Text("$headerText ($count)",
+                            style: TextStyles.T1.textColor(theme.accent1Dark)),
                         alignment: Alignment.bottomLeft,
                         margin: EdgeInsets.only(bottom: Insets.l + 4),
                       );

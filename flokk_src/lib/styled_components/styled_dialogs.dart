@@ -9,9 +9,11 @@ import 'package:provider/provider.dart';
 
 class Dialogs {
   static Future<dynamic> show(Widget child, [BuildContext? context]) async {
-    return await (context != null ? Navigator.of(context) : AppGlobals.nav)?.push(
+    return await (context != null ? Navigator.of(context) : AppGlobals.nav)
+        ?.push(
       StyledDialogRoute(
-        pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
+        pageBuilder: (BuildContext buildContext, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
           return SafeArea(child: child);
         },
       ),
@@ -56,7 +58,8 @@ class StyledDialog extends StatelessWidget {
     );
 
     if (shrinkWrap) {
-      innerContent = IntrinsicWidth(child: IntrinsicHeight(child: innerContent));
+      innerContent =
+          IntrinsicWidth(child: IntrinsicHeight(child: innerContent));
     }
 
     return FocusTraversalGroup(
@@ -73,7 +76,8 @@ class StyledDialog extends StatelessWidget {
             borderRadius: borderRadius,
             child: SingleChildScrollView(
               physics: StyledScrollPhysics(),
-              child: Material(type: MaterialType.transparency, child: innerContent),
+              child: Material(
+                  type: MaterialType.transparency, child: innerContent),
             ),
           ),
         ),
@@ -112,7 +116,8 @@ class OkCancelDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           if (titleStr != null) ...[
-            Text(titleStr.toUpperCase(), style: TextStyles.T1.textColor(theme.accent1Darker)),
+            Text(titleStr.toUpperCase(),
+                style: TextStyles.T1.textColor(theme.accent1Darker)),
             VSpace(Insets.sm * 1.5),
             Container(color: theme.greyWeak.withOpacity(.35), height: 1),
             VSpace(Insets.m * 1.5),
@@ -169,7 +174,8 @@ class StyledDialogRoute<T> extends PopupRoute<T> {
   final RouteTransitionsBuilder? _transitionBuilder;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     return Semantics(
       child: _pageBuilder(context, animation, secondaryAnimation),
       scopesRoute: true,
@@ -178,11 +184,13 @@ class StyledDialogRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  Widget buildTransitions(
-      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
     RouteTransitionsBuilder? tb = _transitionBuilder;
     if (tb == null) {
-      return FadeTransition(opacity: CurvedAnimation(parent: animation, curve: Curves.linear), child: child);
+      return FadeTransition(
+          opacity: CurvedAnimation(parent: animation, curve: Curves.linear),
+          child: child);
     } // Some default transition
     return tb(context, animation, secondaryAnimation, child);
   }

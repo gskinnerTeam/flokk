@@ -35,12 +35,19 @@ class _ContactInfoSocialCardState extends State<ContactInfoSocialCard> {
     ContactData contact = context.watch();
     ContactsModel contactsModel = context.watch();
     bool isGitLoading = context.select<GithubModel, bool>((gm) => gm.isLoading);
-    bool isTwitterLoading = context.select<TwitterModel, bool>((tm) => tm.isLoading);
+    bool isTwitterLoading =
+        context.select<TwitterModel, bool>((tm) => tm.isLoading);
     SocialContactData social = contactsModel.getSocialById(contact.id);
 
     int maxItems = 30;
-    final gitItems = social.gitEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
-    final tweetItems = social.tweets.map((tweet) => TweetListItem(tweet)).take(maxItems).toList();
+    final gitItems = social.gitEvents
+        .map((event) => GitEventListItem(event))
+        .take(maxItems)
+        .toList();
+    final tweetItems = social.tweets
+        .map((tweet) => TweetListItem(tweet))
+        .take(maxItems)
+        .toList();
 
     //return Container();
     return Column(

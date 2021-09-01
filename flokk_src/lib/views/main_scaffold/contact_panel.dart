@@ -15,7 +15,9 @@ class ContactPanel extends StatefulWidget {
   final VoidCallback? onClosePressed;
   final ContactsModel contactsModel;
 
-  const ContactPanel({Key? key, this.onClosePressed, required this.contactsModel}) : super(key: key);
+  const ContactPanel(
+      {Key? key, this.onClosePressed, required this.contactsModel})
+      : super(key: key);
 
   @override
   ContactPanelState createState() => ContactPanelState();
@@ -30,7 +32,8 @@ class ContactPanelState extends State<ContactPanel> {
 
   String _initialEditSection = "";
 
-  bool get hasUnsavedChanged => _isEditingContact && (editKey?.currentState?.isDirty ?? false);
+  bool get hasUnsavedChanged =>
+      _isEditingContact && (editKey?.currentState?.isDirty ?? false);
 
   void showEditView(String sectionType) {
     _initialEditSection = sectionType;
@@ -41,7 +44,8 @@ class ContactPanelState extends State<ContactPanel> {
     setState(() => _isEditingContact = false);
   }
 
-  void _handleEditPressed(String? startSection) => showEditView(startSection ?? "");
+  void _handleEditPressed(String? startSection) =>
+      showEditView(startSection ?? "");
 
   void _handleEditComplete(ContactData contact) {
     /// If contact is not null, then we want to switch back to the InfoView
@@ -71,8 +75,7 @@ class ContactPanelState extends State<ContactPanel> {
 
           /// When contact has been set to null, we want to use the prevContact so we get a clean transition out
           /// Bit of a hack, but not sure how else to maintain state as we slide out.
-          if (contact == ContactData())
-            contact = _prevContact ?? ContactData();
+          if (contact == ContactData()) contact = _prevContact ?? ContactData();
           if (contact != ContactData()) _prevContact = contact;
 
           /// Anytime we're working on a new contact, we want to be in edit mode

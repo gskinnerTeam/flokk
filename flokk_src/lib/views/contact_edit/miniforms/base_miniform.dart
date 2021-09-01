@@ -32,7 +32,8 @@ abstract class BaseMiniForm extends StatelessWidget {
 
   ContactData get c => form.tmpContact;
 
-  bool getIsFocused<T>(List<T> list, T item) => isSelected && list.indexOf(item) == 0;
+  bool getIsFocused<T>(List<T> list, T item) =>
+      isSelected && list.indexOf(item) == 0;
 
   /// /////////////////////////////////////////////////////
   /// SHARED HANDLERS AND BUSINESS LOGIC
@@ -41,7 +42,8 @@ abstract class BaseMiniForm extends StatelessWidget {
     form.rebuild();
   }
 
-  void handleFocusChanged(bool value, BuildContext context) => FocusChangedNotification(value).dispatch(context);
+  void handleFocusChanged(bool value, BuildContext context) =>
+      FocusChangedNotification(value).dispatch(context);
 
   void handleDeletePressed<T>(BuildContext context, T item, List<T> list) {
     // Remove item
@@ -61,8 +63,8 @@ abstract class BaseMiniForm extends StatelessWidget {
   /// SHARED UI FACTORY BUILD METHODS
 
   /// Adds a build button if the final row in the list has some content, and we don't exceed some max # of items
-  void injectAddNewBtnIfNecessary<T>(
-      String hint, List<Widget> column, List<T> list, Function(T) isEmpty, Function() itemBuilder) {
+  void injectAddNewBtnIfNecessary<T>(String hint, List<Widget> column,
+      List<T> list, Function(T) isEmpty, Function() itemBuilder) {
     int maxItems = 8;
     if (list.isNotEmpty && !isEmpty(list.last) && list.length < maxItems) {
       Widget btn = TransparentIconAndTextBtn(
@@ -80,7 +82,8 @@ abstract class BaseMiniForm extends StatelessWidget {
   /// //////////////////////////////////////////////////////////////
   /// Creates an ExpandingMiniformContainer with some shared boilerplate (auto-focus check, and onOpened handler).
   /// Every miniform calls this fxn.
-  Widget buildExpandingContainer(dynamic icon, {required BoolCallback hasContent, required FormBuilder formBuilder}) {
+  Widget buildExpandingContainer(dynamic icon,
+      {required BoolCallback hasContent, required FormBuilder formBuilder}) {
     return ExpandingMiniformContainer(
       sectionType,
       icon,
@@ -96,7 +99,8 @@ abstract class BaseMiniForm extends StatelessWidget {
   /// //////////////////////////////////////////////////
   /// Builds a basic TextInput that dispatches focusChanged
   /// //TODO SB: Move this and the other components into their own widgets. They just need to be passed the miniform as a component.
-  Widget buildTextInput(BuildContext context, String hint, String? initial, void Function(String)? onChanged,
+  Widget buildTextInput(BuildContext context, String hint, String? initial,
+      void Function(String)? onChanged,
       {bool autoFocus = false,
       EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding,
       int? maxLines = 1,
@@ -115,15 +119,26 @@ abstract class BaseMiniForm extends StatelessWidget {
 
   /// //////////////////////////////////////////////////
   /// Builds a dual-column TextInput like those used in Address
-  Widget buildDualTextInput(BuildContext context, String hint1, String initial1, Function(String) onChanged1,
-      String hint2, String initial2, Function(String) onChanged2,
-      {bool autoFocus = false, EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding, int maxLines = 1}) {
+  Widget buildDualTextInput(
+      BuildContext context,
+      String hint1,
+      String initial1,
+      Function(String) onChanged1,
+      String hint2,
+      String initial2,
+      Function(String) onChanged2,
+      {bool autoFocus = false,
+      EdgeInsets padding = StyledFormTextInput.kDefaultTextInputPadding,
+      int maxLines = 1}) {
     return Row(
       children: <Widget>[
-        buildTextInput(context, hint1, initial1, onChanged1, autoFocus: autoFocus, padding: padding, maxLines: maxLines)
+        buildTextInput(context, hint1, initial1, onChanged1,
+                autoFocus: autoFocus, padding: padding, maxLines: maxLines)
             .flexible(),
         HSpace(Insets.m),
-        buildTextInput(context, hint2, initial2, onChanged2, padding: padding, maxLines: maxLines).flexible(),
+        buildTextInput(context, hint2, initial2, onChanged2,
+                padding: padding, maxLines: maxLines)
+            .flexible(),
       ],
     );
   }
@@ -136,7 +151,7 @@ abstract class BaseMiniForm extends StatelessWidget {
       String typeHint = "",
       String? initialText,
       String? initialType,
-      List<String> types = const<String>[],
+      List<String> types = const <String>[],
       void Function(String)? onTextChanged,
       void Function(String)? onTypeChanged,
       VoidCallback? onDelete,
@@ -159,12 +174,14 @@ abstract class BaseMiniForm extends StatelessWidget {
 
         /// Type dropdown
         StyledAutoCompleteDropdown(
-            items: types,
-            hint: typeHint,
-            initialValue: initialType,
-            onChanged: onTypeChanged,
-            maxHeight: maxDropdownHeight,
-            onFocusChanged: (v) => handleFocusChanged(v, context)).width(typeWidth).translate(offset: Offset(0, 3)),
+                items: types,
+                hint: typeHint,
+                initialValue: initialType,
+                onChanged: onTypeChanged,
+                maxHeight: maxDropdownHeight,
+                onFocusChanged: (v) => handleFocusChanged(v, context))
+            .width(typeWidth)
+            .translate(offset: Offset(0, 3)),
         HSpace(2),
 
         /// Delete Btn
@@ -173,7 +190,9 @@ abstract class BaseMiniForm extends StatelessWidget {
           size: 20,
           onPressed: showDelete ? onDelete : null,
           padding: EdgeInsets.all(Insets.sm),
-        ).opacity(showDelete ? 1 : 0, animate: true).animate(Durations.fast, Curves.linear),
+        )
+            .opacity(showDelete ? 1 : 0, animate: true)
+            .animate(Durations.fast, Curves.linear),
       ],
     );
   }
@@ -184,7 +203,8 @@ abstract class BaseMiniForm extends StatelessWidget {
     BuildContext context,
     String hint,
     String typeHint, {
-    List<T> itemList = const [], // NOTE CE: Dart really fails here, default argument values must be const but generic type arguments cannot be used in a const context
+    List<T> itemList =
+        const [], // NOTE CE: Dart really fails here, default argument values must be const but generic type arguments cannot be used in a const context
     List<String> types = const <String>[],
     required T Function() newItemBuilder,
     required bool Function(T) isEmpty,
@@ -215,7 +235,8 @@ abstract class BaseMiniForm extends StatelessWidget {
     }).toList();
 
     /// Add a "Add New" btn to the column if certain conditions are met
-    injectAddNewBtnIfNecessary<T>(hint, kids, itemList, isEmpty, newItemBuilder);
+    injectAddNewBtnIfNecessary<T>(
+        hint, kids, itemList, isEmpty, newItemBuilder);
 
     /// Return the actual Column of content
     return SeparatedColumn(

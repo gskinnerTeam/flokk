@@ -10,7 +10,9 @@ class TwitterPlaceholder extends StatelessWidget {
   // If contact is set, this widget will act as if it belongs to a single contact
   final ContactData contact;
 
-  const TwitterPlaceholder({Key? key, this.isPopular = false, required this.contact}) : super(key: key);
+  const TwitterPlaceholder(
+      {Key? key, this.isPopular = false, required this.contact})
+      : super(key: key);
 
   void _handleLinkPressed(BuildContext context) {
     //If in single-contact mode, try and edit the selected contact
@@ -26,13 +28,17 @@ class TwitterPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (_, constraints) => Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        if (constraints.maxHeight > 250) PlaceholderImageAndBgStack("dashboard-twitter", height: 126, top: 43),
+      builder: (_, constraints) =>
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        if (constraints.maxHeight > 250)
+          PlaceholderImageAndBgStack("dashboard-twitter", height: 126, top: 43),
         EmptyStateTitleAndClickableText(
           title: isPopular ? "NO POPULAR TWEETS" : "NO TWITTER ACTIVITY",
-          startText: contact == ContactData() ? "Add Twitter Handles in " : "Add ",
+          startText:
+              contact == ContactData() ? "Add Twitter Handles in " : "Add ",
           linkText: contact == ContactData() ? "contacts" : "Twitter Handle",
-          endText: " to show ${isPopular ? "popular tweets" : "recent activity"}",
+          endText:
+              " to show ${isPopular ? "popular tweets" : "recent activity"}",
           onPressed: () => _handleLinkPressed(context),
         ),
       ]),

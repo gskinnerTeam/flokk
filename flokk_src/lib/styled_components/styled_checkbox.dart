@@ -17,7 +17,11 @@ class StyledCheckbox extends StatelessWidget {
   final double size;
   final void Function(StyledCheckboxValue)? onChanged;
 
-  const StyledCheckbox({Key? key, this.value = StyledCheckboxValue.None, this.size = 18, this.onChanged})
+  const StyledCheckbox(
+      {Key? key,
+      this.value = StyledCheckboxValue.None,
+      this.size = 18,
+      this.onChanged})
       : super(key: key);
 
   void _handleTapUp(TapUpDetails details) {
@@ -37,17 +41,20 @@ class StyledCheckbox extends StatelessWidget {
   Widget _getIconForCurrentState() {
     switch (value) {
       case StyledCheckboxValue.All:
-        return StyledImageIcon(StyledIcons.checkboxSelected, color: Colors.white, size: 15);
+        return StyledImageIcon(StyledIcons.checkboxSelected,
+            color: Colors.white, size: 15);
       case StyledCheckboxValue.None:
         return Container();
       case StyledCheckboxValue.Partial:
-        return StyledImageIcon(StyledIcons.checkboxPartial, color: Colors.white, size: 15);
+        return StyledImageIcon(StyledIcons.checkboxPartial,
+            color: Colors.white, size: 15);
     }
   }
 
   Widget _wrapGestures(Widget child) {
     if (onChanged == null) return child;
-    return child.gestures(onTapUp: _handleTapUp, behavior: HitTestBehavior.opaque);
+    return child.gestures(
+        onTapUp: _handleTapUp, behavior: HitTestBehavior.opaque);
   }
 
   @override
@@ -57,9 +64,15 @@ class StyledCheckbox extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-          color: value == StyledCheckboxValue.None ? Colors.transparent : theme.accent1Darker,
+          color: value == StyledCheckboxValue.None
+              ? Colors.transparent
+              : theme.accent1Darker,
           borderRadius: Corners.s3Border,
-          border: Border.all(color: value == StyledCheckboxValue.None ? theme.grey : theme.accent1Darker, width: 1.5)),
+          border: Border.all(
+              color: value == StyledCheckboxValue.None
+                  ? theme.grey
+                  : theme.accent1Darker,
+              width: 1.5)),
       child: _wrapGestures(_getIconForCurrentState()),
     );
   }

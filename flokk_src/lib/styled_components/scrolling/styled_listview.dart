@@ -60,7 +60,8 @@ class StyledListViewState extends State<StyledListView> {
 
   @override
   void didUpdateWidget(StyledListView oldWidget) {
-    if (oldWidget.itemCount != widget.itemCount || oldWidget.itemExtent != widget.itemExtent) {
+    if (oldWidget.itemCount != widget.itemCount ||
+        oldWidget.itemExtent != widget.itemExtent) {
       setState(() {});
     }
     super.didUpdateWidget(oldWidget);
@@ -95,7 +96,13 @@ class StyledListViewWithTitle extends StatelessWidget {
   final AssetImage? icon;
   final List<Widget> listItems;
 
-  const StyledListViewWithTitle({Key? key, this.bgColor, this.title = "", this.listItems = const <Widget>[], this.icon}) : super(key: key);
+  const StyledListViewWithTitle(
+      {Key? key,
+      this.bgColor,
+      this.title = "",
+      this.listItems = const <Widget>[],
+      this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +122,9 @@ class StyledListViewWithTitle extends StatelessWidget {
             ],
           ),
           VSpace(Insets.sm),
-          StyledListView(itemCount: listItems.length, itemBuilder: (_, i) => listItems[i]).flexible()
+          StyledListView(
+              itemCount: listItems.length,
+              itemBuilder: (_, i) => listItems[i]).flexible()
         ],
       ).padding(left: Insets.l * .75, right: Insets.m, vertical: Insets.m),
     );

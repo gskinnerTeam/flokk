@@ -14,7 +14,12 @@ class TextInputIconRow extends StatelessWidget {
   final void Function(bool)? onFocusChanged;
 
   const TextInputIconRow(this.icon, this.hintText,
-      {Key? key, this.autoFocus = false, this.initialValue = "", this.onChanged, this.onEditingComplete, this.onFocusChanged})
+      {Key? key,
+      this.autoFocus = false,
+      this.initialValue = "",
+      this.onChanged,
+      this.onEditingComplete,
+      this.onFocusChanged})
       : super(key: key);
 
   @override

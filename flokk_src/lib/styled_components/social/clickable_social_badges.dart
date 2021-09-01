@@ -25,7 +25,9 @@ class ClickableSocialBadges extends StatefulWidget {
   final ContactData contact;
   final bool showTimeSince;
 
-  const ClickableSocialBadges(this.contact, {Key? key, this.showTimeSince = false}) : super(key: key);
+  const ClickableSocialBadges(this.contact,
+      {Key? key, this.showTimeSince = false})
+      : super(key: key);
 
   @override
   _ClickableSocialBadgesState createState() => _ClickableSocialBadgesState();
@@ -36,10 +38,13 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
 
   late Size _viewSize;
 
-  void _handleSocialClicked(BuildContext context, ContactData contact, SocialActivityType type) {
+  void _handleSocialClicked(
+      BuildContext context, ContactData contact, SocialActivityType type) {
     // If they clicked a badge that they have already entered a handle for, then open their social panel.
     if (contact.hasSocialOfType(type)) {
-      context.read<MainScaffoldState>().trySetSelectedContact(contact, showSocial: true);
+      context
+          .read<MainScaffoldState>()
+          .trySetSelectedContact(contact, showSocial: true);
     } else {
       _showSocialMiniFormOverlay(context, type);
     }
@@ -63,7 +68,9 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
     // Figure out bottom text, changes if we have no social
     String bottomTxt = "Add Social IDs";
     if (widget.contact.hasAnySocial) {
-      bottomTxt = lastSocialTime != Dates.epoch ? timeago.format(lastSocialTime) : "No New Activities";
+      bottomTxt = lastSocialTime != Dates.epoch
+          ? timeago.format(lastSocialTime)
+          : "No New Activities";
     }
     return LayoutBuilder(
       builder: (_, constraints) {
@@ -81,7 +88,8 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
                   iconPlaceholder: StyledIcons.twitterEmpty,
                   newMessageCount: newTweets.length,
                   hasAccount: widget.contact.hasTwitter,
-                  onPressed: () => _handleSocialClicked(context, widget.contact, SocialActivityType.Twitter),
+                  onPressed: () => _handleSocialClicked(
+                      context, widget.contact, SocialActivityType.Twitter),
                 ),
                 HSpace(Insets.m),
                 SocialBadge(
@@ -89,12 +97,15 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
                   iconPlaceholder: StyledIcons.githubEmpty,
                   newMessageCount: newGits.length,
                   hasAccount: widget.contact.hasGit,
-                  onPressed: () => _handleSocialClicked(context, widget.contact, SocialActivityType.Git),
+                  onPressed: () => _handleSocialClicked(
+                      context, widget.contact, SocialActivityType.Git),
                 ),
               ],
             ),
             if (widget.showTimeSince) VSpace(Insets.sm * 1.5),
-            if (widget.showTimeSince) Text(bottomTxt, style: TextStyles.Body2.textColor(theme.greyWeak)),
+            if (widget.showTimeSince)
+              Text(bottomTxt,
+                  style: TextStyles.Body2.textColor(theme.greyWeak)),
             VSpace(Insets.sm),
           ]),
         );
@@ -102,7 +113,8 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
     );
   }
 
-  void _showSocialMiniFormOverlay(BuildContext context, SocialActivityType type) {
+  void _showSocialMiniFormOverlay(
+      BuildContext context, SocialActivityType type) {
     AppTheme theme = context.read();
     late OverlayEntry bg;
     late OverlayEntry form;
@@ -115,13 +127,15 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
     bg = OverlayEntry(
       builder: (_) {
         return FadeInWidget(
-          Container(color: theme.greyWeak.withOpacity(.6)).gestures(onTap: _closeOverlay),
+          Container(color: theme.greyWeak.withOpacity(.6))
+              .gestures(onTap: _closeOverlay),
         );
       },
     );
     form = OverlayEntry(builder: (_) {
       return CompositedTransformFollower(
-          offset: Offset(-SocialPopupForm.kWidth * .5 + _viewSize.width * .5, 0),
+          offset:
+              Offset(-SocialPopupForm.kWidth * .5 + _viewSize.width * .5, 0),
           link: overlayLink,
           child: FadeInWidget(SocialPopupForm(
             widget.contact,

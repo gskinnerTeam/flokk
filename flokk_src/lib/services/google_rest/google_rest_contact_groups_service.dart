@@ -8,7 +8,8 @@ import 'package:googleapis/people/v1.dart';
 import 'package:tuple/tuple.dart';
 
 class GoogleRestContactGroupsService {
-  Future<ServiceResult<Tuple2<List<GroupData>, String>>> get(String accessToken, {String nextPageToken = ""}) async {
+  Future<ServiceResult<Tuple2<List<GroupData>, String>>> get(String accessToken,
+      {String nextPageToken = ""}) async {
     String url = "https://people.googleapis.com/v1/contactGroups"
         "?access_token=$accessToken"
         "&pageSize=1000";
@@ -30,10 +31,12 @@ class GoogleRestContactGroupsService {
         groups.add(group);
       }
     }
-    return ServiceResult(Tuple2<List<GroupData>, String>(groups, token), response);
+    return ServiceResult(
+        Tuple2<List<GroupData>, String>(groups, token), response);
   }
 
-  Future<ServiceResult<GroupData>> getById(String accessToken, String groupId) async {
+  Future<ServiceResult<GroupData>> getById(
+      String accessToken, String groupId) async {
     String url = "https://people.googleapis.com/v1/$groupId"
         "?access_token=$accessToken"
         "&maxMembers=1000";
@@ -47,11 +50,13 @@ class GoogleRestContactGroupsService {
     return ServiceResult(group, response);
   }
 
-  Future<ServiceResult<GroupData>> create(String accessToken, GroupData group) async {
+  Future<ServiceResult<GroupData>> create(
+      String accessToken, GroupData group) async {
     String url = "https://people.googleapis.com/v1/contactGroups";
 
     HttpResponse response = await HttpClient.post(url,
-        headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode({"contactGroup": groupToJson(group)}));
+        headers: {"Authorization": "Bearer $accessToken"},
+        body: jsonEncode({"contactGroup": groupToJson(group)}));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
     GroupData? newGroup;
     if (response.success == true) {
@@ -61,7 +66,8 @@ class GoogleRestContactGroupsService {
     return ServiceResult(newGroup, response);
   }
 
-  Future<ServiceResult<void>> delete(String accessToken, GroupData group) async {
+  Future<ServiceResult<void>> delete(
+      String accessToken, GroupData group) async {
     String url = "https://people.googleapis.com/v1/${group.id}";
 
     HttpResponse response = await HttpClient.delete(
@@ -73,7 +79,8 @@ class GoogleRestContactGroupsService {
   }
 
   Future<ServiceResult<void>> modify(String accessToken, GroupData group,
-      {List<ContactData> addContacts = const<ContactData>[], List<ContactData> removeContacts = const<ContactData>[]}) async {
+      {List<ContactData> addContacts = const <ContactData>[],
+      List<ContactData> removeContacts = const <ContactData>[]}) async {
     String url = "https://people.googleapis.com/v1/${group.id}/members:modify";
 
     Map<String, dynamic> data = {};
@@ -93,11 +100,13 @@ class GoogleRestContactGroupsService {
     return ServiceResult(null, response);
   }
 
-  Future<ServiceResult<GroupData>> set(String accessToken, GroupData group) async {
+  Future<ServiceResult<GroupData>> set(
+      String accessToken, GroupData group) async {
     String url = "https://people.googleapis.com/v1/${group.id}";
 
     HttpResponse response = await HttpClient.put(url,
-        headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode({"contactGroup": groupToJson(group)}));
+        headers: {"Authorization": "Bearer $accessToken"},
+        body: jsonEncode({"contactGroup": groupToJson(group)}));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
     GroupData? updatedContact;
     if (response.success == true) {

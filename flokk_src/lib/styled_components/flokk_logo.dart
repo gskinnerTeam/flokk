@@ -9,7 +9,8 @@ class FlokkLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset("assets/images/flokk-logo.png", color: color, height: size);
+    return Image.asset("assets/images/flokk-logo.png",
+        color: color, height: size);
   }
 }
 
@@ -25,12 +26,14 @@ class FlokkSidebarLogo extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Image.asset("assets/images/sidebar-logo.png", width: skinny ? 140 : 160, filterQuality: FilterQuality.high),
+          Image.asset("assets/images/sidebar-logo.png",
+              width: skinny ? 140 : 160, filterQuality: FilterQuality.high),
           if (!skinny) ...{
             Positioned(
               left: 160,
               top: 13,
-              child: Image.asset("assets/images/sidebar-bg.png", width: 84, filterQuality: FilterQuality.high),
+              child: Image.asset("assets/images/sidebar-bg.png",
+                  width: 84, filterQuality: FilterQuality.high),
             ),
           },
         ],

@@ -72,7 +72,8 @@ class GoogleRestContactsService {
   //Debug hook to test many contacts, if the multiplier is > 1, it will clone your contacts list that many times.
   static int contactsMultiplier = 1;
 
-  Future<ServiceResult<GetContactsResult>> getAll(String accessToken, String syncToken) async {
+  Future<ServiceResult<GetContactsResult>> getAll(
+      String accessToken, String syncToken) async {
     List<ContactData> list = [];
     bool requestSyncToken = syncToken == "";
     int retryCount = 0;
@@ -117,9 +118,9 @@ class GoogleRestContactsService {
   //List of valid PersonFields can be found here https://developers.google.com/people/api/rest/v1/people.connections/list
   Future<ServiceResult<GetContactsResult>> get(String accessToken,
       {List<String> personFields = const [],
-        String nextPageToken = "",
-        String syncToken = "",
-        bool requestSyncToken = true}) async {
+      String nextPageToken = "",
+      String syncToken = "",
+      bool requestSyncToken = true}) async {
     // Default to all person fields if none are passed
     if (personFields.isEmpty) {
       personFields = kAllPersonFields;
@@ -149,7 +150,8 @@ class GoogleRestContactsService {
       newNextPageToken = data["nextPageToken"] ?? "";
       newSyncToken = data["nextSyncToken"] ?? "";
       List<dynamic> entries = data["connections"] ?? [];
-      print("token: $newNextPageToken ${entries.length} out of ${data["totalPeople"]}");
+      print(
+          "token: $newNextPageToken ${entries.length} out of ${data["totalPeople"]}");
       for (int i = 0, l = entries.length; i < l; i++) {
         ContactData c = contactFromJson(entries[i]);
         list.add(c);
@@ -161,18 +163,24 @@ class GoogleRestContactsService {
         }
       }
     }
-    return ServiceResult(GetContactsResult(list, nextPageToken: nextPageToken, syncToken: newSyncToken), response);
+    return ServiceResult(
+        GetContactsResult(list,
+            nextPageToken: nextPageToken, syncToken: newSyncToken),
+        response);
   }
 
   //List of valid PersonFields can be found here https://developers.google.com/people/api/rest/v1/people/updateContact
-  Future<ServiceResult<ContactData>> set(String accessToken, ContactData contact, {List<String> personFields = const[]}) async {
-    if (personFields.isEmpty)
-      personFields = kAllUpdatePersonFields;
-    String url = "https://people.googleapis.com/v1/${contact.googleId}:updateContact?"
+  Future<ServiceResult<ContactData>> set(
+      String accessToken, ContactData contact,
+      {List<String> personFields = const []}) async {
+    if (personFields.isEmpty) personFields = kAllUpdatePersonFields;
+    String url =
+        "https://people.googleapis.com/v1/${contact.googleId}:updateContact?"
         "updatePersonFields=${personFields.join(',')}";
 
     HttpResponse response = await HttpClient.patch(url,
-        headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(contactToJson(contact)));
+        headers: {"Authorization": "Bearer $accessToken"},
+        body: jsonEncode(contactToJson(contact)));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
     ContactData updatedContact = ContactData();
     if (response.success == true) {
@@ -182,11 +190,13 @@ class GoogleRestContactsService {
     return ServiceResult(updatedContact, response);
   }
 
-  Future<ServiceResult<ContactData>> create(String accessToken, ContactData contact) async {
+  Future<ServiceResult<ContactData>> create(
+      String accessToken, ContactData contact) async {
     String url = "https://people.googleapis.com/v1/people:createContact";
 
     HttpResponse response = await HttpClient.post(url,
-        headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(contactToJson(contact)));
+        headers: {"Authorization": "Bearer $accessToken"},
+        body: jsonEncode(contactToJson(contact)));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
     ContactData newContact = ContactData();
     if (response.success == true) {
@@ -196,22 +206,31 @@ class GoogleRestContactsService {
     return ServiceResult(newContact, response);
   }
 
-  Future<ServiceResult<void>> delete(String accessToken, ContactData contact) async {
-    String url = "https://people.googleapis.com/v1/${contact.googleId}:deleteContact";
+  Future<ServiceResult<void>> delete(
+      String accessToken, ContactData contact) async {
+    String url =
+        "https://people.googleapis.com/v1/${contact.googleId}:deleteContact";
 
-    HttpResponse response = await HttpClient.delete(url, headers: {"Authorization": "Bearer $accessToken"});
+    HttpResponse response = await HttpClient.delete(url,
+        headers: {"Authorization": "Bearer $accessToken"});
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
     return ServiceResult(null, response);
   }
 
   //Takes a base64 encoded image
-  Future<ServiceResult<ContactData>> updatePic(String accessToken, ContactData contact, String profilePic) async {
-    String url = "https://people.googleapis.com/v1/${contact.googleId}:updateContactPhoto";
+  Future<ServiceResult<ContactData>> updatePic(
+      String accessToken, ContactData contact, String profilePic) async {
+    String url =
+        "https://people.googleapis.com/v1/${contact.googleId}:updateContactPhoto";
 
-    Map<String, String> bodyJson = {"photoBytes": profilePic, "personFields": "names,photos"};
+    Map<String, String> bodyJson = {
+      "photoBytes": profilePic,
+      "personFields": "names,photos"
+    };
 
-    HttpResponse response =
-        await HttpClient.patch(url, headers: {"Authorization": "Bearer $accessToken"}, body: jsonEncode(bodyJson));
+    HttpResponse response = await HttpClient.patch(url,
+        headers: {"Authorization": "Bearer $accessToken"},
+        body: jsonEncode(bodyJson));
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
     ContactData updatedContact = ContactData();
     if (response.success == true) {
@@ -220,10 +239,13 @@ class GoogleRestContactsService {
     return ServiceResult(updatedContact, response);
   }
 
-  Future<ServiceResult<void>> deletePic(String accessToken, ContactData contact) async {
-    String url = "https://people.googleapis.com/v1/${contact.googleId}:deleteContactPhoto";
+  Future<ServiceResult<void>> deletePic(
+      String accessToken, ContactData contact) async {
+    String url =
+        "https://people.googleapis.com/v1/${contact.googleId}:deleteContactPhoto";
 
-    HttpResponse response = await HttpClient.delete(url, headers: {"Authorization": "Bearer $accessToken"});
+    HttpResponse response = await HttpClient.delete(url,
+        headers: {"Authorization": "Bearer $accessToken"});
     print("REQUEST: $url /// RESPONSE: ${response.statusCode}");
     return ServiceResult(null, response);
   }
@@ -283,7 +305,8 @@ class GoogleRestContactsService {
           []
       ..eventList = p.events
               ?.map((x) => EventData()
-                ..date = DateTime(x.date?.year ?? 0, x.date?.month ?? 1, x.date?.day ?? 1)
+                ..date = DateTime(
+                    x.date?.year ?? 0, x.date?.month ?? 1, x.date?.day ?? 1)
                 ..type = x.formattedType ?? "")
               .toList() ??
           []
@@ -303,7 +326,9 @@ class GoogleRestContactsService {
     if (p.birthdays?.isNotEmpty ?? false) {
       c.birthday = BirthdayData()
         ..date = DateTime(
-            p.birthdays?.first.date?.year ?? 0, p.birthdays?.first.date?.month ?? 1, p.birthdays?.first.date?.day ?? 1)
+            p.birthdays?.first.date?.year ?? 0,
+            p.birthdays?.first.date?.month ?? 1,
+            p.birthdays?.first.date?.day ?? 1)
         ..text = p.birthdays?.first.text ?? "";
 
       if (c.birthday.date == DateTime(0, 1, 1)) {
@@ -316,8 +341,9 @@ class GoogleRestContactsService {
     }
 
     if (p.userDefined?.isNotEmpty ?? false) {
-      c.customFields =
-          Map.fromIterable(p.userDefined ?? [], key: (x) => (x as UserDefined).key ?? "", value: (x) => (x as UserDefined).value ?? "");
+      c.customFields = Map.fromIterable(p.userDefined ?? [],
+          key: (x) => (x as UserDefined).key ?? "",
+          value: (x) => (x as UserDefined).value ?? "");
 
       /// Inject known custom fields into Contact, and remove from Map
       c.twitterHandle = c.customFields.remove(kTwitterParam) ?? "";
@@ -405,7 +431,9 @@ class GoogleRestContactsService {
       p.birthdays = [Birthday()..text = contact.birthday.text];
     }
 
-    if (contact.hasGit || contact.hasTwitter || contact.customFields.isNotEmpty) {
+    if (contact.hasGit ||
+        contact.hasTwitter ||
+        contact.customFields.isNotEmpty) {
       /// Inject known custom fields back into the payload
       void addUserDefined(String key, dynamic value) {
         if (value == null) return;
@@ -420,7 +448,8 @@ class GoogleRestContactsService {
       contact.customFields.forEach(addUserDefined);
 
       /// Inject our own, known fields
-      if (contact.hasTwitter) addUserDefined(kTwitterParam, contact.twitterHandle);
+      if (contact.hasTwitter)
+        addUserDefined(kTwitterParam, contact.twitterHandle);
       if (contact.hasGit) addUserDefined(kGitParam, contact.gitUsername);
     }
     //NOTE: Person.Photos are not needed in this, they are read-only
@@ -433,5 +462,6 @@ class GetContactsResult {
   final String nextPageToken;
   final String syncToken;
 
-  GetContactsResult(this.contacts, {required this.nextPageToken, required this.syncToken});
+  GetContactsResult(this.contacts,
+      {required this.nextPageToken, required this.syncToken});
 }

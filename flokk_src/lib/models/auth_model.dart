@@ -64,7 +64,9 @@ class AuthModel extends AbstractModel {
       ..googleRefreshToken = json["googleRefreshToken"]
       ..googleSyncToken = json["googleSyncToken"]
       ..googleEmail = json["googleEmail"]
-      .._expiry = json["_expiry"] != null ? DateTime.parse(json["_expiry"]) : Dates.epoch;
+      .._expiry = json["_expiry"] != null
+          ? DateTime.parse(json["_expiry"])
+          : Dates.epoch;
     ;
   }
 

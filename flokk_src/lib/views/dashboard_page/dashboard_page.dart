@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 class DashboardPage extends StatefulWidget {
   final ContactData selectedContact;
 
-  const DashboardPage({Key? key, required this.selectedContact}) : super(key: key);
+  const DashboardPage({Key? key, required this.selectedContact})
+      : super(key: key);
 
   @override
   DashboardPageState createState() => DashboardPageState();
@@ -27,10 +28,14 @@ class DashboardPageState extends State<DashboardPage> {
             SizedBox(height: Insets.l),
             TopContactsSection(),
             VSpace(Insets.m),
-            SocialActivitySection().padding(horizontal: Insets.lGutter).flexible(),
+            SocialActivitySection()
+                .padding(horizontal: Insets.lGutter)
+                .flexible(),
             SizedBox(height: Insets.l * 1.5),
             RepaintBoundary(
-              child: UpcomingActivitiesSection().height(170).padding(horizontal: Insets.lGutter),
+              child: UpcomingActivitiesSection()
+                  .height(170)
+                  .padding(horizontal: Insets.lGutter),
             ),
             SizedBox(height: Insets.l),
           ],

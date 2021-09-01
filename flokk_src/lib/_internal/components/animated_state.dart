@@ -21,10 +21,12 @@ class _AnimatedTextSpikeState extends AnimatedState<AnimatedTextSpike> {
   }
 }
 
-abstract class AnimatedState<T> extends State with SingleTickerProviderStateMixin {
+abstract class AnimatedState<T> extends State
+    with SingleTickerProviderStateMixin {
   late AnimationController animation;
 
-  AnimationController createAnim({double lowerBound = 0, double upperBound = 1, double seconds = .2}) {
+  AnimationController createAnim(
+      {double lowerBound = 0, double upperBound = 1, double seconds = .2}) {
     return AnimationController(
       vsync: this,
       duration: Duration(milliseconds: (seconds * 1000).round()),

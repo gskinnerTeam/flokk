@@ -9,7 +9,8 @@ class PrimaryBtn extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool bigMode;
 
-  const PrimaryBtn({Key? key, this.child, this.onPressed, this.bigMode = false}) : super(key: key);
+  const PrimaryBtn({Key? key, this.child, this.onPressed, this.bigMode = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +34,17 @@ class PrimaryTextBtn extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool bigMode;
 
-  const PrimaryTextBtn(this.label, {Key? key, this.onPressed, this.bigMode = false}) : super(key: key);
+  const PrimaryTextBtn(this.label,
+      {Key? key, this.onPressed, this.bigMode = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextStyle txtStyle = (bigMode ? TextStyles.Callout : TextStyles.Footnote).textColor(Colors.white);
-    return PrimaryBtn(bigMode: bigMode, onPressed: onPressed, child: Text(label, style: txtStyle));
+    TextStyle txtStyle = (bigMode ? TextStyles.Callout : TextStyles.Footnote)
+        .textColor(Colors.white);
+    return PrimaryBtn(
+        bigMode: bigMode,
+        onPressed: onPressed,
+        child: Text(label, style: txtStyle));
   }
 }

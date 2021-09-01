@@ -35,7 +35,11 @@ class ContactEditForm extends StatefulWidget {
   final String initialSection;
 
   const ContactEditForm(
-      {Key? key, required this.contact, required this.contactsModel, this.onEditComplete, this.initialSection = ""})
+      {Key? key,
+      required this.contact,
+      required this.contactsModel,
+      this.onEditComplete,
+      this.initialSection = ""})
       : super(key: key);
 
   @override
@@ -99,14 +103,16 @@ class ContactEditFormState extends State<ContactEditForm> {
       //Continue to add new contact
       else {
         // Wait for add-new command to complete, since it would be overly complicated to create a tmpUser
-        contact = await UpdateContactCommand(context).execute(contact, updateSocial: contact.hasAnySocial);
+        contact = await UpdateContactCommand(context)
+            .execute(contact, updateSocial: contact.hasAnySocial);
 
         // If we have a valid contact here, all is good
         success = contact != ContactData();
       }
     } else {
       bool hasSocialChanged = contact.hasSameSocial(widget.contact) == false;
-      await UpdateContactCommand(context).execute(contact, updateSocial: hasSocialChanged);
+      await UpdateContactCommand(context)
+          .execute(contact, updateSocial: hasSocialChanged);
     }
     if (success) {
       widget.onEditComplete?.call(contact);
@@ -118,7 +124,8 @@ class ContactEditFormState extends State<ContactEditForm> {
     }
   }
 
-  void handleDeletePressed() async => await DeleteContactCommand(context).execute([widget.contact]);
+  void handleDeletePressed() async =>
+      await DeleteContactCommand(context).execute([widget.contact]);
 
   void handleCancelPressed() async {
     bool doCancel = true;
@@ -127,7 +134,8 @@ class ContactEditFormState extends State<ContactEditForm> {
     }
     if (doCancel) {
       /// If we're cancelling a new contact, return null indicating that it should be discarded
-      widget.onEditComplete?.call(tmpContact.isNew ? ContactData() : widget.contact);
+      widget.onEditComplete
+          ?.call(tmpContact.isNew ? ContactData() : widget.contact);
     }
   }
 

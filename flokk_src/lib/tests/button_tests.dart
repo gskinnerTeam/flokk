@@ -27,7 +27,8 @@ class ButtonTests extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 separatorBuilder: () => VSpace(Insets.m),
                 children: [
-                  ColorShiftIconBtn(StyledIcons.add, color: theme.accent1, onPressed: p),
+                  ColorShiftIconBtn(StyledIcons.add,
+                      color: theme.accent1, onPressed: p),
                 ]),
             SeparatedColumn(
               mainAxisSize: MainAxisSize.min,
@@ -38,7 +39,9 @@ class ButtonTests extends StatelessWidget {
                 SecondaryBtn(child: FlutterLogo(), onPressed: p),
                 SecondaryTextBtn("STAY ON THIS PAGE", onPressed: p),
                 TransparentBtn(
-                    child: Text("CLICK ME!", style: TextStyles.Footnote.textColor(theme.accent1)), onPressed: p),
+                    child: Text("CLICK ME!",
+                        style: TextStyles.Footnote.textColor(theme.accent1)),
+                    onPressed: p),
                 TransparentBtn(
                     bigMode: true,
                     child: Text(
@@ -55,8 +58,13 @@ class ButtonTests extends StatelessWidget {
               children: [
                 PrimaryTextBtn("SAVE", onPressed: p),
                 PrimaryTextBtn("SAVE", bigMode: true, onPressed: p),
-                PrimaryBtn(onPressed: p, child: Text("SAVE FOR WEB", style: TextStyles.Footnote)),
-                PrimaryBtn(onPressed: p, child: Text("SAVE FOR WEB", style: TextStyles.Footnote), bigMode: true),
+                PrimaryBtn(
+                    onPressed: p,
+                    child: Text("SAVE FOR WEB", style: TextStyles.Footnote)),
+                PrimaryBtn(
+                    onPressed: p,
+                    child: Text("SAVE FOR WEB", style: TextStyles.Footnote),
+                    bigMode: true),
               ],
             )
           ],

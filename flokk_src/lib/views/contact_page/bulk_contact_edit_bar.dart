@@ -17,7 +17,10 @@ class BulkContactEditBar extends StatefulWidget {
   final VoidCallback? onCheckChanged;
 
   const BulkContactEditBar(
-      {Key? key, this.checked = const <ContactData>[], this.onCheckChanged, this.all = const <ContactData>[]})
+      {Key? key,
+      this.checked = const <ContactData>[],
+      this.onCheckChanged,
+      this.all = const <ContactData>[]})
       : super(key: key);
 
   @override
@@ -38,7 +41,8 @@ class _BulkContactEditBarState extends State<BulkContactEditBar> {
   void _handleDeletePressed() async {
     //Make a copy of the list, so it doesn't get cleared while the Command is still working
     List<ContactData> usersToDelete = widget.checked.toList();
-    await DeleteContactCommand(context).execute(usersToDelete, onDeleteConfirmed: () {
+    await DeleteContactCommand(context).execute(usersToDelete,
+        onDeleteConfirmed: () {
       // For a nicer UI interaction, we want to clear the list immediately when the User has confirmed their delete intent.
       widget.checked.clear();
       widget.onCheckChanged?.call();
@@ -48,7 +52,8 @@ class _BulkContactEditBarState extends State<BulkContactEditBar> {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
-    TextStyle linkStyle = TextStyles.Body2.textHeight(1.1).textColor(theme.accent1);
+    TextStyle linkStyle =
+        TextStyles.Body2.textHeight(1.1).textColor(theme.accent1);
     return StyledContainer(
       theme.bg1,
       height: 48,
@@ -61,18 +66,27 @@ class _BulkContactEditBarState extends State<BulkContactEditBar> {
           HSpace(Insets.m),
           Text("Select", style: TextStyles.H2.textHeight(1)),
           HSpace(Insets.sm * 1.5),
-          TransparentTextBtn("All", style: linkStyle, onPressed: () => _handleCheckChanged(StyledCheckboxValue.All)),
-          Text("  /  ", style: linkStyle).translate(offset: Offset(-Insets.sm, 0)),
-          TransparentTextBtn("None", style: linkStyle, onPressed: () => _handleCheckChanged(StyledCheckboxValue.None))
+          TransparentTextBtn("All",
+              style: linkStyle,
+              onPressed: () => _handleCheckChanged(StyledCheckboxValue.All)),
+          Text("  /  ", style: linkStyle)
+              .translate(offset: Offset(-Insets.sm, 0)),
+          TransparentTextBtn("None",
+                  style: linkStyle,
+                  onPressed: () =>
+                      _handleCheckChanged(StyledCheckboxValue.None))
               .translate(offset: Offset(-Insets.sm * 2, 0)),
           HSpace(Insets.m),
 //TODO: Implement ManageLabels btn
 //          TransparentIconAndTextBtn("Manage Labels", StyledIcons.label, style: linkStyle),
 //          HSpace(Insets.m),
           TransparentIconAndTextBtn("Delete", StyledIcons.trash,
-              style: linkStyle.textColor(theme.grey), onPressed: _handleDeletePressed, color: theme.grey),
+              style: linkStyle.textColor(theme.grey),
+              onPressed: _handleDeletePressed,
+              color: theme.grey),
           Spacer(),
-          Text("${widget.checked.length} Selected", style: TextStyles.H2.textColor(theme.grey)),
+          Text("${widget.checked.length} Selected",
+              style: TextStyles.H2.textColor(theme.grey)),
           HSpace(Insets.l),
         ],
       ),
@@ -81,7 +95,8 @@ class _BulkContactEditBarState extends State<BulkContactEditBar> {
 
   StyledCheckboxValue _getValue() {
     if (widget.checked.isEmpty) return StyledCheckboxValue.None;
-    if (widget.checked.length == widget.all.length) return StyledCheckboxValue.All;
+    if (widget.checked.length == widget.all.length)
+      return StyledCheckboxValue.All;
     return StyledCheckboxValue.Partial;
   }
 }

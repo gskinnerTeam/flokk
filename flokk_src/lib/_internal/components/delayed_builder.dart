@@ -6,7 +6,11 @@ class DelayedBuilder extends StatefulWidget {
   final WidgetBuilder secondBuilder;
   final double delay;
 
-  const DelayedBuilder({Key? key, required this.firstBuilder, required this.secondBuilder, this.delay = 0.0})
+  const DelayedBuilder(
+      {Key? key,
+      required this.firstBuilder,
+      required this.secondBuilder,
+      this.delay = 0.0})
       : super(key: key);
 
   @override
@@ -27,5 +31,6 @@ class _DelayedBuilderState extends State<DelayedBuilder> {
   }
 
   @override
-  Widget build(BuildContext context) => !show ? widget.firstBuilder(context) : widget.secondBuilder(context);
+  Widget build(BuildContext context) =>
+      !show ? widget.firstBuilder(context) : widget.secondBuilder(context);
 }

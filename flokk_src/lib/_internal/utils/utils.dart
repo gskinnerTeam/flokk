@@ -7,7 +7,8 @@ class Utils {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
 
-  static bool get isMouseConnected => RendererBinding.instance?.mouseTracker.mouseIsConnected ?? false;
+  static bool get isMouseConnected =>
+      RendererBinding.instance?.mouseTracker.mouseIsConnected ?? false;
 
   static void unFocus() {
     primaryFocus?.unfocus();
@@ -16,6 +17,7 @@ class Utils {
   static void benchmark(String name, void Function() test) {
     int ms = DateTime.now().millisecondsSinceEpoch;
     test();
-    print("Benchmark: $name == ${DateTime.now().millisecondsSinceEpoch - ms}ms");
+    print(
+        "Benchmark: $name == ${DateTime.now().millisecondsSinceEpoch - ms}ms");
   }
 }

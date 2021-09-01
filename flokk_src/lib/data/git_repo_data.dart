@@ -15,9 +15,14 @@ class GitRepo {
 
   factory GitRepo.fromJson(Map<String, dynamic> json) {
     return GitRepo()
-      ..repository = json["repository"] == null ? Repository() : Repository.fromJson(json["repository"] as Map<String, dynamic>)
-      ..lastUpdated = json["lastUpdated"] == null ? Dates.epoch : DateTime.parse(json['lastUpdated'] as String);
+      ..repository = json["repository"] == null
+          ? Repository()
+          : Repository.fromJson(json["repository"] as Map<String, dynamic>)
+      ..lastUpdated = json["lastUpdated"] == null
+          ? Dates.epoch
+          : DateTime.parse(json['lastUpdated'] as String);
   }
 
-  Map<String, dynamic> toJson() => {"repository": repository, "lastUpdated": lastUpdated.toIso8601String()};
+  Map<String, dynamic> toJson() =>
+      {"repository": repository, "lastUpdated": lastUpdated.toIso8601String()};
 }

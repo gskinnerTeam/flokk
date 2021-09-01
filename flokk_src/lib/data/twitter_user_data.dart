@@ -43,7 +43,8 @@ class TwitterUser {
 
   TwitterUser();
 
-  factory TwitterUser.fromJson(Map<String, dynamic> json) => _$TwitterUserFromJson(json);
+  factory TwitterUser.fromJson(Map<String, dynamic> json) =>
+      _$TwitterUserFromJson(json);
 
   Map<String, dynamic> toJson() => _$TwitterUserToJson(this);
 }

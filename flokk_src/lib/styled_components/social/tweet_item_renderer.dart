@@ -25,7 +25,8 @@ class TweetListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     AppTheme theme = context.watch();
     int minutesAgo = DateTime.now().difference(tweet.createdAt).inMinutes;
-    String timeTxt = minutesAgo < 60 ? "${minutesAgo}m" : "${(minutesAgo / 60).round()}h";
+    String timeTxt =
+        minutesAgo < 60 ? "${minutesAgo}m" : "${(minutesAgo / 60).round()}h";
     if (minutesAgo > 60 * 24) {
       timeTxt = "${(minutesAgo / 60 / 24).round()}d";
     }
@@ -35,7 +36,9 @@ class TweetListItem extends StatelessWidget {
         Row(children: [
           OneLineText(tweet.user.name, style: titleStyle.bold).flexible(),
           HSpace(Insets.sm),
-          OneLineText(tweet.retweeted ? "Retweeted" : "Tweeted", style: titleStyle).flexible(),
+          OneLineText(tweet.retweeted ? "Retweeted" : "Tweeted",
+                  style: titleStyle)
+              .flexible(),
           Text("  ·  ", style: titleStyle),
           Text(timeTxt, style: titleStyle),
         ]),
@@ -43,8 +46,10 @@ class TweetListItem extends StatelessWidget {
         Row(children: [
           SelectableLinkText(
                   text: "${tweet.text}",
-                  linkStyle: TextStyles.Body1.textHeight(1.6).textColor(theme.accent1),
-                  textStyle: TextStyles.Body1.textHeight(1.6).textColor(theme.txt))
+                  linkStyle:
+                      TextStyles.Body1.textHeight(1.6).textColor(theme.accent1),
+                  textStyle:
+                      TextStyles.Body1.textHeight(1.6).textColor(theme.txt))
               .flexible()
         ]),
         VSpace(Insets.m),
@@ -56,7 +61,8 @@ class TweetListItem extends StatelessWidget {
             style: TextStyles.Body3.textColor(theme.grey),
           ),
           HSpace(Insets.m),
-          StyledImageIcon(StyledIcons.socialRetweet, size: 12, color: theme.grey),
+          StyledImageIcon(StyledIcons.socialRetweet,
+              size: 12, color: theme.grey),
           HSpace(Insets.sm),
           Text(
             "${tweet.retweetCount}",
@@ -64,10 +70,12 @@ class TweetListItem extends StatelessWidget {
           ),
         ]),
         VSpace(Insets.m),
-        Container(color: theme.greyWeak.withOpacity(.35), width: double.infinity, height: 1),
+        Container(
+            color: theme.greyWeak.withOpacity(.35),
+            width: double.infinity,
+            height: 1),
         VSpace(Insets.l),
       ],
     ).gestures(onTap: _handleRowPressed, behavior: HitTestBehavior.opaque);
   }
-
 }

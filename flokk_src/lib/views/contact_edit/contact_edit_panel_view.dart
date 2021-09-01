@@ -28,8 +28,10 @@ import 'package:flokk/views/contact_edit/miniforms/website_miniform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormState> {
-  ContactEditFormView(ContactEditFormState state, {Key? key}) : super(state, key: key);
+class ContactEditFormView
+    extends WidgetView<ContactEditForm, ContactEditFormState> {
+  ContactEditFormView(ContactEditFormState state, {Key? key})
+      : super(state, key: key);
 
   BuildContext get context => state.context;
 
@@ -101,7 +103,8 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
                         ContactPhoneMiniForm(state),
 
                         /// Twitter
-                        ContactSocialMiniForm(state, SocialActivityType.Twitter),
+                        ContactSocialMiniForm(
+                            state, SocialActivityType.Twitter),
 
                         /// Git
                         ContactSocialMiniForm(state, SocialActivityType.Git),
@@ -125,12 +128,16 @@ class ContactEditFormView extends WidgetView<ContactEditForm, ContactEditFormSta
                         ContactNotesMiniForm(state),
 
                         /// Relationships, set a smaller maxDropdownHeight since we're near the bottom of the view
-                        ContactRelationshipMiniForm(state, maxDropdownHeight: 140),
+                        ContactRelationshipMiniForm(state,
+                            maxDropdownHeight: 140),
 
                         if (!contact.isNew)
                           BaseStyledBtn(
-                            hoverColor: theme.isDark ? ColorUtils.shiftHsl(theme.bg1, .2) : theme.bg2.withOpacity(.35),
-                            child: Text("DELETE THIS CONTACT", style: TextStyles.T1.textColor(theme.error)),
+                            hoverColor: theme.isDark
+                                ? ColorUtils.shiftHsl(theme.bg1, .2)
+                                : theme.bg2.withOpacity(.35),
+                            child: Text("DELETE THIS CONTACT",
+                                style: TextStyles.T1.textColor(theme.error)),
                             onPressed: state.handleDeletePressed,
                           ).padding(vertical: Insets.m),
 

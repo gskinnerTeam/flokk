@@ -47,10 +47,10 @@ class WebPicker implements UniversalPicker {
 
   void handleFileLoad(ProgressEvent e) {
     base64Data = reader.result.toString().split(",").last;
-    if (base64Data != null)
-      byteData = Base64Decoder().convert(base64Data!);
+    if (base64Data != null) byteData = Base64Decoder().convert(base64Data!);
     onChange?.call(base64Data ?? "");
   }
 }
 
-UniversalPicker getPlatformPicker({ required String accept }) => WebPicker(accept: accept);
+UniversalPicker getPlatformPicker({required String accept}) =>
+    WebPicker(accept: accept);

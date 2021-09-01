@@ -7,7 +7,12 @@ class StyledDesignGrid extends StatelessWidget {
   final Alignment alignment;
   final bool isEnabled;
 
-  const StyledDesignGrid({Key? key, required this.child, this.alignment = Alignment.center, this.isEnabled = false}) : super(key: key);
+  const StyledDesignGrid(
+      {Key? key,
+      required this.child,
+      this.alignment = Alignment.center,
+      this.isEnabled = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

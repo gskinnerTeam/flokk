@@ -7,6 +7,8 @@ class GoogleRestService {
   static String kStarredGroupId = "contactGroups/starred";
 
   final GoogleRestContactsService contacts = GoogleRestContactsService();
-  final GoogleRestContactGroupsService groups = GoogleRestContactGroupsService();
-  final GoogleRestAuthService auth = GoogleRestAuthService(ApiKeys().googleClientId, ApiKeys().googleClientSecret);
+  final GoogleRestContactGroupsService groups =
+      GoogleRestContactGroupsService();
+  final GoogleRestAuthService auth = GoogleRestAuthService(
+      ApiKeys().googleClientId, ApiKeys().googleClientSecret);
 }

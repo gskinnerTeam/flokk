@@ -13,12 +13,13 @@ class GroupData {
 
   GroupData();
 
-  factory GroupData.fromJson(Map<String, dynamic> json) => _$GroupDataFromJson(json);
+  factory GroupData.fromJson(Map<String, dynamic> json) =>
+      _$GroupDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$GroupDataToJson(this);
 
   @override
-  bool operator==(covariant GroupData other) => other.id == id;
+  bool operator ==(covariant GroupData other) => other.id == id;
 
   @override
   int get hashCode => id.hashCode;

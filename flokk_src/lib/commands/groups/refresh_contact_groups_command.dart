@@ -9,23 +9,29 @@ import 'package:flokk/services/service_result.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tuple/tuple.dart';
 
-class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
+class RefreshContactGroupsCommand extends AbstractCommand
+    with AuthorizedServiceCommandMixin {
   RefreshContactGroupsCommand(BuildContext c) : super(c);
 
-  Future<List<GroupData>> execute({bool onlyStarred = false, bool forceUpdate = false}) async {
+  Future<List<GroupData>> execute(
+      {bool onlyStarred = false, bool forceUpdate = false}) async {
     Log.p("[RefreshContactGroupsCommand]");
 
-    if (contactsModel.canRefreshContactGroups || forceUpdate || AppModel.ignoreCooldowns) {
+    if (contactsModel.canRefreshContactGroups ||
+        forceUpdate ||
+        AppModel.ignoreCooldowns) {
       contactsModel.lastUpdatedGroups = DateTime.now();
 
       await executeAuthServiceCmd(() async {
         GoogleRestContactGroupsService groupsApi = googleRestService.groups;
-        ServiceResult<GroupData> result = ServiceResult(null, HttpResponse.empty());
+        ServiceResult<GroupData> result =
+            ServiceResult(null, HttpResponse.empty());
         if (onlyStarred) {
-          result =
-              await groupsApi.getById(authModel.googleAccessToken, GoogleRestService.kStarredGroupId);
+          result = await groupsApi.getById(
+              authModel.googleAccessToken, GoogleRestService.kStarredGroupId);
           if (result.success) {
-            GroupData starred = contactsModel.getGroupById(GoogleRestService.kStarredGroupId);
+            GroupData starred =
+                contactsModel.getGroupById(GoogleRestService.kStarredGroupId);
             if (starred != GroupData()) {
               starred.members = result.content?.members ?? [];
             } else {
@@ -33,13 +39,15 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
             }
           }
         } else {
-          ServiceResult<Tuple2<List<GroupData>, String>> result = await groupsApi.get(authModel.googleAccessToken);
+          ServiceResult<Tuple2<List<GroupData>, String>> result =
+              await groupsApi.get(authModel.googleAccessToken);
           List<GroupData> groups = result.content?.item1 ?? [];
           String nextPageToken = result.content?.item2 ?? "";
 
           while (nextPageToken != "" && result.success) {
             ServiceResult<Tuple2<List<GroupData>, String>> result =
-                await groupsApi.get(authModel.googleAccessToken, nextPageToken: nextPageToken);
+                await groupsApi.get(authModel.googleAccessToken,
+                    nextPageToken: nextPageToken);
             groups.addAll(result.content?.item1 ?? []);
             nextPageToken = result.content?.item2 ?? "";
           }
@@ -47,9 +55,10 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
           if (groups.isNotEmpty && result.success) {
             //Need to fetch each individual group to get members list
             for (int i = 0; i < groups.length; i++) {
-              if (groups[i].memberCount > 0 || groups[i].id == GoogleRestService.kStarredGroupId) {
-                ServiceResult<GroupData> groupResult =
-                    await groupsApi.getById(authModel.googleAccessToken, groups[i].id);
+              if (groups[i].memberCount > 0 ||
+                  groups[i].id == GoogleRestService.kStarredGroupId) {
+                ServiceResult<GroupData> groupResult = await groupsApi.getById(
+                    authModel.googleAccessToken, groups[i].id);
                 if (groupResult.success) {
                   groups[i].members = groupResult.content?.members ?? [];
                 }

@@ -115,13 +115,16 @@ class TextStyles {
 
   static TextStyle get Body3 => lato.size(FontSizes.s11);
 
-  static TextStyle get Callout => quicksand.size(FontSizes.s14).letterSpace(1.75);
+  static TextStyle get Callout =>
+      quicksand.size(FontSizes.s14).letterSpace(1.75);
 
   static TextStyle get CalloutFocus => Callout.bold;
 
-  static TextStyle get Btn => quicksand.bold.size(FontSizes.s14).letterSpace(1.75);
+  static TextStyle get Btn =>
+      quicksand.bold.size(FontSizes.s14).letterSpace(1.75);
 
-  static TextStyle get BtnSelected => quicksand.size(FontSizes.s14).letterSpace(1.75);
+  static TextStyle get BtnSelected =>
+      quicksand.size(FontSizes.s14).letterSpace(1.75);
 
   static TextStyle get Footnote => quicksand.bold.size(FontSizes.s11);
 
@@ -133,7 +136,7 @@ class Shadows {
 
   static double get mRadius => 8;
 
-  static List<BoxShadow> m(Color color, [ double opacity = 0]) {
+  static List<BoxShadow> m(Color color, [double opacity = 0]) {
     return enabled
         ? [
             BoxShadow(
@@ -149,7 +152,7 @@ class Shadows {
               offset: Offset(1, 0),
             )
           ]
-        : const<BoxShadow>[];
+        : const <BoxShadow>[];
   }
 }
 
@@ -186,4 +189,3 @@ class Corners {
 
   static Radius get s10Radius => Radius.circular(s10);
 }
-

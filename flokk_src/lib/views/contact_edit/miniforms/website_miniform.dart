@@ -5,7 +5,8 @@ import 'package:flokk/views/contact_edit/miniforms/base_miniform.dart';
 import 'package:flutter/material.dart';
 
 class ContactWebsiteMiniForm extends BaseMiniForm {
-  ContactWebsiteMiniForm(ContactEditFormState form, {Key? key}) : super(form, ContactSectionType.websites, key: key);
+  ContactWebsiteMiniForm(ContactEditFormState form, {Key? key})
+      : super(form, ContactSectionType.websites, key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,8 @@ class ContactWebsiteMiniForm extends BaseMiniForm {
       formBuilder: () {
         // Wrap content in a builder so the FocusNotification will get caught by the ExpandingFormContainer
         return Builder(
-          builder: (context) => buildColumnOfTextWithDropdown<WebsiteData>(context, "Link", "Type",
+          builder: (context) => buildColumnOfTextWithDropdown<WebsiteData>(
+              context, "Link", "Type",
               itemList: c.websiteList,
               types: ["Blog", "Home Page", "Profile", "Work"],
               newItemBuilder: () => WebsiteData(),

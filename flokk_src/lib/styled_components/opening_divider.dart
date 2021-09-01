@@ -8,7 +8,9 @@ class OpeningDivider extends StatelessWidget {
   final Color? openColor;
   final Color? closeColor;
 
-  const OpeningDivider({Key? key, this.isOpen = false, this.openColor, this.closeColor}) : super(key: key);
+  const OpeningDivider(
+      {Key? key, this.isOpen = false, this.openColor, this.closeColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

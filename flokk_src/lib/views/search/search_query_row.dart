@@ -25,7 +25,10 @@ class SearchQueryRow extends StatelessWidget {
     //Calculate all padding in the row (searchIcon + padding + closeIcon + padding)
     double tagPadding = 30 + Insets.m + 24 + Insets.m;
     //Return size of text + padding
-    return StringUtils.measure(tag.toUpperCase(), TextStyles.Footnote.letterSpace(0)).width + tagPadding;
+    return StringUtils.measure(
+                tag.toUpperCase(), TextStyles.Footnote.letterSpace(0))
+            .width +
+        tagPadding;
   }
 
   @override
@@ -40,14 +43,17 @@ class SearchQueryRow extends StatelessWidget {
               // Calculate the width of the text input based off of the width of the search bar
               double contentWidth = constraints.maxWidth - Insets.l + Insets.m;
               // Remove size of the close and search icons (in mobile mode, they are combined)
-              double barQueryWidth = max(0, contentWidth - (Sizes.iconMed + Insets.l));
+              double barQueryWidth =
+                  max(0, contentWidth - (Sizes.iconMed + Insets.l));
               if (state.widget.narrowMode == false) {
                 barQueryWidth -= (Sizes.iconMed + Insets.m * 1.5);
               }
               //Subtract widths of tags and contacts, to get the max size for text input
               double barTextFieldWidth = barQueryWidth;
-              state.tmpSearch.tagList.forEach((t) => barTextFieldWidth -= calcTagWidth(t));
-              state.tmpSearch.filterContactList.forEach((fc) => barTextFieldWidth -= calcTagWidth(fc));
+              state.tmpSearch.tagList
+                  .forEach((t) => barTextFieldWidth -= calcTagWidth(t));
+              state.tmpSearch.filterContactList
+                  .forEach((fc) => barTextFieldWidth -= calcTagWidth(fc));
               //Enforce min-size of 200px for search input
               barTextFieldWidth = max(200, barTextFieldWidth);
 
@@ -67,21 +73,29 @@ class SearchQueryRow extends StatelessWidget {
                         children: <Widget>[
                           for (var tag in state.tmpSearch.tagList) ...{
                             StyledGroupLabel(
-                                icon: StyledIcons.label,
-                                text: tag,
-                                onClose: () => state.handleRemoveTag(tag)).padding(right: Insets.m),
+                                    icon: StyledIcons.label,
+                                    text: tag,
+                                    onClose: () => state.handleRemoveTag(tag))
+                                .padding(right: Insets.m),
                           },
-                          for (var filterContact in state.tmpSearch.filterContactList) ...{
+                          for (var filterContact
+                              in state.tmpSearch.filterContactList) ...{
                             StyledGroupLabel(
                                 icon: StyledIcons.user,
                                 text: filterContact,
-                                onClose: () => state.handleRemoveFilterContact(filterContact)).padding(right: Insets.m),
+                                onClose: () => state.handleRemoveFilterContact(
+                                    filterContact)).padding(right: Insets.m),
                           },
                           Container(
-                            constraints: BoxConstraints(maxWidth: barTextFieldWidth),
+                            constraints:
+                                BoxConstraints(maxWidth: barTextFieldWidth),
                             child: StyledSearchTextInput(
-                              contentPadding: EdgeInsets.all(Insets.m * 1.25 - 0.5).copyWith(left: 0),
-                              hintText: state.widget.narrowMode ? "" : "Search for contacts",
+                              contentPadding:
+                                  EdgeInsets.all(Insets.m * 1.25 - 0.5)
+                                      .copyWith(left: 0),
+                              hintText: state.widget.narrowMode
+                                  ? ""
+                                  : "Search for contacts",
                               key: state.textKey,
                               onChanged: state.handleSearchChanged,
                               // Disabled because this callback has different behavior on web for some reason,
