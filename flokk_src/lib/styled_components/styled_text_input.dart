@@ -146,10 +146,10 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
         if (evt is RawKeyDownEvent) {
           if (evt.logicalKey == LogicalKeyboardKey.escape) {
             widget.onEditingCancel?.call();
-            return true;
+            return KeyEventResult.handled;
           }
         }
-        return false;
+        return KeyEventResult.ignored;
       },
       canRequestFocus: true,
     );
