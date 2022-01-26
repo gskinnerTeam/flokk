@@ -11,7 +11,6 @@ class ToggleFavoriteCommand extends AbstractCommand with AuthorizedServiceComman
   ToggleFavoriteCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact) async {
-    if (contact == ContactData()) return false;
     Log.p("[ToggleFavoriteCommand]");
     ServiceResult result = await executeAuthServiceCmd(() async {
       GroupData group = contactsModel.allGroups.firstWhere(

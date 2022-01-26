@@ -79,7 +79,7 @@ class StyledSearchTextInput extends StatefulWidget {
   final TextCapitalization capitalization;
   final TextInputType type;
   final bool enabled;
-  final bool autoValidate;
+  final AutovalidateMode autovalidateMode;
   final bool enableSuggestions;
   final bool autoCorrect;
   final String? errorText;
@@ -107,7 +107,7 @@ class StyledSearchTextInput extends StatefulWidget {
     this.initialValue,
     this.controller,
     this.enabled = true,
-    this.autoValidate = false,
+    this.autovalidateMode = AutovalidateMode.disabled,
     this.enableSuggestions = true,
     this.autoCorrect = true,
     this.errorText,
@@ -146,10 +146,10 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
         if (evt is RawKeyDownEvent) {
           if (evt.logicalKey == LogicalKeyboardKey.escape) {
             widget.onEditingCancel?.call();
-            return true;
+            return KeyEventResult.handled;
           }
         }
-        return false;
+        return KeyEventResult.ignored;
       },
       canRequestFocus: true,
     );
@@ -191,7 +191,7 @@ class StyledSearchTextInputState extends State<StyledSearchTextInput> {
         keyboardType: widget.type,
         obscureText: widget.obscureText,
         autocorrect: widget.autoCorrect,
-        autovalidate: widget.autoValidate,
+        autovalidateMode: widget.autovalidateMode,
         enableSuggestions: widget.enableSuggestions,
         style: widget.style ?? TextStyles.Body1,
         cursorColor: theme.accent1,

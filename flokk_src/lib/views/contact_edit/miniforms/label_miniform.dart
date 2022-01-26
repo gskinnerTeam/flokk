@@ -20,12 +20,15 @@ class ContactLabelMiniForm extends BaseMiniForm {
     // If the label is empty or we already have that label on our contact then dont add it
     if (label.isEmpty || c.groupList.any((g) => g.name == label)) return;
     //TODO SB@CE - This (form.widget.contactsModel) is probably ok, since these miniforms are tightly coupled to form. But no need to reach out for contactsModel. Instead just look it up with provider: ContactsModel contactsModel = context.watch();
-    GroupData groupToAdd = form.widget.contactsModel.getGroupByName(label);
+    GroupData? groupToAdd = form.widget.contactsModel.getGroupByName(label);
     if (groupToAdd != null) {
       setFormState(() => c.groupList.add(groupToAdd));
     } else {
       // We must make a new group, add that group to this contact when the creation has finished
-      CreateLabelCommand(context).execute(label).then((g) => setFormState(() => c.groupList.add(g)));
+      CreateLabelCommand(context).execute(label).then((g) {
+        if (g != null)
+          setFormState(() => c.groupList.add(g));
+      });
     }
   }
 

@@ -24,7 +24,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
   Widget build(BuildContext context) {
     /// ///////////////////////////////////////////////////////////
     /// Bind to AppModel when selectedContact changes, and provide it to the sub-tree
-    ContactData selectedContact = context.select<AppModel, ContactData>((model) => model.selectedContact);
+    ContactData? selectedContact = context.select<AppModel, ContactData?>((model) => model.selectedContact);
 
     /// Bind to page-change
     var currentPage = context.select<AppModel, PageType>((value) => value.currentMainPage);
@@ -61,7 +61,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     /// Figure out what should be visible, and the size of our viewport
     /// 3 cases: 1) Single Column, 2) LeftMenu + Single Column, 3) LeftMenu + Dual Column
     /// (Dual Column means it can show both ContentArea and EditPanel at the same time)
-    bool showPanel = selectedContact != ContactData(); //Contact panel is always shown if a contact is selected
+    bool showPanel = selectedContact != null; //Contact panel is always shown if a contact is selected
     bool showLeftMenu = !isNarrow; //Whether main menu is shown, or hidden behind hamburger btn
     bool useSingleColumn = context.widthInches < 10; //Whether detail panel fills the entire content area
     bool hideContent = showPanel && useSingleColumn; //If single column + panel, we can hide the content
@@ -82,7 +82,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
     /// Edit Panel
     Widget editPanel = ContactPanel(
       key: MainScaffold.sidePanelKey,
-      onClosePressed: () => state.trySetSelectedContact(ContactData()),
+      onClosePressed: () => state.trySetSelectedContact(null),
       contactsModel: state.appModel.contactsModel,
     );
     editPanel = RepaintBoundary(child: editPanel);
@@ -105,9 +105,7 @@ class MainScaffoldView extends WidgetView<MainScaffold, MainScaffoldState> {
       index: state.pages.indexOf(currentPage),
       children: <Widget>[
         /// DASHBOARD PAGE
-        DashboardPage(
-          selectedContact: selectedContact,
-        ),
+        DashboardPage(),
 
         /// CONTACTS PAGE
         ValueListenableBuilder<List<ContactData>>(

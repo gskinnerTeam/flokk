@@ -54,12 +54,12 @@ class _ClickableSocialBadgesState extends State<ClickableSocialBadges> {
     //Fetch model so we can get the latest social info
     ContactsModel contactsModel = Provider.of(context, listen: false);
     // Grab socialData for this contact (might be null)
-    SocialContactData social = contactsModel.getSocialById(widget.contact.id);
+    SocialContactData? social = contactsModel.getSocialById(widget.contact.id);
     // Get the time of their last activity
-    DateTime lastSocialTime = social.latestActivity.createdAt;
+    DateTime lastSocialTime = social?.latestActivity.createdAt ?? Dates.epoch;
     // Grab any tweets we haven't look at yet
-    List<Tweet> newTweets = social.newTweets;
-    List<GitEvent> newGits = social.newGits;
+    List<Tweet> newTweets = social?.newTweets ?? <Tweet>[];
+    List<GitEvent> newGits = social?.newGits ?? <GitEvent>[];
     // Figure out bottom text, changes if we have no social
     String bottomTxt = "Add Social IDs";
     if (widget.contact.hasAnySocial) {

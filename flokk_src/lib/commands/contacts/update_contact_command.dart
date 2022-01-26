@@ -10,8 +10,8 @@ import 'package:flutter/src/widgets/framework.dart';
 class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   UpdateContactCommand(BuildContext c) : super(c);
 
-  Future<ContactData> execute(ContactData contact, {bool updateSocial: false, bool tryAgainOnError = true}) async {
-    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return ContactData();
+  Future<ContactData?> execute(ContactData contact, {bool updateSocial: false, bool tryAgainOnError = true}) async {
+    if (AppModel.forceIgnoreGoogleApiCalls) return null;
     Log.p("[UpdateContactCommand]");
 
     ServiceResult<ContactData> result = await executeAuthServiceCmd(() async {
@@ -25,7 +25,7 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
         }
       } else {
         // Check whether git or twitter changed, if they did we want to reset their cooldowns
-        ContactData oldContact = contactsModel.getContactById(contact.id);
+        final ContactData oldContact = contactsModel.getContactById(contact.id)!;
         bool gitChanged = oldContact.gitUsername != contact.gitUsername;
         if (gitChanged) {
           githubModel.removeEvents(oldContact.gitUsername);
@@ -56,7 +56,7 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
           ContactData? updatedContact = result.content;
           if (updatedContact != null) {
             contactsModel.swapContactById(updatedContact);
-            if (appModel.selectedContact.googleId == updatedContact.googleId) {
+            if (appModel.selectedContact?.googleId == updatedContact.googleId) {
               appModel.selectedContact = updatedContact;
             }
           }
@@ -67,13 +67,13 @@ class UpdateContactCommand extends AbstractCommand with AuthorizedServiceCommand
           ignoreErrors = true;
           await RefreshContactsCommand(context).execute(skipGroups: true);
           //try again with updated etag
-          contact.etag = contactsModel.getContactById(contact.id).etag;
+          contact.etag = contactsModel.getContactById(contact.id)!.etag;
           execute(contact, tryAgainOnError: false);
         }
       }
 
       return result;
     });
-    return result.success ? result.content! : ContactData();
+    return result.success ? result.content! : null;
   }
 }

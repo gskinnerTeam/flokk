@@ -19,14 +19,14 @@ class SearchBarView extends WidgetView<SearchBar, SearchBarState> {
 
   bool get isOpen => state.isOpen;
 
-  bool _handleKeyPress(FocusNode node, RawKeyEvent evt) {
+  KeyEventResult _handleKeyPress(FocusNode node, RawKeyEvent evt) {
     if (evt is RawKeyDownEvent) {
       if (evt.logicalKey == LogicalKeyboardKey.escape) {
         state.cancel();
-        return true;
+        return KeyEventResult.handled;
       }
     }
-    return false;
+    return KeyEventResult.ignored;
   }
 
   @override

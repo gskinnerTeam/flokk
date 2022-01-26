@@ -43,7 +43,7 @@ class RefreshTwitterCommand extends AbstractCommand {
       twitterModel.addTweets(twitterHandle, tweets);
       twitterModel.isLoading = false;
       twitterModel.scheduleSave();
-      int newTweets = contactsModel.getSocialContactByTwitter(twitterHandle).newTweets.length;
+      int newTweets = contactsModel.getSocialContactByTwitter(twitterHandle)?.newTweets.length ?? 0;
       print("New Tweets = $newTweets");
     }
   }

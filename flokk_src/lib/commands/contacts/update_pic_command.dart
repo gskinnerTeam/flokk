@@ -10,7 +10,7 @@ class UpdatePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
   UpdatePicCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact, String base64Pic) async {
-    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (AppModel.forceIgnoreGoogleApiCalls) return false;
     Log.p("[UpdatePicCommand]");
 
     ServiceResult result = await executeAuthServiceCmd(() async {

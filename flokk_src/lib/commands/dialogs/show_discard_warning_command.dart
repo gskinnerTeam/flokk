@@ -1,16 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
-import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/commands/abstract_command.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 class ShowDiscardWarningCommand extends AbstractCommand {
   ShowDiscardWarningCommand(BuildContext c) : super(c);
 
   Future<bool> execute() async {
-    if (appModel.selectedContact == ContactData()) return true;
-    bool isNew = appModel.selectedContact.isNew;
+    final currentlySelectedContact = appModel.selectedContact;
+    if (currentlySelectedContact == null) return true;
+    bool isNew = currentlySelectedContact.isNew;
     return await Dialogs.show(OkCancelDialog(
       okLabel: "DISCARD",
       title: "UNSAVED CHANGES FOR ${isNew ? "NEW " : ""}CONTACT",

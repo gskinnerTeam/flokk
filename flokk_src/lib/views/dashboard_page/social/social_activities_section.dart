@@ -65,30 +65,30 @@ class _SocialActivitySectionState extends State<SocialActivitySection> {
           case DashboardSocialSectionType.All:
             list1Title = "TWITTER RECENT ACTIVITY";
             list1 = twitterModel.allTweets.map((tweet) => TweetListItem(tweet)).take(maxItems).toList();
-            list1Placeholder = TwitterPlaceholder(contact: ContactData());
+            list1Placeholder = TwitterPlaceholder(contact: null);
             icon1 = StyledIcons.twitterActive;
             list2Title = "GITHUB RECENT ACTIVITY";
             list2 = gitModel.allEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
-            list2Placeholder = GitPlaceholder(contact: ContactData());
+            list2Placeholder = GitPlaceholder(contact: null);
             icon2 = StyledIcons.githubActive;
             break;
           case DashboardSocialSectionType.Git:
             list1Title = "GITHUB RECENT ACTIVITY";
-            list1Placeholder = GitPlaceholder(contact: ContactData());
+            list1Placeholder = GitPlaceholder(contact: null);
             list1 = gitModel.allEvents.map((event) => GitEventListItem(event)).take(maxItems).toList();
             icon1 = StyledIcons.githubActive;
             list2Title = "TRENDING REPOSITORIES";
-            list2Placeholder = GitPlaceholder(contact: ContactData(), isTrending: true);
+            list2Placeholder = GitPlaceholder(contact: null, isTrending: true);
             list2 = gitModel.popularRepos.map((repo) => GitRepoListItem(repo)).take(maxItems).toList();
             icon2 = StyledIcons.githubActive;
             break;
           case DashboardSocialSectionType.Twitter:
             list1 = twitterModel.allTweets.map((e) => TweetListItem(e)).take(maxItems).toList();
-            list1Placeholder = TwitterPlaceholder(contact: ContactData());
+            list1Placeholder = TwitterPlaceholder(contact: null);
             list1Title = "TWITTER RECENT ACTIVITY";
             icon1 = StyledIcons.twitterActive;
             list2 = twitterModel.popularTweets.map((e) => TweetListItem(e)).take(maxItems).toList();
-            list2Placeholder = TwitterPlaceholder(contact: ContactData(), isPopular: true);
+            list2Placeholder = TwitterPlaceholder(contact: null, isPopular: true);
             list2Title = "POPULAR TWEETS";
             icon2 = StyledIcons.twitterActive;
             break;

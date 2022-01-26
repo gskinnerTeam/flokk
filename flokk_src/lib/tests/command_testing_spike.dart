@@ -85,7 +85,7 @@ class CommandTestingSpike extends StatelessWidget {
             child: Text("add new label to contact"),
             onPressed: () async {
               List<ContactData> updatedContact = await AddLabelToContactCommand(context)
-                  .execute([contact], existingGroup: GroupData(), newLabel: "Foo");
+                  .execute([contact], newLabel: "Foo");
               print(updatedContact.first);
             },
           ),

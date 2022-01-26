@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 class ContactsPage extends StatefulWidget {
   final SearchEngine searchEngine;
   final List<ContactData> checkedContacts;
-  final ContactData selectedContact;
+  final ContactData? selectedContact;
 
   const ContactsPage({Key? key, required this.searchEngine, this.checkedContacts = const<ContactData>[], required this.selectedContact}) : super(key: key);
 

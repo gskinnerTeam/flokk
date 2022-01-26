@@ -1,6 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:flokk/_internal/log.dart';
 import 'package:flokk/_internal/utils/date_utils.dart';
-import 'package:flokk/_internal/utils/string_utils.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/data/group_data.dart';
 import 'package:flokk/data/social_contact_data.dart';
@@ -34,9 +34,9 @@ class ContactsModel extends AbstractModel {
     notifyListeners();
   }
 
-  GroupData getGroupById(String value) => _allGroups.firstWhere((g) => g.id == value, orElse: () => GroupData());
+  GroupData? getGroupById(String value) => _allGroups.firstWhereOrNull((g) => g.id == value);
 
-  GroupData getGroupByName(String value) => _allGroups.firstWhere((g) => g.name == value, orElse: () => GroupData());
+  GroupData? getGroupByName(String value) => _allGroups.firstWhereOrNull((g) => g.name == value);
 
   //Contacts List
   List<ContactData> get activeContacts => allContacts.where((c) => !c.isDeleted).toList();
@@ -52,7 +52,7 @@ class ContactsModel extends AbstractModel {
     notifyListeners();
   }
 
-  ContactData getContactById(String id) => _allContacts.firstWhere((c) => c.id == id, orElse: () => ContactData());
+  ContactData? getContactById(String id) => _allContacts.firstWhereOrNull((c) => c.id == id);
 
   void addContact(ContactData contact) {
     _allContacts.add(contact);
@@ -67,8 +67,8 @@ class ContactsModel extends AbstractModel {
   }
 
   void swapContactById(ContactData newContact) {
-    ContactData oldContact = getContactById(newContact.id);
-    if (oldContact != ContactData()) {
+    final ContactData? oldContact = getContactById(newContact.id);
+    if (oldContact != null) {
       //[SB] Keep isStarred in sync when we swap contents since this is injected by the [updateContactsWithGroupData] fxn.
       newContact.isStarred = oldContact.isStarred;
       newContact.groupList = oldContact.groupList;
@@ -95,8 +95,8 @@ class ContactsModel extends AbstractModel {
   }
 
   void touchSocialById(String id) {
-    SocialContactData social = getSocialById(id);
-    if (social != SocialContactData()) {
+    SocialContactData? social = getSocialById(id);
+    if (social != null) {
       social.lastCheckedTweets = DateTime.now();
       social.lastCheckedGit = DateTime.now();
       notifyListeners();
@@ -105,22 +105,28 @@ class ContactsModel extends AbstractModel {
   }
 
   void clearGitCooldown(ContactData contact) {
-    getSocialById(contact.id).lastUpdatedGit = Dates.epoch;
-    getSocialById(contact.id).lastCheckedGit = Dates.epoch;
+    getSocialById(contact.id)?.lastUpdatedGit = Dates.epoch;
+    getSocialById(contact.id)?.lastCheckedGit = Dates.epoch;
   }
 
   void clearTwitterCooldown(ContactData contact) {
-    getSocialById(contact.id).lastUpdatedTwitter = Dates.epoch;
-    getSocialById(contact.id).lastCheckedTweets = Dates.epoch;
+    getSocialById(contact.id)?.lastUpdatedTwitter = Dates.epoch;
+    getSocialById(contact.id)?.lastCheckedTweets = Dates.epoch;
   }
 
   bool canRefreshGitEventsFor(String gitUsername) {
-    DateTime lastUpdate = getSocialContactByGit(gitUsername).lastUpdatedGit;
+    final socialContactData = getSocialContactByGit(gitUsername);
+    if (socialContactData == null)
+      return false;
+    DateTime lastUpdate = socialContactData.lastUpdatedGit;
     return DateTime.now().difference(lastUpdate) > gitEventsCooldown;
   }
 
   bool canRefreshTweetsFor(String twitterHandle) {
-    DateTime lastUpdate = getSocialContactByTwitter(twitterHandle).lastUpdatedTwitter;
+    final socialContactData = getSocialContactByTwitter(twitterHandle);
+    if (socialContactData == null)
+      return false;
+    DateTime lastUpdate = socialContactData.lastUpdatedTwitter;
     return DateTime.now().difference(lastUpdate) > tweetsCooldown;
   }
 
@@ -129,32 +135,32 @@ class ContactsModel extends AbstractModel {
   //Updates the timestamps when social feeds are refreshed for contact
   void updateSocialTimestamps({String twitterHandle = "", String gitUsername = ""}) {
     if (twitterHandle.isNotEmpty) {
-      getSocialContactByTwitter(twitterHandle).lastUpdatedTwitter = DateTime.now();
+      getSocialContactByTwitter(twitterHandle)?.lastUpdatedTwitter = DateTime.now();
     }
     if (gitUsername.isNotEmpty) {
-      getSocialContactByGit(gitUsername).lastUpdatedGit = DateTime.now();
+      getSocialContactByGit(gitUsername)?.lastUpdatedGit = DateTime.now();
     }
   }
 
   void updateContactDataGithubValidity(String gitUsername, bool isValid) {
-    allContacts.firstWhere((x) => x.gitUsername == gitUsername, orElse: () => ContactData()).hasValidGit = isValid;
+    allContacts.firstWhereOrNull((x) => x.gitUsername == gitUsername)?.hasValidGit = isValid;
   }
 
   void updateContactDataTwitterValidity(String twitterHandle, bool isValid) {
-    allContacts.firstWhere((x) => x.twitterHandle == twitterHandle, orElse: () => ContactData()).hasValidTwitter =
-        isValid;
+    allContacts.firstWhereOrNull((x) => x.twitterHandle == twitterHandle)?.hasValidTwitter = isValid;
   }
 
-  ContactData getContactByGit(String gitUsername) =>
-      allContacts.firstWhere((x) => x.gitUsername == gitUsername, orElse: () => ContactData());
+  ContactData? getContactByGit(String gitUsername) =>
+      allContacts.firstWhereOrNull((x) => x.gitUsername == gitUsername);
 
-  ContactData getContactByTwitter(String twitterHandle) =>
-      allContacts.firstWhere((x) => x.twitterHandle == twitterHandle, orElse: () => ContactData());
+  ContactData? getContactByTwitter(String twitterHandle) =>
+      allContacts.firstWhereOrNull((x) => x.twitterHandle == twitterHandle);
 
-  SocialContactData getSocialContactByGit(String gitUsername) => getSocialById(getContactByGit(gitUsername).id);
+  SocialContactData? getSocialContactByGit(String gitUsername) =>
+      getSocialById(getContactByGit(gitUsername)?.id ?? "");
 
-  SocialContactData getSocialContactByTwitter(String twitterHandle) =>
-      getSocialById(getContactByTwitter(twitterHandle).id);
+  SocialContactData? getSocialContactByTwitter(String twitterHandle) =>
+      getSocialById(getContactByTwitter(twitterHandle)?.id ?? "");
 
   //Get a list of contacts with the most activity (based on their calculated "points" for each social activity)
   List<SocialContactData> get mostActiveSocialContacts =>
@@ -164,9 +170,9 @@ class ContactsModel extends AbstractModel {
   List<SocialContactData> get mostRecentSocialContacts =>
       allSocialContacts..sort((a, b) => (b.latestActivity.createdAt).compareTo(a.latestActivity.createdAt));
 
-  SocialContactData getSocialById(String id) {
-    if (id.isEmpty) return SocialContactData();
-    return allSocialContacts.firstWhere((c) => c.contactId == id, orElse: () => SocialContactData());
+  SocialContactData? getSocialById(String id) {
+    if (id.isEmpty) return null;
+    return allSocialContacts.firstWhereOrNull((c) => c.contactId == id);
   }
 
   //Get a list of contacts with upcoming dates (repeated contacts are expected if they have multiple events that are upcoming)
@@ -184,7 +190,7 @@ class ContactsModel extends AbstractModel {
 
     List<Tuple2<ContactData, DateMixin>> contactsWithDates = [];
     for (var n in flattenedDates) {
-      contactsWithDates.add(Tuple2<ContactData, DateMixin>(getContactById(n.item1), n.item2));
+      contactsWithDates.add(Tuple2<ContactData, DateMixin>(getContactById(n.item1)!, n.item2));
     }
     return contactsWithDates;
   }
@@ -199,8 +205,8 @@ class ContactsModel extends AbstractModel {
     for (GroupData g in _allGroups) {
       if (g.groupType == GroupType.UserContactGroup) {
         for (String id in g.members) {
-          ContactData contact = getContactById(id);
-          if (contact != ContactData()) {
+          final ContactData? contact = getContactById(id);
+          if (contact != null) {
             contact.groupList.add(g);
             // print("name: ${contact.nameFull} labels: ${contact.groupList.join(',')}");
           }

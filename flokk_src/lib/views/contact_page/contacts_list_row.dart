@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactsListRow extends StatefulWidget {
-  final ContactData contact;
+  final ContactData? contact;
   final bool oddRow;
   final bool lastNameFirst;
   final double? parentWidth;
@@ -47,7 +47,7 @@ class ContactsListRow extends StatefulWidget {
 
 class _ContactsListRowState extends State<ContactsListRow> {
   void handleStarPressed() {
-    ToggleFavoriteCommand(context).execute(widget.contact);
+    ToggleFavoriteCommand(context).execute(widget.contact!);
     setState(() {});
   }
 
@@ -58,16 +58,16 @@ class _ContactsListRowState extends State<ContactsListRow> {
 class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowState> {
   const ContactListCardView(_ContactsListRowState state, {Key? key}) : super(state, key: key);
 
-  ContactData get contact => widget.contact;
+  ContactData? get contact => widget.contact;
 
-  bool get headerMode => contact == ContactData();
+  bool get headerMode => contact == null;
 
   void _handleRowPressed(BuildContext context) {
     context.read<MainScaffoldState>().trySetSelectedContact(widget.contact);
   }
 
   void _handleRowChecked(BuildContext context, bool value) {
-    context.read<MainScaffoldState>().setCheckedContact(widget.contact, value);
+    context.read<MainScaffoldState>().setCheckedContact(widget.contact!, value);
   }
 
   @override
@@ -112,7 +112,7 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
               (headerMode
                       ? rowText("Name")
                       : _ProfileCheckboxWithLabels(
-                          contact,
+                          contact!,
                           isChecked: state.widget.isChecked,
                           onChecked: (value) => _handleRowChecked(context, value),
                         ))
@@ -123,12 +123,12 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
               _FadingFlexContent(
                 isVisible: colCount > 1,
                 flex: 10,
-                child: headerMode ? rowText("Social") : ClickableSocialBadges(contact, showTimeSince: false),
+                child: headerMode ? rowText("Social") : ClickableSocialBadges(contact!, showTimeSince: false),
               ),
 
               /// Phone
               _FadingFlexContent(
-                child: rowText(headerMode ? "Phone" : contact.firstPhone),
+                child: rowText(headerMode ? "Phone" : contact!.firstPhone),
                 flex: 11,
                 isVisible: colCount > 2,
               ),
@@ -137,14 +137,14 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
               _FadingFlexContent(
                 isVisible: colCount > 3,
                 flex: 16,
-                child: rowText(headerMode ? "Email" : contact.firstEmail),
+                child: rowText(headerMode ? "Email" : contact!.firstEmail),
               ),
 
               /// COMPANY
               _FadingFlexContent(
                 isVisible: colCount > 4,
                 flex: 16,
-                child: rowText(headerMode ? "Job / Company" : contact.jobCompany),
+                child: rowText(headerMode ? "Job / Company" : contact!.jobCompany),
               ),
 
               //SizedBox(width: Insets.m),
@@ -154,8 +154,8 @@ class ContactListCardView extends WidgetView<ContactsListRow, _ContactsListRowSt
                   bigMode: true,
                   onPressed: state.handleStarPressed,
                   child: StyledImageIcon(
-                    widget.contact.isStarred ? StyledIcons.starFilled : StyledIcons.starEmpty,
-                    color: widget.contact.isStarred ? theme.accent1Dark : theme.greyWeak,
+                    widget.contact!.isStarred ? StyledIcons.starFilled : StyledIcons.starEmpty,
+                    color: widget.contact!.isStarred ? theme.accent1Dark : theme.greyWeak,
                   ).opacity(headerMode ? 0 : 1),
                 )
             ],

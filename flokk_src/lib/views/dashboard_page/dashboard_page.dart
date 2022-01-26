@@ -9,9 +9,7 @@ import 'package:flokk/views/dashboard_page/top/top_contacts_section.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
-  final ContactData selectedContact;
-
-  const DashboardPage({Key? key, required this.selectedContact}) : super(key: key);
+  const DashboardPage({Key? key}) : super(key: key);
 
   @override
   DashboardPageState createState() => DashboardPageState();

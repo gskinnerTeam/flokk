@@ -86,10 +86,10 @@ class MainScaffoldState extends State<MainScaffold> {
     searchBar?.cancel();
 
     //Skip Scaffold animations if the editPanel is currently open, we don't want the new page animating with the closing panel
-    if (appModel.selectedContact != ContactData()) skipScaffoldAnims = true;
+    if (appModel.selectedContact != null) skipScaffoldAnims = true;
 
     //Clear any selected contact, causing the editPanel to close
-    appModel.selectedContact = ContactData();
+    appModel.selectedContact = null;
 
     // Clear any checked contacts
     checkedContactsNotifier.value = [];
@@ -101,12 +101,15 @@ class MainScaffoldState extends State<MainScaffold> {
   }
 
   /// Change selected contact, this might not complete if user is currently editing
-  Future<void> trySetSelectedContact(ContactData value, {showSocial = false}) async {
+  Future<void> trySetSelectedContact(ContactData? value, {showSocial = false}) async {
     if (!await showDiscardWarningIfNecessary()) return;
-    //De-select?
-    bool hasSocialChanged = showSocial != appModel.showSocialTabOnInfoView;
-    if (!hasSocialChanged && appModel.selectedContact != ContactData() && appModel.selectedContact.id == value.id) {
-      value = ContactData();
+    final currentlySelectedContact = appModel.selectedContact;
+    if (value != null && currentlySelectedContact != null) {
+      //De-select contact if we selected the currently selected contact
+      bool hasSocialChanged = showSocial != appModel.showSocialTabOnInfoView;
+      if (!hasSocialChanged && currentlySelectedContact.id == value.id) {
+        value = null;
+      }
     }
     appModel.selectedContact = value;
     appModel.showSocialTabOnInfoView = showSocial;

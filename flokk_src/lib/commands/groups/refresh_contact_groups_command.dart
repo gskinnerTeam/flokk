@@ -25,11 +25,11 @@ class RefreshContactGroupsCommand extends AbstractCommand with AuthorizedService
           result =
               await groupsApi.getById(authModel.googleAccessToken, GoogleRestService.kStarredGroupId);
           if (result.success) {
-            GroupData starred = contactsModel.getGroupById(GoogleRestService.kStarredGroupId);
-            if (starred != GroupData()) {
+            GroupData? starred = contactsModel.getGroupById(GoogleRestService.kStarredGroupId);
+            if (starred != null) {
               starred.members = result.content?.members ?? [];
             } else {
-              contactsModel.allGroups.add(starred);
+              contactsModel.allGroups.add(result.content!);
             }
           }
         } else {

@@ -45,7 +45,7 @@ class AppModel extends AbstractModel {
 
     /// Watch selected contact and keep it updated when contacts model changes
     if (selectedContact != null) {
-      selectedContact = contactsModel.getContactById(selectedContact.id);
+      selectedContact = contactsModel.getContactById(selectedContact!.id);
     }
   }
 
@@ -79,13 +79,18 @@ class AppModel extends AbstractModel {
 
   /// //////////////////////////////////////////////////
   /// Selected edit target, controls visibility of the edit panel and selected rows in the various views
-  ContactData get selectedContact => _selectedContact ?? ContactData();
+  ContactData? get selectedContact => _selectedContact;
   ContactData? _selectedContact;
 
-  void touchSelectedSocial() => contactsModel.touchSocialById(selectedContact.id);
+  void touchSelectedSocial() {
+    final sc = selectedContact;
+    if (sc != null) {
+      contactsModel.touchSocialById(sc.id);
+    }
+  }
 
   /// Current selected edit target, controls visibility of the edit panel
-  set selectedContact(ContactData value) {
+  set selectedContact(ContactData? value) {
     _selectedContact = value;
     notifyListeners();
   }
@@ -143,7 +148,7 @@ class AppModel extends AbstractModel {
     _theme = v[theme.clamp(0, v.length)];
     _dashContactsSection = DashboardContactsSectionType.values[json['_dashContactsSection'] ?? 0];
     _dashSocialSection = DashboardSocialSectionType.values[json['_dashSocialSection'] ?? 0];
-    version = json['version'];
+    version = json['version'] ?? "0.0.0";
   }
 
   @override

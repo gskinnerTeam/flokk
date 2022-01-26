@@ -11,19 +11,19 @@ import 'package:flutter/cupertino.dart';
 class AddLabelToContactCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   AddLabelToContactCommand(BuildContext c) : super(c);
 
-  Future<List<ContactData>> execute(List<ContactData> contacts, {required GroupData existingGroup, String newLabel = ""}) async {
+  Future<List<ContactData>> execute(List<ContactData> contacts, {GroupData? existingGroup, String newLabel = ""}) async {
     Log.p("[AddLabelToContactCommand]");
     await executeAuthServiceCmd(() async {
-      GroupData group = GroupData();
+      GroupData? group = null;
       if (newLabel.isNotEmpty) {
         //create a new label
         group = await CreateLabelCommand(context).execute(newLabel);
-      } else if (existingGroup != GroupData()) {
+      } else if (existingGroup != null) {
         //use existing label
         group = existingGroup;
       }
       ServiceResult result = ServiceResult(null, HttpResponse.empty());
-      if (group != GroupData()) {
+      if (group != null) {
         result = await googleRestService.groups.modify(authModel.googleAccessToken, group, addContacts: contacts);
       }
       return result;

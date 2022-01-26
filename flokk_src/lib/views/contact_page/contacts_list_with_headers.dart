@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/contacts_model.dart';
@@ -13,7 +14,7 @@ import 'package:tuple/tuple.dart';
 class ContactsListWithHeaders extends StatefulWidget {
   final List<ContactData> contacts;
   final List<ContactData> checkedContacts;
-  final ContactData selectedContact;
+  final ContactData? selectedContact;
   final ContactOrderBy orderBy;
   final bool orderDesc;
   final bool searchMode;
@@ -40,8 +41,8 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
   List<ContactData> get checked => widget.checkedContacts;
 
   bool _getIsChecked(String id) {
-    ContactData c = widget.checkedContacts.firstWhere((_c) => _c.id == id, orElse: () => ContactData());
-    return c != ContactData();
+    ContactData? c = widget.checkedContacts.firstWhereOrNull((_c) => _c.id == id);
+    return c != null;
   }
 
   Tuple2<List<ContactData>, int> getSortedContactsWithFavoriteCount() {
@@ -67,7 +68,7 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
             Column(
               children: <Widget>[
                 /// Header: Pass an empty contact, the renderer will switch to header mode
-                ContactsListRow(ContactData(), parentWidth: constraints.maxWidth)
+                ContactsListRow(null, parentWidth: constraints.maxWidth)
                     .constrained(height: 48)
                     .padding(right: Insets.lGutter - Insets.sm),
 
@@ -105,7 +106,7 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
                         key: ValueKey(c.id),
                         // Pass our width into the renderers as an optimization, so they don't need to calculate their own
                         parentWidth: constraints.maxWidth,
-                        isSelected: c.id == widget.selectedContact.id,
+                        isSelected: widget.selectedContact != null && c.id == widget.selectedContact!.id,
                         isChecked: _getIsChecked(c.id),
                       );
                     }

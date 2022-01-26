@@ -11,7 +11,7 @@ class DeletePicCommand extends AbstractCommand with AuthorizedServiceCommandMixi
   DeletePicCommand(BuildContext c) : super(c);
 
   Future<bool> execute(ContactData contact) async {
-    if (contact == ContactData() || AppModel.forceIgnoreGoogleApiCalls) return false;
+    if (AppModel.forceIgnoreGoogleApiCalls) return false;
     Log.p("[DeletePicCommand]");
 
     bool doDelete = await Dialogs.show(

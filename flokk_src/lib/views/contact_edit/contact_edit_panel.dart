@@ -31,7 +31,7 @@ class ContactSectionType {
 class ContactEditForm extends StatefulWidget {
   final ContactData contact;
   final ContactsModel contactsModel;
-  final void Function(ContactData contact)? onEditComplete;
+  final void Function(ContactData? contact)? onEditComplete;
   final String initialSection;
 
   const ContactEditForm(
@@ -99,10 +99,14 @@ class ContactEditFormState extends State<ContactEditForm> {
       //Continue to add new contact
       else {
         // Wait for add-new command to complete, since it would be overly complicated to create a tmpUser
-        contact = await UpdateContactCommand(context).execute(contact, updateSocial: contact.hasAnySocial);
+        final ContactData? newContact = await UpdateContactCommand(context)
+            .execute(contact, updateSocial: contact.hasAnySocial);
 
         // If we have a valid contact here, all is good
-        success = contact != ContactData();
+        if (newContact != null) {
+          contact = newContact;
+        }
+        success = newContact != null;
       }
     } else {
       bool hasSocialChanged = contact.hasSameSocial(widget.contact) == false;
@@ -127,7 +131,7 @@ class ContactEditFormState extends State<ContactEditForm> {
     }
     if (doCancel) {
       /// If we're cancelling a new contact, return null indicating that it should be discarded
-      widget.onEditComplete?.call(tmpContact.isNew ? ContactData() : widget.contact);
+      widget.onEditComplete?.call(tmpContact.isNew ? null : widget.contact);
     }
   }
 

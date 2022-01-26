@@ -121,6 +121,8 @@ class GithubModel extends AbstractModel {
           .toSet()
           .toList() //get distinct git usernames for each event
           .map((x) => contactsModel.getContactByGit(x ?? "")) //get contact by gitusername
+          .where((x) => x != null)
+          .cast<ContactData>()
           .toList();
 
       //Get the latest date from the events associated with this repo or else fall back to repository.updatedAt
