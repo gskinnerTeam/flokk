@@ -110,7 +110,8 @@ class ContactEditFormState extends State<ContactEditForm> {
       }
     } else {
       bool hasSocialChanged = contact.hasSameSocial(widget.contact) == false;
-      await UpdateContactCommand(context).execute(contact, updateSocial: hasSocialChanged);
+      await UpdateContactCommand(context)
+          .execute(contact, updateSocial: hasSocialChanged);
     }
     if (success) {
       widget.onEditComplete?.call(contact);

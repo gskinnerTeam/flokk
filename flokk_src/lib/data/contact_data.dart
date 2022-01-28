@@ -213,7 +213,7 @@ class ContactData {
   Map<String, dynamic> toJson() => _$ContactDataToJson(this);
 
   @override
-  bool operator==(covariant ContactData other) => other.id == id;
+  bool operator==(covariant ContactData other) => equals(other);
 
   @override
   int get hashCode => id.hashCode;

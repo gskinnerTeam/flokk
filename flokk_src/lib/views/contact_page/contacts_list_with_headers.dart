@@ -60,6 +60,10 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
         Tuple2<List<ContactData>, int> contactsWithFavCount = getSortedContactsWithFavoriteCount();
         List<ContactData> contacts = contactsWithFavCount.item1;
         int favCount = contactsWithFavCount.item2;
+        int itemCount = contacts.length + 1;
+        // When not in search, if some of the contacts are favorited but not all then add another header for them
+        if (!widget.searchMode && favCount != 0 && favCount != contacts.length)
+          itemCount += 1;
 
         return Stack(
           children: <Widget>[
@@ -75,7 +79,7 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
                 /// List
                 StyledListView(
                   itemExtent: 78,
-                  itemCount: widget.contacts.length + (favCount == 0 || favCount == widget.contacts.length ? 1 : 2),
+                  itemCount: itemCount,
                   itemBuilder: (context, i) {
                     /// Inject 1 or 2 header rows into the results
                     bool isFirstHeader = i == 0;
@@ -98,8 +102,10 @@ class _ContactsListWithHeadersState extends State<ContactsListWithHeaders> {
                     }
                     // Regular Row
                     else {
-                      //Because the list is 2 items longer
-                      int offset = i <= favCount || favCount == 0 ? 1 : 2;
+                      //Because the list is 1-2 items longer
+                      int offset = 1;
+                      if (!widget.searchMode && i > favCount && favCount != 0)
+                        ++offset;
                       ContactData c = contacts[i - offset];
                       return ContactsListRow(
                         c,
