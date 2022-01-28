@@ -1,4 +1,3 @@
-import 'package:flokk/_internal/http_client.dart';
 import 'package:flokk/commands/dialogs/show_service_error_command.dart';
 import 'package:flokk/commands/refresh_auth_tokens_command.dart';
 import 'package:flokk/globals.dart';
@@ -9,8 +8,8 @@ import 'package:flokk/models/github_model.dart';
 import 'package:flokk/models/twitter_model.dart';
 import 'package:flokk/services/github_rest_service.dart';
 import 'package:flokk/services/google_rest/google_rest_service.dart';
-import 'package:flokk/services/twitter_rest_service.dart';
 import 'package:flokk/services/service_result.dart';
+import 'package:flokk/services/twitter_rest_service.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -84,7 +83,7 @@ mixin AuthorizedServiceCommandMixin on AbstractCommand {
     ServiceResult<T> r = await cmd();
 
     /// Check for errors
-    if (!ignoreErrors && r.response != null) {
+    if (!ignoreErrors) {
       ShowServiceErrorCommand(context).execute(r.response);
     }
 

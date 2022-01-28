@@ -25,27 +25,27 @@ class CommandTestingSpike extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text("Test contact to apply labels to: ${contact.nameFull}"),
-          RaisedButton(
+          ElevatedButton(
             child: Text("refresh groups"),
             onPressed: () async {
               List<GroupData> groups = await RefreshContactGroupsCommand(context).execute();
               print(groups.map((x) => x.name).toList().join(","));
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("refresh contacts"),
             onPressed: () async {
               await RefreshContactsCommand(context).execute();
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("create label"),
             onPressed: () async {
-              group = await CreateLabelCommand(context).execute("MyNewLabel");
+              group = await CreateLabelCommand(context).execute("MyNewLabel") ?? group;
               print(group);
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("edit label"),
             onPressed: () async {
               group.name = "Renamed Label";
@@ -53,7 +53,7 @@ class CommandTestingSpike extends StatelessWidget {
               print(group);
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("add multiple labels to single contact"),
             onPressed: () async {
               List<GroupData> userLabels =
@@ -67,7 +67,7 @@ class CommandTestingSpike extends StatelessWidget {
               UpdateContactLabelsCommand(context).execute(contact);
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("add single label to multiple contacts"),
             onPressed: () async {
               if (contactModel.allGroups.isNotEmpty) {
@@ -81,7 +81,7 @@ class CommandTestingSpike extends StatelessWidget {
               }
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("add new label to contact"),
             onPressed: () async {
               List<ContactData> updatedContact = await AddLabelToContactCommand(context)
@@ -89,7 +89,7 @@ class CommandTestingSpike extends StatelessWidget {
               print(updatedContact.first);
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("add existing label to contact"),
             onPressed: () async {
               List<ContactData> updatedContact =
@@ -97,14 +97,14 @@ class CommandTestingSpike extends StatelessWidget {
               print(updatedContact.first);
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("remove label from contact"),
             onPressed: () async {
-              ContactData updatedContact = await RemoveLabelFromContactCommand(context).execute(contact, group);
+              ContactData? updatedContact = await RemoveLabelFromContactCommand(context).execute(contact, group);
               print(updatedContact);
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("delete label"),
             onPressed: () async {
               bool success = await DeleteLabelCommand(context).execute(group);

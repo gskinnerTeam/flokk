@@ -1,6 +1,5 @@
 import 'package:flokk/_internal/utils/color_utils.dart';
 import 'package:flokk/styled_components/styled_text_input.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum ThemeType {
@@ -117,9 +116,9 @@ class AppTheme {
       colorScheme: ColorScheme(
           brightness: isDark ? Brightness.dark : Brightness.light,
           primary: accent1,
-          primaryVariant: accent1Darker,
+          primaryContainer: accent1Darker,
           secondary: accent2,
-          secondaryVariant: ColorUtils.shiftHsl(accent2, -.2),
+          secondaryContainer: ColorUtils.shiftHsl(accent2, -.2),
           background: bg1,
           surface: surface,
           onBackground: txt,
@@ -134,10 +133,14 @@ class AppTheme {
           border: ThinUnderlineBorder(),
         ),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        textSelectionColor: greyWeak,
-        textSelectionHandleColor: Colors.transparent,
-        buttonColor: accent1,
-        cursorColor: accent1,
+        textSelectionTheme: TextSelectionThemeData(
+            selectionColor: greyWeak,
+            selectionHandleColor: Colors.transparent,
+            cursorColor: accent1,
+        ),
+        buttonTheme: ButtonThemeData(
+            buttonColor: accent1,
+        ),
         highlightColor: accent1,
         toggleableActiveColor: accent1);
   }

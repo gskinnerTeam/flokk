@@ -25,9 +25,7 @@ class SecondaryIconBtn extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color? color;
 
-  const SecondaryIconBtn(this.icon, {Key? key, this.onPressed, this.color})
-      : assert((icon is AssetImage) || (icon is IconData)),
-        super(key: key);
+  const SecondaryIconBtn(this.icon, {Key? key, this.onPressed, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

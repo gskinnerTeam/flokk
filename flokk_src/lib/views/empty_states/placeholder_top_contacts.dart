@@ -2,7 +2,6 @@ import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/views/empty_states/placeholder_widget_helpers.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class TopContactsPlaceholder extends StatelessWidget {

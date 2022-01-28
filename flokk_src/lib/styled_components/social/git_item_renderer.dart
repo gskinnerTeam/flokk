@@ -1,6 +1,6 @@
-import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/_internal/url_launcher/url_launcher.dart';
+import 'package:flokk/_internal/utils/date_utils.dart';
 import 'package:flokk/app_extensions.dart';
 import 'package:flokk/data/git_event_data.dart';
 import 'package:flokk/data/git_repo_data.dart';

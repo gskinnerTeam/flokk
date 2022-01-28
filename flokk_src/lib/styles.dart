@@ -1,4 +1,3 @@
-import 'package:flokk/app_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textstyle_extensions/textstyle_extensions.dart';

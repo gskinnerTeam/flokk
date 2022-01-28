@@ -1,7 +1,6 @@
 import 'package:flokk/_internal/components/scrolling_flex_view.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
-import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/views/dashboard_page/dates/important_dates_section.dart';
 import 'package:flokk/views/dashboard_page/social/social_activities_section.dart';

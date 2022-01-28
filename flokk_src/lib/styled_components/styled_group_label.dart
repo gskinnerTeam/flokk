@@ -8,7 +8,6 @@ import 'package:flokk/styled_components/styled_image_icon.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 class StyledGroupLabel extends StatelessWidget {
@@ -18,8 +17,7 @@ class StyledGroupLabel extends StatelessWidget {
   final VoidCallback? onClose;
   final VoidCallback? onPressed;
 
-  StyledGroupLabel({this.icon, this.text = "", this.onFocusChanged, this.onClose, this.onPressed})
-      : assert(icon == null || (icon is AssetImage) || (icon is IconData));
+  StyledGroupLabel({this.icon, this.text = "", this.onFocusChanged, this.onClose, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

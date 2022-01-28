@@ -3,7 +3,6 @@ import 'package:flokk/styled_components/buttons/base_styled_button.dart';
 import 'package:flokk/styled_components/styled_image_icon.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,8 +34,7 @@ class ColorShiftIconBtn extends StatelessWidget {
     this.minWidth,
     this.minHeight,
     this.shrinkWrap = false,
-  })  : assert((icon is AssetImage) || (icon is IconData)),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

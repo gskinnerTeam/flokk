@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 class RemoveLabelFromContactCommand extends AbstractCommand with AuthorizedServiceCommandMixin {
   RemoveLabelFromContactCommand(BuildContext c) : super(c);
 
-  Future<ContactData> execute(ContactData contact, GroupData group) async {
+  Future<ContactData?> execute(ContactData contact, GroupData group) async {
     Log.p("[RemoveLabelFromContactCommand]");
 
     await executeAuthServiceCmd(() async {

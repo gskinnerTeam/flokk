@@ -44,8 +44,7 @@ class ExpandingMiniformContainer<T> extends StatefulWidget {
       required this.formBuilder,
       this.onOpened,
       this.autoFocus = false})
-      : assert((icon is AssetImage) || (icon is IconData)),
-        super(key: key);
+      : super(key: key);
 
   @override
   _ExpandingMiniformContainerState createState() => _ExpandingMiniformContainerState();
@@ -107,7 +106,6 @@ class _ExpandingMiniformContainerState extends State<ExpandingMiniformContainer>
           alignment: Alignment.topLeft,
           curve: Curves.easeOut,
           duration: Durations.fast,
-          vsync: this,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

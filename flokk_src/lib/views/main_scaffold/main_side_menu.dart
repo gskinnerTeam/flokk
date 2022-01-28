@@ -12,7 +12,6 @@ import 'package:flokk/themes.dart';
 import 'package:flokk/views/main_scaffold/light_dark_toggle_switch.dart';
 import 'package:flokk/views/main_scaffold/main_scaffold.dart';
 import 'package:flokk/views/main_scaffold/main_side_menu_btn.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +35,7 @@ class MainSideMenu extends StatefulWidget {
 
 class _MainSideMenuState extends State<MainSideMenu> {
 
-  Map<PageType, Offset> _menuBtnOffsetsByType = {};
+  final Map<PageType, Offset> _menuBtnOffsetsByType = {};
   PageType? _prevPage;
 
   double get _headerHeight => 106;

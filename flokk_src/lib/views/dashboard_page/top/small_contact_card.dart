@@ -7,7 +7,6 @@ import 'package:flokk/styled_components/styled_user_avatar.dart';
 import 'package:flokk/styles.dart';
 import 'package:flokk/themes.dart';
 import 'package:flokk/views/main_scaffold/main_scaffold.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

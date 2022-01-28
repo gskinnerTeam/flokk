@@ -44,9 +44,10 @@ class _LinkTextState extends State<SelectableLinkText> {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
+    final colorScheme = themeData.colorScheme;
     final textStyle = widget.textStyle ?? themeData.textTheme.bodyText1;
     final linkStyle = widget.linkStyle ??
-        themeData.textTheme.bodyText1?.copyWith(color: themeData.accentColor, decoration: TextDecoration.underline);
+        themeData.textTheme.bodyText1?.copyWith(color: colorScheme.secondary, decoration: TextDecoration.underline);
 
     final links = _regex.allMatches(widget.text);
 

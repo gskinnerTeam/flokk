@@ -30,8 +30,7 @@ class MainMenuBtn extends StatefulWidget {
       this.transparent = true,
       this.height = 60,
       this.pageType = PageType.None, this.dottedBorder = false})
-      : assert((icon is AssetImage) || (icon is IconData)),
-        super(key: key);
+      : super(key: key);
 
   @override
   MainMenuBtnState createState() => MainMenuBtnState();

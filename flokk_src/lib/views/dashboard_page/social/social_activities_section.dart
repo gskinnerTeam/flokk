@@ -2,7 +2,6 @@ import 'package:flokk/_internal/components/fading_index_stack.dart';
 import 'package:flokk/_internal/components/one_line_text.dart';
 import 'package:flokk/_internal/components/spacing.dart';
 import 'package:flokk/app_extensions.dart';
-import 'package:flokk/data/contact_data.dart';
 import 'package:flokk/models/app_model.dart';
 import 'package:flokk/models/github_model.dart';
 import 'package:flokk/models/twitter_model.dart';

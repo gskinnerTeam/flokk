@@ -81,7 +81,7 @@ class _DesignGridView extends StatelessWidget {
       if (state.gridAlpha > 0)
         IgnorePointer(
           child: Padding(
-            padding: grid.gutters ?? EdgeInsets.zero,
+            padding: grid.gutters,
             child: Row(children: content),
           ),
         ),

@@ -75,11 +75,8 @@ class HttpResponse {
   int get statusCode => raw.statusCode;
 
   HttpResponse(this.raw) {
-    //No response at all, there must have been a connection error
-    if (raw == null)
-      errorType = NetErrorType.disconnected;
     //200 means all is good :)
-    else if (raw.statusCode == 200)
+    if (raw.statusCode == 200)
       errorType = NetErrorType.none;
     //500's, server is probably down
     else if (raw.statusCode >= 500 && raw.statusCode < 600)
@@ -88,7 +85,6 @@ class HttpResponse {
     else if (raw.statusCode >= 400 && raw.statusCode < 500) errorType = NetErrorType.denied;
   }
 
-  // NOTE CE: This just crahes on construction
   HttpResponse.error()
       : raw = http.Response("", -1),
         errorType = NetErrorType.unknown;

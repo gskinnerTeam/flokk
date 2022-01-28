@@ -197,7 +197,7 @@ class ContactData {
 
   List<DateMixin> get allDates {
     //Need to explicitly cast x as DateMixin, otherwise will throw CastError when trying to add birthday
-    List<DateMixin> dates = hasEvents ? eventList.map((x) => x as DateMixin).toList() : [];
+    List<DateMixin> dates = hasEvents ? eventList : [];
     if (hasValidDateForBirthday) {
       dates.add(birthday);
     }

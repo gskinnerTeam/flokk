@@ -14,7 +14,6 @@ import 'package:flokk/services/google_rest/google_rest_auth_service.dart';
 import 'package:flokk/services/google_rest/google_rest_service.dart';
 import 'package:flokk/services/service_result.dart';
 import 'package:flokk/styled_components/clickable_text.dart';
-import 'package:flokk/styled_components/scrolling/styled_scrollview.dart';
 import 'package:flokk/styled_components/styled_dialogs.dart';
 import 'package:flokk/styled_components/styled_progress_spinner.dart';
 import 'package:flokk/styles.dart';
