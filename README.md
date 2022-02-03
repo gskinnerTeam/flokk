@@ -14,15 +14,34 @@ You are invited to improve Flokk Contacts! Submitting pull requests, answering a
 Please note that although we are monitoring GitHub issues, we aren't actively maintaining the codebase, so community involvement and contributions are really appreciated going forward. We're aiming to review pull requests on a weekly basis.
 
 ## Getting Set Up
+### Demo Builds
+To preview the app you can download from the app store on your device by visiting: 
+https://flutter.gskinner.com/folio/#g-download
 
-### 1. Flutter
+### Installation
 
-- Follow the install instructions here: https://flutter.dev/docs/get-started/install
-  - Desktop-specific info: https://flutter.dev/desktop, https://github.com/flutter/flutter/wiki/Desktop-shells
-- Flokk was built on the bleeding edge of Flutter, so make sure to use the `master` branch in their git repo and checkout commit `9c3f0faa6d` for Web, Linux, and macOS builds, or `78929661fb` for Windows builds.
-  - We're aiming to upgrade to an official Flutter version soon to make this easier.
+If you're new to Flutter the first thing you'll need is to follow the [setup instructions](https://flutter.dev/docs/get-started/install). 
 
-### 2. Add Required API Keys
+Once Flutter is setup, you can use the latest `stable` channel, or switch to the latest `master` version to get the most current fixes for desktop/web:
+ * Run `flutter channel master`
+ * Run `flutter upgrade`
+
+If you've never run a desktop build before, you will need to enable it with a one-time command for your current platform:
+* `flutter config --enable-macos-desktop`
+* `flutter config --enable-windows-desktop`
+* `flutter config --enable-linux-desktop`
+
+Once you're on `dev` and desktop is enabled, you're ready to run the app:
+* `flutter run -d windows`
+* `flutter run -d macos`
+* `flutter run -d linux`
+* `flutter run -d android`
+* `flutter run -d ios`
+* `flutter run -d web`
+
+If you re-start your IDE, you should also see a new launch option for your current desktop platform.
+
+### Client Keys
 
 Google Sign In is required in order to run the app (unless running with [cached data](#running-with-cached-data)). The app uses the Google People API, and you will need to provide your own Google OAuth 2 client credentials in the `/lib/api_keys.dart` file. 
 
