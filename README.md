@@ -103,6 +103,3 @@ The /linux and /windows folders contain modifications and should not be upgraded
 
 Since the desktop runners for this project may contain modifications, upgrades should not be made without first verifying that every plugin and embedder can be upgraded and that they remain compatible after an upgrade. Hopefully this will not be as much of an issue once Flutter's desktop support becomes more mature.
 
---
-
-Happy Flokking!
