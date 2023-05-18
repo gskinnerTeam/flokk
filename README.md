@@ -16,7 +16,7 @@ Please note that although we are monitoring GitHub issues, we aren't actively ma
 ## Getting Set Up
 ### Demo Builds
 To preview the app you can download from the app store on your device by visiting: 
-https://flutter.gskinner.com/folio/#g-download
+https://flutter.gskinner.com/flokk/#g-download
 
 ### Installation
 
